@@ -4,6 +4,7 @@
 #include "bsp_button.h"
 #include "bsp_pins.h"
 #include "driver/spi_master.h"
+#include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "esp_heap_caps.h"
 #include "esp_lcd_panel_io.h"
@@ -20,6 +21,42 @@ static esp_lcd_panel_io_handle_t s_io;
 static bool                      s_bl_ready;
 static uint8_t                   s_requested_brightness = 100;
 static uint8_t                   s_master_brightness = 80;
+
+// Pins parked at safe levels by bsp_display_prepare_deep_sleep() and held
+// through deep sleep. Each must be released at boot before the panel is used.
+static const gpio_num_t s_deep_sleep_pins[] = {
+    BSP_LCD_CS, BSP_LCD_SCLK, BSP_LCD_MOSI, BSP_LCD_DC, BSP_LCD_BL,
+};
+// CS idles high (deselected); the rest idle low.
+static const uint8_t s_deep_sleep_levels[] = {1, 0, 0, 0, 0};
+
+static esp_err_t display_release_deep_sleep_holds(void) {
+    esp_err_t first_error = ESP_OK;
+    for (size_t i = 0; i < sizeof(s_deep_sleep_pins) / sizeof(s_deep_sleep_pins[0]); i++) {
+        if ((int)s_deep_sleep_pins[i] < 0) continue;
+        esp_err_t e = gpio_hold_dis(s_deep_sleep_pins[i]);
+        if (e != ESP_OK && first_error == ESP_OK) first_error = e;
+    }
+    return first_error;
+}
+
+static esp_err_t display_set_safe_levels(void) {
+    esp_err_t first_error = ESP_OK;
+    for (size_t i = 0; i < sizeof(s_deep_sleep_pins) / sizeof(s_deep_sleep_pins[0]); i++) {
+        if ((int)s_deep_sleep_pins[i] < 0) continue;
+        const gpio_config_t cfg = {
+            .pin_bit_mask = 1ULL << (unsigned)s_deep_sleep_pins[i],
+            .mode = GPIO_MODE_OUTPUT,
+            .pull_up_en = GPIO_PULLUP_DISABLE,
+            .pull_down_en = GPIO_PULLDOWN_DISABLE,
+            .intr_type = GPIO_INTR_DISABLE,
+        };
+        esp_err_t e = gpio_config(&cfg);
+        if (e == ESP_OK) e = gpio_set_level(s_deep_sleep_pins[i], s_deep_sleep_levels[i]);
+        if (e != ESP_OK && first_error == ESP_OK) first_error = e;
+    }
+    return first_error;
+}
 
 // ---------------------------------------------------------------------------
 // ST7789P3 厂商专属初始化序列(porch / power / gamma)。
@@ -86,6 +123,9 @@ static void backlight_init(void) {
 
 esp_err_t bsp_display_init(void) {
     if (s_panel) return ESP_OK;
+    // Deep-sleep holds from the previous power-off would keep the SPI pins parked.
+    esp_err_t hold_e = display_release_deep_sleep_holds();
+    if (hold_e != ESP_OK) ESP_LOGW(TAG, "LCD deep-sleep hold 解除失败: %s", esp_err_to_name(hold_e));
 
     spi_bus_config_t bus = {
         .mosi_io_num = BSP_LCD_MOSI,
@@ -208,6 +248,37 @@ void bsp_display_set_master_brightness(uint8_t percent) {
 
 uint8_t bsp_display_get_master_brightness(void) {
     return s_master_brightness;
+}
+
+// Deep sleep only. Call after bsp_display_power(false) (ST7789 already in SLPIN):
+// stop the backlight PWM, park CS/SCLK/MOSI/DC/BL at safe levels and hold them
+// through deep sleep. The caller must stop LVGL flushing first.
+esp_err_t bsp_display_prepare_deep_sleep(void) {
+    esp_err_t first_error = ESP_OK;
+    bsp_display_backlight(0);
+    if (s_bl_ready) {
+        esp_err_t e = ledc_stop(BSP_BL_LEDC_MODE, BSP_BL_LEDC_CHANNEL, 0);
+        if (e != ESP_OK) {
+            ESP_LOGE(TAG, "LCD 背光 PWM 停止失败: %s", esp_err_to_name(e));
+            first_error = e;
+        }
+    }
+    esp_err_t e = display_set_safe_levels();
+    if (e != ESP_OK) {
+        ESP_LOGE(TAG, "LCD SPI 安全电平配置失败: %s", esp_err_to_name(e));
+        if (first_error == ESP_OK) first_error = e;
+    }
+    for (size_t i = 0; i < sizeof(s_deep_sleep_pins) / sizeof(s_deep_sleep_pins[0]); i++) {
+        if ((int)s_deep_sleep_pins[i] < 0) continue;
+        e = gpio_hold_en(s_deep_sleep_pins[i]);
+        if (e != ESP_OK) {
+            ESP_LOGE(TAG, "LCD GPIO%d hold 失败: %s", (int)s_deep_sleep_pins[i], esp_err_to_name(e));
+            if (first_error == ESP_OK) first_error = e;
+        }
+    }
+    gpio_deep_sleep_hold_en();
+    ESP_LOGI(TAG, "ST7789 已休眠，LCD SPI 与背光安全电平已保持");
+    return first_error;
 }
 
 void bsp_display_power(bool on) {
