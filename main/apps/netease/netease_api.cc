@@ -2,6 +2,7 @@
 #include "apps/netease/netease_catalog.h"
 #include "apps/netease/netease_url_cache.h"
 
+#include "apps/netease/netease_cookie_guard.h"
 #include "apps/netease/netease_json.h"
 #include "apps/netease/netease_lyrics.h"
 #include "esp_crt_bundle.h"
@@ -69,7 +70,7 @@ esp_err_t on_event(esp_http_client_event_t *event) {
 }
 
 // GET (or POST a form body) and stream the reply into scanner.
-// cookie: the full Cookie header value, or null.
+// cookie: the full Cookie header value, or null. It is dropped on any http:// URL.
 Result request_json(const char *url, const char *cookie, const char *form, const char *agent,
                     JsonScanner &scanner, Cancelled cancelled, char *cookie_out, size_t cookie_capacity) {
     if (cancelled && cancelled()) return Result::Cancelled;
@@ -79,6 +80,11 @@ Result request_json(const char *url, const char *cookie, const char *form, const
         ESP_LOGW(kTag, "Skip HTTPS: free=%u largest=%u", (unsigned)esp_get_free_heap_size(),
                  (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
         return Result::NoMemory;
+    }
+    // Safety net: MUSIC_U must never be sent over plain HTTP.
+    if (cookie_forbidden_on_http(url, cookie)) {
+        ESP_LOGW(kTag, "Cookie withheld: plain HTTP request");
+        cookie = nullptr;
     }
     Request request{cookie_out, cookie_capacity};
 #ifdef ESP_PLATFORM
@@ -202,8 +208,7 @@ char *eapi_form(const char *path, const char *json) {
 // POST to interfacepc.music.163.com/eapi/... as the desktop client. fields is
 // the request's own JSON members, e.g. "\"type\":3".
 Result eapi_post(const char *path, const char *fields, JsonScanner &scanner, Cancelled cancelled,
-                 char *cookie_out = nullptr, size_t cookie_capacity = 0, const char *login = nullptr,
-                 bool large_reply = false) {
+                 char *cookie_out = nullptr, size_t cookie_capacity = 0, const char *login = nullptr) {
     const char *music_u = login && !std::strncmp(login, "MUSIC_U=", 8) ? login + 8 : nullptr;
     const int64_t now = epoch_seconds();
     char request_id[32];
@@ -228,10 +233,8 @@ Result eapi_post(const char *path, const char *fields, JsonScanner &scanner, Can
     if (!form) return Result::NoMemory;
     json.reset();
     char url[96];
-    // Large authenticated lists share the documented HTTP tradeoff. Login and
-    // playback URLs remain HTTPS. Eapi encryption does not protect the Cookie header.
-    std::snprintf(url, sizeof(url), "%s://interfacepc.music.163.com/eapi/%s",
-                  large_reply ? "http" : "https", path + 5);  // drop "/api/"
+    // Always HTTPS: eapi encryption does not protect the Cookie header.
+    std::snprintf(url, sizeof(url), "https://interfacepc.music.163.com/eapi/%s", path + 5);  // drop "/api/"
     const Result r = request_json(url, cookie.get(), form, kDesktopAgent, scanner, cancelled, cookie_out,
                                   cookie_capacity);
     std::free(form);
@@ -496,18 +499,31 @@ Result user_playlists(const char *cookie, uint64_t uid, Playlist *out, size_t ma
 #endif
     *favorites = {};
     PlaylistCollector ctx{uid, out, max, favorites};
-    JsonScanner scanner(PlaylistCollector::sink, &ctx);
+    // Each attempt gets a fresh collector and scanner so partial data is not counted twice.
+    auto fetch = [&](const char *u, const char *c) {
+        ctx = PlaylistCollector{uid, out, max, favorites};
+        JsonScanner scanner(PlaylistCollector::sink, &ctx);
+        return get_json(u, c, scanner, cancelled);
+    };
     char url[128];
-    // ~50 KB replies arrive in 16 KB TLS records, beyond this device's 8 KB TLS
-    // receive limit, so the two large list calls use plain HTTP (user's choice).
-    std::snprintf(url, sizeof(url), "http://music.163.com/api/user/playlist?uid=%" PRIu64 "&limit=%u&offset=0", uid,
+    // ~50 KB replies need 16 KB TLS records, which this device's 8 KB limit cannot
+    // receive, so HTTPS may fail. Then retry the public list over HTTP without the cookie.
+    std::snprintf(url, sizeof(url), "https://music.163.com/api/user/playlist?uid=%" PRIu64 "&limit=%u&offset=0", uid,
                   static_cast<unsigned>(max + 1));  // favorites has its own slot
-    const Result r = get_json(url, cookie, scanner, cancelled);
+    Result r = fetch(url, cookie);
+    bool private_ok = true;
+    if (r != Result::Ok && r != Result::Cancelled && cookie && cookie[0]) {
+        ESP_LOGW(kTag, "Private playlists skipped: HTTPS failed (%s)", result_text(r));
+        std::snprintf(url, sizeof(url), "http://music.163.com/api/user/playlist?uid=%" PRIu64 "&limit=%u&offset=0",
+                      uid, static_cast<unsigned>(max + 1));
+        r = fetch(url, nullptr);
+        private_ok = false;
+    }
     *count = ctx.count;
     if (r != Result::Ok) return r;
     if (ctx.code == 200) {
 #ifdef ESP_PLATFORM
-        s_session_cache.save_playlists(cookie, uid, out, ctx.count, *favorites);
+        if (private_ok) s_session_cache.save_playlists(cookie, uid, out, ctx.count, *favorites);
 #endif
         return Result::Ok;
     }
@@ -519,8 +535,10 @@ Result daily_songs(const char *cookie, uint64_t *ids, size_t max, size_t *count,
     if (!cookie || !cookie[0]) return Result::Api;
     DailyCollector ctx{ids, max};
     JsonScanner scanner(DailyCollector::sink, &ctx);
+    // Requires login, so HTTPS only with no fallback. Records above 8 KiB may make
+    // TLS fail here; needs an on-device check.
     const Result r = eapi_post("/api/v3/discovery/recommend/songs", "\"afresh\":false", scanner,
-                               cancelled, nullptr, 0, cookie, true);
+                               cancelled, nullptr, 0, cookie);
     if (r != Result::Ok) return r;
     if (ctx.code != 200) {
         ESP_LOGW(kTag, "Daily recommendations refused: code=%d", ctx.code);
@@ -533,16 +551,28 @@ Result daily_songs(const char *cookie, uint64_t *ids, size_t max, size_t *count,
 Result playlist_tracks(const char *cookie, uint64_t playlist, uint64_t *ids, size_t max, size_t *count,
                        Cancelled cancelled) {
     struct Ctx { int code = 0; uint64_t *ids; size_t max, n = 0; } ctx{0, ids, max};
-    JsonScanner scanner([](void *c, JsonScanner::Event e, const char *path, const char *value, size_t) {
+    const JsonScanner::Sink sink = [](void *c, JsonScanner::Event e, const char *path, const char *value, size_t) {
         auto &ctx = *static_cast<Ctx *>(c);
         if (e != JsonScanner::Event::Value) return;
         if (is(path, "code")) ctx.code = std::atoi(value);
         else if (is(path, "playlist.trackIds[].id") && ctx.n < ctx.max) ctx.ids[ctx.n++] = to_u64(value);
-    }, &ctx);
+    };
+    // Each attempt gets a fresh collector and scanner so partial data is not counted twice.
+    auto fetch = [&](const char *u, const char *c) {
+        ctx = Ctx{0, ids, max, 0};
+        JsonScanner scanner(sink, &ctx);
+        return get_json(u, c, scanner, cancelled);
+    };
     char url[128];
-    // Plain HTTP for the same reason as user_playlists (large reply).
-    std::snprintf(url, sizeof(url), "http://music.163.com/api/v6/playlist/detail?id=%" PRIu64 "&n=0", playlist);
-    const Result r = get_json(url, cookie, scanner, cancelled);
+    // Large reply: HTTPS with the cookie. If HTTPS fails (e.g. records above 8 KiB),
+    // retry the public playlist over HTTP without the cookie.
+    std::snprintf(url, sizeof(url), "https://music.163.com/api/v6/playlist/detail?id=%" PRIu64 "&n=0", playlist);
+    Result r = fetch(url, cookie);
+    if (r != Result::Ok && r != Result::Cancelled && cookie && cookie[0]) {
+        ESP_LOGW(kTag, "Private playlist tracks skipped: HTTPS failed (%s)", result_text(r));
+        std::snprintf(url, sizeof(url), "http://music.163.com/api/v6/playlist/detail?id=%" PRIu64 "&n=0", playlist);
+        r = fetch(url, nullptr);
+    }
     *count = ctx.n;
     if (r != Result::Ok) return r;
     return ctx.code == 200 ? Result::Ok : Result::Api;
