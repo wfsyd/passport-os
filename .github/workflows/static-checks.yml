@@ -21,6 +21,16 @@ jobs:
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
+      # Host tests compile ESP-IDF's cJSON and mbedTLS sources from /opt/esp-idf.
+      - name: Fetch ESP-IDF v5.5.3 cJSON and mbedTLS sources
+        run: |
+          idf="$RUNNER_TEMP/esp-idf"
+          git clone --quiet --depth 1 --branch v5.5.3 --filter=blob:none --sparse https://github.com/espressif/esp-idf.git "$idf"
+          git -C "$idf" sparse-checkout set components/json components/mbedtls
+          git -C "$idf" submodule update --quiet --init --depth 1 components/json/cJSON components/mbedtls/mbedtls
+          sudo ln -s "$idf" /opt/esp-idf
+          echo "IDF_PATH=/opt/esp-idf" >> "$GITHUB_ENV"
+
       - name: Run hardware-independent regression tests
         run: bash tools/test-host.sh
 
