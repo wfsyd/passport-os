@@ -7,6 +7,9 @@ python3 tests/check_digit_font.py
 python3 tests/check_title_glyphs.py
 python3 tests/check_launcher_apps.py
 python3 -m unittest discover -s tools/ai_usage_helper/tests
+"${CC:-cc}" -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Imain \
+    tests/test_ai_usage_core.c main/apps/ai_usage/ai_usage_core.c -o "$test_dir/ai-usage-core"
+"$test_dir/ai-usage-core"
 test_dir="$(mktemp -d /tmp/passport-host.XXXXXX)"
 trap 'rm -rf -- "$test_dir"' EXIT
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined \
