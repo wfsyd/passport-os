@@ -56,18 +56,28 @@ bool radio_search_consider(const char *station_json, const char *wanted, RadioSe
     const char *url = string_field(entry, "url_resolved");
     if (!url[0]) url = string_field(entry, "url");
     const char *codec = string_field(entry, "codec");
-    // Same rule as the directory catalog: declared MP3, or an .mp3 URL without a codec.
-    const bool mp3 = !strcasecmp(codec, "MP3") || (!codec[0] && std::strstr(url, ".mp3"));
+    const bool hls = flag_field(entry, "hls", false) || std::strstr(url, ".m3u8");
+    const bool aac = !strncasecmp(codec, "AAC", 3);
+    // MP3 without a declared codec is accepted only for an .mp3 URL, as in the directory catalog.
+    const bool mp3 = !strcasecmp(codec, "MP3") || (!codec[0] && std::strstr(url, ".mp3") && !hls);
+    int tier = -1;
+    if (hls && aac) tier = 2;
+    else if (!hls && mp3) tier = 0;
+    else if (!hls && aac) tier = 1;
+    const cJSON *bitrate = cJSON_GetObjectItemCaseSensitive(entry, "bitrate");
+    const bool bitrate_ok = !cJSON_IsNumber(bitrate) || bitrate->valuedouble <= 0 ||
+                            bitrate->valuedouble <= 128;
     const long votes = votes_field(entry);
-    const bool qualifies = name[0] && contains_ci(name, wanted) && mp3 &&
+    const bool qualifies = tier >= 0 && bitrate_ok && name[0] && contains_ci(name, wanted) &&
                            flag_field(entry, "lastcheckok", true) &&
-                           !flag_field(entry, "hls", false) &&
                            (starts_with(url, "http://") || starts_with(url, "https://")) &&
                            std::strlen(url) < sizeof(best->url);
     bool changed = false;
-    if (qualifies && (!best->found || votes > best->votes)) {
+    if (qualifies && (!best->found || tier < best->tier ||
+                      (tier == best->tier && votes > best->votes))) {
         std::snprintf(best->url, sizeof(best->url), "%s", url);
         best->votes = votes;
+        best->tier = tier;
         best->found = true;
         changed = true;
     }
