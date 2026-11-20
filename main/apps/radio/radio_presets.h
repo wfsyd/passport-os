@@ -1,6 +1,22 @@
 #pragma once
 #include "radio_player.h"
 
+// Name-based presets resolved at runtime through the radio-browser directory
+// (countrycode AU, highest-voted MP3). Used instead of kRadioPresets for AU.
+struct RadioSearchPreset {
+    const char *name;         // shown on the dial
+    const char *description;
+    const char *query;        // substring of the directory station name
+};
+
+inline constexpr RadioSearchPreset kAuRadioSearchPresets[] = {
+    {"triple j", "ABC · 全国音乐", "triple j"},
+    {"Double J", "ABC · 全国音乐", "Double J"},
+    {"ABC Classic", "ABC · 古典音乐", "ABC Classic"},
+    {"ABC Radio National", "ABC · 资讯与文化", "ABC Radio National"},
+    {"ABC Jazz", "ABC · 爵士", "ABC Jazz"},
+};
+
 // Shared presets: one catalog failure must not leave the radio with one station.
 inline constexpr RadioStation kRadioPresets[] = {
 #ifdef PASSPORT_RADIO_HLS_TEST

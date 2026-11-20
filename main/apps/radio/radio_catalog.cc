@@ -1,6 +1,7 @@
 #include "radio_catalog.h"
 #include "radio_presets.h"
 #include "radio_json_stream.h"
+#include "radio_search_pick.h"
 #include "esp_random.h"
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -386,24 +387,22 @@ DirectoryServers directory_servers(RadioCatalogCancelled stop) {
     return servers;
 }
 
-void query_directory(const DirectoryServers &servers, const RadioLocation &location,
-                     const char *field, const char *value, const char *description,
-                     RadioStation *stations, std::size_t capacity, std::size_t &count,
-                     RadioCatalogCancelled stop) {
-    if (cancelled(stop) || count >= capacity || !value[0] || !servers.count) return;
-    char encoded[160] = {}, country[16] = {};
-    url_encode(value, encoded, sizeof(encoded));
-    url_encode(location.country_code, country, sizeof(country));
+// Runs one directory search (`url_query` is the text after "/json/stations/search?")
+// on the preferred replica first, then the others. Each station object goes to
+// `visit`, which returns false once it has enough. Returns true when a replica
+// answered, even with no stations.
+template <typename Visit>
+bool search_directory(const DirectoryServers &servers, const char *url_query,
+                      RadioCatalogCancelled stop, Visit &&visit) {
     auto *object = static_cast<char *>(std::malloc(kObjectCapacity));
-    if (!object) return;
+    if (!object) return false;
+    bool answered = false;
     const std::size_t start = servers.preferred < servers.count ? servers.preferred : 0;
     for (std::size_t step = 0; step < servers.count && !cancelled(stop); ++step) {
         const std::size_t i = (start + step) % servers.count;
-        char url[384];
-        std::snprintf(url, sizeof(url),
-            "http://%s/json/stations/search?countrycode=%s&%s=%s&codec=MP3"
-            "&hidebroken=true&bitrateMax=96&order=clickcount&reverse=true&limit=12",
-            servers.hosts[i], country, field, encoded);
+        char url[512];
+        std::snprintf(url, sizeof(url), "http://%s/json/stations/search?%s",
+                      servers.hosts[i], url_query);
         esp_http_client_config_t config = {};
         config.url = url;
         config.timeout_ms = kHttpTimeoutMs;
@@ -419,6 +418,7 @@ void query_directory(const DirectoryServers &servers, const RadioLocation &locat
             if (esp_http_client_get_status_code(client) == 200) {
                 RadioJsonStream parser(object, kObjectCapacity);
                 char chunk[512];
+                bool full = false;
                 while (!cancelled(stop)) {
                     int n = esp_http_client_read(client, chunk, sizeof(chunk));
                     if (n <= 0) {
@@ -426,9 +426,9 @@ void query_directory(const DirectoryServers &servers, const RadioLocation &locat
                         break;
                     }
                     parser.Feed(chunk, n, [&](const char *json) {
-                        append_station(json, description, stations, capacity, count);
+                        if (!full && !visit(json)) full = true;
                     });
-                    if (count >= capacity) { success = true; break; }
+                    if (full) { success = true; break; }
                 }
             }
         }
@@ -436,11 +436,54 @@ void query_directory(const DirectoryServers &servers, const RadioLocation &locat
         esp_http_client_cleanup(client);
         if (success) {
             servers.preferred = i;
+            answered = true;
             break; // an empty successful response is not a replica fault
         }
         ESP_LOGW(kTag, "Directory replica failed; trying another server");
     }
     std::free(object);
+    return answered;
+}
+
+void query_directory(const DirectoryServers &servers, const RadioLocation &location,
+                     const char *field, const char *value, const char *description,
+                     RadioStation *stations, std::size_t capacity, std::size_t &count,
+                     RadioCatalogCancelled stop) {
+    if (cancelled(stop) || count >= capacity || !value[0] || !servers.count) return;
+    char encoded[160] = {}, country[16] = {}, query[320] = {};
+    url_encode(value, encoded, sizeof(encoded));
+    url_encode(location.country_code, country, sizeof(country));
+    std::snprintf(query, sizeof(query),
+        "countrycode=%s&%s=%s&codec=MP3&hidebroken=true&bitrateMax=96"
+        "&order=clickcount&reverse=true&limit=12", country, field, encoded);
+    search_directory(servers, query, stop, [&](const char *json) {
+        append_station(json, description, stations, capacity, count);
+        return count < capacity;
+    });
+}
+
+// One name-based AU preset: the highest-voted working MP3 whose name contains `query`.
+// No bitrate cap, so 128 kbps MP3 streams are not excluded.
+bool resolve_search_preset(const DirectoryServers &servers, const char *query,
+                           const char *name, const char *description,
+                           RadioStation *out, RadioCatalogCancelled stop) {
+    if (cancelled(stop) || !query[0] || !servers.count) return false;
+    char encoded[160] = {}, url_query[320] = {};
+    url_encode(query, encoded, sizeof(encoded));
+    std::snprintf(url_query, sizeof(url_query),
+        "countrycode=AU&name=%s&codec=MP3&hidebroken=true"
+        "&order=votes&reverse=true&limit=20", encoded);
+    RadioSearchBest best = {};
+    search_directory(servers, url_query, stop, [&](const char *json) {
+        radio_search_consider(json, query, &best);
+        return true;
+    });
+    if (!best.found) return false;
+    *out = {};
+    copy_text(out->name, sizeof(out->name), name);
+    copy_text(out->description, sizeof(out->description), description);
+    copy_text(out->url, sizeof(out->url), best.url);
+    return out->url[0] != '\0';
 }
 
 std::size_t discover_for_location(RadioStation *stations, std::size_t capacity,
@@ -467,6 +510,32 @@ std::size_t discover_for_location(RadioStation *stations, std::size_t capacity,
     }
     const DirectoryServers servers = directory_servers(stop);
     std::size_t count = 0;
+    // Australia: the named ABC and triple j presets come first so the directory
+    // results cannot push them out of the capacity; the CN presets are not used.
+    const bool au = !std::strcmp(location->country_code, "AU");
+    if (au) {
+        for (const auto &preset : kAuRadioSearchPresets) {
+            if (cancelled(stop) || count >= capacity) break;
+            RadioStation station = {};
+            if (resolve_search_preset(servers, preset.query, preset.name, preset.description,
+                                      &station, stop) && !duplicate_url(stations, count, station.url)) {
+                stations[count++] = station;
+            }
+        }
+        // Local ABC station for the device's city, when the lookup named one.
+        const char *city_name = location->city;
+        if (city_name[0] && !same_name(city_name, default_city_label()) && count < capacity &&
+            !cancelled(stop)) {
+            char local[64] = {}, query[64] = {};
+            std::snprintf(local, sizeof(local), "ABC %s", city_name);
+            copy_text(query, sizeof(query), local);
+            RadioStation station = {};
+            if (resolve_search_preset(servers, query, local, "ABC · 本地电台", &station, stop) &&
+                !duplicate_url(stations, count, station.url)) {
+                stations[count++] = station;
+            }
+        }
+    }
     const auto voice_ready = [&] {
         if (!voice_station) return false;  // ordinary browsing keeps its full catalog
         for (std::size_t i = 0; i < count; ++i)
@@ -488,9 +557,11 @@ std::size_t discover_for_location(RadioStation *stations, std::size_t capacity,
                         stations, capacity, count, stop);
     }
     if (cancelled(stop)) return 0;
-    for (const auto &preset : kRadioPresets) {
-        if (count >= capacity) break;
-        if (!duplicate_url(stations, count, preset.url)) stations[count++] = preset;
+    if (!au) {
+        for (const auto &preset : kRadioPresets) {
+            if (count >= capacity) break;
+            if (!duplicate_url(stations, count, preset.url)) stations[count++] = preset;
+        }
     }
     ESP_LOGI(kTag, "Catalog %s / %s: %u stations", location->city, location->region, (unsigned)count);
     return count;
