@@ -21,7 +21,7 @@ TZ = timezone(timedelta(hours=10))
 EXPECTED = {
     "v": 1,
     "t": int(NOW.timestamp()),
-    "claude": {"tok_today": 2385, "tok_5h": 935, "reset": "11:00", "last": "09:00"},
+    "claude": {"tok_today": 885, "tok_5h": 435, "reset": "11:00", "last": "09:00"},
     "codex": {"p5h": 18, "pwk": 42, "reset": "13:00", "reset_wk": "Mon 09:30",
               "tok_today": 4500},
 }

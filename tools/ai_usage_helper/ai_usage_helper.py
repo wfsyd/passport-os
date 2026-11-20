@@ -166,9 +166,10 @@ def claude_entries(paths):
                 if key in seen:  # streamed duplicates repeat the same message
                     continue
                 seen.add(key)
+            # Cache reads are excluded: they repeat the whole context on every
+            # turn and would swamp the totals.
             tokens = sum(_count(usage.get(k)) for k in (
-                "input_tokens", "output_tokens",
-                "cache_creation_input_tokens", "cache_read_input_tokens"))
+                "input_tokens", "output_tokens", "cache_creation_input_tokens"))
             entries.append((dt, tokens))
     return entries
 

@@ -34,10 +34,12 @@ localhost. Responses are recomputed at most every 60 seconds.
 Example output (fake data):
 
 ```
-{"v":1,"t":1795134600,"claude":{"tok_today":2385,"tok_5h":935,"reset":"11:00","last":"09:00"},"codex":{"p5h":18,"pwk":42,"reset":"13:00","reset_wk":"Mon 09:30","tok_today":4500}}
+{"v":1,"t":1795134600,"claude":{"tok_today":885,"tok_5h":435,"reset":"11:00","last":"09:00"},"codex":{"p5h":18,"pwk":42,"reset":"13:00","reset_wk":"Mon 09:30","tok_today":4500}}
 ```
 
-Keys: `claude.tok_today` / `tok_5h` (tokens in the current 5-hour block), `reset`
+Keys: `claude.tok_today` / `tok_5h` (tokens in the current 5-hour block; input,
+output and cache-creation tokens only, cache reads are left out because they
+repeat the whole context on every turn), `reset`
 (block end, local HH:MM), `last` (last activity). `codex.p5h` / `pwk` (used %
 of the 5-hour and weekly windows), `reset` / `reset_wk` (local time), `tok_today`.
 Missing values are left out.
