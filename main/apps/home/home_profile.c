@@ -138,7 +138,7 @@ esp_err_t home_profile_set_text(const home_profile_t *in) {
     if (!home_profile_coordinates_valid(in->lat, in->lon) ||
         (in->country_code[0] && strcmp(in->country_code, "CN") &&
          strcmp(in->country_code, "HK") && strcmp(in->country_code, "MO") &&
-         strcmp(in->country_code, "TW"))) return ESP_ERR_INVALID_ARG;
+         strcmp(in->country_code, "TW") && strcmp(in->country_code, "AU"))) return ESP_ERR_INVALID_ARG;
 
     // 先持久化再上屏:NVS 写失败时保持旧资料,UI 永远与存储一致。
     nvs_handle_t handle;

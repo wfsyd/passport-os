@@ -206,8 +206,15 @@ const posts=()=>requests.filter(r=>r.options.method==='POST');
  assert.equal(posts().filter(r=>r.url.startsWith('/api/avatar')).at(-1).options.body.byteLength,4976);
  assert.equal(posts().filter(r=>r.url.startsWith('/api/share')).at(-1).options.body.type,'image/jpeg');
  // Nationwide search and stable ids distinguish repeated county names.
- assert.ok(cityCatalog.length>=3000);assert.equal(new Set(cityCatalog.map(c=>c[4])).size,34);
- get('province').value='广东';get('province').onchange();
+ assert.ok(cityCatalog.length>=3000);assert.equal(new Set(cityCatalog.map(c=>c[4])).size,42);
+ // Australian rows keep their country, and their English state names drive the same province filter.
+assert.equal(cityCatalog.filter(c=>c[6]==='AU').length,275);
+assert.equal(cityCatalog.find(c=>c[1]==='Sydney')[6],'AU');
+assert.ok(html.includes("regionCountry[region]||'CN'"));
+get('province').value='New South Wales';get('province').onchange();
+assert.match(get('cityStatus').textContent,/找到 \d+ 个地点/);
+assert.ok(get('city').options.some(o=>o.value==='AUNSW001'));
+get('province').value='广东';get('province').onchange();
  get('citySearch').value='珠海';get('citySearch').oninput();
  const zhuhai=cityCatalog.find(c=>c[1]==='珠海'&&c[4]==='广东');
  assert.ok(get('city').options.some(o=>o.value===zhuhai[0]));
