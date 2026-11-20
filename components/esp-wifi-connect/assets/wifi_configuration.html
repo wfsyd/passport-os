@@ -1631,7 +1631,8 @@ p{line-height:1.65}
                 ssid: ssid.value,
                 password: document.getElementById('password').value,
                 epoch: Math.floor(Date.now() / 1000),
-                tz_minutes: -new Date().getTimezoneOffset()
+                tz_minutes: -new Date().getTimezoneOffset(),
+                tz_zone: Intl.DateTimeFormat().resolvedOptions().timeZone || ''
             };
 
             try {
