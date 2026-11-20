@@ -1,0 +1,18 @@
+Australian place directory (au_cities.csv)
+
+Derived from GeoNames (https://www.geonames.org/), licensed under the
+Creative Commons Attribution 4.0 International licence (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+Obtained through the npm package "all-the-cities" version 3.1.0 (MIT licence
+for the package code; the package states that its data is derived from
+GeoNames). The raw package tarball is not committed. Only the Australian rows
+were extracted by tools/extract_all_the_cities.py into au_cities.csv.
+
+Selection: country AU with population >= 15,000, plus the eight state and
+territory capitals. Coordinates are rounded to four decimals. The timezone
+column is a hand-assigned IANA zone per state (Broken Hill is the only
+city-level exception). The state column uses GeoNames admin1 codes 01-08.
+
+This is a weather and display directory, not a postal or administrative
+register.
