@@ -7,9 +7,6 @@ python3 tests/check_digit_font.py
 python3 tests/check_title_glyphs.py
 python3 tests/check_launcher_apps.py
 python3 -m unittest discover -s tools/ai_usage_helper/tests
-"${CC:-cc}" -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Imain \
-    tests/test_ai_usage_core.c main/apps/ai_usage/ai_usage_core.c -o "$test_dir/ai-usage-core"
-"$test_dir/ai-usage-core"
 test_dir="$(mktemp -d /tmp/passport-host.XXXXXX)"
 trap 'rm -rf -- "$test_dir"' EXIT
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined \
@@ -81,7 +78,7 @@ python3 tests/test_avatar_upload.py
 "${CC:-cc}" -std=c11 -D_POSIX_C_SOURCE=200809L -Wall -Wextra -Werror -Wno-unused-variable \
     -fsanitize=address,undefined -g -ffunction-sections -fdata-sections \
     -Itests/home_mocks -Itests/radio_mocks -Imain \
-    tests/test_home_storage.c -Wl,--gc-sections -lm -o "$test_dir/home-storage"
+    tests/test_home_storage.c main/apps/ai_usage/ai_usage_core.c -Wl,--gc-sections -lm -o "$test_dir/home-storage"
 "$test_dir/home-storage"
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -g \
     -Itests/vendor/cjson -Icomponents/esp-wifi-connect/include \
@@ -158,4 +155,7 @@ python3 tests/test_media_startup.py
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -Imain \
     -Itests/registry_mocks tests/test_netease_performance.cc main/apps/netease/netease_json.cc -o "$test_dir/netease-performance"
 "$test_dir/netease-performance"
+"${CC:-cc}" -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Imain \
+    tests/test_ai_usage_core.c main/apps/ai_usage/ai_usage_core.c -o "$test_dir/ai-usage-core"
+"$test_dir/ai-usage-core"
 echo "Host regression tests: PASS"
