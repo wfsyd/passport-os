@@ -54,6 +54,7 @@ idf_component_register(
         "apps/voice/app_ui.c"
         "apps/voice/app_state.c"
         "apps/voice/time_sync.c"
+        "apps/voice/tz_zone.c"
         "ui/ui_pixel.c"
         "ui/ui_capture.c"
         "apps/voice/ui_pixel_math.c"

@@ -10,6 +10,8 @@ static const char *TAG = "settings";
 
 static const char *K_TZ_HOUR = "tz_hour";
 static const char *K_TZ_MIN = "tz_min";
+static const char *K_TZ_POSIX = "tz_posix";
+#define TZ_POSIX_STORE_MAX 48
 
 esp_err_t nvs_settings_init(void) {
     nvs_handle_t h;
@@ -63,6 +65,36 @@ esp_err_t nvs_settings_set_tz_min(int16_t minutes) {
     if (e == ESP_OK) e = nvs_commit(h);
     nvs_close(h);
     ESP_LOGI(TAG, "tz_min = %d", (int)minutes);
+    return e;
+}
+
+esp_err_t nvs_settings_get_tz_posix(char *buf, size_t cap) {
+    if (!buf || cap == 0) return ESP_ERR_INVALID_ARG;
+    buf[0] = '\0';
+    nvs_handle_t h;
+    esp_err_t e = nvs_open(APP_NS, NVS_READONLY, &h);
+    if (e != ESP_OK) return ESP_ERR_NVS_NOT_FOUND;
+    size_t len = cap;
+    e = nvs_get_str(h, K_TZ_POSIX, buf, &len);
+    nvs_close(h);
+    if (e != ESP_OK || buf[0] == '\0' || len > TZ_POSIX_STORE_MAX) {
+        buf[0] = '\0';
+        return ESP_ERR_NVS_NOT_FOUND;
+    }
+    return ESP_OK;
+}
+
+esp_err_t nvs_settings_set_tz_posix(const char *posix) {
+    if (!posix) posix = "";
+    if (strlen(posix) >= TZ_POSIX_STORE_MAX) return ESP_ERR_INVALID_ARG;
+    nvs_handle_t h;
+    esp_err_t e = nvs_open(APP_NS, NVS_READWRITE, &h);
+    if (e != ESP_OK) return e;
+    e = posix[0] ? nvs_set_str(h, K_TZ_POSIX, posix) : nvs_erase_key(h, K_TZ_POSIX);
+    if (e == ESP_ERR_NVS_NOT_FOUND) e = ESP_OK;   // clearing an unset key is fine
+    if (e == ESP_OK) e = nvs_commit(h);
+    nvs_close(h);
+    ESP_LOGI(TAG, "tz_posix = %s", posix[0] ? posix : "(none)");
     return e;
 }
 
