@@ -150,11 +150,33 @@ int main(int argc,char **argv) {
     city_fixture="["+station(std::string(9000,'X'),"http://oversize/live")+","+
         station("坏台","http://bad/live",",\"lastcheckok\":false")+","+
         station("HLS台","http://hls/live",",\"hls\":true")+","+
-        "{\"name\":\"AAC台\",\"url\":\"http://aac/live.mp3\",\"codec\":\"AAC\"},"+
+        "{\"name\":\"OGG台\",\"url\":\"http://ogg/live.ogg\",\"codec\":\"OGG\"},"+
         station("长URL",std::string("http://url/")+std::string(300,'X'))+","+
         station("有效无后缀","http://valid/live")+"]";
     n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);
     assert(n==7&&!std::strcmp(stations[0].name,"有效无后缀")&&live_http==0);
+
+    // Format gate: MP3, AAC family and AAC HLS are kept; HLS with MP3 or an unknown codec,
+    // and other codecs, are rejected.
+    reset();
+    city_fixture="["+
+        std::string("{\"name\":\"MP3台\",\"url\":\"http://f/mp3\",\"codec\":\"MP3\"},")+
+        "{\"name\":\"AAC台\",\"url\":\"http://f/aac\",\"codec\":\"AAC\"},"
+        "{\"name\":\"HEAAC台\",\"url\":\"http://f/he\",\"codec\":\"AAC+\"},"
+        "{\"name\":\"HLS AAC台\",\"url\":\"http://f/aac.m3u8\",\"codec\":\"AAC\",\"hls\":1},"
+        "{\"name\":\"HLS MP3台\",\"url\":\"http://f/mp3.m3u8\",\"codec\":\"MP3\",\"hls\":1},"
+        "{\"name\":\"HLS未知台\",\"url\":\"http://f/unknown.mp3\",\"hls\":1},"
+        "{\"name\":\"OGG台\",\"url\":\"http://f/live.ogg\",\"codec\":\"OGG\"},"
+        "{\"name\":\"无编码台\",\"url\":\"http://f/undeclared.m3u8\"}]";
+    n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);
+    assert(n>=5&&!std::strcmp(stations[0].name,"MP3台")&&!std::strcmp(stations[1].name,"AAC台")&&
+           !std::strcmp(stations[2].name,"HEAAC台")&&!std::strcmp(stations[3].name,"HLS AAC台")&&
+           !std::strcmp(stations[4].name,"无编码台"));
+    for(std::size_t i=0;i<n;++i)
+        assert(std::strstr(stations[i].name,"HLS MP3")==nullptr&&std::strstr(stations[i].name,"未知")==nullptr&&
+               std::strstr(stations[i].name,"OGG")==nullptr);
+    unique(stations,n);
+    assert(queries.size()>=1&&queries[0].find("codec=")==std::string::npos);
 
     char object[32];RadioJsonStream parser(object,sizeof(object));std::vector<std::string> objects;
     std::string body="[{\"a\":\"}\\\"{\",\"b\":{}},{\"large\":\""+std::string(100,'x')+"\"},{\"last\":1}]";

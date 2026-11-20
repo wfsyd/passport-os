@@ -99,6 +99,21 @@ bool contains(const char *text, const char *needle) {
     return text && needle && std::strstr(text, needle) != nullptr;
 }
 
+// ASCII case-insensitive substring match ("AAC", "AAC+", "HE-AAC" all contain "aac").
+bool contains_no_case(const char *text, const char *needle) {
+    if (!text || !needle || !needle[0]) return false;
+    for (const char *p = text; *p; ++p) {
+        std::size_t i = 0;
+        while (needle[i] && p[i] &&
+               std::tolower(static_cast<unsigned char>(p[i])) ==
+                   std::tolower(static_cast<unsigned char>(needle[i]))) {
+            ++i;
+        }
+        if (!needle[i]) return true;
+    }
+    return false;
+}
+
 bool http_get(const char *url, char *response, std::size_t capacity,
               std::size_t *response_size, RadioCatalogCancelled stop) {
     if (!url || !response || capacity < 2) return false;
@@ -338,10 +353,18 @@ void append_station(const char *json, const char *description,
     const char *url = json_string(entry, "url_resolved");
     if (!url[0]) url = json_string(entry, "url");
     const char *codec = json_string(entry, "codec");
-    // MP3 URLs need not end in .mp3; use declared codec, excluding AAC and HLS.
-    const bool mp3 = same_name(codec, "MP3") || (!codec[0] && contains(url, ".mp3"));
-    if (name[0] && url[0] && mp3 && enabled(entry, "lastcheckok", true) &&
-        !enabled(entry, "hls", false) && std::strlen(url) < sizeof(stations[0].url)) {
+    // Accepted formats are the ones the player decodes: MP3, AAC (ADTS, AAC+, HE-AAC) and
+    // HLS with AAC/TS segments. A missing codec is judged by the URL suffix instead.
+    // Stream URLs need not end in an extension, so only an undeclared codec relies on one.
+    const bool undeclared = !codec[0];
+    const bool aac = contains_no_case(codec, "AAC");
+    const bool hls_url = contains(url, ".m3u8");
+    const bool format_ok = same_name(codec, "MP3") || aac ||
+        (undeclared && (contains(url, ".mp3") || contains(url, ".aac") || hls_url));
+    // HLS is accepted only as AAC: a declared AAC codec, or no codec with an .m3u8 URL.
+    const bool hls_ok = !enabled(entry, "hls", false) || aac || (undeclared && hls_url);
+    if (name[0] && url[0] && format_ok && hls_ok && enabled(entry, "lastcheckok", true) &&
+        std::strlen(url) < sizeof(stations[0].url)) {
         RadioStation candidate = {};
         normalize_stream_url(url, candidate.url, sizeof(candidate.url));
         if ((starts_with(candidate.url, "http://") || starts_with(candidate.url, "https://")) &&
@@ -454,7 +477,7 @@ void query_directory(const DirectoryServers &servers, const RadioLocation &locat
     url_encode(value, encoded, sizeof(encoded));
     url_encode(location.country_code, country, sizeof(country));
     std::snprintf(query, sizeof(query),
-        "countrycode=%s&%s=%s&codec=MP3&hidebroken=true&bitrateMax=96"
+        "countrycode=%s&%s=%s&hidebroken=true&bitrateMax=128"
         "&order=clickcount&reverse=true&limit=12", country, field, encoded);
     search_directory(servers, query, stop, [&](const char *json) {
         append_station(json, description, stations, capacity, count);
@@ -462,7 +485,8 @@ void query_directory(const DirectoryServers &servers, const RadioLocation &locat
     });
 }
 
-// One name-based AU preset: the highest-voted working MP3 whose name contains `query`.
+// One name-based AU preset: the station whose name contains `query`, preferring MP3, then
+// direct AAC, then HLS AAC (see radio_search_consider), then the most votes.
 // No bitrate cap, so 128 kbps MP3 streams are not excluded.
 bool resolve_search_preset(const DirectoryServers &servers, const char *query,
                            const char *name, const char *description,
@@ -471,7 +495,7 @@ bool resolve_search_preset(const DirectoryServers &servers, const char *query,
     char encoded[160] = {}, url_query[320] = {};
     url_encode(query, encoded, sizeof(encoded));
     std::snprintf(url_query, sizeof(url_query),
-        "countrycode=AU&name=%s&codec=MP3&hidebroken=true"
+        "countrycode=AU&name=%s&hidebroken=true"
         "&order=votes&reverse=true&limit=20", encoded);
     RadioSearchBest best = {};
     search_directory(servers, url_query, stop, [&](const char *json) {

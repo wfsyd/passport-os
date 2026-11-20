@@ -45,6 +45,8 @@ CONFIG_LV_BUILD_DEMOS=n
 
 # Audio Decoders (esp_audio_codec)
 CONFIG_AUDIO_DECODER_MP3_SUPPORT=y
+# Most Australian stations (ABC, SBS, ARN, SCA) stream AAC or HLS AAC only.
+CONFIG_AUDIO_DECODER_AAC_SUPPORT=y
 
 # TLS & Certificates
 CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y

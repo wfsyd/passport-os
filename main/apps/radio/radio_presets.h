@@ -2,7 +2,7 @@
 #include "radio_player.h"
 
 // Name-based presets resolved at runtime through the radio-browser directory
-// (countrycode AU, highest-voted MP3). Used instead of kRadioPresets for AU.
+// (countrycode AU, MP3 preferred, then AAC, then HLS AAC). Used instead of kRadioPresets for AU.
 struct RadioSearchPreset {
     const char *name;         // shown on the dial
     const char *description;
@@ -13,9 +13,14 @@ inline constexpr RadioSearchPreset kAuRadioSearchPresets[] = {
     {"triple j", "ABC · 全国音乐", "triple j"},
     {"Double J", "ABC · 全国音乐", "Double J"},
     {"ABC Classic", "ABC · 古典音乐", "ABC Classic"},
-    {"ABC Radio National", "ABC · 资讯与文化", "ABC Radio National"},
-    {"ABC Jazz", "ABC · 爵士", "ABC Jazz"},
+    {"SBS Radio 1", "SBS · News and languages", "SBS Radio 1"},
+    {"KIIS", "Commercial · Pop hits", "KIIS"},
+    {"Nova", "Commercial · Pop hits", "Nova"},
+    {"Triple M", "Commercial · Rock and sport", "Triple M"},
 };
+// Seven presets plus the local "ABC <city>" station fill the 8-station
+// discovery and cache capacity (app_radio.cc kDiscoveryCapacity).
+static_assert(sizeof(kAuRadioSearchPresets) / sizeof(kAuRadioSearchPresets[0]) <= 7);
 
 // Build default country (see radio_catalog.h). AU builds start from the AU search
 // presets, which have no stream URL until the directory resolves them.
