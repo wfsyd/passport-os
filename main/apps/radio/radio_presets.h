@@ -17,6 +17,12 @@ inline constexpr RadioSearchPreset kAuRadioSearchPresets[] = {
     {"ABC Jazz", "ABC · 爵士", "ABC Jazz"},
 };
 
+// Build default country (see radio_catalog.h). AU builds start from the AU search
+// presets, which have no stream URL until the directory resolves them.
+#ifndef PASSPORT_DEFAULT_COUNTRY
+#define PASSPORT_DEFAULT_COUNTRY "AU"
+#endif
+
 // Shared presets: one catalog failure must not leave the radio with one station.
 inline constexpr RadioStation kRadioPresets[] = {
 #ifdef PASSPORT_RADIO_HLS_TEST
