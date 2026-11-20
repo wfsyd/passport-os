@@ -2,11 +2,13 @@
 // 移植自 trae_card/components/platform/platform_esp32/src/audio_es8311.c
 #include "bsp_audio.h"
 #include "bsp_audio_volume.h"
+#include "bsp_es8311_sleep_check.h"
 #include "bsp_i2c.h"
 #include "bsp_pins.h"
 #include "esp_codec_dev.h"
 #include "esp_codec_dev_defaults.h"
 #include "es8311_codec.h"
+#include "driver/gpio.h"
 #include "driver/i2s_std.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
@@ -264,13 +266,141 @@ void bsp_audio_deinit(void) {
     control_unlock();
 }
 
-void bsp_audio_prepare_sleep(void) {
+#define ES8311_SLEEP_ATTEMPTS 2
+#define ES8311_SLEEP_RETRY_MS 5
+
+typedef struct {
+    uint8_t reg;
+    uint8_t value;
+} es8311_reg_value_t;
+
+// Forced suspend sequence; does not depend on codec-dev's opened flag, so it
+// is correct even if audio was never played since boot. REG45=0x01 also turns
+// off the BCLK/LRCK internal pull-ups, which codec-dev's suspend leaves on.
+static const es8311_reg_value_t s_es8311_sleep_sequence[] = {
+    {0x32, 0x00}, {0x17, 0x00}, {0x0E, 0xFF}, {0x12, 0x02},
+    {0x14, 0x00}, {0x0D, 0xFA}, {0x15, 0x00}, {0x02, 0x10},
+    {0x00, 0x00}, {0x00, 0x1F}, {0x01, 0x30}, {0x01, 0x00},
+    {0x45, 0x01}, {0x0D, 0xFC}, {0x02, 0x00},
+};
+
+// Stop TX/RX so no DMA keeps clocking into the suspended codec. READY counts
+// as already stopped.
+static esp_err_t audio_stop_i2s_channels(void) {
+    esp_err_t first_error = ESP_OK;
+    const struct {
+        i2s_chan_handle_t channel;
+        const char *name;
+    } channels[] = {
+        {s_tx, "TX"},
+        {s_rx, "RX"},
+    };
+
+    for (size_t i = 0; i < sizeof(channels) / sizeof(channels[0]); i++) {
+        if (!channels[i].channel) continue;
+        esp_err_t e = i2s_channel_disable(channels[i].channel);
+        if (e == ESP_ERR_INVALID_STATE) e = ESP_OK;
+        if (e != ESP_OK) {
+            ESP_LOGE(TAG, "I2S %s 停止失败: %s", channels[i].name, esp_err_to_name(e));
+            if (first_error == ESP_OK) first_error = e;
+        }
+    }
+    return first_error;
+}
+
+static esp_err_t es8311_force_sleep_once(unsigned attempt) {
+    bool valid = true;
+    (void)attempt;  // only used by the ESP_LOGE calls below; those are no-ops on host
+
+    for (size_t i = 0; i < sizeof(s_es8311_sleep_sequence) /
+                           sizeof(s_es8311_sleep_sequence[0]); i++) {
+        const es8311_reg_value_t *item = &s_es8311_sleep_sequence[i];
+        uint8_t value = item->value;
+        int write_result = s_ctrl->write_reg(s_ctrl, item->reg, 1, &value, 1);
+        if (write_result == ESP_CODEC_DEV_OK) continue;
+
+        uint8_t actual = 0;
+        int read_result = s_ctrl->read_reg(s_ctrl, item->reg, 1, &actual, 1);
+        ESP_LOGE(TAG, "ES8311 休眠写入失败 attempt=%u REG%02X expected=0x%02X "
+                      "actual=%s error=%d",
+                 attempt, item->reg, item->value,
+                 read_result == ESP_CODEC_DEV_OK ? "read" : "unavailable",
+                 write_result);
+        valid = false;
+    }
+
+    for (size_t i = 0; i < bsp_es8311_sleep_check_count; i++) {
+        const bsp_es8311_reg_check_t *item = &bsp_es8311_sleep_checks[i];
+        uint8_t actual = 0;
+        int read_result = s_ctrl->read_reg(s_ctrl, item->reg, 1, &actual, 1);
+        if (read_result == ESP_CODEC_DEV_OK &&
+            bsp_es8311_sleep_check_matches(item, actual)) continue;
+
+        ESP_LOGE(TAG, "ES8311 休眠校验失败 attempt=%u REG%02X expected=0x%02X "
+                      "mask=0x%02X actual=0x%02X error=%d",
+                 attempt, item->reg, item->value, item->mask, actual, read_result);
+        valid = false;
+    }
+    return valid ? ESP_OK : ESP_FAIL;
+}
+
+static esp_err_t es8311_force_sleep(void) {
+    if (!s_ctrl || !s_ctrl->read_reg || !s_ctrl->write_reg) return ESP_ERR_INVALID_STATE;
+
+    for (unsigned attempt = 1; attempt <= ES8311_SLEEP_ATTEMPTS; attempt++) {
+        if (es8311_force_sleep_once(attempt) == ESP_OK) {
+            ESP_LOGI(TAG, "ES8311 已进入低功耗状态并通过寄存器校验");
+            return ESP_OK;
+        }
+        if (attempt < ES8311_SLEEP_ATTEMPTS) vTaskDelay(pdMS_TO_TICKS(ES8311_SLEEP_RETRY_MS));
+    }
+    ESP_LOGE(TAG, "ES8311 强制休眠失败");
+    return ESP_FAIL;
+}
+
+esp_err_t bsp_audio_prepare_sleep(void) {
     // Do not free objects that an audio worker may still reference. Closing
     // powers down ES8311; keeping the lock prevents a late worker reopening it.
     // The caller immediately enters deep sleep and never returns to normal use.
+    // Safe to call with audio never initialised: nothing is open, so only the
+    // lock is taken and the result is ESP_OK.
     control_lock();
     if (s_dev) esp_codec_dev_close(s_dev);
     s_opened = false;
+    // codec-dev's close may write a weaker suspend, so the forced sequence runs last.
+    esp_err_t first_error = s_ctrl ? es8311_force_sleep() : ESP_OK;
+    esp_err_t e = audio_stop_i2s_channels();
+    if (e != ESP_OK && first_error == ESP_OK) first_error = e;
+    s_tx_primed = s_rx_primed = false;
+    return first_error;
+}
+
+// Deep sleep only: I2S MCLK/BCLK/WS/DOUT/DIN become high-impedance inputs with
+// no pulls. Call after bsp_audio_prepare_sleep(); the I2S cannot be resumed in
+// this boot, so enter deep sleep or reboot immediately. Never use for light sleep.
+esp_err_t bsp_audio_prepare_deep_sleep(void) {
+    control_lock();
+    esp_err_t first_error = audio_stop_i2s_channels();
+    const int pins[] = {BSP_I2S_MCLK, BSP_I2S_BCLK, BSP_I2S_WS, BSP_I2S_DOUT, BSP_I2S_DIN};
+    uint64_t mask = 0;
+    for (size_t i = 0; i < sizeof(pins) / sizeof(pins[0]); i++) {
+        if (pins[i] >= 0) mask |= 1ULL << (unsigned)pins[i];
+    }
+    const gpio_config_t cfg = {
+        .pin_bit_mask = mask,
+        .mode = GPIO_MODE_INPUT,
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE,
+    };
+    esp_err_t e = gpio_config(&cfg);
+    if (e != ESP_OK) {
+        ESP_LOGE(TAG, "I2S 引脚高阻配置失败: %s", esp_err_to_name(e));
+        if (first_error == ESP_OK) first_error = e;
+    } else {
+        ESP_LOGI(TAG, "I2S MCLK/BCLK/WS/DOUT/DIN 已切换为高阻");
+    }
+    return first_error;
 }
 
 static esp_err_t set_format(uint32_t hz, uint8_t bits, uint8_t ch) {

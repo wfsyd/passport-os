@@ -9,6 +9,7 @@
 #include "bsp_battery.h"
 #include "bsp_button.h"
 #include "bsp_display.h"
+#include "bsp_i2c.h"
 #include "bsp_pins.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
@@ -103,7 +104,14 @@ void power_off(const char *message) {
         released = bsp_button_read_mv() < kButtonRanges[BSP_BTN_COUNT - 1][1] ? 0 : released + 1;
         vTaskDelay(pdMS_TO_TICKS(20));
     }
-    bsp_audio_prepare_sleep();
+    // Order matters. Audio first, while I2C still works: ES8311 suspend, then
+    // I2S pins go high-Z. Display SLPIN already ran above, so the SPI and
+    // backlight pins can be parked now. I2C pins go last: no bus access after this.
+    // The wake pin (GPIO0) is not touched here; sleep_now() configures it.
+    if (bsp_audio_prepare_sleep() != ESP_OK) ESP_LOGW(kTag, "Codec suspend not verified; sleeping anyway");
+    if (bsp_audio_prepare_deep_sleep() != ESP_OK) ESP_LOGW(kTag, "I2S pin isolation incomplete");
+    if (bsp_display_prepare_deep_sleep() != ESP_OK) ESP_LOGW(kTag, "Display pin isolation incomplete");
+    if (bsp_i2c_prepare_deep_sleep() != ESP_OK) ESP_LOGW(kTag, "I2C pin isolation incomplete");
     sleep_now();
 }
 
