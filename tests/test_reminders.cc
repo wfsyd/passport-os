@@ -11,7 +11,11 @@ extern "C" passport_app_id_t app_registry_get_active(){return foreground;}
 extern "C" void app_registry_switch_to(passport_app_id_t id){foreground=id;}
 extern "C" void app_registry_keep_awake(){}
 extern "C" int time_sync_tz_offset_sec(){return 28800;}
+extern "C" int time_sync_offset_at_utc(int64_t){return 28800;}
 namespace reminders {void show_alert(const Record*r,const char*){shown=r?r->id:0;}}
+// Simulated Sydney zone: AEST (+10) until 2026-10-04 02:00 AEST, AEDT (+11) until 2027-04-04 03:00 AEDT.
+static int64_t s_to_aedt=0,s_to_aest=0;
+static int sim_offset(int64_t utc){return utc>=s_to_aedt&&utc<s_to_aest?660*60:600*60;}
 int main(){
     using namespace reminders;
     int64_t due=0;char formatted[32];
@@ -117,6 +121,37 @@ int main(){
         assert(!alarm_active()&&!shown&&foreground==APP_ID_XIAOZHI);
         fail_write=false;monotonic_us+=1100000;poll();assert(get(42,&r));
         assert(repeats?(r.status==Status::Pending&&r.due>time(nullptr)):r.status==Status::Missed);
+    }
+    // Weekly Monday 09:00 created under AEST must stay at 09:00 local across both DST changes.
+    {
+        assert(parse_local("2026-10-04 02:00:00",600*60,&s_to_aedt));
+        assert(parse_local("2027-04-04 03:00:00",660*60,&s_to_aest));
+        Record rec{};rec.id=7;rec.status=Status::Pending;
+        std::strcpy(rec.title,"周一晨会");
+        assert(parse_local("2026-09-28 09:00:00",600*60,&rec.due));
+        assert(make_rule(1,rec.due,600*60,&rec.repeat));
+        set_offset_resolver(sim_offset);
+        int64_t occ=rec.due;bool saw_aest=false,saw_aedt=false;
+        for(int k=0;k<60;++k){
+            const int off=sim_offset(occ);
+            const int64_t local=occ+off;
+            assert(((local%86400)+86400)%86400==9*3600);      // 09:00 local
+            assert(((local/86400)+3)%7==0);                  // still Monday
+            assert(display_offset_seconds(rec,0)==off);
+            saw_aest|=off==600*60;saw_aedt|=off==660*60;
+            const int64_t next=next_occurrence(rec,occ);
+            assert(next>occ);
+            rec.due=next;occ=next;
+        }
+        assert(saw_aest&&saw_aedt);
+        // Without a resolver the stored +10 offset keeps firing at 10:00 local in summer.
+        set_offset_resolver(nullptr);
+        Record fixed=rec;fixed.due=0;
+        assert(parse_local("2026-10-26 09:00:00",600*60,&fixed.due));
+        const int64_t drift=next_occurrence(fixed,fixed.due);
+        assert(((drift+660*60)%86400+86400)%86400==10*3600);
+        assert(display_offset_seconds(fixed,28800)==600*60);
+        set_offset_resolver(nullptr);
     }
     puts("Reminders: strict date/UTF-8, persistence, failure, tools, due/snooze/backlog/capacity, shortcut dismissal PASS");
 }

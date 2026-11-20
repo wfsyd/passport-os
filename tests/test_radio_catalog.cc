@@ -15,7 +15,8 @@ struct TestHttp { std::string url, body; std::size_t offset = 0; bool fail = fal
 std::vector<std::string> queries;
 std::string city_fixture, province_fixture, state_fixture, ip_city;
 bool fail_dns = false, fail_first = false, fail_all = false, stopped = false, stop_on_read = false, fake_dns = false;
-unsigned ip_requests = 0, live_http = 0;
+unsigned ip_requests = 0, ipwho_requests = 0, ipapi_requests = 0, live_http = 0;
+bool ipwho_fail = false, ipapi_fail = false;
 uint32_t esp_random() { return 0; }
 extern "C" esp_err_t esp_crt_bundle_attach(void *) { return ESP_OK; }
 
@@ -33,8 +34,13 @@ extern "C" esp_http_client_handle_t esp_http_client_init(const esp_http_client_c
     ++live_http;
     client->url = decode(config->url);
     client->fail = fail_all || (fail_first && client->url.find("de1.") != std::string::npos);
-    if (client->url.find("ip-api") != std::string::npos || client->url.find("ipwho") != std::string::npos) {
-        ++ip_requests;
+    if (client->url.find("ipwho") != std::string::npos) {
+        ++ip_requests;++ipwho_requests;
+        client->fail = client->fail || ipwho_fail;
+        client->body = "{\"success\":true,\"country_code\":\"CN\",\"region\":\"Guangdong\",\"city\":\""+ip_city+"\"}";
+    } else if (client->url.find("ip-api") != std::string::npos) {
+        ++ip_requests;++ipapi_requests;
+        client->fail = client->fail || ipapi_fail;
         client->body = "{\"status\":\"success\",\"countryCode\":\"CN\",\"regionName\":\"Guangdong\",\"city\":\""+ip_city+"\"}";
     } else {
         queries.push_back(client->url);
@@ -69,7 +75,8 @@ std::string station(const std::string &name,const std::string &url,const std::st
     return "{\"name\":\""+name+"\",\"url\":\""+url+"\",\"codec\":\"MP3\""+extra+"}";
 }
 void reset() {
-    assert(live_http==0);queries.clear();ip_requests=0;fail_dns=fail_first=fail_all=stopped=stop_on_read=fake_dns=false;
+    assert(live_http==0);queries.clear();ip_requests=ipwho_requests=ipapi_requests=0;
+    fail_dns=fail_first=fail_all=stopped=stop_on_read=fake_dns=ipwho_fail=ipapi_fail=false;
     ip_city="Zhuhai";city_fixture="[]";province_fixture="[]";state_fixture="[]";
 }
 void unique(const RadioStation *s,std::size_t n) {
@@ -107,10 +114,22 @@ int main(int argc,char **argv) {
     n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);
     assert(n==8&&queries.size()==3&&std::strstr(stations[2].description,"推荐"));unique(stations,n);
 
+    // IP location: HTTPS ipwho.is first, ip-api.com only when ipwho.is fails.
     reset();ip_city="Jiangmen";city_fixture="["+station("江门电台","http://jm/live")+"]";
     n=radio_catalog_discover(stations,8,&location,cancel);
-    assert(n==7&&ip_requests==1&&!std::strcmp(location.city,"江门"));
+    assert(n==7&&ipwho_requests==1&&ipapi_requests==0&&!std::strcmp(location.city,"江门"));
+    assert(!std::strcmp(location.country_code,"CN"));
     assert(queries[0].find("name=江门")!=std::string::npos);
+
+    reset();ipwho_fail=true;ip_city="Jiangmen";city_fixture="["+station("江门备用","http://jm/backup")+"]";
+    n=radio_catalog_discover(stations,8,&location,cancel);
+    assert(n==7&&ipwho_requests==1&&ipapi_requests==1&&!std::strcmp(location.city,"江门"));
+
+    // Lookup failure: fall back to the build default country (AU) with a neutral label.
+    reset();ipwho_fail=ipapi_fail=true;
+    radio_catalog_discover(stations,8,&location,cancel);
+    assert(ipwho_requests==1&&ipapi_requests==1);
+    assert(!std::strcmp(location.country_code,"AU")&&!std::strcmp(location.city,"Recommended"));
 
     reset();fail_dns=true;fail_first=true;city_fixture="["+station("恢复","http://ok/live")+"]";
     n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);

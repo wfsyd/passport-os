@@ -54,6 +54,7 @@ idf_component_register(
         "apps/voice/app_ui.c"
         "apps/voice/app_state.c"
         "apps/voice/time_sync.c"
+        "apps/voice/tz_zone.c"
         "ui/ui_pixel.c"
         "ui/ui_capture.c"
         "apps/voice/ui_pixel_math.c"
@@ -148,3 +149,10 @@ target_add_binary_data(${COMPONENT_LIB} "${phone_setup_gz}" BINARY)
 if(PASSPORT_RADIO_HLS_TEST)
     target_compile_definitions(${COMPONENT_LIB} PRIVATE PASSPORT_RADIO_HLS_TEST=1)
 endif()
+
+# Country used for radio recommendations when location lookup fails (ISO 3166 alpha-2).
+set(PASSPORT_DEFAULT_COUNTRY "AU" CACHE STRING "Fallback country code for radio recommendations")
+if(NOT PASSPORT_DEFAULT_COUNTRY MATCHES "^[A-Z][A-Z]$")
+    message(FATAL_ERROR "PASSPORT_DEFAULT_COUNTRY must be two uppercase letters, got '${PASSPORT_DEFAULT_COUNTRY}'")
+endif()
+target_compile_definitions(${COMPONENT_LIB} PRIVATE "PASSPORT_DEFAULT_COUNTRY=\"${PASSPORT_DEFAULT_COUNTRY}\"")

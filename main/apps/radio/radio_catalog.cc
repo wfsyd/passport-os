@@ -25,9 +25,9 @@ namespace {
 
 constexpr char kTag[] = "radio_catalog";
 constexpr char kLocationUrl[] =
-    "http://ip-api.com/json/?fields=status,countryCode,regionName,city";
-constexpr char kBackupLocationUrl[] =
     "https://ipwho.is/?fields=success,country_code,region,city";
+constexpr char kBackupLocationUrl[] =
+    "http://ip-api.com/json/?fields=status,countryCode,regionName,city";
 constexpr std::size_t kObjectCapacity = 8192;
 constexpr int kHttpTimeoutMs = 2500;
 bool cancelled(RadioCatalogCancelled fn) { return fn && fn(); }
@@ -170,42 +170,53 @@ void copy_text(char *target, std::size_t capacity, const char *source) {
     target[n] = '\0';
 }
 
+bool parse_location(const char *body, RadioLocation *location, bool ipwho) {
+    cJSON *root = cJSON_Parse(body);
+    if (!root) return false;
+    bool success = false;
+    if (ipwho) {
+        // https://ipwho.is: {"success":true,"country_code":"AU","region":"...","city":"..."}
+        cJSON *ok = cJSON_GetObjectItemCaseSensitive(root, "success");
+        const char *country = json_string(root, "country_code");
+        const char *region = json_string(root, "region");
+        const char *city = json_string(root, "city");
+        success = cJSON_IsTrue(ok) && country[0] && (city[0] || region[0]);
+    } else {
+        // http://ip-api.com: {"status":"success","countryCode":"AU","regionName":"...","city":"..."}
+        const char *status = json_string(root, "status");
+        const char *country = json_string(root, "countryCode");
+        const char *region = json_string(root, "regionName");
+        const char *city = json_string(root, "city");
+        success = std::strcmp(status, "success") == 0 && country[0] && (city[0] || region[0]);
+    }
+    if (success) {
+        const char *country = json_string(root, ipwho ? "country_code" : "countryCode");
+        const char *region = json_string(root, ipwho ? "region" : "regionName");
+        const char *city = json_string(root, "city");
+        copy_text(location->country_code, sizeof(location->country_code), country);
+        copy_text(location->region, sizeof(location->region), region);
+        copy_text(location->city, sizeof(location->city), city);
+    }
+    cJSON_Delete(root);
+    return success;
+}
+
+// Label for the generic "recommended stations" group when no city is known.
+// Keep the original Chinese label for the China build.
+const char *default_city_label() {
+    return std::strcmp(PASSPORT_DEFAULT_COUNTRY, "CN") == 0 ? "推荐电台" : "Recommended";
+}
+
 bool locate(RadioLocation *location, RadioCatalogCancelled stop) {
     char *response = static_cast<char *>(std::malloc(2048));
     if (!response) return false;
     bool success = false;
+    // HTTPS ipwho.is first; plain-HTTP ip-api.com only as a fallback.
     if (http_get(kLocationUrl, response, 2048, nullptr, stop)) {
-        cJSON *root = cJSON_Parse(response);
-        if (root) {
-            const char *status = json_string(root, "status");
-            const char *country = json_string(root, "countryCode");
-            const char *region = json_string(root, "regionName");
-            const char *city = json_string(root, "city");
-            if (std::strcmp(status, "success") == 0 && country[0] &&
-                (city[0] || region[0])) {
-                copy_text(location->country_code, sizeof(location->country_code), country);
-                copy_text(location->region, sizeof(location->region), region);
-                copy_text(location->city, sizeof(location->city), city);
-                success = true;
-            }
-            cJSON_Delete(root);
-        }
+        success = parse_location(response, location, true);
     }
     if (!success && !cancelled(stop) && http_get(kBackupLocationUrl, response, 2048, nullptr, stop)) {
-        cJSON *root = cJSON_Parse(response);
-        if (root) {
-            cJSON *ok = cJSON_GetObjectItemCaseSensitive(root, "success");
-            const char *country = json_string(root, "country_code");
-            const char *region = json_string(root, "region");
-            const char *city = json_string(root, "city");
-            if (cJSON_IsTrue(ok) && country[0] && (city[0] || region[0])) {
-                copy_text(location->country_code, sizeof(location->country_code), country);
-                copy_text(location->region, sizeof(location->region), region);
-                copy_text(location->city, sizeof(location->city), city);
-                success = true;
-            }
-            cJSON_Delete(root);
-        }
+        success = parse_location(response, location, false);
     }
     std::free(response);
     return success;
@@ -575,8 +586,8 @@ std::size_t radio_catalog_discover(RadioStation *stations, std::size_t capacity,
     *location = {};
     if (!locate(location, stop)) {
         if (cancelled(stop)) return 0;
-        copy_text(location->country_code, sizeof(location->country_code), "CN");
-        copy_text(location->city, sizeof(location->city), "推荐电台");
+        copy_text(location->country_code, sizeof(location->country_code), PASSPORT_DEFAULT_COUNTRY);
+        copy_text(location->city, sizeof(location->city), default_city_label());
     }
     return discover_for_location(stations, capacity, location, stop);
 }
@@ -588,7 +599,7 @@ std::size_t radio_catalog_discover_location(const RadioLocation &preferred,
     if (!stations || !capacity || !location || cancelled(stop)) return 0;
     if (!preferred.city[0]) return radio_catalog_discover(stations, capacity, location, stop);
     *location = preferred;
-    if (!location->country_code[0]) copy_text(location->country_code, sizeof(location->country_code), "CN");
+    if (!location->country_code[0]) copy_text(location->country_code, sizeof(location->country_code), PASSPORT_DEFAULT_COUNTRY);
 #ifdef ESP_PLATFORM
     const RadioLocation want = *location;
     if (s_catalog_cache.load(want, stations, capacity, location, voice_station)) {

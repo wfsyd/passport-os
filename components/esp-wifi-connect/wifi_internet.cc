@@ -44,6 +44,7 @@ void WifiManager::InternetWorker(void *arg) {
         if (!self->IsConnected()) break;
         InternetStatus result = InternetStatus::NoInternet;
         // Two independent endpoints, no redirects or portal body allocation.
+        // Global probe first; the .cn endpoint is a later fallback for China networks.
         for (const char *url : {"http://connectivitycheck.gstatic.com/generate_204",
                                "http://www.qualcomm.cn/generate_204"}) {
             esp_http_client_config_t config{};

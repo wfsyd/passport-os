@@ -83,6 +83,9 @@ python3 tests/test_avatar_upload.py
     -Itests/vendor/cjson -Icomponents/esp-wifi-connect/include \
     tests/test_phone_time.cc tests/vendor/cjson/cJSON.c -o "$test_dir/phone-time"
 "$test_dir/phone-time"
+"${CC:-cc}" -std=c11 -D_POSIX_C_SOURCE=200809L -Wall -Wextra -Werror -fsanitize=address,undefined -g \
+    -Imain tests/test_tz_zone.c main/apps/voice/tz_zone.c -o "$test_dir/tz-zone"
+"$test_dir/tz-zone"
 python3 tests/test_city_catalog.py
 python3 tests/test_home_weather.py
 python3 tests/test_home_weather_schedule.py
