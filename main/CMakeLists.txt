@@ -87,6 +87,8 @@ idf_component_register(
         "apps/sound_jump/jump_voice.c"
         "apps/sound_jump/jump_mic.c"
         "apps/sound_jump/app_sound_jump.cc"
+        "apps/ai_usage/ai_usage_core.c"
+        "apps/ai_usage/app_ai_usage.cc"
         "apps/stopwatch/stopwatch_core.c"
         "apps/stopwatch/app_stopwatch.cc"
         "apps/pomodoro/pomodoro_core.c"
