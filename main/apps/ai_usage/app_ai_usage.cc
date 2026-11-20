@@ -142,7 +142,7 @@ void refresh(int64_t now) {
     set_text(s_status, status);
     ui_pixel_text_color(s_status, failed || wifi_down ? UI_WARNING : UI_TEXT_DIM);
 
-    char buf[24];
+    char buf[AI_USAGE_TIME_MAX + AI_USAGE_WEEK_MAX + 4];  // fits "<reset> / <reset_wk>"
     const bool claude = have_good && good.has_claude;
     ai_usage_format_tokens(claude ? good.claude.tok_5h : AI_USAGE_UNSET, buf, sizeof(buf));
     set_text(s_claude_5h, claude && good.claude.tok_5h >= 0 ? buf : "--");
