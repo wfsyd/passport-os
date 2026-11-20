@@ -24,11 +24,6 @@
 namespace {
 
 constexpr char kTag[] = "radio_catalog";
-// Country used when the location lookup fails. Set by the build option
-// PASSPORT_DEFAULT_COUNTRY (main/CMakeLists.txt); "AU" unless overridden.
-#ifndef PASSPORT_DEFAULT_COUNTRY
-#define PASSPORT_DEFAULT_COUNTRY "AU"
-#endif
 constexpr char kLocationUrl[] =
     "https://ipwho.is/?fields=success,country_code,region,city";
 constexpr char kBackupLocationUrl[] =

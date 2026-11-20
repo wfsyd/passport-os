@@ -4,6 +4,12 @@
 
 #include <cstddef>
 
+// Country used when the location is unknown (lookup failed or no profile country).
+// Set by the build option PASSPORT_DEFAULT_COUNTRY (main/CMakeLists.txt); "AU" unless overridden.
+#ifndef PASSPORT_DEFAULT_COUNTRY
+#define PASSPORT_DEFAULT_COUNTRY "AU"
+#endif
+
 struct RadioLocation {
     char country_code[4];
     char region[48];

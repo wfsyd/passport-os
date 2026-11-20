@@ -102,15 +102,17 @@ void catalog_worker(void *arg) {
     }
     voice_intent::Request *voice = s_voice.exchange(nullptr);
     RadioLocation preferred = {}, loc = {};
+    home_profile_t profile;
+    home_profile_get(&profile);
     if (voice) {
         // A spoken city replaces the profile city for this session only.
         // The tool limits the name to this field; preferred is zero-filled.
+        // Country: the profile's country when known, else the build default (same as radio_catalog).
         std::memcpy(preferred.city, voice->name,
                     std::min(std::strlen(voice->name), sizeof(preferred.city) - 1));
-        std::snprintf(preferred.country_code, sizeof(preferred.country_code), "CN");
+        std::snprintf(preferred.country_code, sizeof(preferred.country_code), "%s",
+                      profile.country_code[0] ? profile.country_code : PASSPORT_DEFAULT_COUNTRY);
     } else {
-        home_profile_t profile;
-        home_profile_get(&profile);
         std::snprintf(preferred.city, sizeof(preferred.city), "%s", profile.city);
         std::snprintf(preferred.region, sizeof(preferred.region), "%s", profile.region);
         std::snprintf(preferred.search_city, sizeof(preferred.search_city), "%s", profile.radio_city);
