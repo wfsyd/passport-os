@@ -45,6 +45,7 @@ extern const passport_app_t g_pomodoro_app;
 extern const passport_app_t g_netease_app;
 extern const passport_app_t g_reminders_app;
 extern const passport_app_t g_lists_app;
+extern const passport_app_t g_ai_usage_app;
 
 namespace {
 
@@ -65,6 +66,7 @@ const passport_app_t *s_apps[] = {
     &g_tetris_app,
     &g_game_app,
     &g_sound_jump_app,
+    &g_ai_usage_app,
     &g_settings_app,   // 设置放最后(应用惯用收尾位置)
 };
 

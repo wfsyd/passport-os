@@ -7,5 +7,5 @@ with tempfile.TemporaryDirectory(prefix='passport-cards-') as tmp:
     subprocess.run(['cc','-std=c11','-D_POSIX_C_SOURCE=200809L','-Wall','-Wextra','-Werror',
         '-Wno-unused-variable','-fsanitize=address,undefined','-fno-omit-frame-pointer',
         '-DSPIFFS_BASE="'+str(Path(tmp)/'storage')+'"','-Itests/home_mocks','-Itests/radio_mocks','-Imain',
-        'tests/test_card_gallery.c','main/apps/home/home_profile.c','-lm','-o',str(target)],cwd=ROOT,check=True)
+        'tests/test_card_gallery.c','main/apps/home/home_profile.c','main/apps/ai_usage/ai_usage_core.c','-lm','-o',str(target)],cwd=ROOT,check=True)
     subprocess.run([str(target),str(ROOT/'tests/fixtures/card-240x320.jpg')],check=True)
