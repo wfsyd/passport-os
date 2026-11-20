@@ -62,6 +62,8 @@ void finish_alert() {
 bool clock_ready(){const auto t=time(nullptr);return t>=1700000000 && t<4102444800LL;}
 void initialize() {
     if(mutex) return;
+    // Repeating reminders follow the device's zone rules (DST) when a POSIX TZ is active.
+    set_offset_resolver(time_sync_offset_at_utc);
     mutex=xSemaphoreCreateMutexStatic(&mutex_storage);
     nvs_handle_t handle;
     if(nvs_open("reminders_v1",NVS_READWRITE,&handle)!=ESP_OK) return;

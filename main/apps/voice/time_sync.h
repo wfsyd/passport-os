@@ -30,6 +30,8 @@ int time_sync_tz_offset_sec(void);             // 当前时区偏移秒(本地 =
 esp_err_t time_sync_set_posix_tz(const char *posix);
 // 手机端 IANA 时区名(如 "Australia/Sydney");未知名等同于清除。由 phone_time.h 调用。
 void passport_phone_zone(const char *iana);
+// UTC instant -> offset seconds in force then (POSIX rule when set, else the fixed offset).
+int time_sync_offset_at_utc(int64_t utc);
 // 天气接口给出的偏移(分钟,-720..840);与当前相同则不写 NVS。
 esp_err_t time_sync_set_tz_offset_min(int minutes);
 int time_sync_format_local(char *buf, size_t cap); // "HH:MM"(校时)或 "--:--"(未校时)

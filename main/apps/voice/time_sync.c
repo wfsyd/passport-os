@@ -116,6 +116,12 @@ static int64_t current_utc(void)
 
 int time_sync_tz_hour(void) { return s_tz_min / 60; }
 
+int time_sync_offset_at_utc(int64_t utc)
+{
+    if (s_tz_posix[0] != '\0') return tz_zone_offset_sec(utc);
+    return s_tz_min * 60;
+}
+
 int time_sync_tz_offset_sec(void)
 {
     if (s_tz_posix[0] != '\0' && s_valid) return tz_zone_offset_sec(current_utc());

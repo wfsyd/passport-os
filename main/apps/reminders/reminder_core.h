@@ -25,6 +25,14 @@ constexpr size_t kLegacyRecordBytes = 112;
 bool valid_rule(const RepeatRule &rule);
 bool make_rule(uint8_t days, int64_t due, int offset_seconds, RepeatRule *out);
 int64_t next_occurrence(const Record &record, int64_t after);
+// Optional zone rules: UTC instant -> UTC offset in seconds (e.g. with daylight saving).
+// When set, repeating rules resolve their offset at fire time instead of trusting the
+// offset stored at creation. Null (default) keeps the stored fixed offset.
+using OffsetAt = int (*)(int64_t utc);
+void set_offset_resolver(OffsetAt resolver);
+// Offset to display a record's due time with: resolved at r.due for repeating rules,
+// otherwise the caller's fallback (current clock offset).
+int display_offset_seconds(const Record &record, int fallback);
 const char *repeat_name(uint8_t days);
 bool valid_title(const char *title);
 bool valid_record(const Record &record);

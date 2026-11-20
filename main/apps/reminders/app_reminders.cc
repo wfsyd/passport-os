@@ -35,7 +35,7 @@ void refresh() {
     if(detail_id) {
         Record r{};if(!get(detail_id,&r)){detail_id=0;deleting=false;}
         else {
-            char when[32];format_local(r.due,r.repeat.days?r.repeat.utc_offset_minutes*60:time_sync_tz_offset_sec(),when,sizeof(when));
+            char when[32];format_local(r.due,display_offset_seconds(r,time_sync_tz_offset_sec()),when,sizeof(when));
             ui_pixel_label_set_text(heading,deleting?(r.repeat.days?"删除整个重复提醒？":"删除这条提醒？"):status_text(r.status));
             char text[200];std::snprintf(text,sizeof(text),"%s\n%s\n\n%s",when,repeat_name(r.repeat.days),r.title);ui_pixel_label_set_text(body,text);
             ui_pixel_label_set_text(footer,error_text?error_text:deleting?"确定删除 · 上键取消\n长按确定返回":r.repeat.days?"确定完成本次 · 下键删除\n长按确定返回列表":"确定标记完成 · 下键删除\n长按确定返回列表");return;
@@ -52,7 +52,7 @@ void refresh() {
     const size_t start=selected/3*3;
     for(size_t i=0;i<3&&start+i<count;++i) {
         const auto &r=rows[start+i];char when[32],text[160];
-        format_local(r.due,r.repeat.days?r.repeat.utc_offset_minutes*60:time_sync_tz_offset_sec(),when,sizeof(when));
+        format_local(r.due,display_offset_seconds(r,time_sync_tz_offset_sec()),when,sizeof(when));
         std::snprintf(text,sizeof(text),"%s\n%.11s · %s",r.title,when+5,r.repeat.days?repeat_name(r.repeat.days):status_text(r.status));
         lv_label_set_long_mode(lines[i],LV_LABEL_LONG_DOT);ui_pixel_label_set_text(lines[i],text);
         ui_pixel_text_color(lines[i],start+i==selected?UI_ON_ACCENT:UI_TEXT);
@@ -135,7 +135,7 @@ void show_alert(const Record *r,const char *error) {
         alert_title=label(alert,"",10,76,200,76,UI_TEXT);
         alert_hint=label(alert,"",10,170,200,48,UI_TEXT_DIM);
     }
-    char when[32];format_local(r->due,r->repeat.days?r->repeat.utc_offset_minutes*60:time_sync_tz_offset_sec(),when,sizeof(when));
+    char when[32];format_local(r->due,display_offset_seconds(*r,time_sync_tz_offset_sec()),when,sizeof(when));
     ui_pixel_label_set_text(alert_time,when+5);ui_pixel_label_set_text(alert_title,r->title);
     ui_pixel_label_set_text(alert_hint,error?error:"确定完成 · 下键延后5分\n上键静音");
     bsp_lvgl_unlock();
