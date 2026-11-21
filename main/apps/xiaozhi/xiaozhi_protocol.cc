@@ -26,7 +26,12 @@ struct __attribute__((packed)) BinaryHeaderV3 {
 };
 
 constexpr size_t kBinaryHeaderLen = sizeof(BinaryHeaderV3);
-constexpr TickType_t kSendTimeoutMs = pdMS_TO_TICKS(150);
+// esp_websocket_client aborts the whole connection when a send times out.
+// Over a long link (e.g. Australia to the server in China, RTT ~250 ms) the
+// small lwIP send buffer fills after a large MCP reply, and 150 ms was not
+// enough for the ACKs to free it, so sessions dropped right after the hello.
+constexpr TickType_t kSendTimeoutMs = pdMS_TO_TICKS(2000);      // JSON control/MCP
+constexpr TickType_t kAudioSendTimeoutMs = pdMS_TO_TICKS(600);  // ~10 Opus frames
 
 std::string MakeUuidV4() {
     uint8_t r[16];
@@ -309,13 +314,13 @@ bool Protocol::SendAudio(const uint8_t *opus_data, size_t len) {
 
         int total = (int)(kBinaryHeaderLen + len);
         int sent = esp_websocket_client_send_bin(client_, reinterpret_cast<const char *>(send_buf),
-                                                total, kSendTimeoutMs);
+                                                total, kAudioSendTimeoutMs);
         return sent == total;
     }
 
     // v1：裸 Opus，无帧头
     int sent = esp_websocket_client_send_bin(client_, reinterpret_cast<const char *>(opus_data),
-                                            (int)len, kSendTimeoutMs);
+                                            (int)len, kAudioSendTimeoutMs);
     return sent == (int)len;
 }
 
