@@ -464,10 +464,18 @@ Result prepare(uint16_t index, Track &t) {
     Result r = Result::Ok;
     const SongUrl *cached = s_urls ? s_urls->find(t.id, esp_timer_get_time()) : nullptr;
     if (!cached && s_urls) {
-        // One track per lookup: a multi-song reply can exceed the 8 KiB TLS record limit.
         uint64_t ids[UrlCache::kCount]{};
         size_t n = 0;
-        ids[n++] = t.id;
+        {
+            Guard g;
+            const Model &m = model();
+            for (int delta : {0, 1, -1}) {
+                const auto id = m.ids[(index + m.track_count + delta) % m.track_count];
+                bool duplicate = false;
+                for (size_t i = 0; i < n; ++i) duplicate |= ids[i] == id;
+                if (!duplicate) ids[n++] = id;
+            }
+        }
         s_urls->clear();
         r = song_urls(s_cookie, ids, n, s_urls->entries, interrupted);
         if (r == Result::Ok) s_urls->fetched_at = esp_timer_get_time();

@@ -166,8 +166,8 @@ python3 tests/test_media_startup.py
     -Itests/registry_mocks tests/test_netease_performance.cc main/apps/netease/netease_json.cc -o "$test_dir/netease-performance"
 "$test_dir/netease-performance"
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -Imain \
-    tests/test_netease_cookie_guard.cc -o "$test_dir/netease-cookie-guard"
-"$test_dir/netease-cookie-guard"
+    tests/test_netease_endpoint_path.cc -o "$test_dir/netease-endpoint-path"
+"$test_dir/netease-endpoint-path"
 "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Imain \
     tests/test_ai_usage_core.c main/apps/ai_usage/ai_usage_core.c -o "$test_dir/ai-usage-core"
 "$test_dir/ai-usage-core"

@@ -1,12 +1,9 @@
 // NetEase Cloud Music web API and PC-client eapi requests.
 //
-// Rule: the login cookie (MUSIC_U) is never sent over plain HTTP. Requests that
-// carry it use HTTPS; user playlists are paged small enough for the 8 KiB TLS
-// record limit. Playlist track ids and daily songs are still too large for it and
-// fail on device (unresolved). If an HTTPS playlist call fails, it retries without
-// the cookie (public data only); daily songs have no fallback. Anonymous metadata
-// (song detail, lyrics, search) uses plain HTTP so it can run beside the MP3 decoder.
-// Responses stream through JsonScanner; nothing is buffered.
+// API requests use plain http://, including the ones that carry the login cookie
+// (account, playlists, playlist tracks, daily songs, song URLs). The device's 8 KiB
+// TLS record limit cannot take the larger HTTPS replies. Only the login QR key
+// requests stay on HTTPS. Responses stream through JsonScanner; nothing is buffered.
 #pragma once
 
 #include <cstddef>
@@ -57,7 +54,7 @@ Result account(const char *cookie, uint64_t *uid, char *nickname, size_t capacit
 
 Result user_playlists(const char *cookie, uint64_t uid, Playlist *out, size_t max, size_t *count,
                       Playlist *favorites, Cancelled cancelled);
-// Personalized daily recommendations; requires login, always HTTPS. Streams only song IDs.
+// Personalized daily recommendations; requires login. Streams only song IDs.
 Result daily_songs(const char *cookie, uint64_t *ids, size_t max, size_t *count, Cancelled cancelled);
 // Ids of up to max tracks; count receives the number actually stored.
 Result playlist_tracks(const char *cookie, uint64_t playlist, uint64_t *ids, size_t max, size_t *count,
