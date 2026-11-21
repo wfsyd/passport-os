@@ -5,7 +5,12 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-source = re.sub(r'^#include .*$', '', (ROOT / 'components/bsp/src/bsp_audio.c').read_text(), flags=re.M)
+def strip_host_directives(text):
+    return re.sub(r'^(#include .*|#pragma once)$', '', text, flags=re.M)
+
+source = strip_host_directives((ROOT / 'components/bsp/src/bsp_audio.c').read_text())
+sleep_check = (strip_host_directives((ROOT / 'components/bsp/src/bsp_es8311_sleep_check.h').read_text()) +
+               strip_host_directives((ROOT / 'components/bsp/src/bsp_es8311_sleep_check.c').read_text()))
 prelude = r'''
 #include <assert.h>
 #include <stdbool.h>
@@ -48,6 +53,11 @@ prelude = r'''
 #define ESP_CODEC_DEV_TYPE_IN_OUT 3
 #define ESP_CODEC_DEV_TYPE_IN 1
 #define ESP_CODEC_DEV_TYPE_OUT 2
+#define ESP_CODEC_DEV_OK 0
+#define GPIO_MODE_INPUT 1
+#define GPIO_PULLUP_DISABLE 0
+#define GPIO_PULLDOWN_DISABLE 0
+#define GPIO_INTR_DISABLE 0
 typedef int esp_err_t,portMUX_TYPE,StaticSemaphore_t,SemaphoreHandle_t;
 typedef int i2s_chan_handle_t;
 typedef void *esp_codec_dev_handle_t;
@@ -59,8 +69,18 @@ static int steps,fail_at,live,channels,mode,device_type,curve,gain,volume,reads,
 static int fail_step(void){return ++steps==fail_at;}
 static int bsp_i2c_init(void){return fail_step()?ESP_FAIL:ESP_OK;}
 static void *bsp_i2c_bus(void){return NULL;}
-typedef struct audio_codec_ctrl_if_t {int (*write_reg)(const struct audio_codec_ctrl_if_t*,int,int,const void*,int);} audio_codec_ctrl_if_t;
-static int reset_reg(const audio_codec_ctrl_if_t *a,int b,int c,const void*d,int e){(void)a;(void)b;(void)c;(void)d;(void)e;return 0;}
+typedef struct audio_codec_ctrl_if_t {
+ int (*write_reg)(const struct audio_codec_ctrl_if_t*,int,int,const void*,int);
+ int (*read_reg)(const struct audio_codec_ctrl_if_t*,int,int,void*,int);
+} audio_codec_ctrl_if_t;
+/* Fake ES8311 register file: writes store, reads return the stored value. */
+static uint8_t regs[256];
+static int corrupt_reg=-1,gpio_calls,gpio_mask_has_mclk;
+static int reg_write(const audio_codec_ctrl_if_t *a,int reg,int len,const void*v,int n){(void)a;(void)len;(void)n;regs[reg]=(reg==corrupt_reg)?0:*(const uint8_t*)v;return 0;}
+static int reg_read(const audio_codec_ctrl_if_t *a,int reg,int len,void*v,int n){(void)a;(void)len;(void)n;*(uint8_t*)v=regs[reg];return 0;}
+static audio_codec_ctrl_if_t ctrl={reg_write,reg_read};
+typedef struct {uint64_t pin_bit_mask;int mode,pull_up_en,pull_down_en,intr_type;} gpio_config_t;
+static int gpio_config(const gpio_config_t*c){gpio_calls++;if(c->pin_bit_mask&(1ULL<<BSP_I2S_MCLK))gpio_mask_has_mclk=1;return 0;}
 typedef int audio_codec_data_if_t,audio_codec_if_t,audio_codec_gpio_if_t;
 typedef struct {int port,addr;void *bus_handle;} audio_codec_i2c_cfg_t;
 typedef struct {int port;i2s_chan_handle_t tx_handle,rx_handle;} audio_codec_i2s_cfg_t;
@@ -73,7 +93,7 @@ typedef struct {
  struct {int data_bit_width,slot_bit_width,slot_mode,slot_mask,ws_width;bool ws_pol,bit_shift,left_align,big_endian,bit_order_lsb;}slot_cfg;
  struct {int mclk,bclk,ws,dout,din;struct {bool mclk_inv,bclk_inv,ws_inv;}invert_flags;}gpio_cfg;
 }i2s_std_config_t;
-static audio_codec_ctrl_if_t ctrl={reset_reg};static int data,gpio,codec,dev;
+static int data,gpio,codec,dev;
 static const audio_codec_ctrl_if_t *audio_codec_new_i2c_ctrl(const audio_codec_i2c_cfg_t*c){(void)c;if(fail_step())return NULL;live++;return &ctrl;}
 static int i2s_new_channel(const i2s_chan_config_t*c,i2s_chan_handle_t *tx,i2s_chan_handle_t *rx){
  assert(c->dma_desc_num==4 || c->dma_desc_num==6);if(fail_step())return ESP_FAIL;
@@ -102,6 +122,7 @@ static int esp_codec_dev_write(void*p,void*d,size_t n){assert(p);(void)d;(void)n
 static int esp_codec_dev_read(void*p,void*d,size_t n){assert(p);(void)d;(void)n;reads++;return 0;}
 void bsp_audio_deinit(void);
 '''
+sleep_prelude = sleep_check
 checks = r'''
 int main(void){
  int (*init[])(void)={bsp_audio_init,bsp_audio_init_capture,bsp_audio_init_playback,bsp_audio_init_feedback};
@@ -118,7 +139,11 @@ int main(void){
   assert((bsp_audio_write(NULL,0)==ESP_OK)==!!(channels&1));
   assert(bsp_audio_set_format(24000,16,1)==ESP_OK);
   const int live_before_sleep=live;
-  bsp_audio_prepare_sleep();assert(!s_opened&&live==live_before_sleep);
+  corrupt_reg=-1;assert(bsp_audio_prepare_sleep()==ESP_OK);
+  assert(!s_opened&&live==live_before_sleep&&regs[0x45]==0x01&&regs[0x0E]==0xFF);
+  /* An unverifiable suspend retries once and reports failure; the lock stays held. */
+  corrupt_reg=0x45;assert(bsp_audio_prepare_sleep()==ESP_FAIL);corrupt_reg=-1;
+  gpio_calls=0;assert(bsp_audio_prepare_deep_sleep()==ESP_OK&&gpio_calls==1&&gpio_mask_has_mclk);
   control_unlock(); /* host fixture resumes only to exercise cleanup */
   bsp_audio_deinit();bsp_audio_deinit();assert(!live && !channels);
   for(int failure=1;failure<=init_steps;failure++){
@@ -141,7 +166,7 @@ int main(void){
 '''
 with tempfile.TemporaryDirectory() as tmp:
     path = Path(tmp) / 'audio.c'
-    path.write_text(prelude + source + checks)
+    path.write_text(prelude + sleep_prelude + source + checks)
     subprocess.run(['cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-Wno-unused-variable',
                     '-Wno-int-conversion', '-fsanitize=address,undefined', str(path), '-o', str(path.with_suffix(''))], check=True)
     subprocess.run([str(path.with_suffix(''))], check=True)

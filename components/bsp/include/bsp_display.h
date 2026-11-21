@@ -39,6 +39,11 @@ uint8_t bsp_display_get_master_brightness(void);
 // 无需重绘。未初始化时 no-op。
 void bsp_display_power(bool on);
 
+// Deep sleep only: after bsp_display_power(false), stop the backlight PWM and
+// park the SPI/backlight pins at safe levels, held through deep sleep. Must not
+// be followed by LVGL flushes; the next boot releases the holds in bsp_display_init().
+esp_err_t bsp_display_prepare_deep_sleep(void);
+
 // ---------------------------------------------------------------------------
 // LVGL 接入(可选层)。必须先 bsp_display_init() 成功后再调。
 // 不想用 LVGL 的开发者可忽略本段,直接用 bsp_display_panel() 自己画。
