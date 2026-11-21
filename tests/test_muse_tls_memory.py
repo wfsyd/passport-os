@@ -1,6 +1,6 @@
 """Exercise real bounded allocator wrappers with the same link interception as IDF."""
 from pathlib import Path
-import subprocess,tempfile
+import re,subprocess,tempfile
 root=Path(__file__).resolve().parents[1]
 with tempfile.TemporaryDirectory() as tmp:
     d=Path(tmp)
@@ -33,13 +33,13 @@ static auto free_fn=esp_mbedtls_mem_free;
 void *task=(void*)1;
 void *xTaskGetCurrentTaskHandle(){return task;}
 void mbedtls_platform_zeroize(void *p,size_t n){memset(p,0,n);}
-size_t requested=8866;
+size_t requested=MUSE_RX_RESERVE;
 bool extra_allocation=false,other_task=false;
 unsigned erased;
 void *last_buffer;
 void sdk_free(mbedtls_ssl_context *s) {
     free_fn(s->buf);s->buf=nullptr;
-    if(last_buffer){auto *p=(unsigned char*)last_buffer;for(size_t i=0;i<9216;++i)assert(p[i]==0);++erased;last_buffer=nullptr;}
+    if(last_buffer){auto *p=(unsigned char*)last_buffer;for(size_t i=0;i<MUSE_RX_RESERVE;++i)assert(p[i]==0);++erased;last_buffer=nullptr;}
 }
 esp_err_t esp_mbedtls_dynamic_set_rx_buf_static(mbedtls_ssl_context *s) {
     if(other_task) {task=(void*)2;void *p=alloc_fn(1,8866);assert(p);free_fn(p);task=(void*)1;}
@@ -77,15 +77,20 @@ int main(){
     }
     assert(erased==1000 && heap_allocs==heap_frees);
     other_task=false;
-    for(size_t size:{size_t(0),size_t(9217),std::numeric_limits<size_t>::max()}){
+    for(size_t size:{size_t(0),size_t(MUSE_RX_RESERVE+1),std::numeric_limits<size_t>::max()}){
         requested=size;assert(muse_tls_reserve_rx(&a)==ESP_ERR_NO_MEM);
     }
-    requested=8866;assert(muse_tls_reserve_rx(&a)==ESP_OK);sdk_free(&a);
+    requested=MUSE_RX_RESERVE;assert(muse_tls_reserve_rx(&a)==ESP_OK);sdk_free(&a);
     assert(heap_allocs==heap_frees);
 }
 '''.replace('#include <limits>','#include <limits>\n#include <initializer_list>'))
+    cfg=re.search(r'^CONFIG_MBEDTLS_SSL_IN_CONTENT_LEN=(\d+)$',(root/'sdkconfig.defaults').read_text(),re.M)
+    content=int(cfg.group(1))
+    reserve=8+content+2*(13+16+48+256)
+    src=(root/'components/passport_muse/sdk/muse_tls_memory.cpp').read_text()
+    assert re.search(r'kTlsInContentLen\s*=\s*%d;'%content,src), 'muse_tls_memory.cpp kTlsInContentLen != sdkconfig'
     subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-fsanitize=address,undefined','-g',
-      '-I'+str(d),'-I'+str(root/'components/passport_muse/sdk'),
+      '-DMUSE_RX_RESERVE=%d'%reserve,'-I'+str(d),'-I'+str(root/'components/passport_muse/sdk'),
       str(root/'components/passport_muse/sdk/muse_tls_memory.cpp'),str(d/'heap.cpp'),str(d/'sdk.cpp'),str(d/'test.cpp'),
       '-Wl,--wrap=esp_mbedtls_mem_calloc','-Wl,--wrap=esp_mbedtls_mem_free','-o',str(d/'test')],check=True)
     subprocess.run([str(d/'test')],check=True)

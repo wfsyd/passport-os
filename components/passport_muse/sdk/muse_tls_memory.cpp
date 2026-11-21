@@ -8,12 +8,18 @@
 #include <cstring>
 #include <limits>
 
-// The IDF 5.5.3 RX reservation for an 8192-byte content limit needs 8866
-// bytes including its metadata. Keep the SDK responsible for all headers,
+// Must match CONFIG_MBEDTLS_SSL_IN_CONTENT_LEN in sdkconfig.defaults
+// (tests/test_muse_tls_memory.py checks this).
+constexpr size_t kTlsInContentLen = 16384;
+// IDF 5.5.3 static RX reservation (esp_mbedtls_dynamic_set_rx_buf_static):
+// 8-byte buffer head + content + 2 * (13 record header + 16 IV + 48 SHA-384 MAC
+// + 256 CBC padding). For 8192 this is 8866 bytes; for 16384 it is 17058.
+constexpr size_t kRxReserveBytes = 8 + kTlsInContentLen + 2 * (13 + 16 + 48 + 256);
+// Keep the SDK responsible for all headers,
 // offsets and destruction; only supply storage during that one public call.
 // A configuration increase fails closed instead of falling back to the heap.
 namespace {
-alignas(16) unsigned char rx_storage[9 * 1024];
+alignas(16) unsigned char rx_storage[kRxReserveBytes];
 std::atomic<TaskHandle_t> reserving_task{nullptr};
 std::atomic<bool> rx_in_use{false};
 }
