@@ -26,17 +26,27 @@ AU_STATES = {
 }
 
 
+AU_ORDER = ('NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT')  # picker order, not admin code order
+
+
 def au_rows():
-    """Rows in the catalog format, codes AU<state><nnn> numbered by the CSV order."""
-    rows, counters = [], {}
+    """Rows in the catalog format, grouped by AU_ORDER with each state's capital first, then A-Z.
+
+    Codes AU<state><nnn> are numbered in that same order, so AUNSW001 is Sydney.
+    """
     with AU_SOURCE.open(encoding='utf-8', newline='') as source:
-        for r in csv.DictReader(source):
-            abbreviation, state = AU_STATES[r['admin1']]
-            counters[abbreviation] = counters.get(abbreviation, 0) + 1
-            code = f'AU{abbreviation}{counters[abbreviation]:03d}'
-            # id, display name, latitude, longitude, state, radio name, country
-            rows.append([code, r['name'], round(float(r['lat']), 4), round(float(r['lon']), 4),
-                         state, r['name'], 'AU'])
+        records = list(csv.DictReader(source))
+    def order(r):
+        abbreviation = AU_STATES[r['admin1']][0]
+        return (AU_ORDER.index(abbreviation), r['capital'] != '1', r['name'].casefold(), r['name'])
+    rows, counters = [], {}
+    for r in sorted(records, key=order):
+        abbreviation, state = AU_STATES[r['admin1']]
+        counters[abbreviation] = counters.get(abbreviation, 0) + 1
+        code = f'AU{abbreviation}{counters[abbreviation]:03d}'
+        # id, display name, latitude, longitude, state, radio name, country
+        rows.append([code, r['name'], round(float(r['lat']), 4), round(float(r['lon']), 4),
+                     state, r['name'], 'AU'])
     return rows
 
 
