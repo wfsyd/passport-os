@@ -173,9 +173,12 @@ void format_dial_readout(const Station &row, char *out, std::size_t capacity) {
         case kBandAm:
             std::snprintf(out, capacity, "%u kHz", unsigned(row.frequency));
             break;
-        default:
-            std::snprintf(out, capacity, "%s", text(row.dab_block));
+        default: {
+            // Simulcasts of FM and AM services have no block, so they read as DAB+.
+            const char *block = text(row.dab_block);
+            std::snprintf(out, capacity, "%s", block[0] ? block : "DAB+");
             break;
+        }
     }
 }
 

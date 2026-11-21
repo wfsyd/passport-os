@@ -18,7 +18,7 @@ COLUMNS = ['area_id', 'area_name', 'state', 'lat', 'lon', 'band', 'freq', 'dab_b
 BAND_CODES = {'FM': 0, 'AM': 1, 'DAB': 2}
 FM_DECIHZ = (870, 1080)   # 87.0 to 108.0 MHz, in 0.1 MHz units
 AM_KHZ = (522, 1728)
-AU_LAT = (-44.0, -10.0)
+AU_LAT = (-44.0, -9.0)   # Torres Strait islands lie north of 10 S
 AU_LON = (112.0, 154.0)
 MAX_NAME_BYTES = 40
 MAX_QUERY_BYTES = 40
@@ -94,9 +94,10 @@ def build(rows):
             if not AM_KHZ[0] <= freq <= AM_KHZ[1] or r['dab_block']:
                 fail(line, 'AM needs freq in kHz within 522-1728 and no dab_block')
         else:
-            if freq != 0 or not r['dab_block']:
-                fail(line, 'DAB needs freq 0 and a dab_block')
-            check_text(line, 'dab_block', r['dab_block'], 8)
+            if freq != 0:
+                fail(line, 'DAB needs freq 0')
+            if r['dab_block']:
+                check_text(line, 'dab_block', r['dab_block'], 8)
         key = (r['area_id'], band, r['name'])
         if key in seen:
             fail(line, f'duplicate station {r["name"]} in {r["area_id"]}')
