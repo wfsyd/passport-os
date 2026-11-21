@@ -210,6 +210,7 @@ void show_picker_rows() {
 
 void close_picker() {
     s_picker_open.store(false);
+    s_menu_open.store(false);
     radio_ui_show_main();
 }
 
@@ -224,6 +225,44 @@ void apply_area_choice(const char *choice) {
     }
     s_catalog_installed.store(false);
     start_catalog();
+}
+
+// Radio menu, opened by a triple press of OK in table mode: "Band" cycles FM/AM/DAB+,
+// "Area" opens the picker. Long OK closes it (on_back), like the other sub-pages.
+std::atomic<bool> s_menu_open{false};
+std::size_t s_menu_selected;
+
+void show_menu_rows() {
+    static char band[24];
+    static const char *rows[2];
+    std::snprintf(band, sizeof(band), "Band: %s", au_radio::band_label(radio_player_table_band()));
+    rows[0] = band;
+    rows[1] = "Area";
+    radio_ui_show_area("Radio", rows, 2, s_menu_selected);
+}
+
+void close_menu() {
+    s_menu_open.store(false);
+    radio_ui_show_main();
+}
+
+void menu_key(uint8_t btn, app_btn_event_t event) {
+    if (event != BTN_EVT_CLICK) return;
+    if (btn == BSP_BTN_UP) {
+        s_menu_selected = s_menu_selected ? s_menu_selected - 1 : 0;
+        show_menu_rows();
+    } else if (btn == BSP_BTN_DOWN) {
+        s_menu_selected = s_menu_selected < 1 ? s_menu_selected + 1 : s_menu_selected;
+        show_menu_rows();
+    } else if (btn == BSP_BTN_OK) {
+        if (s_menu_selected == 0) {
+            radio_app_cycle_band();
+            close_menu();
+        } else {
+            close_menu();
+            radio_app_open_area_picker();
+        }
+    }
 }
 
 void picker_key(uint8_t btn, app_btn_event_t event) {
@@ -304,6 +343,7 @@ void radio_app_start(void) {
     }
     // 1. 显示 Radio UI 界面
     s_picker_open.store(false);
+    s_menu_open.store(false);
     radio_ui_show_main();
     radio_ui_set_volume(radio_player_volume());
     if (!s_catalog_commit || s_catalog_running.load()) {
@@ -439,7 +479,15 @@ bool radio_app_cycle_band(void) {
     return s_player_ready.load() && radio_player_cycle_table_band();
 }
 
+bool radio_app_wants_triple_click(void) {
+    return s_player_ready.load() && radio_player_table_mode();
+}
+
 bool radio_app_on_back(void) {
+    if (s_menu_open.load()) {
+        close_menu();
+        return true;
+    }
     if (!s_picker_open.load()) return false;
     if (s_picker.back() == au_radio::AreaPicker::Outcome::Close) close_picker();
     else show_picker_rows();
@@ -451,6 +499,19 @@ void radio_app_on_key(uint8_t btn, app_btn_event_t event, uint16_t mv) {
     if (!s_player_ready.load()) return;
     if (s_picker_open.load()) {
         picker_key(btn, event);
+        return;
+    }
+    if (s_menu_open.load()) {
+        menu_key(btn, event);
+        return;
+    }
+    if (event == BTN_EVT_TRIPLE) {
+        // Only OK sends a triple, and only when radio_app_wants_triple_click() said yes.
+        if (btn == BSP_BTN_OK && radio_player_table_mode()) {
+            s_menu_selected = 0;
+            s_menu_open.store(true);
+            show_menu_rows();
+        }
         return;
     }
 

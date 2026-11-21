@@ -938,6 +938,12 @@ bool radio_player_cycle_table_band() {
     return true;
 }
 
+bool radio_player_table_mode() { return s_table_mode.load(std::memory_order_acquire); }
+
+uint8_t radio_player_table_band() {
+    return s_table_mode.load(std::memory_order_acquire) ? table_ram()->band : au_radio::kBandFm;
+}
+
 bool radio_player_replace_stations_resuming(const RadioStation *stations,
                                            std::size_t count) {
     char remembered[sizeof(RadioStation::name)] = {};

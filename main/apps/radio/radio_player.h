@@ -44,6 +44,9 @@ bool radio_player_replace_table(std::size_t area);
 // Table mode: moves to the next band the area has (FM, AM, DAB+, FM) and starts at its first
 // station. Returns false outside table mode or when the area has no other band.
 bool radio_player_cycle_table_band();
+// True while table rows are installed; the band of the rows shown (FM when not in table mode).
+bool radio_player_table_mode();
+uint8_t radio_player_table_band();
 // Installs a catalog and keeps listening to the station the user last chose
 // when the new catalog still offers it, so a restart resumes where it left off.
 bool radio_player_replace_stations_resuming(const RadioStation *stations,
