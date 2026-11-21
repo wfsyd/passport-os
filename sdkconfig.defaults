@@ -24,6 +24,8 @@ CONFIG_ESP_SYSTEM_EVENT_TASK_STACK_SIZE=4096
 CONFIG_LV_COLOR_DEPTH_16=y
 CONFIG_LV_FONT_MONTSERRAT_14=y
 CONFIG_LV_FONT_MONTSERRAT_20=y
+# Buddy/UI body and title fonts are lossless LVGL-compressed (see main/fonts/gen_buddy_font.sh, tools/gen_ui_font_20.sh).
+CONFIG_LV_USE_FONT_COMPRESSED=y
 # 32px and 48px readouts use digit-only subsets (main/fonts/ui_digits_32.c,
 # pomodoro_digits_48.c); the full fonts would add ~46 KB / ~90 KB of flash.
 # CONFIG_LV_FONT_MONTSERRAT_32 is not set

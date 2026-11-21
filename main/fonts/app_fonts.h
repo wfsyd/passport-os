@@ -18,7 +18,7 @@ LV_FONT_DECLARE(buddy_font_16);
 // Title (标题): shared SourceHanSansSC 20px/4bpp subset for static titles.
 // Missing glyphs fall back to the 16px body font, so new title text must add
 // its glyphs; regenerate with:
-//   wsl -d Ubuntu-24.04 bash /mnt/f/WORK/AI硬件/_diag/gen_ui_font.sh
+//   bash tools/gen_ui_font_20.sh
 LV_FONT_DECLARE(ui_font_20);
 // Display readout (大读数): Montserrat 32 digits, '.', ':', space and "NET",
 // copied from LVGL's built-in font by tools/gen_digit_font.py.

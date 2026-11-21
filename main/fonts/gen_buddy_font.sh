@@ -26,7 +26,7 @@ npx --yes lv_font_conv \
   --font "$OTF" \
   --range 0x20-0x7e \
   --symbols "$SYMBOLS" \
-  --size 16 --bpp 2 --format lvgl --no-compress --no-prefilter --no-kerning \
+  --size 16 --bpp 2 --format lvgl --no-prefilter --no-kerning \
   --lv-include lvgl.h --lv-font-name buddy_font_16 \
   -o "$OUT"
 
