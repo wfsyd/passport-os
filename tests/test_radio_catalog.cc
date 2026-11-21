@@ -136,9 +136,10 @@ int main(int argc,char **argv) {
     n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);
     assert(n==7&&queries[0].find("de1.")!=std::string::npos&&queries[1].find("fi1.")!=std::string::npos);
 
+    // The replica that answered last (fi1, after de1 failed above) is tried first this session.
     reset();fake_dns=true;city_fixture="["+station("代理网络","http://proxy/live")+"]";
     n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);
-    assert(n==7&&queries[0].find("de1.")!=std::string::npos);
+    assert(n==7&&queries[0].find("fi1.")!=std::string::npos&&queries[0].find("de1.")==std::string::npos);
 
     reset();fail_all=true;
     n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);assert(n==6);unique(stations,n);

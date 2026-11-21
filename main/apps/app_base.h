@@ -36,6 +36,7 @@ typedef enum {
     BTN_EVT_LONG,
     BTN_EVT_LONG_UP,
     BTN_EVT_DOUBLE, // resolved by ADC task; reserved for global OK shortcut
+    BTN_EVT_TRIPLE, // resolved by ADC task; only sent to apps that asked for it (OkGesture query)
 } app_btn_event_t;
 
 typedef struct {

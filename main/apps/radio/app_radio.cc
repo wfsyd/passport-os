@@ -2,6 +2,7 @@
 #include "apps/radio/radio_ui.h"
 #include "apps/radio/radio_player.h"
 #include "apps/radio/radio_catalog.h"
+#include "apps/radio/au_radio_table.h"
 #include "apps/home/home_profile.h"
 #include "voice_intent.h"
 #include "freertos/FreeRTOS.h"
@@ -65,6 +66,29 @@ void end_stop_timer() {
 
 bool catalog_cancelled() { return s_catalog_cancel.load() || !s_radio_active.load(); }
 
+// Table mode applies to an AU profile that the bundled station table covers. Other
+// profiles, and voice city requests, keep directory discovery.
+bool table_area_for_profile(std::size_t *area) {
+    home_profile_t profile;
+    home_profile_get(&profile);
+    const char *country = profile.country_code[0] ? profile.country_code : PASSPORT_DEFAULT_COUNTRY;
+    if (std::strcmp(country, "AU") != 0) return false;
+    // Order: user-picked area (radio_city, "Name, ST"), then profile city/region/GPS.
+    // IP lookup is only reached when no table area matches (directory discovery).
+    au_radio::AreaRule rule = au_radio::AreaRule::None;
+    double km = 0;
+    if (!au_radio::area_for_selection_detail(profile.radio_city, profile.city, profile.region,
+                                             profile.lat, profile.lon, area, &rule, &km)) {
+        return false;
+    }
+    char distance[24] = "-";
+    if (rule == au_radio::AreaRule::Gps) std::snprintf(distance, sizeof(distance), "%.1f km", km);
+    ESP_LOGI(TAG, "Table area %s by %s (%s): radio_city=\"%s\" city=\"%s\" region=\"%s\" lat=%s lon=%s",
+             au_radio::area_name(*area), au_radio::area_rule_name(rule), distance,
+             profile.radio_city, profile.city, profile.region, profile.lat, profile.lon);
+    return true;
+}
+
 // First station whose name contains the spoken keywords, else the top one.
 std::size_t voice_station(const RadioStation *stations, std::size_t count, const char *keywords) {
     if (keywords && keywords[0])
@@ -74,7 +98,6 @@ std::size_t voice_station(const RadioStation *stations, std::size_t count, const
 
 void catalog_worker(void *arg) {
     (void)arg;
-    ESP_LOGI(TAG, "Starting shared city station catalog search...");
     constexpr std::size_t kDiscoveryCapacity = 8;
     // Release the live decoder/TLS working set before directory HTTP/cJSON.
     radio_player_set_playing(false);
@@ -89,6 +112,24 @@ void catalog_worker(void *arg) {
         vTaskDelete(nullptr);
         return;
     }
+    std::size_t table_area = 0;
+    // Table mode returns here: no IP lookup and no directory search. Streams resolve on tune.
+    if (!s_voice.load(std::memory_order_acquire) && table_area_for_profile(&table_area)) {
+        // Table mode: the rows come from flash, so no directory HTTP runs here.
+        xSemaphoreTake(s_catalog_commit, portMAX_DELAY);
+        const bool alive = !catalog_cancelled() && s_ui_alive.load();
+        if (alive && radio_player_replace_table(table_area)) {
+            ESP_LOGI(TAG, "Station table: %s", au_radio::area_name(table_area));
+            radio_ui_set_location(au_radio::area_name(table_area));
+            s_catalog_installed.store(true);
+        }
+        if (alive) radio_player_set_playing(true);
+        xSemaphoreGive(s_catalog_commit);
+        s_catalog_running.store(false);
+        vTaskDelete(nullptr);
+        return;
+    }
+    ESP_LOGI(TAG, "Starting shared city station catalog search...");
     auto *stations = static_cast<RadioStation *>(
         std::calloc(kDiscoveryCapacity, sizeof(RadioStation)));
     if (!stations) {
@@ -166,6 +207,106 @@ void start_catalog() {
     xSemaphoreGive(s_catalog_commit);
 }
 
+// Area page: while open, the keys drive the picker instead of the station list.
+// Long OK closes one level (on_back), so the global back gesture still works.
+au_radio::AreaPicker s_picker;
+std::atomic<bool> s_picker_open{false};
+std::atomic<bool> s_menu_open{false};
+
+void show_picker_rows() {
+    static const char *rows[au_radio::AreaPicker::kMaxAreas + 1];
+    const std::size_t count = s_picker.count();
+    for (std::size_t i = 0; i < count; ++i) rows[i] = s_picker.label(i);
+    radio_ui_show_area(s_picker.title(), rows, count, s_picker.selected());
+}
+
+void close_picker() {
+    s_picker_open.store(false);
+    s_menu_open.store(false);
+    radio_ui_show_main();
+}
+
+// Saves the choice ("" = automatic location) and re-runs table selection for it.
+void apply_area_choice(const char *choice) {
+    home_profile_t profile;
+    home_profile_get(&profile);
+    std::snprintf(profile.radio_city, sizeof(profile.radio_city), "%s", choice ? choice : "");
+    if (home_profile_set_text(&profile) != ESP_OK) {
+        ESP_LOGW(TAG, "Area choice not saved");
+        return;
+    }
+    s_catalog_installed.store(false);
+    start_catalog();
+}
+
+// Radio menu, opened by a triple press of OK in table mode: "Band" cycles FM/AM/DAB+,
+// "Area" opens the picker. Long OK closes it (on_back), like the other sub-pages.
+std::size_t s_menu_selected;
+
+void show_menu_rows() {
+    static char band[24];
+    static const char *rows[2];
+    std::snprintf(band, sizeof(band), "Band: %s", au_radio::band_label(radio_player_table_band()));
+    rows[0] = band;
+    rows[1] = "Area";
+    radio_ui_show_area("Radio", rows, 2, s_menu_selected);
+}
+
+void close_menu() {
+    s_menu_open.store(false);
+    radio_ui_show_main();
+}
+
+void menu_key(uint8_t btn, app_btn_event_t event) {
+    if (event != BTN_EVT_CLICK) return;
+    if (btn == BSP_BTN_UP) {
+        s_menu_selected = s_menu_selected ? s_menu_selected - 1 : 0;
+        show_menu_rows();
+    } else if (btn == BSP_BTN_DOWN) {
+        s_menu_selected = s_menu_selected < 1 ? s_menu_selected + 1 : s_menu_selected;
+        show_menu_rows();
+    } else if (btn == BSP_BTN_OK) {
+        if (s_menu_selected == 0) {
+            radio_app_cycle_band();
+            close_menu();
+        } else {
+            close_menu();
+            radio_app_open_area_picker();
+        }
+    }
+}
+
+void picker_key(uint8_t btn, app_btn_event_t event) {
+    if (event != BTN_EVT_CLICK) return;
+    if (btn == BSP_BTN_UP) {
+        s_picker.move(-1);
+        show_picker_rows();
+    } else if (btn == BSP_BTN_DOWN) {
+        s_picker.move(1);
+        show_picker_rows();
+    } else if (btn == BSP_BTN_OK) {
+        switch (s_picker.select()) {
+            case au_radio::AreaPicker::Outcome::Stay:
+                show_picker_rows();
+                break;
+            case au_radio::AreaPicker::Outcome::Auto:
+                apply_area_choice("");
+                close_picker();
+                break;
+            case au_radio::AreaPicker::Outcome::Area: {
+                char choice[48] = {};
+                if (au_radio::format_area_choice(s_picker.chosen_area(), choice, sizeof(choice)))
+                    apply_area_choice(choice);
+                close_picker();
+                break;
+            }
+            case au_radio::AreaPicker::Outcome::Close:
+                close_picker();
+                break;
+        }
+    }
+}
+
 void on_wifi_event(WifiEvent event, const std::string &data) {
     if (!s_radio_active.load()) return;
 
@@ -212,6 +353,8 @@ void radio_app_start(void) {
         }
     }
     // 1. 显示 Radio UI 界面
+    s_picker_open.store(false);
+    s_menu_open.store(false);
     radio_ui_show_main();
     radio_ui_set_volume(radio_player_volume());
     if (!s_catalog_commit || s_catalog_running.load()) {
@@ -285,6 +428,7 @@ bool radio_app_prepare_stop(void) {
 
 void radio_app_stop(void) {
     ESP_LOGI(TAG, "Stopping Radio App (keeping global Wi-Fi active)...");
+    s_picker_open.store(false);
     if (s_catalog_commit) xSemaphoreTake(s_catalog_commit, portMAX_DELAY);
     s_catalog_cancel.store(true);
     s_radio_active.store(false);
@@ -332,9 +476,55 @@ void radio_app_stop(void) {
              (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
 }
 
+// Opens the Area page. Nothing lists when the profile is not an AU table area.
+void radio_app_open_area_picker(void) {
+    if (!s_player_ready.load() || !s_radio_active.load()) return;
+    s_picker.open();
+    if (s_picker.count() == 0) return;
+    s_picker_open.store(true);
+    show_picker_rows();
+}
+
+// Moves to the next band of the current table area. False outside table mode.
+bool radio_app_cycle_band(void) {
+    return s_player_ready.load() && radio_player_cycle_table_band();
+}
+
+bool radio_app_wants_triple_click(void) {
+    return s_player_ready.load() && radio_player_table_mode();
+}
+
+bool radio_app_on_back(void) {
+    if (s_menu_open.load()) {
+        close_menu();
+        return true;
+    }
+    if (!s_picker_open.load()) return false;
+    if (s_picker.back() == au_radio::AreaPicker::Outcome::Close) close_picker();
+    else show_picker_rows();
+    return true;
+}
+
 void radio_app_on_key(uint8_t btn, app_btn_event_t event, uint16_t mv) {
     (void)mv;
     if (!s_player_ready.load()) return;
+    if (s_picker_open.load()) {
+        picker_key(btn, event);
+        return;
+    }
+    if (s_menu_open.load()) {
+        menu_key(btn, event);
+        return;
+    }
+    if (event == BTN_EVT_TRIPLE) {
+        // Only OK sends a triple, and only when radio_app_wants_triple_click() said yes.
+        if (btn == BSP_BTN_OK && radio_player_table_mode()) {
+            s_menu_selected = 0;
+            s_menu_open.store(true);
+            show_menu_rows();
+        }
+        return;
+    }
 
     if (event == BTN_EVT_CLICK) {
         if (btn == BSP_BTN_UP) {
@@ -376,4 +566,5 @@ const passport_app_t g_radio_app = {
     .stop = radio_app_stop,
     .on_key = radio_app_on_key,
     .prepare_stop = radio_app_prepare_stop,
+    .on_back = radio_app_on_back,
 };

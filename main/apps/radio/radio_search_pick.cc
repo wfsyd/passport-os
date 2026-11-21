@@ -13,6 +13,20 @@ bool starts_with(const char *text, const char *prefix) {
     return std::strncmp(text, prefix, std::strlen(prefix)) == 0;
 }
 
+// True when `needle` occurs in `text` (ASCII case-insensitive) with no letter or digit
+// on either side of it.
+bool contains_word_ci(const char *text, const char *needle) {
+    if (!needle[0]) return false;
+    const std::size_t length = std::strlen(needle);
+    for (const char *p = text; *p; ++p) {
+        if (strncasecmp(p, needle, length) != 0) continue;
+        const bool before = p == text || !std::isalnum(static_cast<unsigned char>(p[-1]));
+        const bool after = !std::isalnum(static_cast<unsigned char>(p[length]));
+        if (before && after) return true;
+    }
+    return false;
+}
+
 bool contains_ci(const char *text, const char *needle) {
     if (!needle[0]) return true;
     for (const char *p = text; *p; ++p) {
@@ -45,7 +59,8 @@ long votes_field(cJSON *object) {
 
 } // namespace
 
-bool radio_search_consider(const char *station_json, const char *wanted, RadioSearchBest *best) {
+bool radio_search_consider(const char *station_json, const char *wanted, RadioSearchBest *best,
+                           bool whole_word) {
     if (!station_json || !wanted || !best) return false;
     cJSON *entry = cJSON_Parse(station_json);
     if (!entry || !cJSON_IsObject(entry)) {
@@ -68,7 +83,9 @@ bool radio_search_consider(const char *station_json, const char *wanted, RadioSe
     const bool bitrate_ok = !cJSON_IsNumber(bitrate) || bitrate->valuedouble <= 0 ||
                             bitrate->valuedouble <= 128;
     const long votes = votes_field(entry);
-    const bool qualifies = tier >= 0 && bitrate_ok && name[0] && contains_ci(name, wanted) &&
+    const bool name_ok = whole_word ? contains_word_ci(name, wanted) : contains_ci(name, wanted);
+    const bool country_ok = !whole_word || !strcasecmp(string_field(entry, "countrycode"), "AU");
+    const bool qualifies = tier >= 0 && bitrate_ok && name[0] && name_ok && country_ok &&
                            flag_field(entry, "lastcheckok", true) &&
                            (starts_with(url, "http://") || starts_with(url, "https://")) &&
                            std::strlen(url) < sizeof(best->url);

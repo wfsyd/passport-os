@@ -141,6 +141,13 @@ uint32_t s_last_sleep_seconds = UINT32_MAX;
 uint32_t s_volume_until;
 uint16_t s_station_frequency;
 int32_t s_needle_x = kDialNeedleHome;
+// Table mode readout ("774 kHz", "9C"); empty keeps the frequency/NET readout.
+char s_dial_text[24] = {};
+// Area page rows (state codes, or areas of one state). The strings are table or constant text.
+constexpr std::size_t kAreaRowsMax = 49;
+const char *s_area_rows[kAreaRowsMax];
+std::size_t s_area_count;
+char s_area_title[24] = "Area";
 
 bool drain_video_color_transfers() {
     if (!bsp_display_io()) return true;
@@ -377,7 +384,13 @@ void apply_dial(bool animate) {
     if (!s_dial_needle) return;
     const int target = dial_x_for_station();
 
-    if (s_dial_readout) {
+    if (s_dial_readout && s_dial_text[0]) {
+        // The digit face has no letters for "kHz" or DAB blocks; use the text face then.
+        const bool digits = std::strspn(s_dial_text, "0123456789. ") == std::strlen(s_dial_text);
+        lv_obj_set_style_text_font(s_dial_readout, digits ? &ui_digits_32 : &lv_font_montserrat_20, 0);
+        lv_label_set_text(s_dial_readout, s_dial_text);
+    } else if (s_dial_readout) {
+        lv_obj_set_style_text_font(s_dial_readout, &ui_digits_32, 0);
         char text[16];
         if (s_station_frequency >= kDialBandLow && s_station_frequency <= kDialBandHigh) {
             std::snprintf(text, sizeof(text), "%u.%u",
@@ -470,19 +483,19 @@ void apply_location() {
 
 void apply_playback() {
     if (!s_status || !s_play_icon) return;
-    const char *status=!s_network_connected?"网络未连接":s_playback_state==RadioPlaybackState::Playing?"播放中":
-        s_playback_state==RadioPlaybackState::Connecting?"连接中":s_playback_state==RadioPlaybackState::Buffering?"缓冲中":
-        s_playback_state==RadioPlaybackState::Reconnecting?"重连中":s_playback_state==RadioPlaybackState::Error?"播放失败":"已暂停";
+    const char *status=!s_network_connected?"No network":s_playback_state==RadioPlaybackState::Playing?"Playing":
+        s_playback_state==RadioPlaybackState::Connecting?"Connecting":s_playback_state==RadioPlaybackState::Buffering?"Buffering":
+        s_playback_state==RadioPlaybackState::Reconnecting?"Reconnecting":s_playback_state==RadioPlaybackState::Error?"Failed":"Paused";
     ui_pixel_label_set_text(s_status,status);
     ui_pixel_text_color(s_status,s_playback_state==RadioPlaybackState::Error?UI_DANGER:!s_network_connected?UI_WARNING:UI_TEXT_DIM);
     const bool playing = s_playback_state == RadioPlaybackState::Playing ||
                          s_playback_state == RadioPlaybackState::Buffering ||
                          s_playback_state == RadioPlaybackState::Connecting ||
                          s_playback_state == RadioPlaybackState::Reconnecting;
-    if (s_main_hint) ui_pixel_label_set_text(s_main_hint, !s_network_connected ? "先用手机完成配网" : playing
-        ? "上下换台 · 确定暂停"
+    if (s_main_hint) ui_pixel_label_set_text(s_main_hint, !s_network_connected ? "Set up Wi-Fi on phone" : playing
+        ? "Up/Down station  OK pause"
         : s_playback_state == RadioPlaybackState::Error
-            ? "上下换台 · 确定重试" : "上下换台 · 确定播放");
+            ? "Up/Down station  OK retry" : "Up/Down station  OK play");
     apply_location();
     ui_pixel_label_set_text(s_play_icon, playing ? "II" : ">");
     ui_pixel_text_color(s_play_icon,
@@ -572,7 +585,7 @@ void build_main() {
     auto *meter_panel=make_box(s_main_group,12,242,216,22,kBackground);
     for(std::size_t i=0;i<kMeterCount;i++){s_meter[i]=make_box(meter_panel,2+i*12,20,8,2,kGrid);lv_obj_set_style_bg_opa(s_meter[i],LV_OPA_TRANSP,0);}
     s_play_icon=make_label(s_main_group,"",0,0,1,kAmber);lv_obj_add_flag(s_play_icon,LV_OBJ_FLAG_HIDDEN);
-    s_main_hint=ui_pixel_footer(s_main_group,"上下换台 · 确定播放","长按：上下音量 · 确定返回",&buddy_font_16);
+    s_main_hint=ui_pixel_footer(s_main_group,"Up/Down station  OK play","Hold +/-: volume  Hold OK: back",&buddy_font_16);
 
     apply_network();
     apply_station();
@@ -711,10 +724,7 @@ void build_settings(RadioSettingsPage page, std::size_t selected, uint8_t volume
     }
 
     static constexpr const char *kMenuItems[] = {
-        "音量", "城市电台", "定时播放", "屏幕设置", "网络设置", "蓝牙", "返回",
-    };
-    static constexpr const char *kCityItems[] = {
-        "自动定位", "北京", "上海", "广州", "深圳", "长沙", "杭州", "成都",
+        "音量", "Area", "定时播放", "屏幕设置", "网络设置", "蓝牙", "返回",
     };
     static constexpr const char *kSleepTimerItems[] = {
         "无定时", "15 分钟", "30 分钟", "60 分钟", "90 分钟", "返回",
@@ -747,12 +757,18 @@ void build_settings(RadioSettingsPage page, std::size_t selected, uint8_t volume
             items = kMenuItems;
             item_count = sizeof(kMenuItems) / sizeof(kMenuItems[0]);
             break;
-        case RadioSettingsPage::City:
-            items = kCityItems;
-            item_count = sizeof(kCityItems) / sizeof(kCityItems[0]);
-            title_text = "城市电台";
-            hint_text = "确定选择  长按返回";
+        case RadioSettingsPage::City: {
+            // Eight rows fit the page. Keep the highlighted row on screen.
+            constexpr std::size_t kVisible = 8;
+            std::size_t first = selected >= kVisible ? selected - (kVisible - 1) : 0;
+            if (first + kVisible > s_area_count) first = s_area_count > kVisible ? s_area_count - kVisible : 0;
+            items = s_area_rows + first;
+            item_count = std::min(kVisible, s_area_count - first);
+            s_settings_selected = selected - first;
+            title_text = s_area_title;
+            hint_text = "Up/Down select  OK choose";
             break;
+        }
         case RadioSettingsPage::SleepTimer:
             items = kSleepTimerItems;
             item_count = sizeof(kSleepTimerItems) / sizeof(kSleepTimerItems[0]);
@@ -1299,6 +1315,20 @@ void radio_ui_set_audio_levels(const uint8_t *levels, std::size_t count) {
         std::memset(s_levels + copy_count, 0, kMeterCount - copy_count);
     }
     s_level_generation.fetch_add(1, std::memory_order_release);
+}
+
+void radio_ui_set_dial_text(const char *text) {
+    std::snprintf(s_dial_text, sizeof(s_dial_text), "%s", text ? text : "");
+}
+
+void radio_ui_show_area(const char *title, const char *const *items, std::size_t count,
+                        std::size_t selected) {
+    s_area_count = std::min(count, kAreaRowsMax);
+    for (std::size_t i = 0; i < s_area_count; ++i) s_area_rows[i] = items[i];
+    std::snprintf(s_area_title, sizeof(s_area_title), "%s", title ? title : "Area");
+    if (!s_screen || !bsp_lvgl_lock(500)) return;
+    build_settings(RadioSettingsPage::City, selected, s_volume);
+    bsp_lvgl_unlock();
 }
 
 void radio_ui_show_settings(RadioSettingsPage page, std::size_t selected,

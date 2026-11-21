@@ -1,0 +1,14 @@
+Australian radio station table (stations.csv)
+
+Derived from the Australian Communications and Media Authority (ACMA) "Broadcast
+Transmitter Data", October 2026 release, licensed under the Creative Commons
+Attribution 3.0 Australia Licence (CC BY 3.0 AU):
+https://creativecommons.org/licenses/by/3.0/au/
+
+Source: https://www.acma.gov.au/list-transmitters-licence-broadcast
+Attribution: Australian Communications and Media Authority (ACMA). The raw workbook
+is not committed. Only the AM, FM and DR rows were converted by
+tools/acma_to_stations.py into stations.csv (see README.md for the filter rules).
+
+This is a station finder, not a licence register. ACMA says a transmitter entry
+shows a licence exists, not that the service is operating as recorded.

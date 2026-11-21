@@ -11,7 +11,10 @@
 #include <new>
 #include <strings.h>
 
-namespace { constexpr char kTag[] = "radio_hls"; }
+namespace {
+constexpr char kTag[] = "radio_hls";
+constexpr size_t kRedirectUrlBytes = 256;   // RadioStation::url, with its NUL
+}
 struct RadioSource::Hls {
     radio_hls::Playlist list;
     char url[radio_hls::kUrl]{};
@@ -57,17 +60,40 @@ bool RadioSource::request(const char *url) {
         std::snprintf(range, sizeof(range), "bytes=%lu-", static_cast<unsigned long>(range_start_));
         esp_http_client_set_header(client_, "Range", range);
     }
-    for (unsigned redirects = 0; redirects <= 4 && !cancelled(); ++redirects) {
+    // A plain-http URL that redirects to https is retried first as the same URL on http://,
+    // because the https hop can fail on a small TLS buffer (-0x7100). https is the fallback.
+    char https_redirect[kRedirectUrlBytes] = {};
+    for (unsigned redirects = 0; redirects <= 5 && !cancelled(); ++redirects) {
         mime_[0] = 0; icy_interval_ = 0; content_length_ = 0;
-        if (esp_http_client_open(client_, 0) != ESP_OK || esp_http_client_fetch_headers(client_) < 0) return false;
-        const int status = esp_http_client_get_status_code(client_);
+        const bool connected = esp_http_client_open(client_, 0) == ESP_OK && esp_http_client_fetch_headers(client_) >= 0;
+        const int status = connected ? esp_http_client_get_status_code(client_) : -1;
         status_ = status;
         if (status >= 200 && status < 300) return true;
-        if (status != 301 && status != 302 && status != 303 && status != 307 && status != 308) {
-            ESP_LOGW(kTag, "HTTP status %d", status); return false;
+        if (https_redirect[0]) {
+            // The plain-http form gave no stream (failed, or redirected again): use the https form.
+            ESP_LOGI(kTag, "Plain-http redirect failed; trying https");
+            esp_http_client_close(client_);
+            if (esp_http_client_set_url(client_, https_redirect) != ESP_OK) return false;
+            https_redirect[0] = '\0';
+            continue;
         }
+        if (status != 301 && status != 302 && status != 303 && status != 307 && status != 308) {
+            if (status >= 0) ESP_LOGW(kTag, "HTTP status %d", status);
+            return false;
+        }
+        char from[kRedirectUrlBytes] = {};
+        esp_http_client_get_url(client_, from, sizeof(from));
         if (esp_http_client_set_redirection(client_) != ESP_OK) return false;
         esp_http_client_close(client_);
+        char next[kRedirectUrlBytes] = {};
+        if (!https_redirect[0] && radio_hls::starts(from, "http://") &&
+            esp_http_client_get_url(client_, next, sizeof(next)) == ESP_OK && radio_hls::starts(next, "https://")) {
+            char plain[kRedirectUrlBytes] = {};
+            std::snprintf(plain, sizeof(plain), "http://%s", next + 8);
+            std::snprintf(https_redirect, sizeof(https_redirect), "%s", next);
+            ESP_LOGI(kTag, "Redirect to https; trying http first");
+            if (esp_http_client_set_url(client_, plain) != ESP_OK) return false;
+        }
     }
     return false;
 }
@@ -136,6 +162,15 @@ bool RadioSource::next_segment() {
     }
     return false;
 }
+bool RadioSource::open_fallback(const char *first, const char *fallback) {
+    if (open(first)) return true;
+    // Only a failure before any body byte was read leaves this object reusable.
+    if (oom_ || cancelled() || prefix_size_ || hls_) return false;
+    ESP_LOGI(kTag, "Plain-http open failed; trying https");
+    mime_[0] = '\0';
+    return open(fallback);
+}
+
 bool RadioSource::open(const char *url, uint32_t offset) {
     range_start_ = offset;
     if (!request(url)) return false;

@@ -34,7 +34,130 @@ static int bsp_button_read_mv() { return (now >= tap_start && now < tap_end) ||
     (second_start && now >= second_start && now < second_end) ? voltage : 2900; }
 [[maybe_unused]] static bool app_registry_screen_is_on() { return screen_on; }
 static void key_post(KeyMessage message) { messages.push_back(message);emitted_at.push_back(now); }
+[[maybe_unused]] static bool radio_app_wants_triple_click() { return false; }
 ''' + polling + r'''
+// OK gesture timing with a triple-capable foreground app (Radio table mode) and without one.
+static bool radio_triple(passport_app_id_t app) { return app == APP_ID_RADIO; }
+static auto collect(std::vector<KeyMessage> &out) {
+    return [&out](uint8_t b, app_btn_event_t e, uint16_t mv) { out.push_back({b, e, mv}); };
+}
+static void ok(OkGesture &g, std::vector<KeyMessage> &out, app_btn_event_t e, int64_t t, passport_app_id_t app) {
+    g.event(BSP_BTN_OK, e, 603, t, app, collect(out));
+}
+static void tick(OkGesture &g, std::vector<KeyMessage> &out, int64_t t, passport_app_id_t app) {
+    g.poll(t, app, collect(out));
+}
+// One short press: press at t, click and release 80 ms later.
+static void tap(OkGesture &g, std::vector<KeyMessage> &out, int64_t t, passport_app_id_t app) {
+    ok(g, out, BTN_EVT_PRESS, t, app);
+    ok(g, out, BTN_EVT_CLICK, t + 80000, app);
+    ok(g, out, BTN_EVT_RELEASE, t + 80000, app);
+}
+static unsigned ok_count(const std::vector<KeyMessage> &out, app_btn_event_t e) {
+    unsigned n = 0;
+    for (const auto &m : out) n += m.button == BSP_BTN_OK && m.event == e;
+    return n;
+}
+static void triple_checks() {
+    const passport_app_id_t radio = APP_ID_RADIO, home = APP_ID_HOME;
+    // Single: unchanged timing, emitted 180 ms after its release, never as a double.
+    {
+        OkGesture g; g.set_triple_query(radio_triple); std::vector<KeyMessage> out;
+        tap(g, out, 0, radio);
+        tick(g, out, 259999, radio);
+        assert(out.size() == 1);
+        tick(g, out, 260000, radio);
+        assert(ok_count(out, BTN_EVT_CLICK) == 1 && ok_count(out, BTN_EVT_RELEASE) == 1);
+        assert(ok_count(out, BTN_EVT_DOUBLE) == 0 && ok_count(out, BTN_EVT_TRIPLE) == 0);
+    }
+    // Double in a triple-capable app: held for one window, then emitted once.
+    {
+        OkGesture g; g.set_triple_query(radio_triple); std::vector<KeyMessage> out;
+        tap(g, out, 0, radio);
+        tap(g, out, 150000, radio);
+        assert(ok_count(out, BTN_EVT_DOUBLE) == 0 && ok_count(out, BTN_EVT_CLICK) == 0);
+        tick(g, out, 409999, radio);
+        assert(ok_count(out, BTN_EVT_DOUBLE) == 0);
+        tick(g, out, 410000, radio);
+        assert(ok_count(out, BTN_EVT_DOUBLE) == 1 && ok_count(out, BTN_EVT_CLICK) == 0);
+        tick(g, out, 2000000, radio);
+        assert(ok_count(out, BTN_EVT_DOUBLE) == 1);
+    }
+    // Double in an app without the query: unchanged, emitted at the second click.
+    {
+        OkGesture g; g.set_triple_query(radio_triple); std::vector<KeyMessage> out;
+        tap(g, out, 0, home);
+        tap(g, out, 150000, home);
+        assert(ok_count(out, BTN_EVT_DOUBLE) == 1);
+        OkGesture none; std::vector<KeyMessage> plain;
+        tap(none, plain, 0, radio);
+        tap(none, plain, 150000, radio);
+        assert(ok_count(plain, BTN_EVT_DOUBLE) == 1);
+    }
+    // Triple: third click inside the window yields TRIPLE at once, and no double or click.
+    {
+        OkGesture g; g.set_triple_query(radio_triple); std::vector<KeyMessage> out;
+        tap(g, out, 0, radio);
+        tap(g, out, 150000, radio);
+        tap(g, out, 300000, radio);
+        assert(ok_count(out, BTN_EVT_TRIPLE) == 1 && ok_count(out, BTN_EVT_DOUBLE) == 0);
+        tick(g, out, 3000000, radio);
+        assert(ok_count(out, BTN_EVT_CLICK) == 0 && ok_count(out, BTN_EVT_DOUBLE) == 0);
+        assert(ok_count(out, BTN_EVT_TRIPLE) == 1);
+    }
+    // Third press after the window: the held double goes out first, the third is a single.
+    {
+        OkGesture g; g.set_triple_query(radio_triple); std::vector<KeyMessage> out;
+        tap(g, out, 0, radio);
+        tap(g, out, 150000, radio);
+        ok(g, out, BTN_EVT_PRESS, 420000, radio);
+        assert(ok_count(out, BTN_EVT_DOUBLE) == 1);
+        ok(g, out, BTN_EVT_CLICK, 500000, radio);
+        ok(g, out, BTN_EVT_RELEASE, 500000, radio);
+        assert(ok_count(out, BTN_EVT_TRIPLE) == 0);
+        tick(g, out, 680000, radio);
+        assert(ok_count(out, BTN_EVT_CLICK) == 1 && ok_count(out, BTN_EVT_DOUBLE) == 1);
+    }
+    // Hold after a double: LONG only, and the held double is dropped (same as today).
+    {
+        OkGesture g; g.set_triple_query(radio_triple); std::vector<KeyMessage> out;
+        tap(g, out, 0, radio);
+        tap(g, out, 150000, radio);
+        ok(g, out, BTN_EVT_PRESS, 300000, radio);
+        ok(g, out, BTN_EVT_LONG, 800000, radio);
+        tick(g, out, 2000000, radio);
+        assert(ok_count(out, BTN_EVT_LONG) == 1 && ok_count(out, BTN_EVT_DOUBLE) == 0);
+        assert(ok_count(out, BTN_EVT_TRIPLE) == 0 && ok_count(out, BTN_EVT_CLICK) == 0);
+    }
+    // Single then hold: LONG immediately, no click later.
+    {
+        OkGesture g; g.set_triple_query(radio_triple); std::vector<KeyMessage> out;
+        ok(g, out, BTN_EVT_PRESS, 0, radio);
+        ok(g, out, BTN_EVT_LONG, 500000, radio);
+        tick(g, out, 2000000, radio);
+        assert(ok_count(out, BTN_EVT_LONG) == 1 && ok_count(out, BTN_EVT_CLICK) == 0);
+    }
+    // Another key during a held double: the double goes out first, then the key.
+    {
+        OkGesture g; g.set_triple_query(radio_triple); std::vector<KeyMessage> out;
+        tap(g, out, 0, radio);
+        tap(g, out, 150000, radio);
+        g.event(BSP_BTN_DOWN, BTN_EVT_PRESS, 302, 260000, radio, collect(out));
+        assert(out.size() >= 2);
+        assert(out[out.size() - 2].button == BSP_BTN_OK && out[out.size() - 2].event == BTN_EVT_DOUBLE);
+        assert(out.back().button == BSP_BTN_DOWN && out.back().event == BTN_EVT_PRESS);
+    }
+    // Foreground change while a double is held: dropped, never sent to the new app.
+    {
+        OkGesture g; g.set_triple_query(radio_triple); std::vector<KeyMessage> out;
+        tap(g, out, 0, radio);
+        tap(g, out, 150000, radio);
+        tick(g, out, 200000, home);
+        tick(g, out, 2000000, home);
+        assert(ok_count(out, BTN_EVT_DOUBLE) == 0 && ok_count(out, BTN_EVT_TRIPLE) == 0);
+    }
+}
+
 int main() {
     assert(button_from_mv(-1) == -1);
     for (int mv : {0, 5, 10, 149}) assert(button_from_mv(mv) == BSP_BTN_UP);
@@ -103,6 +226,7 @@ int main() {
     gesture.event(BSP_BTN_OK,BTN_EVT_CLICK,603,780000,APP_ID_REMINDERS,emit);
     gesture.event(BSP_BTN_OK,BTN_EVT_RELEASE,603,780000,APP_ID_REMINDERS,emit);
     gesture.poll(1200000,APP_ID_REMINDERS,emit);assert(messages.empty());
+    triple_checks();
 }
 '''
 with tempfile.TemporaryDirectory() as tmp:
@@ -113,4 +237,4 @@ with tempfile.TemporaryDirectory() as tmp:
     subprocess.run(['c++', '-std=c++17', '-Wall', '-Wextra', '-Werror',
                     '-fsanitize=address,undefined', '-I'+tmp, '-I'+str(root/'main'), str(path), '-o', executable], check=True)
     subprocess.run([executable], check=True)
-print('ADC polling: short taps, single/double/long OK, power hold, sampling phases, mixed keys and stale gestures PASS')
+print('ADC polling: short taps, single/double/triple/long OK, power hold, sampling phases, mixed keys and stale gestures PASS')

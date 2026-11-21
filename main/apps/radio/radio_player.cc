@@ -1,5 +1,7 @@
 #include "radio_presets.h"
 #include "radio_player.h"
+#include "au_radio_table.h"
+#include "radio_catalog.h"
 #include "radio_stream_buffer.h"
 #include "radio_source.h"
 
@@ -48,6 +50,10 @@ constexpr uint8_t kMaxFailedAttempts = 3;
 // Two dead stations in a row is a network problem (hotspot without data,
 // captive portal), not bad stations: stop walking the list and keep retrying.
 constexpr uint8_t kMaxAutoSkips = 2;
+// Table mode reuses the same station bytes with a different layout. Its RAM must
+// stay below the HLS tail, which starts at the directory layout's end.
+constexpr std::size_t kHlsScratchOffset = (sizeof(RadioStation) * kMaxStations + 15) & ~size_t(15);
+static_assert(sizeof(au_radio::TableRam) <= kHlsScratchOffset);
 
 std::atomic<bool> s_network_connected{false};
 std::atomic<bool> s_wanted_playing{true};
@@ -61,6 +67,40 @@ SemaphoreHandle_t s_player_stopped;
 SemaphoreHandle_t s_station_mutex;
 bool s_decoders_registered;
 RadioStation *s_stations;
+// True while the list holds AU table rows (see radio_player_replace_table).
+// Written only under s_station_mutex with the list.
+std::atomic<bool> s_table_mode{false};
+
+au_radio::TableRam *table_ram() {
+    return reinterpret_cast<au_radio::TableRam *>(audio_workspace::radio::stations());
+}
+
+// Describes table row `position` as a RadioStation. The URL stays empty until
+// the row is tuned and resolved (see resolve_table_stream).
+RadioStation table_station(std::size_t position) {
+    const au_radio::TableRam &table = *table_ram();
+    const au_radio::Station &row = au_radio::station_at(table.listed[position]);
+    RadioStation station = {};
+    std::snprintf(station.name, sizeof(station.name), "%s", au_radio::text(row.name));
+    std::snprintf(station.description, sizeof(station.description), "%s · %s",
+                  au_radio::band_label(row.band), au_radio::area_name(table.area));
+    station.frequency_decihz = row.band == au_radio::kBandFm ? row.frequency : 0;
+    return station;
+}
+
+// Every station change goes through here, so the dial readout follows the row:
+// FM frequency, AM kHz or the DAB block. Directory stations clear it.
+void show_station(std::size_t index, std::size_t count, const RadioStation &station) {
+    char readout[24] = {};
+    if (s_table_mode.load(std::memory_order_acquire)) {
+        const au_radio::TableRam &table = *table_ram();
+        if (index < table.count) {
+            au_radio::format_dial_readout(au_radio::station_at(table.listed[index]), readout, sizeof(readout));
+        }
+    }
+    radio_ui_set_dial_text(readout);
+    radio_ui_set_station(index, count, station);
+}
 
 RadioStation station_snapshot(std::size_t index) {
     RadioStation station = {};
@@ -69,7 +109,8 @@ RadioStation station_snapshot(std::size_t index) {
         return station;
     }
     const std::size_t count = std::max<std::size_t>(s_station_count.load(), 1);
-    station = s_stations[index % count];
+    station = s_table_mode.load(std::memory_order_acquire) ? table_station(index % count)
+                                                            : s_stations[index % count];
     xSemaphoreGive(s_station_mutex);
     return station;
 }
@@ -133,6 +174,7 @@ bool install_stations(const RadioStation *stations, std::size_t count,
     s_generation.fetch_add(1, std::memory_order_acq_rel);
     if (xSemaphoreTake(s_station_mutex, pdMS_TO_TICKS(1000)) != pdTRUE) return false;
     std::memcpy(s_stations, stations, count * sizeof(RadioStation));
+    s_table_mode.store(false, std::memory_order_release);
     if (count < kMaxStations) {
         std::memset(s_stations + count, 0,
                     (kMaxStations - count) * sizeof(RadioStation));
@@ -211,7 +253,7 @@ std::size_t downmix_to_mono(uint8_t *pcm, std::size_t bytes, uint8_t channels) {
 
 // Out of memory is not the station's fault: it must not count toward skipping
 // a healthy station, and retrying at the station back-off rate fragments the heap.
-enum class StreamResult { Played, Failed, OutOfMemory };
+enum class StreamResult { Played, Failed, OutOfMemory, NoStream };
 
 esp_audio_simple_dec_handle_t open_decoder(esp_audio_simple_dec_type_t type, bool *out_of_memory) {
     esp_audio_simple_dec_cfg_t config = {
@@ -276,9 +318,74 @@ void stream_reader_task(void *arg) {
     vTaskSuspend(nullptr);
 }
 
+// Resolution runs on the player task while no decoder is open (the previous
+// stream closed its decoder and reader). The directory cancel hook is a plain
+// function, so the request it checks is published in these atomics first.
+std::atomic<uint32_t> s_resolve_generation{0};
+std::atomic<std::size_t> s_resolve_station{0};
+
+bool resolve_cancelled() {
+    return !request_still_current(s_resolve_generation.load(), s_resolve_station.load());
+}
+
+// Baked stream URL of table row `position` (streams.csv), or "" when the row has none.
+const char *table_baked_url(std::size_t position) {
+    const au_radio::TableRam &table = *table_ram();
+    if (position >= table.count) return "";
+    return au_radio::text(au_radio::station_at(table.listed[position]).url);
+}
+
+// Table rows hold a directory query, not a URL. Finds the stream for list position
+// `station`, using the cache when possible. False when no stream was found or the
+// request went stale while resolving.
+bool resolve_table_stream(std::size_t station, uint32_t generation, char *url, std::size_t capacity) {
+    au_radio::TableRam &table = *table_ram();
+    const uint16_t row = table.listed[station];
+    char query[sizeof(RadioStation::name)] = {};
+    std::snprintf(query, sizeof(query), "%s", au_radio::text(au_radio::station_at(row).query));
+    radio_ui_set_playback(RadioPlaybackState::Connecting, "Finding stream");
+    s_resolve_generation.store(generation, std::memory_order_release);
+    s_resolve_station.store(station, std::memory_order_release);
+    const auto resolve = [](const char *name, char *out, std::size_t size) {
+        return radio_catalog_resolve_stream(name, out, size, resolve_cancelled);
+    };
+    au_radio::StreamLookup lookup = au_radio::resolve_stream(table.cache, row, query, url, capacity, resolve);
+    // A miss gets one retry with the shorter name ("KIIS 106.5" -> "KIIS"). The retry
+    // accepts only an AU result whose name holds the original first word as a whole word,
+    // so a loose match cannot put another station behind this row ("SEN" in "Sensation").
+    char shorter[sizeof(RadioStation::name)] = {};
+    if (lookup == au_radio::StreamLookup::NotFound && !resolve_cancelled() &&
+        au_radio::shorter_query(query, shorter, sizeof(shorter))) {
+        char word[sizeof(RadioStation::name)] = {};
+        au_radio::first_word(query, word, sizeof(word));
+        ESP_LOGI(kTag, "No stream for \"%s\"; retrying as \"%s\" (name must hold \"%s\")", query, shorter, word);
+        const auto resolve_word = [&word](const char *name, char *out, std::size_t size) {
+            return radio_catalog_resolve_stream(name, out, size, resolve_cancelled, word);
+        };
+        lookup = au_radio::resolve_stream(table.cache, row, shorter, url, capacity, resolve_word);
+    }
+    if (lookup == au_radio::StreamLookup::NotFound) {
+        ESP_LOGW(kTag, "No stream found for table row %u", static_cast<unsigned>(row));
+        return false;
+    }
+    return true;
+}
+
 StreamResult stream_station(std::size_t station, uint32_t generation) {
-    const RadioStation preset = station_snapshot(station);
-    if (!preset.url[0]) {
+    RadioStation preset = station_snapshot(station);
+    const bool table_row = s_table_mode.load(std::memory_order_acquire);
+    // A baked URL plays without a directory lookup. If it does not open, the name lookup is tried once.
+    bool baked_url = false;
+    if (table_row) {
+        const char *baked = table_baked_url(station);
+        baked_url = baked[0] != '\0';
+        if (baked_url) {
+            std::snprintf(preset.url, sizeof(preset.url), "%s", baked);
+        } else if (!resolve_table_stream(station, generation, preset.url, sizeof(preset.url))) {
+            return request_still_current(generation, station) ? StreamResult::NoStream
+                                                              : StreamResult::Failed;
+        }
+    } else if (!preset.url[0]) {
         ESP_LOGE(kTag, "Station %u has no stream URL", static_cast<unsigned>(station));
         return StreamResult::Failed;
     }
@@ -293,16 +400,41 @@ StreamResult stream_station(std::size_t station, uint32_t generation) {
         const auto &r = *static_cast<Request *>(context);
         return r.stop.load(std::memory_order_acquire) || !request_still_current(r.generation, r.station);
     }, &request, audio_workspace::radio::stations() + scratch_offset, scratch_bytes);
+    // Table rows try the http:// form first; https is used only if that fails to open.
+    const auto open_stream = [&](const char *url) {
+        if (table_row && std::strncmp(url, "https://", 8) == 0) {
+            char plain[sizeof(preset.url)] = {};
+            std::snprintf(plain, sizeof(plain), "http://%s", url + 8);
+            return source.open_fallback(plain, url);
+        }
+        return source.open(url);
+    };
 
     bool played_audio = false;
     bool out_of_memory = false;
+    bool no_stream = false;
     esp_audio_simple_dec_handle_t decoder = nullptr;
     uint8_t *input = nullptr;
     uint8_t *output = nullptr;
     uint8_t *compressed = nullptr;
 
     do {
-        if (!source.open(preset.url)) {
+        ESP_LOGI(kTag, "Opening stream: free=%u largest=%u", (unsigned)esp_get_free_heap_size(),
+                 (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
+        bool opened = open_stream(preset.url);
+        if (!opened && baked_url) {
+            ESP_LOGW(kTag, "Baked stream failed: %s err %d", preset.url, source.status());
+            if (source.reusable()) {
+                // The baked URL did not open: look the row up by name, as a row without one.
+                baked_url = false;
+                if (!resolve_table_stream(station, generation, preset.url, sizeof(preset.url))) {
+                    no_stream = true;
+                    break;
+                }
+                opened = open_stream(preset.url);
+            }
+        }
+        if (!opened) {
             out_of_memory = source.oom();
             break;
         }
@@ -470,6 +602,7 @@ StreamResult stream_station(std::size_t station, uint32_t generation) {
     if (decoder) esp_audio_simple_dec_close(decoder);
     out_of_memory |= source.oom();
     if (played_audio) return StreamResult::Played;
+    if (no_stream) return request_still_current(generation, station) ? StreamResult::NoStream : StreamResult::Failed;
     return out_of_memory ? StreamResult::OutOfMemory : StreamResult::Failed;
 }
 
@@ -513,6 +646,15 @@ void player_task(void *) {
         const StreamResult result = stream_station(station, generation);
         s_stream_active.store(false, std::memory_order_release);
         if (!request_still_current(generation, station)) continue;
+
+        if (result == StreamResult::NoStream) {
+            // Show it and wait for the listener to tune or change state. Table
+            // rows are not skipped automatically, so a dead row cannot loop.
+            ESP_LOGW(kTag, "No stream for station %u", static_cast<unsigned>(station));
+            radio_ui_set_playback(RadioPlaybackState::Error, "No stream");
+            while (request_still_current(generation, station)) vTaskDelay(pdMS_TO_TICKS(100));
+            continue;
+        }
 
         if (result == StreamResult::OutOfMemory) {
             // Keep the station and its failure count; give other tasks time
@@ -591,6 +733,7 @@ bool radio_player_init() {
     s_network_connected.store(false, std::memory_order_release);
     s_wanted_playing.store(false, std::memory_order_release);
     s_stream_active.store(false, std::memory_order_release);
+    s_table_mode.store(false, std::memory_order_release);
 
     s_station_mutex = xSemaphoreCreateMutex();
     s_player_stopped = xSemaphoreCreateBinary();
@@ -650,7 +793,7 @@ bool radio_player_init() {
     s_decoders_registered = true;
     bsp_audio_set_volume(100);
 
-    radio_ui_set_station(s_station_index.load(), radio_player_station_count(),
+    show_station(s_station_index.load(), radio_player_station_count(),
                          radio_player_station(s_station_index.load()));
     radio_ui_set_volume(radio_player_volume());
     TaskHandle_t task = xTaskCreateStatic(player_task, "radio_stream", kStreamStackBytes, nullptr, 6,
@@ -753,9 +896,9 @@ void radio_player_set_station(std::size_t index) {
     save_setting("station", static_cast<uint8_t>(index));
     const RadioStation chosen = radio_player_station(index);
     save_station_name(chosen.name);
-    radio_ui_set_station(index, radio_player_station_count(), radio_player_station(index));
+    show_station(index, radio_player_station_count(), radio_player_station(index));
     if (radio_player_is_playing()) {
-        radio_ui_set_playback(RadioPlaybackState::Connecting, "正在切换电台");
+        radio_ui_set_playback(RadioPlaybackState::Connecting, "Switching station");
     }
 }
 
@@ -778,10 +921,80 @@ bool radio_player_replace_stations(const RadioStation *stations, std::size_t cou
     save_setting("station", static_cast<uint8_t>(selected));
     const RadioStation chosen = radio_player_station(selected);
     save_station_name(chosen.name);
-    radio_ui_set_station(selected, radio_player_station_count(), chosen);
+    show_station(selected, radio_player_station_count(), chosen);
     ESP_LOGI(kTag, "Installed local catalog with %u stations",
              static_cast<unsigned>(radio_player_station_count()));
     return true;
+}
+
+bool radio_player_replace_table(std::size_t area) {
+    if (!s_stations || !s_station_mutex) return false;
+    char remembered[sizeof(RadioStation::name)] = {};
+    const bool has_remembered = load_station_name(remembered, sizeof(remembered));
+
+    // Stop the current request first; the caller has already released the decoder.
+    s_generation.fetch_add(1, std::memory_order_acq_rel);
+    if (xSemaphoreTake(s_station_mutex, pdMS_TO_TICKS(1000)) != pdTRUE) return false;
+    au_radio::TableRam &table = *table_ram();
+    const uint8_t band = au_radio::first_band(au_radio::bands_in_area(area));
+    const std::size_t count = au_radio::collect_stations(area, 1u << band, table.listed,
+                                                         au_radio::kMaxListed);
+    if (count == 0) {
+        xSemaphoreGive(s_station_mutex);
+        return false;
+    }
+    table.area = static_cast<uint16_t>(area);
+    table.count = static_cast<uint16_t>(count);
+    table.band = band;
+    table.cache.clear();
+    std::size_t selected = 0;
+    if (has_remembered) {
+        for (std::size_t i = 0; i < count; ++i) {
+            if (std::strcmp(au_radio::text(au_radio::station_at(table.listed[i]).name), remembered) == 0) {
+                selected = i;
+                break;
+            }
+        }
+    }
+    s_table_mode.store(true, std::memory_order_release);
+    s_station_count.store(count, std::memory_order_release);
+    s_station_index.store(selected, std::memory_order_release);
+    xSemaphoreGive(s_station_mutex);
+
+    save_setting("station", static_cast<uint8_t>(selected));
+    const RadioStation chosen = radio_player_station(selected);
+    save_station_name(chosen.name);
+    show_station(selected, radio_player_station_count(), chosen);
+    ESP_LOGI(kTag, "Installed table area %u with %u stations",
+             static_cast<unsigned>(area), static_cast<unsigned>(count));
+    return true;
+}
+
+bool radio_player_cycle_table_band() {
+    if (!s_table_mode.load(std::memory_order_acquire) || !s_stations || !s_station_mutex) return false;
+    if (xSemaphoreTake(s_station_mutex, pdMS_TO_TICKS(1000)) != pdTRUE) return false;
+    au_radio::TableRam &table = *table_ram();
+    const uint8_t next = au_radio::next_band(table.band, au_radio::bands_in_area(table.area));
+    const std::size_t count = next == table.band ? 0 : au_radio::collect_stations(
+        table.area, 1u << next, table.listed, au_radio::kMaxListed);
+    if (count == 0) {
+        xSemaphoreGive(s_station_mutex);
+        return false;
+    }
+    table.band = next;
+    table.count = static_cast<uint16_t>(count);
+    table.cache.clear();
+    s_station_count.store(count, std::memory_order_release);
+    s_station_index.store(0, std::memory_order_release);
+    xSemaphoreGive(s_station_mutex);
+    radio_player_set_station(0);
+    return true;
+}
+
+bool radio_player_table_mode() { return s_table_mode.load(std::memory_order_acquire); }
+
+uint8_t radio_player_table_band() {
+    return s_table_mode.load(std::memory_order_acquire) ? table_ram()->band : au_radio::kBandFm;
 }
 
 bool radio_player_replace_stations_resuming(const RadioStation *stations,
@@ -798,7 +1011,7 @@ bool radio_player_replace_stations_resuming(const RadioStation *stations,
     save_setting("station", static_cast<uint8_t>(selected));
     const RadioStation chosen = radio_player_station(selected);
     save_station_name(chosen.name);
-    radio_ui_set_station(selected, radio_player_station_count(), chosen);
+    show_station(selected, radio_player_station_count(), chosen);
     if (has_remembered && selected > 0) {
         ESP_LOGI(kTag, "Resumed remembered station '%s' at index %u",
                  chosen.name, static_cast<unsigned>(selected));

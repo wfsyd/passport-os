@@ -2,6 +2,7 @@
 #include "launcher/timer_resume.h"
 #include "launcher/app_registry.h"
 #include "launcher/ok_gesture.h"
+#include "apps/radio/app_radio.h"
 #include "boot_chime.h"
 #include "ui_sfx.h"
 #include "boot_splash.h"
@@ -116,6 +117,10 @@ static void button_task(void *arg) {
     uint8_t power_stage = 0;
     uint16_t last_mv = 0;
     OkGesture ok_gesture;
+    // Only Radio in table mode handles a triple press (menu). Other apps see the same events as before.
+    ok_gesture.set_triple_query([](passport_app_id_t app) {
+        return app == APP_ID_RADIO && radio_app_wants_triple_click();
+    });
     const auto emit = [](uint8_t button, app_btn_event_t event, uint16_t mv) {
         key_post({button, event, mv});
     };

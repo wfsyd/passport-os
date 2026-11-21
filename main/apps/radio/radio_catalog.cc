@@ -381,15 +381,26 @@ void append_station(const char *json, const char *description,
 struct DirectoryServers {
     char hosts[4][64] = {};
     std::size_t count = 0;
-    mutable std::size_t preferred = 0;
 };
+// The replica that answered last, kept for the session (like the catalog cache) so
+// a tune does not start by retrying a replica that already failed. Cleared when it
+// fails; the next answering replica becomes the working one.
+char s_working_host[64] = {};
+
 DirectoryServers directory_servers(RadioCatalogCancelled stop) {
     DirectoryServers servers;
     if (cancelled(stop)) return servers;
+    const auto add = [&servers](const char *host) {
+        if (!host[0] || servers.count >= 4) return;
+        for (std::size_t i = 0; i < servers.count; ++i)
+            if (std::strcmp(servers.hosts[i], host) == 0) return;
+        copy_text(servers.hosts[servers.count++], sizeof(servers.hosts[0]), host);
+    };
+    add(s_working_host);
     // Prefer virtual-host replica names first; raw IPs from service DNS often
     // reject IP Host headers or time out on DNS-filtering/proxy networks.
-    copy_text(servers.hosts[servers.count++], sizeof(servers.hosts[0]), "de1.api.radio-browser.info");
-    copy_text(servers.hosts[servers.count++], sizeof(servers.hosts[0]), "fi1.api.radio-browser.info");
+    add("de1.api.radio-browser.info");
+    add("fi1.api.radio-browser.info");
     addrinfo hints = {}, *addresses = nullptr;
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
@@ -400,10 +411,7 @@ DirectoryServers directory_servers(RadioCatalogCancelled stop) {
             // Proxy fake-IP DNS answers (RFC 2544 range) are not service hosts.
             if ((ntohl(addr->sin_addr.s_addr) & 0xfffe0000u) == 0xc6120000u) continue;
             if (!inet_ntop(AF_INET, &addr->sin_addr, ip, sizeof(ip))) continue;
-            bool duplicate = false;
-            for (std::size_t i = 0; i < servers.count; ++i)
-                duplicate |= std::strcmp(servers.hosts[i], ip) == 0;
-            if (!duplicate) copy_text(servers.hosts[servers.count++], sizeof(servers.hosts[0]), ip);
+            add(ip);
         }
         freeaddrinfo(addresses);
     }
@@ -411,7 +419,7 @@ DirectoryServers directory_servers(RadioCatalogCancelled stop) {
 }
 
 // Runs one directory search (`url_query` is the text after "/json/stations/search?")
-// on the preferred replica first, then the others. Each station object goes to
+// on the working replica first, then the others. Each station object goes to
 // `visit`, which returns false once it has enough. Returns true when a replica
 // answered, even with no stations.
 template <typename Visit>
@@ -420,9 +428,7 @@ bool search_directory(const DirectoryServers &servers, const char *url_query,
     auto *object = static_cast<char *>(std::malloc(kObjectCapacity));
     if (!object) return false;
     bool answered = false;
-    const std::size_t start = servers.preferred < servers.count ? servers.preferred : 0;
-    for (std::size_t step = 0; step < servers.count && !cancelled(stop); ++step) {
-        const std::size_t i = (start + step) % servers.count;
+    for (std::size_t i = 0; i < servers.count && !cancelled(stop); ++i) {
         char url[512];
         std::snprintf(url, sizeof(url), "http://%s/json/stations/search?%s",
                       servers.hosts[i], url_query);
@@ -458,10 +464,12 @@ bool search_directory(const DirectoryServers &servers, const char *url_query,
         esp_http_client_close(client);
         esp_http_client_cleanup(client);
         if (success) {
-            servers.preferred = i;
+            copy_text(s_working_host, sizeof(s_working_host), servers.hosts[i]);
             answered = true;
             break; // an empty successful response is not a replica fault
         }
+        // A failed working replica is dropped, so the next tune does not start with it.
+        if (std::strcmp(servers.hosts[i], s_working_host) == 0) s_working_host[0] = '\0';
         ESP_LOGW(kTag, "Directory replica failed; trying another server");
     }
     std::free(object);
@@ -488,9 +496,13 @@ void query_directory(const DirectoryServers &servers, const RadioLocation &locat
 // One name-based AU preset: the station whose name contains `query`, preferring MP3, then
 // direct AAC, then HLS AAC (see radio_search_consider), then the most votes.
 // No bitrate cap, so 128 kbps MP3 streams are not excluded.
+// With `must_word`, the result name must contain it as a whole word and be AU (see
+// radio_search_consider); `query` still drives the directory search.
 bool resolve_search_preset(const DirectoryServers &servers, const char *query,
                            const char *name, const char *description,
-                           RadioStation *out, RadioCatalogCancelled stop) {
+                           RadioStation *out, RadioCatalogCancelled stop,
+                           std::size_t *results = nullptr, const char *must_word = nullptr) {
+    if (results) *results = 0;
     if (cancelled(stop) || !query[0] || !servers.count) return false;
     char encoded[160] = {}, url_query[320] = {};
     url_encode(query, encoded, sizeof(encoded));
@@ -499,7 +511,9 @@ bool resolve_search_preset(const DirectoryServers &servers, const char *query,
         "&order=votes&reverse=true&limit=20", encoded);
     RadioSearchBest best = {};
     search_directory(servers, url_query, stop, [&](const char *json) {
-        radio_search_consider(json, query, &best);
+        if (results) ++*results;
+        if (must_word) radio_search_consider(json, must_word, &best, true);
+        else radio_search_consider(json, query, &best);
         return true;
     });
     if (!best.found) return false;
@@ -720,4 +734,20 @@ std::size_t radio_catalog_discover_city(const char *city, RadioStation *stations
     RadioLocation preferred = {};
     if (city) copy_text(preferred.city, sizeof(preferred.city), city);
     return radio_catalog_discover_location(preferred, stations, capacity, location);
+}
+
+bool radio_catalog_resolve_stream(const char *query, char *url, std::size_t capacity,
+                                  RadioCatalogCancelled cancelled, const char *must_word) {
+    if (!query || !url || capacity == 0) return false;
+    url[0] = '\0';
+    const DirectoryServers servers = directory_servers(cancelled);
+    RadioStation found = {};
+    std::size_t results = 0;
+    if (!resolve_search_preset(servers, query, "", "", &found, cancelled, &results, must_word)) {
+        ESP_LOGI(kTag, "Stream search \"%s\": %u results, no usable stream", query, (unsigned)results);
+        return false;
+    }
+    std::snprintf(url, capacity, "%s", found.url);
+    ESP_LOGI(kTag, "Stream search \"%s\": %u results, chose %s", query, (unsigned)results, url);
+    return url[0] != '\0';
 }
