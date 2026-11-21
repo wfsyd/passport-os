@@ -3,6 +3,7 @@ import re
 import subprocess
 import sys
 import tempfile
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -57,6 +58,50 @@ for city, state in [('Sydney', 'NSW'), ('Melbourne', 'VIC'), ('Brisbane', 'QLD')
         dab_blocks = {block for band, _, _, block, _ in rows if band == 2}
         assert dab_blocks == {'', '9C'}, 'DAB+ simulcasts have no block, national services are on 9C'
         assert (2, 'KIIS 106.5') in names, 'commercial brand simulcast on DAB+'
+
+# DAB+-only areas fold into the FM/AM area with the most stations within 70 km, not the nearest.
+# Sydney suburbs (Campbelltown, Windsor, ...) must land in nsw-sydney, never in Nowra or Lithgow.
+SYDNEY_SUBURBS = ('Campbelltown', 'Windsor', 'Manly', 'Sutherland', 'Waverley')
+area_names = {name for name, _, _, _ in areas}
+for suburb in SYDNEY_SUBURBS:
+    assert suburb not in area_names, f'{suburb} is a DAB+-only area folded into Sydney'
+for name, state in (('Nowra', 'NSW'), ('Lithgow (City)', 'NSW')):
+    for a in areas:
+        if a[0] == name and a[1] == state:
+            rows = stations[a[2]:a[2] + a[3]]
+            assert all(band != 2 for band, _, _, _, _ in rows), f'{name} has DAB+ rows folded from Sydney'
+
+FOLD_MODULE = ROOT / 'tools/acma_to_stations.py'
+try:
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('acma_to_stations', FOLD_MODULE)
+    acma = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(acma)
+except ImportError as error:
+    print(f'SKIP fold rule test: {error}')
+else:
+    head = ['area_id', 'area_name', 'state', 'lat', 'lon', 'band', 'freq', 'dab_block', 'name', 'query']
+    def row(area, name, state, lat, lon, band, freq, block, brand):
+        return [area, name, state, f'{lat:.4f}', f'{lon:.4f}', band, str(freq), block, brand, brand]
+    fold_rows = [
+        # Sydney: three FM/AM stations. Nowra: one AM station, nearer to Campbelltown.
+        row('nsw-sydney', 'Sydney', 'NSW', -33.82, 151.185, 'FM', 1005, '', 'triple j'),
+        row('nsw-sydney', 'Sydney', 'NSW', -33.82, 151.185, 'FM', 1065, '', 'KIIS 106.5'),
+        row('nsw-sydney', 'Sydney', 'NSW', -33.82, 151.185, 'AM', 702, '', 'ABC Sydney'),
+        row('nsw-nowra', 'Nowra', 'NSW', -34.6181, 150.6975, 'AM', 603, '', 'ABC Radio National'),
+        row('nsw-campbelltown', 'Campbelltown', 'NSW', -34.1472, 150.6708, 'DAB', 0, '9C', 'Double J'),
+        row('nsw-campbelltown', 'Campbelltown', 'NSW', -34.1472, 150.6708, 'DAB', 0, '9C', 'ABC Jazz'),
+    ]
+    folded = acma.fold_dab_only_areas(fold_rows, Counter())
+    folded_areas = {r[0] for r in folded}
+    assert 'nsw-campbelltown' not in folded_areas, 'DAB+-only area folds'
+    sydney = [r for r in folded if r[0] == 'nsw-sydney']
+    assert ('DAB', 'Double J') in {(r[5], r[8]) for r in sydney}, 'folded rows reach the Sydney area'
+    assert not [r for r in folded if r[0] == 'nsw-nowra' and r[5] == 'DAB'], 'nearer area with fewer stations loses'
+    # Outside 70 km nothing folds.
+    far = [row('wa-far', 'Far', 'WA', -20.0, 120.0, 'DAB', 0, '9C', 'Double J')] + fold_rows[:3]
+    assert 'wa-far' in {r[0] for r in acma.fold_dab_only_areas(far, Counter())}
+    print('fold rule test: PASS')
 
 with tempfile.TemporaryDirectory(prefix='passport-au-radio-') as tmp:
     tmp = Path(tmp)

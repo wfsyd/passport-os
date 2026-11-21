@@ -84,7 +84,7 @@ DTV, Introduction and Glossary. Rules, in order:
 8. Each area keeps at most 96 rows (`au_radio::kMaxListed`), ranked National, then
    Commercial and DAB+, then Community, then Retransmission, each by power.
 
-An area with only DAB+ rows (no FM or AM) is folded into the nearest FM or AM area within
+An area with only DAB+ rows (no FM or AM) is folded into the FM or AM area with the most stations within
 70 km, with its DAB+ rows merged there (rule 8 of `acma_to_stations.py`). Without such an area it
 is kept.
 

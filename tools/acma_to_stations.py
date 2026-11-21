@@ -25,9 +25,10 @@ Filter rules, applied in this order (counts are printed):
            brand, with dab_block empty (shown as DAB+). Commercial and ABC/SBS
            services simulcast on DAB+.
      A DAB+ row with no FM area within 50 km marks no area.
-  8. An area with only DAB+ rows (no FM or AM) is folded into the nearest area within
-     70 km that has FM or AM rows. Its DAB+ rows are merged there, deduplicated by name
-     (the block of the existing row is kept). Without such an area it is kept as it is.
+  8. An area with only DAB+ rows (no FM or AM) is folded into an area within 70 km that
+     has FM or AM rows: the one with the most stations (rows) wins, ties go to the nearest.
+     Its DAB+ rows are merged there, deduplicated by name (the block of the existing row
+     is kept). Without such an area it is kept as it is.
      Without this, a DAB+ transmitter site can become an area with three rows, which
      the device would show instead of the metro area.
   9. Areas with no rows left are dropped, so the device falls back to the directory
@@ -220,7 +221,11 @@ def make_area_ids(keys):
 
 
 def fold_dab_only_areas(rows, skipped):
-    """Fold each area that has only DAB+ rows into the nearest FM/AM area within 70 km.
+    """Fold each area that has only DAB+ rows into an FM/AM area within 70 km.
+
+    The target is the candidate with the most stations (rows, counted before any folding),
+    ties going to the nearest. Nearest-only was wrong: it sent Campbelltown to Nowra and
+    Windsor to Lithgow when Sydney is the metro area.
 
     rows are output rows in COLUMNS order. The DAB+ rows are merged into the target area,
     deduplicated by name (the target's existing row, and its block, wins). A DAB+-only area
@@ -239,15 +244,19 @@ def fold_dab_only_areas(rows, skipped):
         areas[area_id]['rows'].append(row)
 
     targets = {a: v for a, v in areas.items() if v['bands'] - {'DAB'}}
+    station_counts = {a: len(v['rows']) for a, v in targets.items()}
     for area_id in order:
         area = areas[area_id]
         if area_id in targets:
             continue
-        best, best_km = None, DAB_ONLY_FOLD_KM
+        best, best_key = None, None
         for other_id, other in targets.items():
             km = distance_km(area['lat'], area['lon'], other['lat'], other['lon'])
-            if km <= best_km:
-                best, best_km = other_id, km
+            if km > DAB_ONLY_FOLD_KM:
+                continue
+            key = (-station_counts[other_id], km)
+            if best_key is None or key < best_key:
+                best, best_key = other_id, key
         if best is None:
             skipped['DAB+-only area with no FM or AM area within 70 km (kept)'] += 1
             continue
