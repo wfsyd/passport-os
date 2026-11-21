@@ -1,11 +1,11 @@
 // NetEase Cloud Music web API and PC-client eapi requests.
 //
 // Rule: the login cookie (MUSIC_U) is never sent over plain HTTP. Requests that
-// carry it use HTTPS, including large list calls (user playlists, playlist track
-// ids, daily songs). If an HTTPS playlist call fails (for example memory, or
-// records above the 8 KiB TLS limit), it retries without the cookie (public data
-// only); daily songs have no fallback. Anonymous metadata (song detail, lyrics)
-// uses plain HTTP so it can run beside the MP3 decoder without a TLS session.
+// carry it use HTTPS; user playlists are paged small enough for the 8 KiB TLS
+// record limit. Playlist track ids and daily songs are still too large for it and
+// fail on device (unresolved). If an HTTPS playlist call fails, it retries without
+// the cookie (public data only); daily songs have no fallback. Anonymous metadata
+// (song detail, lyrics, search) uses plain HTTP so it can run beside the MP3 decoder.
 // Responses stream through JsonScanner; nothing is buffered.
 #pragma once
 
