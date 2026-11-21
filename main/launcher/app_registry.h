@@ -52,6 +52,8 @@ void app_registry_log_display_state(void);
 void app_registry_keep_awake(void);
 // Caller holds LVGL lock. Wake without switching apps; false during handoff.
 bool app_registry_wake_for_notice(void);
+// Pause LVGL refresh while a settings page swaps screens; false resumes it.
+void app_registry_hold_refresh(bool hold);
 // Caller holds LVGL lock. Never wait for the lifecycle lock or seize audio.
 bool app_registry_sound_notice(void);
 

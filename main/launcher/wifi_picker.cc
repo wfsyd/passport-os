@@ -104,7 +104,6 @@ bool wifi_picker_open() {
     if (s_picker) return true;
     s_picker = new (std::nothrow) Picker;
     if (!s_picker) return false;
-    WifiManager::GetInstance().StartConfigAp(true, true);
     if (!radio_ui_init()) { wifi_picker_close(); return false; }
     bsp_lvgl_lock(-1);
     refresh_scan();
@@ -123,6 +122,7 @@ bool wifi_picker_open() {
         draw();
     }, 1000, nullptr);
     bsp_lvgl_unlock();
+    WifiManager::GetInstance().StartConfigAp(true, true);
     return true;
 }
 

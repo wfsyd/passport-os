@@ -190,6 +190,7 @@ bool s_ok_long_triggered = false;
 // empty screen exists only to keep LVGL's active pointer valid; never draw it.
 lv_obj_t *s_handoff_screen = nullptr;
 std::atomic<bool> s_building_target{false};
+std::atomic<bool> s_refresh_hold{false};
 uint32_t s_handoff_count = 0;
 uint32_t s_handoff_flushes = 0;
 uint32_t s_panel_flushes = 0;
@@ -198,7 +199,7 @@ std::atomic<int64_t> s_switch_started_us{0};
 std::atomic<int> s_first_frame_stage{0}; // 0 idle, 1 waiting first flush, 2 waiting refresh end
 
 void resume_target_refresh(lv_display_t *display) {
-    if (!s_screen_on.load() || s_building_target.load() ||
+    if (!s_screen_on.load() || s_building_target.load() || s_refresh_hold.load() ||
         (s_handoff_screen && lv_screen_active() == s_handoff_screen)) return;
     if (auto *timer = lv_display_get_refr_timer(display)) {
         // A full invalidation may already be cached while the holder is active.
@@ -215,7 +216,7 @@ void display_refresh_guard(lv_event_t *event) {
         // LVGL's default REFR_REQUEST handler resumes this timer on every
         // invalidation. Pausing it once is insufficient; keep holding until a
         // real target is loaded, including targets built by another task.
-        if (!s_screen_on.load() || s_building_target.load() ||
+        if (!s_screen_on.load() || s_building_target.load() || s_refresh_hold.load() ||
             (s_handoff_screen && lv_screen_active() == s_handoff_screen)) {
             if (auto *timer = lv_display_get_refr_timer(display)) lv_timer_pause(timer);
         }
@@ -659,6 +660,17 @@ void app_registry_keep_awake(void) {
     // 只续期不唤醒:屏幕已熄灭时刷新计时也无副作用(仍是熄灭态),
     // 下一次真正的按键依旧走"第一按仅唤醒"护栏。
     s_last_activity_us.store(esp_timer_get_time(), std::memory_order_release);
+}
+
+void app_registry_hold_refresh(bool hold) {
+    bsp_lvgl_lock(-1);
+    s_refresh_hold = hold;
+    if (hold) {
+        if (auto *timer = lv_display_get_refr_timer(nullptr)) lv_timer_pause(timer);
+    } else if (lv_screen_active() != nullptr) {
+        resume_target_refresh(lv_display_get_default());
+    }
+    bsp_lvgl_unlock();
 }
 
 bool app_registry_sound_notice(void) {
