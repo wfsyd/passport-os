@@ -485,7 +485,7 @@ Result account(const char *cookie, uint64_t *uid, char *nickname, size_t capacit
         else if (is(path, "profile.userId") || (is(path, "account.id") && !ctx.uid)) ctx.uid = to_u64(value);
         else if (is(path, "profile.nickname")) copy(ctx.nick, ctx.capacity, value);
     }, &ctx);
-    const Result r = get_json("http://music.163.com/api/nuser/account/get", cookie, scanner, cancelled);
+    const Result r = get_json("https://music.163.com/api/nuser/account/get", cookie, scanner, cancelled);
     if (r != Result::Ok) return r;
     *uid = ctx.uid;
     if (ctx.code == 200 && ctx.uid) {
@@ -643,7 +643,7 @@ Result song_urls(const char *cookie, const uint64_t *ids, size_t count, SongUrl 
     } else {
         char request[208];
         std::snprintf(request, sizeof(request),
-                      "http://music.163.com/api/song/enhance/player/url?ids=%%5B%s%%5D&br=128000", id_list);
+                      "https://music.163.com/api/song/enhance/player/url?ids=%%5B%s%%5D&br=128000", id_list);
         r = get_json(request, nullptr, scanner, cancelled);
     }
     if (r != Result::Ok || ctx.code != 200) {
