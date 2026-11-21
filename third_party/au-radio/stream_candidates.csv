@@ -5,3 +5,18 @@ Smooth 95.3,https://playerservices.streamtheworld.com/api/livestream-redirect/SM
 Smooth 95.3,https://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC320.aac
 Triple M Sydney,https://sa47.scastream.com.au/2mmm_128?sca3xx=1
 ABC Classic,https://mediaserviceslive.akamaized.net/hls/live/2038316/classicfmnsw/index.m3u8
+triple j,http://abc.streamguys1.com/live/triplejnsw/icecast.audio
+Double J,http://abc.streamguys1.com/live/doublejnsw/icecast.audio
+ABC Classic,http://abc.streamguys1.com/live/classicfmnsw/icecast.audio
+ABC Sydney,http://abc.streamguys1.com/live/localsydney/icecast.audio
+ABC Jazz,http://abc.streamguys1.com/live/abcjazz/icecast.audio
+ABC NewsRadio,http://abc.streamguys1.com/live/newsradio/icecast.audio
+ABC Melbourne,http://abc.streamguys1.com/live/localmelbourne/icecast.audio
+ABC Canberra,http://abc.streamguys1.com/live/localcanberra/icecast.audio
+ABC Hobart,http://abc.streamguys1.com/live/localhobart/icecast.audio
+ABC Darwin,http://abc.streamguys1.com/live/localdarwin/icecast.audio
+Radio Adelaide,http://abc.streamguys1.com/live/localadelaide/icecast.audio
+2UE,http://sa46.scastream.com.au/live/2ue_128.stream/playlist.m3u8
+Triple M Melbourne,http://sa47.scastream.com.au/live/3mmm_128.stream/playlist.m3u8
+Triple M Brisbane,http://sa47.scastream.com.au/live/4mmm_128.stream/playlist.m3u8
+Mix 94.5,http://sa46.scastream.com.au/live/6mix_128.stream/playlist.m3u8
