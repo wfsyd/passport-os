@@ -18,16 +18,13 @@ Triple M Sydney,http://sa47.scastream.com.au/2mmm_128?sca3xx=1,aac,2026-11-21
 2CA,http://playerservices.streamtheworld.com/api/livestream-redirect/2CAAAC.aac,aac,2026-11-21
 4ZZZ,https://iheart.4zzz.org.au/zed-digital,aac,2026-11-21
 ABC Melbourne,https://mediaserviceslive.akamaized.net/hls/live/2109416/localmelbourne/v0-221.m3u8,hls,2026-11-21
-2UE,http://sa46.scastream.com.au:80/live/2ue_128.stream/playlist.m3u8?listeningSessionID=6aadec9a2f8551ba_5478164_UboreZTF_MTAzLjIxLjgxLjY6ODA!_000000dUxoh&downloadSessionID=0,hls,2026-11-21
 Smooth 95.3,http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC48.aac,aac,2026-11-21
-SYN,http://stream.nightride.fm/chillsynth.mp3,aac,2026-11-21
 Print Radio Tasmania,http://165.228.181.146:88/broadwave.mp3?src=1&rate=1,aac,2026-11-21
 Nova 100,http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_100_AAC320.aac,aac,2026-11-21
 Sea FM,http://stream.rcs.revma.com/128n3ctdwhruv,aac,2026-11-21
 Gold 104.3,http://ais-arn.streamguys1.com/au_004_icy,aac,2026-11-21
 KIIS 106.5,http://ais-arn.streamguys1.com/au_007_icy,aac,2026-11-21
 Triple M Adelaide,http://legacy.scahw.com.au/5mmm_32,aac,2026-11-21
-Mix 94.5,http://sa46.scastream.com.au/live/6mix_128.stream/playlist.m3u8?listeningSessionID=692f1dcf00977a0f_17156967_Q3O0YAv4_MTAzLjIxLjgxLjY6ODA!_000000q9IbS&downloadSessionID=0,hls,2026-11-21
 ABC Radio National,http://abc.streamguys1.com/live/rnnsw/icecast.audio,aac,2026-11-21
 ABC Jazz,https://mediaserviceslive.akamaized.net/hls/live/2108543/abcjazz/v0-221.m3u8,hls,2026-11-21
 Nova 106.9,http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_1069_AAC320.aac,aac,2026-11-21
@@ -49,10 +46,8 @@ Double J,https://mediaserviceslive.akamaized.net/hls/live/2108567/doublejnsw/v0-
 Fine Music,http://radio12.shoutcast.net.au:2020/stream/2MBS-ICE,aac,2026-11-21
 3AW,http://playerservices.streamtheworld.com/api/livestream-redirect/3AW.mp3,aac,2026-11-21
 ABC NewsRadio,https://mediaserviceslive.akamaized.net/hls/live/2109425/newsradio/v0-221.m3u8,hls,2026-11-21
-Triple M Brisbane,http://sa47.scastream.com.au/live/4mmm_128.stream/playlist.m3u8?listeningSessionID=692f0d2f013be492_16910808_cXvVLSYa_NjYuODUuODkuMTcyOjgw_000000nmU6U&downloadSessionID=0,hls,2026-11-21
 ABC Adelaide,https://mediaserviceslive.akamaized.net/hls/live/2109401/localadelaide/v0-221.m3u8,hls,2026-11-21
 Mix 104.9,http://playerservices.streamtheworld.com/api/livestream-redirect/DAR_MIX1049AAC.aac,aac,2026-11-21
 6PR,http://playerservices.streamtheworld.com/api/livestream-redirect/6PR.mp3,aac,2026-11-21
 ABC Brisbane,https://mediaserviceslive.akamaized.net/hls/live/2109403/localbrisbane/v0-221.m3u8,hls,2026-11-21
-Triple M Melbourne,https://sa47.scastream.com.au:443/live/3mmm_128.stream/playlist.m3u8?listeningSessionID=6aaecefdbf1e313b_5420267_nXTCqcqQ_MTAzLjIxLjgxLjEwOjgw_000000dtH7j&downloadSessionID=0,hls,2026-11-21
 ABC Perth,https://mediaserviceslive.akamaized.net/hls/live/2109419/localperth/v0-221.m3u8,hls,2026-11-21
