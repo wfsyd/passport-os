@@ -1,1 +1,22 @@
 name,url,codec,checked
+Fine Music,http://radio12.shoutcast.net.au:2020/stream/2MBS-ICE,aac,2026-11-21
+2GB,http://playerservices.streamtheworld.com/api/livestream-redirect/2GB.mp3,aac,2026-11-21
+ABC Jazz,https://mediaserviceslive.akamaized.net/hls/live/2108543/abcjazz/v0-221.m3u8,hls,2026-11-21
+2SM,http://cast4.asurahosting.com/proxy/2sm1269/stream,aac,2026-11-21
+Nova 96.9,http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969_AAC48.aac,aac,2026-11-21
+ABC Classic,https://mediaserviceslive.akamaized.net/hls/live/2108547/classicfmnsw/v0-221.m3u8,hls,2026-11-21
+KIIS 106.5,http://ais-arn.streamguys1.com/au_007_icy,aac,2026-11-21
+SBS PopAsia,http://sbs-ice.streamguys1.com/sbs-popasia-sbs-web,aac,2026-11-21
+2UE,http://sa46.scastream.com.au:80/live/2ue_128.stream/playlist.m3u8?listeningSessionID=6aac64d6ea1b1a83_5578398_zB8TDLNK_MTAzLjIxLjgxLjI6ODA!_000000ekrrA&downloadSessionID=0,hls,2026-11-21
+2Day FM,http://legacy.scahw.com.au/2day_32,aac,2026-11-21
+Triple M Sydney,http://sa47.scastream.com.au/2mmm_128?sca3xx=1,aac,2026-11-21
+ABC NewsRadio,https://mediaserviceslive.akamaized.net/hls/live/2109425/newsradio/v0-221.m3u8,hls,2026-11-21
+SBS Radio,http://sbs-ice.streamguys1.com/sbs1-sbs-web,aac,2026-11-21
+FBi Radio,http://streamer.fbiradio.com/stream,aac,2026-11-21
+Smooth 95.3,http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC48.aac,aac,2026-11-21
+Double J,https://mediaserviceslive.akamaized.net/hls/live/2108567/doublejnsw/v0-221.m3u8,hls,2026-11-21
+2SER,http://138.25.219.25:840/2ser128.MP3,aac,2026-11-21
+ABC Sydney,https://mediaserviceslive.akamaized.net/hls/live/2109422/localsydney/v0-221.m3u8,hls,2026-11-21
+Hope 103.2,http://28853.live.streamtheworld.com/2CBAAAC.aac,aac,2026-11-21
+ABC Radio National,http://abc.streamguys1.com/live/rnnsw/icecast.audio,aac,2026-11-21
+triple j,https://mediaserviceslive.akamaized.net/hls/live/2109456/triplejnsw/v0-221.m3u8,hls,2026-11-21
