@@ -87,6 +87,20 @@ bool area_for_choice(const char *choice, std::size_t *area);
 bool area_for_selection(const char *choice, const char *city, const char *region, const char *lat,
                         const char *lon, std::size_t *area);
 
+// The rule that chose an area, for logs. None when no rule matched.
+enum class AreaRule : uint8_t { None, Choice, City, Region, Gps };
+const char *area_rule_name(AreaRule rule);
+// As area_for_selection, also reporting the rule and, for Gps, the distance in km.
+// rule and km may be null.
+bool area_for_selection_detail(const char *choice, const char *city, const char *region,
+                               const char *lat, const char *lon, std::size_t *area,
+                               AreaRule *rule, double *km);
+
+// Stream-query fallback for a "No stream" miss: drops trailing frequency or band tokens
+// ("KIIS 106.5" -> "KIIS", "ABC Radio 774 AM" -> "ABC Radio"). False when nothing would
+// be dropped, when the result would be empty, or when `out` is too small.
+bool shorter_query(const char *query, char *out, std::size_t capacity);
+
 // Area picker state machine (states, then areas of the chosen state). Pure logic: the
 // UI renders label() rows and feeds it up/down/OK/long-OK. At the areas level the rows are
 // the major areas of the state (the capital first, then A-Z), and the last row is Auto.

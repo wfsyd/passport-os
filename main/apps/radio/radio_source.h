@@ -19,6 +19,8 @@ public:
     }
     // offset > 0 asks for "Range: bytes=offset-"; check status() for 206.
     bool open(const char *url, uint32_t offset = 0);
+    // Opens `first`; when that fails before any body byte or HLS state exists, opens `fallback`.
+    bool open_fallback(const char *first, const char *fallback);
     int read(uint8_t *data, size_t size);
     bool complete() const { return finished_; }
     bool oom() const { return oom_; }

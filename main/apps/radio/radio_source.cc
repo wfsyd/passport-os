@@ -136,6 +136,15 @@ bool RadioSource::next_segment() {
     }
     return false;
 }
+bool RadioSource::open_fallback(const char *first, const char *fallback) {
+    if (open(first)) return true;
+    // Only a failure before any body byte was read leaves this object reusable.
+    if (oom_ || cancelled() || prefix_size_ || hls_) return false;
+    ESP_LOGI(kTag, "Plain-http open failed; trying https");
+    mime_[0] = '\0';
+    return open(fallback);
+}
+
 bool RadioSource::open(const char *url, uint32_t offset) {
     range_start_ = offset;
     if (!request(url)) return false;

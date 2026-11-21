@@ -339,11 +339,17 @@ bool resolve_table_stream(std::size_t station, uint32_t generation, char *url, s
     radio_ui_set_playback(RadioPlaybackState::Connecting, "Finding stream");
     s_resolve_generation.store(generation, std::memory_order_release);
     s_resolve_station.store(station, std::memory_order_release);
-    const au_radio::StreamLookup lookup = au_radio::resolve_stream(
-        table.cache, row, query, url, capacity,
-        [](const char *name, char *out, std::size_t size) {
-            return radio_catalog_resolve_stream(name, out, size, resolve_cancelled);
-        });
+    const auto resolve = [](const char *name, char *out, std::size_t size) {
+        return radio_catalog_resolve_stream(name, out, size, resolve_cancelled);
+    };
+    au_radio::StreamLookup lookup = au_radio::resolve_stream(table.cache, row, query, url, capacity, resolve);
+    // A miss gets one retry with the shorter name ("KIIS 106.5" -> "KIIS").
+    char shorter[sizeof(RadioStation::name)] = {};
+    if (lookup == au_radio::StreamLookup::NotFound && !resolve_cancelled() &&
+        au_radio::shorter_query(query, shorter, sizeof(shorter))) {
+        ESP_LOGI(kTag, "No stream for \"%s\"; retrying as \"%s\"", query, shorter);
+        lookup = au_radio::resolve_stream(table.cache, row, shorter, url, capacity, resolve);
+    }
     if (lookup == au_radio::StreamLookup::NotFound) {
         ESP_LOGW(kTag, "No stream found for table row %u", static_cast<unsigned>(row));
         return false;
@@ -353,7 +359,8 @@ bool resolve_table_stream(std::size_t station, uint32_t generation, char *url, s
 
 StreamResult stream_station(std::size_t station, uint32_t generation) {
     RadioStation preset = station_snapshot(station);
-    if (s_table_mode.load(std::memory_order_acquire)) {
+    const bool table_row = s_table_mode.load(std::memory_order_acquire);
+    if (table_row) {
         if (!resolve_table_stream(station, generation, preset.url, sizeof(preset.url))) {
             return request_still_current(generation, station) ? StreamResult::NoStream
                                                               : StreamResult::Failed;
@@ -382,7 +389,18 @@ StreamResult stream_station(std::size_t station, uint32_t generation) {
     uint8_t *compressed = nullptr;
 
     do {
-        if (!source.open(preset.url)) {
+        ESP_LOGI(kTag, "Opening stream: free=%u largest=%u", (unsigned)esp_get_free_heap_size(),
+                 (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
+        bool opened = false;
+        if (table_row && std::strncmp(preset.url, "https://", 8) == 0) {
+            // Table rows try the http:// form first; https is used only if that fails to open.
+            char plain[sizeof(preset.url)] = {};
+            std::snprintf(plain, sizeof(plain), "http://%s", preset.url + 8);
+            opened = source.open_fallback(plain, preset.url);
+        } else {
+            opened = source.open(preset.url);
+        }
+        if (!opened) {
             out_of_memory = source.oom();
             break;
         }

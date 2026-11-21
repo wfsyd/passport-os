@@ -190,6 +190,34 @@ static void picker_flow() {
     assert(picker.back() == Outcome::Stay && picker.back() == Outcome::Close);
 }
 
+static void rules_and_shorter_query() {
+    // Fixture: Testville (NSW, lat -33.8 lon 151.2), Fixtureton (VIC), Bulk (QLD).
+    std::size_t area = 99;
+    AreaRule rule = AreaRule::None;
+    double km = -1;
+    assert(area_for_selection_detail("Fixtureton, VIC", "Testville", "", "-33.8", "151.2", &area, &rule, &km));
+    assert(area == 1 && rule == AreaRule::Choice);
+    assert(area_for_selection_detail("", "Testville", "", "", "", &area, &rule, &km));
+    assert(area == 0 && rule == AreaRule::City);
+    assert(area_for_selection_detail("", "Unknown", "Fixtureton", "", "", &area, &rule, &km));
+    assert(area == 1 && rule == AreaRule::Region);
+    assert(area_for_selection_detail("", "Unknown", "", "-33.9", "151.1", &area, &rule, &km));
+    assert(area == 0 && rule == AreaRule::Gps && km > 0 && km < 25);
+    assert(!area_for_selection_detail("", "Unknown", "", "-30.0", "151.2", &area, &rule, &km));
+    assert(rule == AreaRule::None);
+    assert(area_for_selection("", "Testville", "", "", "", &area) && area == 0);
+    assert(std::strcmp(area_rule_name(AreaRule::Gps), "gps") == 0);
+
+    char out[16];
+    assert(shorter_query("KIIS 106.5", out, sizeof(out)) && std::strcmp(out, "KIIS") == 0);
+    assert(shorter_query("ABC Radio 774 AM", out, sizeof(out)) && std::strcmp(out, "ABC Radio") == 0);
+    assert(shorter_query("Triple J 101.5 FM ", out, sizeof(out)) && std::strcmp(out, "Triple J") == 0);
+    assert(!shorter_query("ABC Radio", out, sizeof(out)));          // nothing to drop
+    assert(!shorter_query("106.5", out, sizeof(out)));              // dropping it would leave nothing
+    assert(!shorter_query("KIIS 106.5", out, 4));                   // "KIIS" needs 5 bytes
+    assert(!shorter_query(nullptr, out, sizeof(out)));
+}
+
 int main() {
     lookups();
     collection();
@@ -198,7 +226,8 @@ int main() {
     states_and_bands();
     readouts_and_choices();
     picker_flow();
+    rules_and_shorter_query();
     std::puts("AU radio table: lookups, nearest/profile selection, capacity, lazy resolve, LRU cache, "
-              "states, bands, readouts, area choice, picker: PASS");
+              "states, bands, readouts, area choice, picker, rules, shorter query: PASS");
     return 0;
 }

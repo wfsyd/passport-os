@@ -260,10 +260,75 @@ bool area_for_choice(const char *choice, std::size_t *area) {
     return false;
 }
 
+bool area_for_selection_detail(const char *choice, const char *city, const char *region,
+                              const char *lat, const char *lon, std::size_t *area,
+                              AreaRule *rule, double *km) {
+    if (rule) *rule = AreaRule::None;
+    if (!area) return false;
+    if (area_for_choice(choice, area)) {
+        if (rule) *rule = AreaRule::Choice;
+        return true;
+    }
+    if (area_by_name(city, area)) {
+        if (rule) *rule = AreaRule::City;
+        return true;
+    }
+    if (area_by_name(region, area)) {
+        if (rule) *rule = AreaRule::Region;
+        return true;
+    }
+    if (!lat || !lon || !lat[0] || !lon[0]) return false;
+    char *lat_end = nullptr;
+    char *lon_end = nullptr;
+    const double la = std::strtod(lat, &lat_end);
+    const double lo = std::strtod(lon, &lon_end);
+    if (lat_end == lat || lon_end == lon) return false;
+    double distance = 0;
+    if (!nearest_area(la, lo, area, &distance) || distance > kMaxSelectKm) return false;
+    if (rule) *rule = AreaRule::Gps;
+    if (km) *km = distance;
+    return true;
+}
+
 bool area_for_selection(const char *choice, const char *city, const char *region, const char *lat,
                         const char *lon, std::size_t *area) {
-    if (area_for_choice(choice, area)) return true;
-    return area_for_profile(city, region, lat, lon, area);
+    return area_for_selection_detail(choice, city, region, lat, lon, area, nullptr, nullptr);
+}
+
+const char *area_rule_name(AreaRule rule) {
+    switch (rule) {
+        case AreaRule::Choice: return "radio_city";
+        case AreaRule::City: return "city";
+        case AreaRule::Region: return "region";
+        case AreaRule::Gps: return "gps";
+        default: return "none";
+    }
+}
+
+bool shorter_query(const char *query, char *out, std::size_t capacity) {
+    if (!query || !out || capacity == 0) return false;
+    const std::size_t length = std::strlen(query);
+    std::size_t keep = length;
+    while (keep > 0 && query[keep - 1] == ' ') --keep;
+    // Trim whole trailing tokens while they are a frequency (contains a digit) or a band word.
+    for (;;) {
+        std::size_t start = keep;
+        while (start > 0 && query[start - 1] != ' ') --start;
+        const std::size_t token_length = keep - start;
+        if (token_length == 0) break;
+        bool droppable = false;
+        for (std::size_t i = start; i < keep; ++i) droppable |= std::isdigit(static_cast<unsigned char>(query[i])) != 0;
+        const char first = static_cast<char>(std::tolower(static_cast<unsigned char>(query[start])));
+        const char second = static_cast<char>(std::tolower(static_cast<unsigned char>(query[start + 1])));
+        if (token_length == 2 && second == 'm' && (first == 'f' || first == 'a')) droppable = true;
+        if (!droppable) break;
+        keep = start;
+        while (keep > 0 && query[keep - 1] == ' ') --keep;
+    }
+    if (keep == 0 || keep >= length || keep >= capacity) return false;
+    std::memcpy(out, query, keep);
+    out[keep] = '\0';
+    return true;
 }
 
 void AreaPicker::open() {
