@@ -1,4 +1,5 @@
 #include "apps/home/home_profile.h"
+#include "apps/ai_usage/ai_usage_core.h"
 
 #include "esp_log.h"
 #include "esp_spiffs.h"
@@ -50,6 +51,7 @@ static char s_upload_path[HOME_SHARE_PATH_MAX];
 static portMUX_TYPE s_mux = portMUX_INITIALIZER_UNLOCKED;
 static home_profile_t s_profile;
 static uint32_t s_version = 1;
+static char s_ai_usage_url[AI_USAGE_URL_MAX];
 
 static bool utf8_len_ok(const char *s, size_t cap) {
     return s && strnlen(s, cap) < cap; /* strlen 已含结尾 0 之外的全部字节 */
@@ -79,10 +81,16 @@ void home_profile_init(void) {
     s_cards_loaded = false;
     s_avatar_loaded = false;
     memset(&s_profile, 0, sizeof(s_profile));
+    s_ai_usage_url[0] = '\0';
     nvs_handle_t handle;
     if (nvs_open(NVS_NAMESPACE, NVS_READONLY, &handle) != ESP_OK) {
         ESP_LOGI(TAG, "No profile stored yet, using empty profile");
         return;
+    }
+    size_t url_len = sizeof(s_ai_usage_url);
+    if (nvs_get_str(handle, "ai_usage_url", s_ai_usage_url, &url_len) != ESP_OK ||
+        !ai_usage_url_valid(s_ai_usage_url)) {
+        s_ai_usage_url[0] = '\0';
     }
     size_t len;
     len = sizeof(s_profile.name);
@@ -120,6 +128,34 @@ uint32_t home_profile_version(void) {
     uint32_t v = s_version;
     portEXIT_CRITICAL(&s_mux);
     return v;
+}
+
+esp_err_t home_profile_set_ai_usage_url(const char *url) {
+    if (!ai_usage_url_valid(url)) return ESP_ERR_INVALID_ARG;
+    nvs_handle_t handle;
+    esp_err_t err = nvs_open(NVS_NAMESPACE, NVS_READWRITE, &handle);
+    if (err != ESP_OK) return err;
+    err = nvs_set_str(handle, "ai_usage_url", url);
+    if (err == ESP_OK) err = nvs_commit(handle);
+    nvs_close(handle);
+    if (err != ESP_OK) {
+        ESP_LOGW(TAG, "AI usage URL save failed: %s", esp_err_to_name(err));
+        return err;
+    }
+    portENTER_CRITICAL(&s_mux);
+    memcpy(s_ai_usage_url, url, strlen(url) + 1); /* validated: fits AI_USAGE_URL_MAX */
+    portEXIT_CRITICAL(&s_mux);
+    return ESP_OK;
+}
+
+void home_profile_get_ai_usage_url(char *out, size_t cap) {
+    if (!out || cap == 0) return;
+    size_t n = 0;
+    portENTER_CRITICAL(&s_mux);
+    while (n + 1 < cap && s_ai_usage_url[n] != '\0') ++n;
+    memcpy(out, s_ai_usage_url, n);
+    portEXIT_CRITICAL(&s_mux);
+    out[n] = '\0';
 }
 
 esp_err_t home_profile_set_text(const home_profile_t *in) {

@@ -9,6 +9,7 @@
 #include "ui/ui_palette.h"
 
 #include <cJSON.h>
+#include "apps/ai_usage/ai_usage_core.h"
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
@@ -124,6 +125,9 @@ static esp_err_t handler_profile_get(httpd_req_t *req) {
     cJSON_AddStringToObject(root, "region", profile.region);
     cJSON_AddStringToObject(root, "radio_city", profile.radio_city);
     cJSON_AddStringToObject(root, "country_code", profile.country_code);
+    char ai_usage_url[AI_USAGE_URL_MAX];
+    home_profile_get_ai_usage_url(ai_usage_url, sizeof(ai_usage_url));
+    cJSON_AddStringToObject(root, "ai_usage_url", ai_usage_url);
     cJSON_AddBoolToObject(root, "avatar", home_profile_has_avatar());
     cJSON *palette = cJSON_AddArrayToObject(root, "portrait_palette");
     for (uint8_t level = 0; level < 4; ++level)
@@ -176,10 +180,24 @@ static esp_err_t handler_profile_post(httpd_req_t *req) {
         grab("region", in.region, HOME_REGION_MAX) &&
         grab("radio_city", in.radio_city, HOME_CITY_MAX) &&
         grab("country_code", in.country_code, sizeof(in.country_code));
+    // Optional: an absent key keeps the stored helper URL; a present key
+    // replaces it (empty turns the feature off). Checked before anything is saved.
+    const cJSON *usage_item = cJSON_GetObjectItemCaseSensitive(root, "ai_usage_url");
+    const bool usage_given = usage_item != nullptr;
+    char usage_url[AI_USAGE_URL_MAX] = {};
+    bool usage_valid = !usage_given || cJSON_IsString(usage_item);
+    if (usage_given && usage_valid) {
+        const size_t usage_len = std::strlen(usage_item->valuestring);
+        usage_valid = usage_len < sizeof(usage_url);
+        if (usage_valid) std::memcpy(usage_url, usage_item->valuestring, usage_len + 1);
+    }
+    usage_valid = usage_valid && (!usage_given || ai_usage_url_valid(usage_url));
     cJSON_Delete(root);
     if (!valid) return send_json(req, 400, "{\"error\":\"text too long\"}");
+    if (!usage_valid) return send_json(req, 400, "{\"error\":\"ai_usage_url\"}");
 
     esp_err_t err = home_profile_set_text(&in);
+    if (err == ESP_OK && usage_given) err = home_profile_set_ai_usage_url(usage_url);
     return send_json(req, err == ESP_OK ? 200 : 400,
                      err == ESP_OK ? "{\"ok\":true}" : "{\"error\":\"invalid\"}");
 }

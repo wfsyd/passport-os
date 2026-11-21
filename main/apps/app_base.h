@@ -26,6 +26,7 @@ typedef enum {
     APP_ID_NETEASE,
     APP_ID_REMINDERS,
     APP_ID_LISTS,
+    APP_ID_AI_USAGE,
     APP_ID_COUNT
 } passport_app_id_t;
 

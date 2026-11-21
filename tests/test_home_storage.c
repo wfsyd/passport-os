@@ -43,13 +43,23 @@ esp_err_t nvs_open(const char *ns, int mode, nvs_handle_t *h) {
     return ESP_OK;
 }
 void nvs_close(nvs_handle_t h) { (void)h; }
+static char ai_url_store[AI_USAGE_URL_MAX];
+static bool ai_url_stored;
 esp_err_t nvs_get_str(nvs_handle_t h, const char *key, char *out, size_t *n) {
-    (void)h; (void)key; (void)out; (void)n;
-    return ESP_ERR_NVS_NOT_FOUND;
+    (void)h;
+    if (strcmp(key, "ai_usage_url") || !ai_url_stored) return ESP_ERR_NVS_NOT_FOUND;
+    if (strlen(ai_url_store) + 1 > *n) return ESP_FAIL;
+    memcpy(out, ai_url_store, strlen(ai_url_store) + 1);
+    return ESP_OK;
 }
 esp_err_t nvs_commit(nvs_handle_t h) { (void)h; ++commits; return ESP_OK; }
 esp_err_t nvs_set_str(nvs_handle_t h, const char *key, const char *value) {
     (void)h;
+    if (!strcmp(key, "ai_usage_url")) {
+        snprintf(ai_url_store, sizeof(ai_url_store), "%s", value);
+        ai_url_stored = true;
+        return ESP_OK;
+    }
     assert(!strcmp(key, "cards_v1"));
     snprintf(cards_order, sizeof(cards_order), "%s", value);
     return ESP_OK;
@@ -62,7 +72,28 @@ static void reset(void) {
     s_cards_loaded = s_avatar_loaded = true;
 }
 
+static void check_ai_usage_url(void) {
+    char url[AI_USAGE_URL_MAX];
+    home_profile_get_ai_usage_url(url, sizeof(url));
+    assert(url[0] == '\0');
+    const char *helper = "http://192.168.1.20:8787/usage.json?t=abc";
+    assert(home_profile_set_ai_usage_url(helper) == ESP_OK);
+    assert(home_profile_set_ai_usage_url("https://192.168.1.20/usage.json") == ESP_ERR_INVALID_ARG);
+    home_profile_get_ai_usage_url(url, sizeof(url));
+    assert(!strcmp(url, helper));          // rejected write keeps the old value
+    home_profile_init();                   // reload from NVS, as after a restart
+    home_profile_get_ai_usage_url(url, sizeof(url));
+    assert(!strcmp(url, helper));
+    char tiny[8];
+    home_profile_get_ai_usage_url(tiny, sizeof(tiny));
+    assert(strlen(tiny) == sizeof(tiny) - 1);   // truncated but terminated
+    assert(home_profile_set_ai_usage_url("") == ESP_OK);
+    home_profile_get_ai_usage_url(url, sizeof(url));
+    assert(url[0] == '\0');               // empty turns the feature off
+}
+
 int main(void) {
+    check_ai_usage_url();
     // Blank, another firmware's image (Xiaozhi OTA slot) or arbitrary data: always format.
     const uint8_t heads[] = {0xff, 0xe9, 0x7f};
     for (size_t i = 0; i < sizeof(heads); ++i) {
