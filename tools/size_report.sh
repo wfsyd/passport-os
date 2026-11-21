@@ -3,9 +3,9 @@ set -euo pipefail
 
 # Builds one firmware size-measurement variant and reports the app binary size.
 # Usage: tools/size_report.sh <variant>
-# Variants: base cert_cmn log_warn assert_silent nano_fmt combined
+# Variants: base cert_cmn log_warn assert_silent nano_fmt combined codec_trim
 
-variant="${1:?usage: $0 <base|cert_cmn|log_warn|assert_silent|nano_fmt|combined>}"
+variant="${1:?usage: $0 <base|cert_cmn|log_warn|assert_silent|nano_fmt|combined|codec_trim>}"
 repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 variant_cfg="/tmp/variant.cfg"
 out_dir="${repo_root}/size-out"
@@ -52,6 +52,33 @@ CONFIG_NEWLIB_NANO_FORMAT=y
 CONFIG_LIBC_NEWLIB_NANO_FORMAT=y
 EOF
         ;;
+    codec_trim)
+        cat >"${variant_cfg}" <<'EOF'
+CONFIG_AUDIO_DECODER_G711_SUPPORT=n
+CONFIG_AUDIO_DECODER_AMRNB_SUPPORT=n
+CONFIG_AUDIO_DECODER_AMRWB_SUPPORT=n
+CONFIG_AUDIO_DECODER_FLAC_SUPPORT=n
+CONFIG_AUDIO_DECODER_VORBIS_SUPPORT=n
+CONFIG_AUDIO_DECODER_ADPCM_SUPPORT=n
+CONFIG_AUDIO_DECODER_ALAC_SUPPORT=n
+CONFIG_AUDIO_DECODER_SBC_SUPPORT=n
+CONFIG_AUDIO_DECODER_LC3_SUPPORT=n
+CONFIG_AUDIO_DECODER_G722_SUPPORT=n
+CONFIG_AUDIO_ENCODER_AAC_SUPPORT=n
+CONFIG_AUDIO_ENCODER_G711_SUPPORT=n
+CONFIG_AUDIO_ENCODER_AMRNB_SUPPORT=n
+CONFIG_AUDIO_ENCODER_AMRWB_SUPPORT=n
+CONFIG_AUDIO_ENCODER_ADPCM_SUPPORT=n
+CONFIG_AUDIO_ENCODER_ALAC_SUPPORT=n
+CONFIG_AUDIO_ENCODER_PCM_SUPPORT=n
+CONFIG_AUDIO_ENCODER_SBC_SUPPORT=n
+CONFIG_AUDIO_ENCODER_LC3_SUPPORT=n
+CONFIG_AUDIO_ENCODER_G722_SUPPORT=n
+CONFIG_AUDIO_SIMPLE_DEC_WAV_SUPPORT=n
+CONFIG_AUDIO_SIMPLE_DEC_M4A_SUPPORT=n
+CONFIG_AUDIO_SIMPLE_DEC_OGG_SUPPORT=n
+EOF
+        ;;
     *)
         echo "ERROR: unknown variant '${variant}'" >&2
         exit 2
@@ -82,6 +109,13 @@ fi
 echo "== Size: ${variant} =="
 idf.py -B "${build_dir}" size
 
+if [[ "${variant}" == "codec_trim" ]]; then
+    echo "== sdkconfig codec options: ${variant} =="
+    grep -E "CONFIG_AUDIO_(DECODER|ENCODER|SIMPLE_DEC)" "${build_dir}/sdkconfig" || true
+    echo "== Size components (top 30): ${variant} =="
+    idf.py -B "${build_dir}" size-components 2>&1 | head -30 || true
+fi
+
 if [[ "${variant}" == "base" ]]; then
     mkdir -p "${out_dir}"
 
@@ -103,19 +137,29 @@ if [[ "${variant}" == "base" ]]; then
     echo "map file: ${map_file}"
     echo "elf file: ${elf_file}"
 
+    echo "== 2a: libmain.a name in map =="
+    grep -m3 "libmain.a" "${map_file}" || echo "NOT FOUND: libmain.a in map"
+    echo "== 2a: libpassport_muse.a name in map =="
+    grep -m3 "libpassport_muse.a" "${map_file}" || echo "NOT FOUND: libpassport_muse.a in map"
+    echo "== 2a: libesp-wifi-connect.a name in map =="
+    grep -m3 "libesp-wifi-connect.a" "${map_file}" || echo "NOT FOUND: libesp-wifi-connect.a in map"
+
+    echo "== esp_idf_size --help (first 60 lines) =="
+    python -m esp_idf_size --help 2>&1 | head -60 || true
+
     echo "== 2a: libmain.a per-object breakdown =="
-    if ! python -m esp_idf_size --archive-details libmain.a "${map_file}" 2>&1; then
-        echo "esp_idf_size failed; trying idf.py size --archive-details"
-        idf.py -B "${build_dir}" size --archive-details libmain.a 2>&1 \
-            || echo "CMD FAILED: libmain.a archive details (esp_idf_size and idf.py both failed)"
+    if ! python -m esp_idf_size --archive-details esp-idf/main/libmain.a "${map_file}" 2>&1; then
+        echo "--archive-details failed; trying --archive-details=<name> --files"
+        python -m esp_idf_size --archive-details=esp-idf/main/libmain.a --files "${map_file}" 2>&1 \
+            || echo "CMD FAILED: libmain.a archive details (both flag syntaxes failed)"
     fi
 
     echo "== 2b: libpassport_muse.a archive details (first 60 lines) =="
-    python -m esp_idf_size --archive-details libpassport_muse.a "${map_file}" 2>&1 | head -60 \
+    python -m esp_idf_size --archive-details esp-idf/passport_muse/libpassport_muse.a "${map_file}" 2>&1 | head -60 \
         || echo "CMD FAILED: libpassport_muse.a archive details"
 
     echo "== 2b: libesp-wifi-connect.a archive details (first 60 lines) =="
-    python -m esp_idf_size --archive-details libesp-wifi-connect.a "${map_file}" 2>&1 | head -60 \
+    python -m esp_idf_size --archive-details esp-idf/esp-wifi-connect/libesp-wifi-connect.a "${map_file}" 2>&1 | head -60 \
         || echo "CMD FAILED: libesp-wifi-connect.a archive details"
 
     echo "== 2c: largest symbols in final ELF (last 150 by size) =="
@@ -125,14 +169,6 @@ if [[ "${variant}" == "base" ]]; then
     echo "== 2d: ELF section headers =="
     riscv32-esp-elf-objdump -h "${elf_file}" 2>&1 \
         || echo "CMD FAILED: riscv32-esp-elf-objdump -h ${elf_file}"
-
-    echo "== 2d: map context around flash.appdesc =="
-    grep -n -B3 -A40 'flash.appdesc' "${map_file}" 2>&1 | head -120 \
-        || echo "CMD FAILED: grep flash.appdesc in ${map_file}"
-
-    echo "== 2d: map context around esp_app_desc.c.obj =="
-    grep -n -A10 'esp_app_desc.c.obj' "${map_file}" 2>&1 | head -60 \
-        || echo "CMD FAILED: grep esp_app_desc.c.obj in ${map_file}"
     echo "=== MAP BREAKDOWN END ==="
 fi
 

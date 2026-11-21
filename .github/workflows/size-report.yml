@@ -18,6 +18,7 @@ jobs:
       matrix:
         variant:
           - base
+          - codec_trim
           # Deferred variants, re-enable later:
           # - cert_cmn
           # - log_warn
