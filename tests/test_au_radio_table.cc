@@ -32,7 +32,7 @@ static void lookups() {
 
     std::size_t area = 99;
     assert(area_by_name("testville", &area) && area == 0);
-    assert(area_by_name("VIC", &area) && area == 1);
+    assert(!area_by_name("VIC", &area) && !area_by_name("nsw", &area));  // a bare state does not match
     assert(!area_by_name("Nowhere", &area) && !area_by_name("", &area));
 
     double km = -1;
@@ -136,7 +136,7 @@ static void readouts_and_choices() {
     assert(std::strcmp(text, "630 kHz") == 0);
     format_dial_readout(station_at(3), text, sizeof(text));
     assert(std::strcmp(text, "9A") == 0);
-    const Station simulcast{0, 0, 0, 0, kBandDab};  // empty dab_block: pool offset 0 is ""
+    const Station simulcast{0, 0, 0, 0, kBandDab, 0};  // empty dab_block: pool offset 0 is ""
     format_dial_readout(simulcast, text, sizeof(text));
     assert(std::strcmp(text, "DAB+") == 0);
 
@@ -171,19 +171,51 @@ static void picker_flow() {
     picker.move(-1);
     assert(picker.selected() == 1);
 
-    // VIC: Auto first, then its areas.
-    assert(picker.select() == Outcome::Stay && picker.count() == 2);
+    // VIC: Fixtureton has 1 row and is not a capital, so only Auto is listed (last row).
+    assert(picker.select() == Outcome::Stay && picker.count() == 1);
     assert(picker.level() == AreaPicker::Level::Areas && std::strcmp(picker.title(), "VIC") == 0);
     assert(std::strcmp(picker.label(0), AreaPicker::kAutoLabel) == 0);
-    assert(std::strcmp(picker.label(1), "Fixtureton") == 0);
-    picker.move(1);
-    assert(picker.select() == Outcome::Area && picker.chosen_area() == 1);
+    assert(picker.select() == Outcome::Auto);
 
     // Long OK goes back one level and keeps the state row highlighted.
     assert(picker.back() == Outcome::Stay && picker.level() == AreaPicker::Level::States);
     assert(picker.selected() == 1);
-    assert(picker.select() == Outcome::Stay && picker.select() == Outcome::Auto);
+
+    // QLD: Bulk has 100 rows, so it is listed first, then Auto.
+    picker.move(1);
+    assert(picker.select() == Outcome::Stay && picker.count() == 2);
+    assert(std::strcmp(picker.label(0), "Bulk") == 0);
+    assert(std::strcmp(picker.label(1), AreaPicker::kAutoLabel) == 0);
+    assert(picker.select() == Outcome::Area && picker.chosen_area() == 2);
     assert(picker.back() == Outcome::Stay && picker.back() == Outcome::Close);
+}
+
+static void rules_and_shorter_query() {
+    // Fixture: Testville (NSW, lat -33.8 lon 151.2), Fixtureton (VIC), Bulk (QLD).
+    std::size_t area = 99;
+    AreaRule rule = AreaRule::None;
+    double km = -1;
+    assert(area_for_selection_detail("Fixtureton, VIC", "Testville", "", "-33.8", "151.2", &area, &rule, &km));
+    assert(area == 1 && rule == AreaRule::Choice);
+    assert(area_for_selection_detail("", "Testville", "", "", "", &area, &rule, &km));
+    assert(area == 0 && rule == AreaRule::City);
+    assert(area_for_selection_detail("", "Unknown", "Fixtureton", "", "", &area, &rule, &km));
+    assert(area == 1 && rule == AreaRule::Region);
+    assert(area_for_selection_detail("", "Unknown", "", "-33.9", "151.1", &area, &rule, &km));
+    assert(area == 0 && rule == AreaRule::Gps && km > 0 && km < 25);
+    assert(!area_for_selection_detail("", "Unknown", "", "-30.0", "151.2", &area, &rule, &km));
+    assert(rule == AreaRule::None);
+    assert(area_for_selection("", "Testville", "", "", "", &area) && area == 0);
+    assert(std::strcmp(area_rule_name(AreaRule::Gps), "gps") == 0);
+
+    char out[16];
+    assert(shorter_query("KIIS 106.5", out, sizeof(out)) && std::strcmp(out, "KIIS") == 0);
+    assert(shorter_query("ABC Radio 774 AM", out, sizeof(out)) && std::strcmp(out, "ABC Radio") == 0);
+    assert(shorter_query("Triple J 101.5 FM ", out, sizeof(out)) && std::strcmp(out, "Triple J") == 0);
+    assert(!shorter_query("ABC Radio", out, sizeof(out)));          // nothing to drop
+    assert(!shorter_query("106.5", out, sizeof(out)));              // dropping it would leave nothing
+    assert(!shorter_query("KIIS 106.5", out, 4));                   // "KIIS" needs 5 bytes
+    assert(!shorter_query(nullptr, out, sizeof(out)));
 }
 
 int main() {
@@ -194,7 +226,8 @@ int main() {
     states_and_bands();
     readouts_and_choices();
     picker_flow();
+    rules_and_shorter_query();
     std::puts("AU radio table: lookups, nearest/profile selection, capacity, lazy resolve, LRU cache, "
-              "states, bands, readouts, area choice, picker: PASS");
+              "states, bands, readouts, area choice, picker, rules, shorter query: PASS");
     return 0;
 }

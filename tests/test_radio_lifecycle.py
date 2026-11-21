@@ -72,10 +72,15 @@ static void show_station(std::size_t i,std::size_t n,RadioStation s){radio_ui_se
 static void radio_ui_set_volume(unsigned){}
 struct RadioLocation {char city[64],region[64],search_city[64],country_code[4];};
 struct home_profile_t {char city[64],region[64],radio_city[64],country_code[4],lat[16],lon[16];};
+static bool table_match=false;
+static unsigned table_installs=0;
 namespace au_radio{inline bool area_for_profile(const char*,const char*,const char*,const char*,std::size_t*){return false;}
 inline bool area_for_selection(const char*,const char*,const char*,const char*,const char*,std::size_t*){return false;}
+enum class AreaRule : unsigned char {None,Choice,City,Region,Gps};
+inline bool area_for_selection_detail(const char*,const char*,const char*,const char*,const char*,std::size_t*a,AreaRule*r,double*){if(!table_match)return false;*a=0;*r=AreaRule::City;return true;}
+inline const char *area_rule_name(AreaRule){return "";}
 inline const char *area_name(std::size_t){return "";}}
-bool radio_player_replace_table(std::size_t){return false;}
+bool radio_player_replace_table(std::size_t){table_installs++;return true;}
 static std::atomic<bool> s_catalog_cancel,s_radio_active,s_ui_alive,s_catalog_running,s_catalog_installed;
 static void *s_catalog_commit=&token;
 static bool idle=true,playing,fail_catalog_alloc,cancel_during_wait;
@@ -122,6 +127,13 @@ int main(){
  catalog_worker(nullptr);assert(!queries && playing && !s_catalog_running && !s_catalog_installed);
  fail_catalog_alloc=false;s_catalog_running=true;catalog_worker(nullptr);
  assert(queries==1 && installs==1 && playing && !s_catalog_running && s_catalog_installed && chosen==-1);
+ // Table mode: an AU profile area installs the bundled rows with no directory query,
+ // no allocation and no IP lookup; playback starts from the table.
+ profile_country[0]='A';profile_country[1]='U';profile_country[2]='\0';table_match=true;
+ s_catalog_installed=false;s_catalog_running=true;queries=0;allocations=0;playing=false;
+ catalog_worker(nullptr);
+ assert(table_installs==1 && !queries && !allocations && playing && s_catalog_installed && !s_catalog_running);
+ table_match=false;profile_country[0]='\0';
  // A voice request replaces the profile city once and picks the named station.
  auto *voice=new voice_intent::Request{};std::strcpy(voice->name,"北京");std::strcpy(voice->detail,"交通");
  s_voice=voice;s_catalog_running=true;catalog_worker(nullptr);

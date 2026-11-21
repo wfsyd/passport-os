@@ -84,6 +84,10 @@ DTV, Introduction and Glossary. Rules, in order:
 8. Each area keeps at most 96 rows (`au_radio::kMaxListed`), ranked National, then
    Commercial and DAB+, then Community, then Retransmission, each by power.
 
+An area with only DAB+ rows (no FM or AM) is folded into the FM or AM area with the most stations within
+70 km, with its DAB+ rows merged there (rule 8 of `acma_to_stations.py`). Without such an area it
+is kept.
+
 Areas are the ACMA licence area with the "RA" suffix removed, or the area served
 where the licence area is blank. Each area's lat/lon is its highest power AM/FM site.
 Its state is the state of that site.
@@ -99,3 +103,36 @@ Its state is the state of that site.
 - ACMA licence entries show a licence exists, not that the service is on air.
 - The Glossary notes that callsigns are not assigned to open narrowcasting services,
   and that the on-air identification may differ from the callsign.
+
+## Stream URLs (streams.csv)
+
+`streams.csv` has the columns `name,url,codec,checked`. `name` is a station name from
+stations.csv, and the URL applies to every row with that name. `codec` is mp3, aac or hls.
+`checked` is the ISO date of the probe. The file starts with only the header.
+
+`tools/generate_radio_table.py` bakes each URL into the table. A row with a baked URL plays
+it directly on tune, with no directory lookup. If that URL does not open, the device falls
+back to the name lookup, as for a row with no URL. Rows without a URL are looked up by name.
+Each distinct URL is stored once in the string pool.
+
+## Probing stream URLs
+
+1. List candidate URLs in `stream_candidates.csv` (`name,url`; several rows per name are
+   tried in order).
+2. Probe them. Network access is needed:
+
+   ```
+   python3 tools/probe_au_streams.py --candidates third_party/au-radio/stream_candidates.csv --area nsw-sydney --radio-browser
+   ```
+
+   Leave out `--area` to probe every area. `--radio-browser` also tries the URLs that
+   radio-browser.info lists for each name. The script writes `streams.csv`, and prints a
+   table of name, result, URL and the reasons for failures. A candidate passes when it returns
+   an audio or HLS content type within 10 s and its first 32 KB (or the first HLS segment)
+   contain an MP3, ADTS or TS sync. Playlists are followed to their first URL. For https,
+   the http:// form is tried first.
+3. Regenerate the table: `python3 tools/generate_radio_table.py`, then commit `streams.csv`
+   and `main/apps/radio/au_radio_table_data.inc`.
+
+Only the names in the probed area change. Their rows are replaced, so a name that fails
+loses its row. Rows for other areas are kept.

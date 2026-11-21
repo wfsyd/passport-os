@@ -328,6 +328,13 @@ bool resolve_cancelled() {
     return !request_still_current(s_resolve_generation.load(), s_resolve_station.load());
 }
 
+// Baked stream URL of table row `position` (streams.csv), or "" when the row has none.
+const char *table_baked_url(std::size_t position) {
+    const au_radio::TableRam &table = *table_ram();
+    if (position >= table.count) return "";
+    return au_radio::text(au_radio::station_at(table.listed[position]).url);
+}
+
 // Table rows hold a directory query, not a URL. Finds the stream for list position
 // `station`, using the cache when possible. False when no stream was found or the
 // request went stale while resolving.
@@ -339,11 +346,17 @@ bool resolve_table_stream(std::size_t station, uint32_t generation, char *url, s
     radio_ui_set_playback(RadioPlaybackState::Connecting, "Finding stream");
     s_resolve_generation.store(generation, std::memory_order_release);
     s_resolve_station.store(station, std::memory_order_release);
-    const au_radio::StreamLookup lookup = au_radio::resolve_stream(
-        table.cache, row, query, url, capacity,
-        [](const char *name, char *out, std::size_t size) {
-            return radio_catalog_resolve_stream(name, out, size, resolve_cancelled);
-        });
+    const auto resolve = [](const char *name, char *out, std::size_t size) {
+        return radio_catalog_resolve_stream(name, out, size, resolve_cancelled);
+    };
+    au_radio::StreamLookup lookup = au_radio::resolve_stream(table.cache, row, query, url, capacity, resolve);
+    // A miss gets one retry with the shorter name ("KIIS 106.5" -> "KIIS").
+    char shorter[sizeof(RadioStation::name)] = {};
+    if (lookup == au_radio::StreamLookup::NotFound && !resolve_cancelled() &&
+        au_radio::shorter_query(query, shorter, sizeof(shorter))) {
+        ESP_LOGI(kTag, "No stream for \"%s\"; retrying as \"%s\"", query, shorter);
+        lookup = au_radio::resolve_stream(table.cache, row, shorter, url, capacity, resolve);
+    }
     if (lookup == au_radio::StreamLookup::NotFound) {
         ESP_LOGW(kTag, "No stream found for table row %u", static_cast<unsigned>(row));
         return false;
@@ -353,8 +366,15 @@ bool resolve_table_stream(std::size_t station, uint32_t generation, char *url, s
 
 StreamResult stream_station(std::size_t station, uint32_t generation) {
     RadioStation preset = station_snapshot(station);
-    if (s_table_mode.load(std::memory_order_acquire)) {
-        if (!resolve_table_stream(station, generation, preset.url, sizeof(preset.url))) {
+    const bool table_row = s_table_mode.load(std::memory_order_acquire);
+    // A baked URL plays without a directory lookup. If it does not open, the name lookup is tried once.
+    bool baked_url = false;
+    if (table_row) {
+        const char *baked = table_baked_url(station);
+        baked_url = baked[0] != '\0';
+        if (baked_url) {
+            std::snprintf(preset.url, sizeof(preset.url), "%s", baked);
+        } else if (!resolve_table_stream(station, generation, preset.url, sizeof(preset.url))) {
             return request_still_current(generation, station) ? StreamResult::NoStream
                                                               : StreamResult::Failed;
         }
@@ -373,16 +393,38 @@ StreamResult stream_station(std::size_t station, uint32_t generation) {
         const auto &r = *static_cast<Request *>(context);
         return r.stop.load(std::memory_order_acquire) || !request_still_current(r.generation, r.station);
     }, &request, audio_workspace::radio::stations() + scratch_offset, scratch_bytes);
+    // Table rows try the http:// form first; https is used only if that fails to open.
+    const auto open_stream = [&](const char *url) {
+        if (table_row && std::strncmp(url, "https://", 8) == 0) {
+            char plain[sizeof(preset.url)] = {};
+            std::snprintf(plain, sizeof(plain), "http://%s", url + 8);
+            return source.open_fallback(plain, url);
+        }
+        return source.open(url);
+    };
 
     bool played_audio = false;
     bool out_of_memory = false;
+    bool no_stream = false;
     esp_audio_simple_dec_handle_t decoder = nullptr;
     uint8_t *input = nullptr;
     uint8_t *output = nullptr;
     uint8_t *compressed = nullptr;
 
     do {
-        if (!source.open(preset.url)) {
+        ESP_LOGI(kTag, "Opening stream: free=%u largest=%u", (unsigned)esp_get_free_heap_size(),
+                 (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
+        bool opened = open_stream(preset.url);
+        if (!opened && baked_url && source.reusable()) {
+            // The baked URL did not open: look the row up by name, as a row without one.
+            baked_url = false;
+            if (!resolve_table_stream(station, generation, preset.url, sizeof(preset.url))) {
+                no_stream = true;
+                break;
+            }
+            opened = open_stream(preset.url);
+        }
+        if (!opened) {
             out_of_memory = source.oom();
             break;
         }
@@ -550,6 +592,7 @@ StreamResult stream_station(std::size_t station, uint32_t generation) {
     if (decoder) esp_audio_simple_dec_close(decoder);
     out_of_memory |= source.oom();
     if (played_audio) return StreamResult::Played;
+    if (no_stream) return request_still_current(generation, station) ? StreamResult::NoStream : StreamResult::Failed;
     return out_of_memory ? StreamResult::OutOfMemory : StreamResult::Failed;
 }
 

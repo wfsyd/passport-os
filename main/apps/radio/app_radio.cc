@@ -75,8 +75,18 @@ bool table_area_for_profile(std::size_t *area) {
     if (std::strcmp(country, "AU") != 0) return false;
     // Order: user-picked area (radio_city, "Name, ST"), then profile city/region/GPS.
     // IP lookup is only reached when no table area matches (directory discovery).
-    return au_radio::area_for_selection(profile.radio_city, profile.city, profile.region,
-                                        profile.lat, profile.lon, area);
+    au_radio::AreaRule rule = au_radio::AreaRule::None;
+    double km = 0;
+    if (!au_radio::area_for_selection_detail(profile.radio_city, profile.city, profile.region,
+                                             profile.lat, profile.lon, area, &rule, &km)) {
+        return false;
+    }
+    char distance[24] = "-";
+    if (rule == au_radio::AreaRule::Gps) std::snprintf(distance, sizeof(distance), "%.1f km", km);
+    ESP_LOGI(TAG, "Table area %s by %s (%s): radio_city=\"%s\" city=\"%s\" region=\"%s\" lat=%s lon=%s",
+             au_radio::area_name(*area), au_radio::area_rule_name(rule), distance,
+             profile.radio_city, profile.city, profile.region, profile.lat, profile.lon);
+    return true;
 }
 
 // First station whose name contains the spoken keywords, else the top one.
@@ -88,7 +98,6 @@ std::size_t voice_station(const RadioStation *stations, std::size_t count, const
 
 void catalog_worker(void *arg) {
     (void)arg;
-    ESP_LOGI(TAG, "Starting shared city station catalog search...");
     constexpr std::size_t kDiscoveryCapacity = 8;
     // Release the live decoder/TLS working set before directory HTTP/cJSON.
     radio_player_set_playing(false);
@@ -104,6 +113,7 @@ void catalog_worker(void *arg) {
         return;
     }
     std::size_t table_area = 0;
+    // Table mode returns here: no IP lookup and no directory search. Streams resolve on tune.
     if (!s_voice.load(std::memory_order_acquire) && table_area_for_profile(&table_area)) {
         // Table mode: the rows come from flash, so no directory HTTP runs here.
         xSemaphoreTake(s_catalog_commit, portMAX_DELAY);
@@ -119,6 +129,7 @@ void catalog_worker(void *arg) {
         vTaskDelete(nullptr);
         return;
     }
+    ESP_LOGI(TAG, "Starting shared city station catalog search...");
     auto *stations = static_cast<RadioStation *>(
         std::calloc(kDiscoveryCapacity, sizeof(RadioStation)));
     if (!stations) {

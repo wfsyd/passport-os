@@ -25,9 +25,15 @@ Filter rules, applied in this order (counts are printed):
            brand, with dab_block empty (shown as DAB+). Commercial and ABC/SBS
            services simulcast on DAB+.
      A DAB+ row with no FM area within 50 km marks no area.
-  8. Areas with no rows left are dropped, so the device falls back to the directory
+  8. An area with only DAB+ rows (no FM or AM) is folded into an area within 70 km that
+     has FM or AM rows: the one with the most stations (rows) wins, ties go to the nearest.
+     Its DAB+ rows are merged there, deduplicated by name (the block of the existing row
+     is kept). Without such an area it is kept as it is.
+     Without this, a DAB+ transmitter site can become an area with three rows, which
+     the device would show instead of the metro area.
+  9. Areas with no rows left are dropped, so the device falls back to the directory
      search there.
-  9. Each area keeps at most 96 rows (au_radio::kMaxListed), ranked National, then
+  10. Each area keeps at most 96 rows (au_radio::kMaxListed), ranked National, then
      Commercial and DAB+, then Community, then Retransmission, each by power.
 
 Areas: AM/FM rows form an area from the ACMA licence area (RA suffix removed) or,
@@ -67,6 +73,7 @@ DAB_NATIONAL = [('Double J', 'Double J', '9C'), ('ABC Jazz', 'ABC Jazz', '9C'),
 DAB_SIMULCAST_PURPOSES = ('National', 'Commercial')
 ROWS_PER_AREA = 96          # au_radio::kMaxListed in main/apps/radio/au_radio_table.h
 DAB_MAX_KM = 50.0
+DAB_ONLY_FOLD_KM = 70.0    # DAB+-only areas fold into an FM/AM area this close
 MAX_TEXT = 40               # area_name, name, query limit in tools/generate_radio_table.py
 MAX_ID = 16
 DMS = re.compile(r'^\s*(\d+)\s+(\d+)\s+(\d+(?:\.\d+)?)\s*([NSEW])\s*$')
@@ -213,6 +220,71 @@ def make_area_ids(keys):
     return ids
 
 
+def fold_dab_only_areas(rows, skipped):
+    """Fold each area that has only DAB+ rows into an FM/AM area within 70 km.
+
+    The target is the candidate with the most stations (rows, counted before any folding),
+    ties going to the nearest. Nearest-only was wrong: it sent Campbelltown to Nowra and
+    Windsor to Lithgow when Sydney is the metro area.
+
+    rows are output rows in COLUMNS order. The DAB+ rows are merged into the target area,
+    deduplicated by name (the target's existing row, and its block, wins). A DAB+-only area
+    with no FM/AM area in range is kept. Returns the new row list, with areas in their
+    original order and rows in table order.
+    """
+    areas = {}      # area_id -> {'lat', 'lon', 'bands': set, 'rows': list}
+    order = []
+    for row in rows:
+        area_id = row[0]
+        if area_id not in areas:
+            areas[area_id] = {'head': row[:5], 'lat': float(row[3]), 'lon': float(row[4]),
+                              'bands': set(), 'rows': []}
+            order.append(area_id)
+        areas[area_id]['bands'].add(row[5])
+        areas[area_id]['rows'].append(row)
+
+    targets = {a: v for a, v in areas.items() if v['bands'] - {'DAB'}}
+    station_counts = {a: len(v['rows']) for a, v in targets.items()}
+    for area_id in order:
+        area = areas[area_id]
+        if area_id in targets:
+            continue
+        best, best_key = None, None
+        for other_id, other in targets.items():
+            km = distance_km(area['lat'], area['lon'], other['lat'], other['lon'])
+            if km > DAB_ONLY_FOLD_KM:
+                continue
+            key = (-station_counts[other_id], km)
+            if best_key is None or key < best_key:
+                best, best_key = other_id, key
+        if best is None:
+            skipped['DAB+-only area with no FM or AM area within 70 km (kept)'] += 1
+            continue
+        target = areas[best]
+        names = {row[8] for row in target['rows'] if row[5] == 'DAB'}
+        merged = 0
+        for row in area['rows']:
+            if row[8] in names:
+                skipped['DAB+-only area row already in target (deduplicated)'] += 1
+                continue
+            names.add(row[8])
+            target['rows'].append(target['head'] + row[5:])
+            merged += 1
+        skipped['DAB+-only areas folded into a nearby FM/AM area'] += 1
+        area['folded_into'] = best
+        if len(target['rows']) > ROWS_PER_AREA:
+            raise ValueError(f'{best} exceeds {ROWS_PER_AREA} rows after folding {area_id}')
+
+    out = []
+    for area_id in order:
+        area = areas[area_id]
+        if area.get('folded_into'):
+            continue
+        kept = sorted(area['rows'], key=lambda r: (BAND_ORDER[r[5]], int(r[6]), r[8]))
+        out.extend(kept)
+    return out
+
+
 def build(records, brands, skipped):
     am_fm = [r for r in records if r['band'] != 'DAB']
     dab = [r for r in records if r['band'] == 'DAB']
@@ -307,7 +379,7 @@ def build(records, brands, skipped):
             ])
     empty = len(main) - len({(r[2], r[1]) for r in out_rows})
     skipped['areas with no rows left (device falls back to directory search)'] += empty
-    return out_rows
+    return fold_dab_only_areas(out_rows, skipped)
 
 
 def main():

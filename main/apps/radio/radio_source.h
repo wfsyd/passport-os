@@ -19,9 +19,14 @@ public:
     }
     // offset > 0 asks for "Range: bytes=offset-"; check status() for 206.
     bool open(const char *url, uint32_t offset = 0);
+    // Opens `first`; when that fails before any body byte or HLS state exists, opens `fallback`.
+    bool open_fallback(const char *first, const char *fallback);
     int read(uint8_t *data, size_t size);
     bool complete() const { return finished_; }
     bool oom() const { return oom_; }
+    // False once an open has read body bytes or set up HLS state; a new open on this
+    // object is then unsafe. open_fallback follows the same rule.
+    bool reusable() const { return !oom_ && !prefix_size_ && !hls_; }
     uint32_t icy_interval() const { return icy_interval_; }
     esp_audio_simple_dec_type_t type() const { return type_; }
     // Body length of the final response (after redirects); 0 when unknown.
