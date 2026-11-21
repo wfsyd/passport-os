@@ -27,8 +27,8 @@ foreach(required_option
             "Build through ./build.sh or regenerate sdkconfig from sdkconfig.defaults.")
     endif()
 endforeach()
-if(NOT CONFIG_MBEDTLS_SSL_IN_CONTENT_LEN EQUAL 16384)
+if(NOT CONFIG_MBEDTLS_SSL_IN_CONTENT_LEN EQUAL 8192)
     message(FATAL_ERROR
-        "CONFIG_MBEDTLS_SSL_IN_CONTENT_LEN must be 16384: NetEase and other HTTPS servers send 16 KiB records.")
+        "CONFIG_MBEDTLS_SSL_IN_CONTENT_LEN must be 8192 for the ESP32-C3 audio/TLS budget.")
 endif()
 
