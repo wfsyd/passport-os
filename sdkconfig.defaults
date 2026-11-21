@@ -55,6 +55,7 @@ CONFIG_MBEDTLS_ASYMMETRIC_CONTENT_LEN=y
 # Xiaozhi WebSocket control/audio frames and the observed Muse TLS records fit
 # within 8 KiB. Dynamic buffers keep TLS memory scoped to active connections.
 CONFIG_MBEDTLS_SSL_IN_CONTENT_LEN=8192
+# Muse's static RX reservation (muse_tls_memory.cpp) depends on this value.
 CONFIG_MBEDTLS_SSL_OUT_CONTENT_LEN=2048
 CONFIG_ESP_WIFI_DYNAMIC_RX_MGMT_BUFFER=y
 

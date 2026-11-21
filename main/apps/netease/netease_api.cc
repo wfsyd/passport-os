@@ -1,5 +1,6 @@
 #include "apps/netease/netease_api.h"
 #include "apps/netease/netease_catalog.h"
+#include "apps/netease/netease_endpoint.h"
 #include "apps/netease/netease_url_cache.h"
 
 #include "apps/netease/netease_json.h"
@@ -68,6 +69,14 @@ esp_err_t on_event(esp_http_client_event_t *event) {
     return ESP_OK;
 }
 
+// One log line per failed request: endpoint path (no query, so no cookie or tokens),
+// HTTP status (0 if no response) and the esp_err name.
+void log_failure(const char *url, int status, esp_err_t err, Result result) {
+    char path[96];
+    netease::endpoint_path(url, path, sizeof(path));
+    ESP_LOGW(kTag, "%s failed: status=%d err=%s (%s)", path, status, esp_err_to_name(err), result_text(result));
+}
+
 // GET (or POST a form body) and stream the reply into scanner.
 // cookie: the full Cookie header value, or null.
 Result request_json(const char *url, const char *cookie, const char *form, const char *agent,
@@ -76,8 +85,7 @@ Result request_json(const char *url, const char *cookie, const char *form, const
     const bool tls = std::strncmp(url, "https://", 8) == 0;
     if (tls && (heap_caps_get_largest_free_block(MALLOC_CAP_8BIT) < kTlsLargestBlock ||
                 esp_get_free_heap_size() < kTlsFree)) {
-        ESP_LOGW(kTag, "Skip HTTPS: free=%u largest=%u", (unsigned)esp_get_free_heap_size(),
-                 (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
+        log_failure(url, 0, ESP_ERR_NO_MEM, Result::NoMemory);
         return Result::NoMemory;
     }
     Request request{cookie_out, cookie_capacity};
@@ -99,7 +107,10 @@ Result request_json(const char *url, const char *cookie, const char *form, const
     cfg.user_data = &request;
     if (tls) cfg.crt_bundle_attach = esp_crt_bundle_attach;
     esp_http_client_handle_t client = esp_http_client_init(&cfg);
-    if (!client) return Result::NoMemory;
+    if (!client) {
+        log_failure(url, 0, ESP_ERR_NO_MEM, Result::NoMemory);
+        return Result::NoMemory;
+    }
     if (!form) esp_http_client_set_header(client, "Referer", "https://music.163.com/");
     esp_http_client_set_header(client, "Accept-Encoding", "identity");
     const size_t form_length = form ? std::strlen(form) : 0;
@@ -111,27 +122,36 @@ Result request_json(const char *url, const char *cookie, const char *form, const
     if (cookie && cookie[0]) esp_http_client_set_header(client, "Cookie", cookie);
 
     Result result = Result::Network;
+    esp_err_t err = ESP_OK;
+    int status = 0;
     const int64_t deadline = esp_timer_get_time() + kRequestDeadlineUs;
     do {
-        if (esp_http_client_open(client, static_cast<int>(form_length)) != ESP_OK) break;
+        err = esp_http_client_open(client, static_cast<int>(form_length));
+        if (err != ESP_OK) break;
         if (form_length && esp_http_client_write(client, form, static_cast<int>(form_length)) !=
-                               static_cast<int>(form_length)) break;
-        if (esp_http_client_fetch_headers(client) < 0) break;
-        const int status = esp_http_client_get_status_code(client);
+                               static_cast<int>(form_length)) {
+            err = ESP_FAIL;
+            break;
+        }
+        if (esp_http_client_fetch_headers(client) < 0) {
+            err = ESP_FAIL;
+            break;
+        }
+        status = esp_http_client_get_status_code(client);
         if (status != 200) {
-            ESP_LOGW(kTag, "HTTP %d", status);
             result = Result::Http;
             break;
         }
         char chunk[512];
         for (;;) {
             if (cancelled && cancelled()) { result = Result::Cancelled; break; }
-            if (esp_timer_get_time() > deadline) { result = Result::Network; break; }
+            if (esp_timer_get_time() > deadline) { err = ESP_ERR_TIMEOUT; result = Result::Network; break; }
             const int n = esp_http_client_read(client, chunk, sizeof(chunk));
-            if (n < 0) { result = Result::Network; break; }
+            if (n < 0) { err = ESP_FAIL; result = Result::Network; break; }
             if (n == 0) {
                 result = esp_http_client_is_complete_data_received(client) && scanner.complete() ? Result::Ok
                          : scanner.failed() ? Result::Parse : Result::Network;
+                if (result == Result::Network) err = ESP_FAIL;
                 break;
             }
             if (!scanner.feed(chunk, static_cast<size_t>(n))) { result = Result::Parse; break; }
@@ -139,7 +159,7 @@ Result request_json(const char *url, const char *cookie, const char *form, const
     } while (false);
     esp_http_client_close(client);
     esp_http_client_cleanup(client);
-    if (result != Result::Ok && result != Result::Cancelled) ESP_LOGW(kTag, "GET failed (%s)", result_text(result));
+    if (result != Result::Ok && result != Result::Cancelled) log_failure(url, status, err, result);
     return result;
 }
 
@@ -228,8 +248,8 @@ Result eapi_post(const char *path, const char *fields, JsonScanner &scanner, Can
     if (!form) return Result::NoMemory;
     json.reset();
     char url[96];
-    // Large authenticated lists share the documented HTTP tradeoff. Login and
-    // playback URLs remain HTTPS. Eapi encryption does not protect the Cookie header.
+    // Large_reply selects plain HTTP (see netease_api.h). Eapi encryption does not
+    // protect the Cookie header, so this request is sent unencrypted in that case.
     std::snprintf(url, sizeof(url), "%s://interfacepc.music.163.com/eapi/%s",
                   large_reply ? "http" : "https", path + 5);  // drop "/api/"
     const Result r = request_json(url, cookie.get(), form, kDesktopAgent, scanner, cancelled, cookie_out,
@@ -619,7 +639,7 @@ Result song_urls(const char *cookie, const uint64_t *ids, size_t count, SongUrl 
         char fields[160];
         std::snprintf(fields, sizeof(fields),
                       "\"ids\":\"[%s]\",\"level\":\"standard\",\"encodeType\":\"mp3\"", id_list);
-        r = eapi_post("/api/song/enhance/player/url/v1", fields, scanner, cancelled, nullptr, 0, cookie);
+        r = eapi_post("/api/song/enhance/player/url/v1", fields, scanner, cancelled, nullptr, 0, cookie, true);
     } else {
         char request[208];
         std::snprintf(request, sizeof(request),

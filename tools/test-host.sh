@@ -154,4 +154,7 @@ python3 tests/test_media_startup.py
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -Imain \
     -Itests/registry_mocks tests/test_netease_performance.cc main/apps/netease/netease_json.cc -o "$test_dir/netease-performance"
 "$test_dir/netease-performance"
+"${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -Imain \
+    tests/test_netease_endpoint_path.cc -o "$test_dir/netease-endpoint-path"
+"$test_dir/netease-endpoint-path"
 echo "Host regression tests: PASS"

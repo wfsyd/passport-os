@@ -1,9 +1,9 @@
 // NetEase Cloud Music web API and PC-client eapi requests.
 //
-// Requests that carry the login cookie use HTTPS, except large list calls
-// (user playlists, playlist track ids, daily songs), which use HTTP; anonymous metadata (song
-// detail, lyrics) uses plain HTTP so it can run beside the MP3 decoder without
-// a TLS session. Responses stream through JsonScanner; nothing is buffered.
+// API requests use plain http://, including the ones that carry the login cookie
+// (account, playlists, playlist tracks, daily songs, song URLs). The device's 8 KiB
+// TLS record limit cannot take the larger HTTPS replies. Only the login QR key
+// requests stay on HTTPS. Responses stream through JsonScanner; nothing is buffered.
 #pragma once
 
 #include <cstddef>
