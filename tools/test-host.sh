@@ -100,6 +100,7 @@ python3 tests/test_device_control.py
 python3 tests/test_lists.py
 "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Icomponents/passport_muse/sdk -Icomponents/passport_muse/include \
     tests/test_muse_voice.c components/passport_muse/voice_helpers.c -o "$test_dir/muse-voice"
+python3 tests/test_muse_avatar_frames.py
 python3 tests/test_muse_chat_link.py
 python3 tests/test_muse_pairing_dispatch.py
 python3 tests/test_muse_pairing_memory.py
