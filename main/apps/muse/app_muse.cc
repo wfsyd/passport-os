@@ -7,6 +7,8 @@
 #include "ui_pixel.h"
 #include "wifi_manager.h"
 #include "muse_avatar_frames.h"
+#include "esp_heap_caps.h"
+#include "esp_log.h"
 #include <cstdio>
 #include <cstring>
 
@@ -26,6 +28,10 @@ int s_frame, s_layout, s_from_size, s_from_y, s_from_status, s_size, s_y, s_stat
 uint16_t s_level;
 uint32_t s_repair_armed_until;
 static const lv_image_colorkey_t kTransparent = {{0,0,0},{0,0,0}};
+constexpr char kTag[] = "app_muse";
+// Frames are stored as palette runs; one RGB565 buffer holds the frame on screen.
+uint16_t *s_avatar_px;
+lv_image_dsc_t s_avatar_dsc{};
 
 lv_obj_t *label(const char *text, int y, int height, uint32_t color) {
     auto *o = ui_pixel_label(s_screen, text, &buddy_font_16, color);
@@ -86,6 +92,13 @@ const char *error_action(const char *detail) {
     if (std::strstr(detail, "重启")) return "请重启设备后再连接";
     if (std::strstr(detail, "返回") || std::strstr(detail, "重新进入")) return "返回后重新打开 Muse";
     return "确定重试";
+}
+void show_frame(int frame) {
+    if (!s_avatar_px || !muse_avatar_expand_frame(frame, s_avatar_px)) return;
+    lv_image_cache_drop(&s_avatar_dsc);
+    lv_image_set_src(s_avatar, &s_avatar_dsc);
+    lv_obj_invalidate(s_avatar);
+    s_frame = frame;
 }
 int avatar_frame(const passport_muse_snapshot_t &state, uint32_t now) {
     uint32_t age = now - s_stage_at;
@@ -185,7 +198,7 @@ void refresh() {
     }
     composition(layout,now); s_showing_reply = showing_reply;
     int frame = avatar_frame(state,now);
-    if (frame != s_frame) { lv_image_set_src(s_avatar,&muse_avatar_frames[frame]);s_frame = frame; }
+    if (frame != s_frame) show_frame(frame);
     if (state.stage == PASSPORT_MUSE_LISTENING || state.stage == PASSPORT_MUSE_WORKING) app_registry_keep_awake();
     if (now - s_battery_at >= 5000) {
         ui_pixel_battery_set(&s_battery, bsp_battery_soc());
@@ -219,7 +232,21 @@ void start() {
     lv_label_set_long_mode(s_name, LV_LABEL_LONG_DOT);
     s_battery = ui_pixel_battery_create(top, UI_STATUS_BATTERY_X, 6, UI_TEXT, &lv_font_montserrat_14);
     s_avatar = lv_image_create(s_screen);
-    lv_image_set_src(s_avatar,&muse_avatar_frames[0]);
+    s_avatar_px = static_cast<uint16_t *>(heap_caps_malloc(MUSE_AVATAR_FRAME_PIXELS * sizeof(uint16_t),
+                                                           MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
+    if (s_avatar_px) {
+        s_avatar_dsc.header.magic = LV_IMAGE_HEADER_MAGIC;
+        s_avatar_dsc.header.cf = LV_COLOR_FORMAT_RGB565;
+        s_avatar_dsc.header.w = 64;
+        s_avatar_dsc.header.h = 64;
+        s_avatar_dsc.header.stride = 128;
+        s_avatar_dsc.data_size = static_cast<uint32_t>(MUSE_AVATAR_FRAME_PIXELS * sizeof(uint16_t));
+        s_avatar_dsc.data = reinterpret_cast<const uint8_t *>(s_avatar_px);
+        show_frame(0);
+    } else {
+        ESP_LOGW(kTag, "avatar buffer unavailable; avatar hidden");
+        lv_obj_add_flag(s_avatar, LV_OBJ_FLAG_HIDDEN);
+    }
     lv_image_set_pivot(s_avatar,0,0);lv_image_set_antialias(s_avatar,false);
     lv_obj_set_style_image_colorkey(s_avatar,&kTransparent,0);
     s_status = label("",228,24,UI_TEXT);
@@ -241,6 +268,7 @@ void stop() {
     passport_muse_stop();
     if (bsp_lvgl_lock(-1)) {
         if (s_screen) {lv_obj_delete(s_screen);s_screen=nullptr;}
+        if (s_avatar_px) {lv_image_cache_drop(&s_avatar_dsc);heap_caps_free(s_avatar_px);s_avatar_px=nullptr;}
         s_wifi_bars[0] = s_wifi_bars[1] = s_wifi_bars[2] = nullptr;
         bsp_lvgl_unlock();
     }
