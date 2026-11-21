@@ -62,8 +62,7 @@ const char *band_label(uint8_t band) {
 bool area_by_name(const char *name, std::size_t *area) {
     if (!name || !name[0] || !area) return false;
     for (std::size_t i = 0; i < area_count(); ++i) {
-        const Area &row = area_at(i);
-        if (equal_ci(name, text(row.name)) || equal_ci(name, text(row.state))) {
+        if (equal_ci(name, text(area_at(i).name))) {
             *area = i;
             return true;
         }
@@ -75,17 +74,36 @@ bool nearest_area(double lat, double lon, std::size_t *area, double *km) {
     if (!area || !std::isfinite(lat) || !std::isfinite(lon)) return false;
     bool found = false;
     double best = 0;
+    std::size_t nearest = 0;
+    // Densest area within kPreferKm: most stations, then the nearer one.
+    bool near_found = false;
+    std::size_t dense = 0;
+    double dense_km = 0;
     for (std::size_t i = 0; i < area_count(); ++i) {
         const Area &row = area_at(i);
         const double d = distance_km(lat, lon, row.lat_e4 / 1e4, row.lon_e4 / 1e4);
         if (!found || d < best) {
             found = true;
             best = d;
-            *area = i;
+            nearest = i;
+        }
+        if (d <= kPreferKm &&
+            (!near_found || row.count > area_at(dense).count ||
+             (row.count == area_at(dense).count && d < dense_km))) {
+            near_found = true;
+            dense = i;
+            dense_km = d;
         }
     }
-    if (found && km) *km = best;
-    return found;
+    if (!found) return false;
+    if (near_found) {
+        *area = dense;
+        if (km) *km = dense_km;
+    } else {
+        *area = nearest;
+        if (km) *km = best;
+    }
+    return true;
 }
 
 bool area_for_profile(const char *city, const char *region, const char *lat, const char *lon,
@@ -117,6 +135,38 @@ std::size_t collect_stations(std::size_t area, uint8_t band_mask, uint16_t *out,
 namespace {
 
 constexpr const char *kStateCodes[kStateCount] = {"NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT", "NT"};
+
+struct Capital {
+    const char *name;
+    const char *state;
+};
+constexpr Capital kCapitals[] = {
+    {"Sydney", "NSW"}, {"Melbourne", "VIC"}, {"Brisbane", "QLD"}, {"Adelaide", "SA"},
+    {"Perth", "WA"},   {"Hobart", "TAS"},    {"Canberra", "ACT"}, {"Darwin", "NT"},
+};
+
+bool is_capital(std::size_t area) {
+    const Area &row = area_at(area);
+    for (const Capital &capital : kCapitals) {
+        if (equal_ci(capital.name, text(row.name)) && equal_ci(capital.state, text(row.state))) return true;
+    }
+    return false;
+}
+
+// Picker rows: the capital first, then the other areas A-Z (case-insensitive).
+bool picker_area_before(uint16_t a, uint16_t b) {
+    const bool cap_a = is_capital(a);
+    const bool cap_b = is_capital(b);
+    if (cap_a != cap_b) return cap_a;
+    const char *x = area_name(a);
+    const char *y = area_name(b);
+    for (;; ++x, ++y) {
+        const int cx = std::tolower(static_cast<unsigned char>(*x));
+        const int cy = std::tolower(static_cast<unsigned char>(*y));
+        if (cx != cy) return cx < cy;
+        if (cx == '\0') return false;
+    }
+}
 
 // Bit order for next_band(): FM -> AM -> DAB+ -> FM.
 constexpr uint8_t kBandCycle[3] = {kBandFm, kBandAm, kBandDab};
@@ -220,6 +270,7 @@ void AreaPicker::open() {
     level_ = Level::States;
     selected_ = 0;
     state_count_ = 0;
+    area_count_ = 0;
     for (std::size_t i = 0; i < kStateCount; ++i) {
         uint16_t probe[1];
         if (areas_in_state(kStateCodes[i], probe, 1) > 0) states_[state_count_++] = static_cast<uint8_t>(i);
@@ -246,8 +297,8 @@ void AreaPicker::move(int delta) {
 
 const char *AreaPicker::label(std::size_t i) const {
     if (level_ == Level::States) return i < state_count_ ? kStateCodes[states_[i]] : "";
-    if (i == 0) return kAutoLabel;
-    return i - 1 < area_count_ ? area_name(areas_[i - 1]) : "";
+    if (i < area_count_) return area_name(areas_[i]);
+    return i == area_count_ ? kAutoLabel : "";
 }
 
 const char *AreaPicker::title() const {
@@ -259,14 +310,22 @@ AreaPicker::Outcome AreaPicker::select() {
         if (selected_ >= state_count_) return Outcome::Stay;
         state_index_ = states_[selected_];
         state_row_ = selected_;
-        area_count_ = areas_in_state(kStateCodes[state_index_], areas_, kMaxAreas);
+        // Major areas only: at least kMajorAreaStations stations, or a state capital.
+        area_count_ = 0;
+        for (std::size_t i = 0; i < area_count() && area_count_ < kMaxAreas; ++i) {
+            const Area &row = area_at(i);
+            if (!equal_ci(kStateCodes[state_index_], text(row.state))) continue;
+            if (row.count < kMajorAreaStations && !is_capital(i)) continue;
+            areas_[area_count_++] = static_cast<uint16_t>(i);
+        }
+        std::sort(areas_, areas_ + area_count_, picker_area_before);
         level_ = Level::Areas;
         selected_ = 0;
         return Outcome::Stay;
     }
-    if (selected_ == 0) return Outcome::Auto;
-    if (selected_ - 1 >= area_count_) return Outcome::Stay;
-    chosen_ = areas_[selected_ - 1];
+    if (selected_ == area_count_) return Outcome::Auto;
+    if (selected_ > area_count_) return Outcome::Stay;
+    chosen_ = areas_[selected_];
     return Outcome::Area;
 }
 

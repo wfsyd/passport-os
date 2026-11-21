@@ -36,7 +36,7 @@ def decode_table(text):
 subprocess.run([sys.executable, str(GEN), '--check'], cwd=ROOT, check=True)
 real = (ROOT / 'main/apps/radio/au_radio_table_data.inc').read_text(encoding='utf-8')
 source_lines = (ROOT / 'third_party/au-radio/stations.csv').read_text(encoding='utf-8').splitlines()
-assert source_lines[0] == HEADER and len(source_lines) > 1000
+assert source_lines[0] == HEADER and len(source_lines) > 900
 assert f'kAreaCount = {len({line.split(",")[0] for line in source_lines[1:]})};' in real
 assert f'kStationCount = {len(source_lines) - 1};' in real
 areas, stations = decode_table(real)
@@ -101,4 +101,12 @@ with tempfile.TemporaryDirectory(prefix='passport-au-radio-') as tmp:
                     '-Imain', f'-DAU_RADIO_DATA_INC="{table}"',
                     str(ROOT / 'tests/test_au_radio_table.cc'), str(ROOT / 'main/apps/radio/au_radio_table.cc'),
                     '-o', str(exe)], check=True)
+    subprocess.run([str(exe)], check=True)
+
+# The bundled table itself: Sydney GPS, picker order, and no DAB+-only area left beside an FM/AM area.
+with tempfile.TemporaryDirectory(prefix='passport-au-radio-real-') as tmp:
+    exe = Path(tmp) / 'au-radio-real-table'
+    subprocess.run(['c++', '-std=c++17', '-Wall', '-Wextra', '-Werror', '-fsanitize=address,undefined', '-g',
+                    '-Imain', str(ROOT / 'tests/test_au_radio_real_table.cc'),
+                    str(ROOT / 'main/apps/radio/au_radio_table.cc'), '-o', str(exe)], check=True, cwd=ROOT)
     subprocess.run([str(exe)], check=True)

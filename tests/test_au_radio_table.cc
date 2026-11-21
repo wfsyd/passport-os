@@ -32,7 +32,7 @@ static void lookups() {
 
     std::size_t area = 99;
     assert(area_by_name("testville", &area) && area == 0);
-    assert(area_by_name("VIC", &area) && area == 1);
+    assert(!area_by_name("VIC", &area) && !area_by_name("nsw", &area));  // a bare state does not match
     assert(!area_by_name("Nowhere", &area) && !area_by_name("", &area));
 
     double km = -1;
@@ -171,18 +171,22 @@ static void picker_flow() {
     picker.move(-1);
     assert(picker.selected() == 1);
 
-    // VIC: Auto first, then its areas.
-    assert(picker.select() == Outcome::Stay && picker.count() == 2);
+    // VIC: Fixtureton has 1 row and is not a capital, so only Auto is listed (last row).
+    assert(picker.select() == Outcome::Stay && picker.count() == 1);
     assert(picker.level() == AreaPicker::Level::Areas && std::strcmp(picker.title(), "VIC") == 0);
     assert(std::strcmp(picker.label(0), AreaPicker::kAutoLabel) == 0);
-    assert(std::strcmp(picker.label(1), "Fixtureton") == 0);
-    picker.move(1);
-    assert(picker.select() == Outcome::Area && picker.chosen_area() == 1);
+    assert(picker.select() == Outcome::Auto);
 
     // Long OK goes back one level and keeps the state row highlighted.
     assert(picker.back() == Outcome::Stay && picker.level() == AreaPicker::Level::States);
     assert(picker.selected() == 1);
-    assert(picker.select() == Outcome::Stay && picker.select() == Outcome::Auto);
+
+    // QLD: Bulk has 100 rows, so it is listed first, then Auto.
+    picker.move(1);
+    assert(picker.select() == Outcome::Stay && picker.count() == 2);
+    assert(std::strcmp(picker.label(0), "Bulk") == 0);
+    assert(std::strcmp(picker.label(1), AreaPicker::kAutoLabel) == 0);
+    assert(picker.select() == Outcome::Area && picker.chosen_area() == 2);
     assert(picker.back() == Outcome::Stay && picker.back() == Outcome::Close);
 }
 

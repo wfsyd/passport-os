@@ -18,6 +18,9 @@ constexpr std::size_t kMaxListed = 96;
 constexpr std::size_t kCacheEntries = 4;
 constexpr std::size_t kUrlBytes = 256;
 constexpr double kMaxSelectKm = 150.0;
+constexpr double kPreferKm = 25.0;
+// Areas with at least this many stations are listed in the area picker (capitals always are).
+constexpr std::size_t kMajorAreaStations = 8;
 // Station workspace left for table mode: kStationBytes (10240) minus
 // RadioSource::kHlsWorkspaceBytes (6000). Checked against the real layout in radio_player.cc.
 constexpr std::size_t kTableRamBudgetBytes = 4240;
@@ -48,11 +51,15 @@ const char *text(uint16_t offset);
 const char *area_name(std::size_t area);
 const char *band_label(uint8_t band);
 
-// Case-insensitive match on the area name or the state abbreviation.
+// Case-insensitive match on the area name only. A state code does not match, so a bare
+// state never picks an arbitrary area of that state.
 bool area_by_name(const char *name, std::size_t *area);
-// Nearest area by great-circle distance; km receives the distance.
+// Nearest area by great-circle distance; km receives the distance. Among the areas within
+// kPreferKm, the one with the most stations wins (the metro area, not a small suburb
+// beside it). Without any such area, this is the plain nearest area.
 bool nearest_area(double lat, double lon, std::size_t *area, double *km);
-// Area for a profile: city or region name first, then the nearest area within kMaxSelectKm.
+// Area for a profile: city name, then region name (only if it is an area name), then the
+// GPS point via nearest_area within kMaxSelectKm.
 bool area_for_profile(const char *city, const char *region, const char *lat, const char *lon,
                       std::size_t *area);
 // Row indices of the area's stations whose band is in band_mask, in table order.
@@ -81,11 +88,12 @@ bool area_for_selection(const char *choice, const char *city, const char *region
                         const char *lon, std::size_t *area);
 
 // Area picker state machine (states, then areas of the chosen state). Pure logic: the
-// UI renders label() rows and feeds it up/down/OK/long-OK. Row 0 of the areas level is "Auto".
+// UI renders label() rows and feeds it up/down/OK/long-OK. At the areas level the rows are
+// the major areas of the state (the capital first, then A-Z), and the last row is Auto.
 class AreaPicker {
 public:
     static constexpr std::size_t kMaxAreas = 48;
-    static constexpr const char *kAutoLabel = "Auto (location)";
+    static constexpr const char *kAutoLabel = "Auto (use my location)";
     enum class Level : uint8_t { States, Areas };
     enum class Outcome : uint8_t { Stay, Auto, Area, Close };
 
@@ -96,7 +104,7 @@ public:
     std::size_t count() const;
     std::size_t selected() const { return selected_; }
     void move(int delta);
-    // Stable text for row i: a state code, "Auto (location)", or a table area name.
+    // Stable text for row i: a state code, a table area name, or kAutoLabel (last row of areas).
     const char *label(std::size_t i) const;
     Outcome select();  // OK: enter a state, or choose the highlighted area
     Outcome back();    // long OK: areas -> states, states -> Close
