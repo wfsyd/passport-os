@@ -200,6 +200,7 @@ void start_catalog() {
 // Long OK closes one level (on_back), so the global back gesture still works.
 au_radio::AreaPicker s_picker;
 std::atomic<bool> s_picker_open{false};
+std::atomic<bool> s_menu_open{false};
 
 void show_picker_rows() {
     static const char *rows[au_radio::AreaPicker::kMaxAreas + 1];
@@ -229,7 +230,6 @@ void apply_area_choice(const char *choice) {
 
 // Radio menu, opened by a triple press of OK in table mode: "Band" cycles FM/AM/DAB+,
 // "Area" opens the picker. Long OK closes it (on_back), like the other sub-pages.
-std::atomic<bool> s_menu_open{false};
 std::size_t s_menu_selected;
 
 void show_menu_rows() {
