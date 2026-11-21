@@ -93,6 +93,11 @@ Result request_json(const char *url, const char *cookie, const char *form, const
     vTaskDelay(pdMS_TO_TICKS(15));
     if (cancelled && cancelled()) return Result::Cancelled;
 #endif
+    // TLS record limit: this build's mbedTLS accepts incoming records of at most
+    // CONFIG_MBEDTLS_SSL_IN_CONTENT_LEN = 8 KiB (kept there for the RAM budget; do not
+    // raise it). A server sends a large body in full 16 KiB records, which fail with
+    // -0x7100 here. So HTTPS replies must stay small (paged, limited fields), and
+    // anonymous requests that cannot be small use plain http://.
     esp_http_client_config_t cfg{};
     cfg.url = url;
     cfg.timeout_ms = 5000;
@@ -505,17 +510,35 @@ Result user_playlists(const char *cookie, uint64_t uid, Playlist *out, size_t ma
         JsonScanner scanner(PlaylistCollector::sink, &ctx);
         return get_json(u, c, scanner, cancelled);
     };
-    char url[128];
-    // ~50 KB replies need 16 KB TLS records, which this device's 8 KB limit cannot
-    // receive, so HTTPS may fail. Then retry the public list over HTTP without the cookie.
-    std::snprintf(url, sizeof(url), "https://music.163.com/api/user/playlist?uid=%" PRIu64 "&limit=%u&offset=0", uid,
-                  static_cast<unsigned>(max + 1));  // favorites has its own slot
-    Result r = fetch(url, cookie);
+    // The login-scoped list is fetched in small pages. A full list (~20 playlists)
+    // is ~50 KB, far above the 8 KiB TLS record limit, so two per page keeps each
+    // reply to a few KB. Every page is its own connection. Stops at the end of the list.
+    constexpr unsigned kPageLimit = 2;
+    constexpr unsigned kMaxOffset = 100;
+    auto fetch_pages = [&]() {
+        ctx = PlaylistCollector{uid, out, max, favorites};
+        Result pr = Result::Ok;
+        for (unsigned offset = 0; offset < kMaxOffset; offset += kPageLimit) {
+            char page[160];
+            std::snprintf(page, sizeof(page),
+                          "https://music.163.com/api/user/playlist?uid=%" PRIu64 "&limit=%u&offset=%u", uid,
+                          kPageLimit, offset);
+            const size_t before = ctx.seen;
+            JsonScanner scanner(PlaylistCollector::sink, &ctx);
+            pr = get_json(page, cookie, scanner, cancelled);
+            if (pr != Result::Ok) break;
+            if (ctx.seen - before < kPageLimit || ctx.count >= max) break;
+        }
+        return pr;
+    };
+    Result r = fetch_pages();
     bool private_ok = true;
     if (r != Result::Ok && r != Result::Cancelled && cookie && cookie[0]) {
+        // Public lists only, over HTTP without the cookie (a single reply).
         ESP_LOGW(kTag, "Private playlists skipped: HTTPS failed (%s)", result_text(r));
+        char url[128];
         std::snprintf(url, sizeof(url), "http://music.163.com/api/user/playlist?uid=%" PRIu64 "&limit=%u&offset=0",
-                      uid, static_cast<unsigned>(max + 1));
+                      uid, static_cast<unsigned>(max + 1));  // favorites has its own slot
         r = fetch(url, nullptr);
         private_ok = false;
     }
@@ -535,8 +558,9 @@ Result daily_songs(const char *cookie, uint64_t *ids, size_t max, size_t *count,
     if (!cookie || !cookie[0]) return Result::Api;
     DailyCollector ctx{ids, max};
     JsonScanner scanner(DailyCollector::sink, &ctx);
-    // Requires login, so HTTPS only with no fallback. Records above 8 KiB may make
-    // TLS fail here; needs an on-device check.
+    // Requires login, so HTTPS only with no fallback. The reply (~30 full song
+    // records) is above the 8 KiB TLS record limit and will fail on device. No paged
+    // or smaller endpoint is verified yet (unresolved).
     const Result r = eapi_post("/api/v3/discovery/recommend/songs", "\"afresh\":false", scanner,
                                cancelled, nullptr, 0, cookie);
     if (r != Result::Ok) return r;
@@ -564,8 +588,9 @@ Result playlist_tracks(const char *cookie, uint64_t playlist, uint64_t *ids, siz
         return get_json(u, c, scanner, cancelled);
     };
     char url[128];
-    // Large reply: HTTPS with the cookie. If HTTPS fails (e.g. records above 8 KiB),
-    // retry the public playlist over HTTP without the cookie.
+    // Cookie-carrying, so HTTPS. The trackIds array is ~80-100 bytes per track, so
+    // long playlists exceed the 8 KiB record limit and fail here (unresolved: no paged
+    // endpoint verified). Then retry the public playlist over HTTP without the cookie.
     std::snprintf(url, sizeof(url), "https://music.163.com/api/v6/playlist/detail?id=%" PRIu64 "&n=0", playlist);
     Result r = fetch(url, cookie);
     if (r != Result::Ok && r != Result::Cancelled && cookie && cookie[0]) {

@@ -91,6 +91,7 @@ void self_test() {
         {"creator":{"userId":99},"name":"Renamed favorite","specialType":5,"userId":42,"id":9007199254740993,"trackCount":27}
     ],"code":200})");
     assert(playlists.code == 200 && playlists.count == 2);
+    assert(playlists.seen == 4);  // every playlist entry counts toward paging, favorites included
     assert(favorite.id == 9007199254740993ULL && favorite.count == 27);
     netease::fill_home_entries(home, favorite);
     const char *names[] = {"我喜欢的音乐", "每日推荐", "热歌榜", "新歌榜", "飙升榜", "原创榜"};
