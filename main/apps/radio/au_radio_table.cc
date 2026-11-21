@@ -114,6 +114,168 @@ std::size_t collect_stations(std::size_t area, uint8_t band_mask, uint16_t *out,
     return n;
 }
 
+namespace {
+
+constexpr const char *kStateCodes[kStateCount] = {"NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT", "NT"};
+
+// Bit order for next_band(): FM -> AM -> DAB+ -> FM.
+constexpr uint8_t kBandCycle[3] = {kBandFm, kBandAm, kBandDab};
+
+}  // namespace
+
+const char *state_code(std::size_t index) { return index < kStateCount ? kStateCodes[index] : ""; }
+
+std::size_t areas_in_state(const char *state, uint16_t *out, std::size_t capacity) {
+    if (!state || !state[0] || !out) return 0;
+    std::size_t n = 0;
+    for (std::size_t i = 0; i < area_count() && n < capacity; ++i) {
+        if (equal_ci(state, text(area_at(i).state))) out[n++] = static_cast<uint16_t>(i);
+    }
+    return n;
+}
+
+uint8_t bands_in_area(std::size_t area) {
+    if (area >= area_count()) return 0;
+    const Area &row = area_at(area);
+    uint8_t mask = 0;
+    for (std::size_t i = row.first; i < std::size_t(row.first) + row.count; ++i) {
+        mask = static_cast<uint8_t>(mask | (1u << station_at(i).band));
+    }
+    return mask;
+}
+
+uint8_t first_band(uint8_t band_mask) {
+    for (uint8_t band : kBandCycle) {
+        if (band_mask & (1u << band)) return band;
+    }
+    return kBandFm;
+}
+
+uint8_t next_band(uint8_t current, uint8_t band_mask) {
+    std::size_t at = 0;
+    for (std::size_t i = 0; i < 3; ++i) {
+        if (kBandCycle[i] == current) at = i;
+    }
+    for (std::size_t step = 1; step <= 3; ++step) {
+        const uint8_t band = kBandCycle[(at + step) % 3];
+        if (band_mask & (1u << band)) return band;
+    }
+    return current;
+}
+
+void format_dial_readout(const Station &row, char *out, std::size_t capacity) {
+    if (!out || capacity == 0) return;
+    switch (row.band) {
+        case kBandFm:
+            std::snprintf(out, capacity, "%u.%u", unsigned(row.frequency / 10),
+                          unsigned(row.frequency % 10));
+            break;
+        case kBandAm:
+            std::snprintf(out, capacity, "%u kHz", unsigned(row.frequency));
+            break;
+        default:
+            std::snprintf(out, capacity, "%s", text(row.dab_block));
+            break;
+    }
+}
+
+bool format_area_choice(std::size_t area, char *out, std::size_t capacity) {
+    if (!out || capacity == 0 || area >= area_count()) return false;
+    const Area &row = area_at(area);
+    std::snprintf(out, capacity, "%s, %s", text(row.name), text(row.state));
+    return true;
+}
+
+bool area_for_choice(const char *choice, std::size_t *area) {
+    if (!choice || !choice[0] || !area) return false;
+    const char *comma = std::strrchr(choice, ',');
+    char name[48] = {};
+    std::size_t name_len = comma ? std::size_t(comma - choice) : std::strlen(choice);
+    if (name_len == 0 || name_len >= sizeof(name)) return false;
+    std::memcpy(name, choice, name_len);
+    while (name_len && name[name_len - 1] == ' ') name[--name_len] = '\0';
+    const char *state = comma ? comma + 1 : nullptr;
+    while (state && *state == ' ') ++state;
+    if (state && !state[0]) state = nullptr;
+    for (std::size_t i = 0; i < area_count(); ++i) {
+        const Area &row = area_at(i);
+        if (!equal_ci(name, text(row.name))) continue;
+        if (state && !equal_ci(state, text(row.state))) continue;
+        *area = i;
+        return true;
+    }
+    return false;
+}
+
+bool area_for_selection(const char *choice, const char *city, const char *region, const char *lat,
+                        const char *lon, std::size_t *area) {
+    if (area_for_choice(choice, area)) return true;
+    return area_for_profile(city, region, lat, lon, area);
+}
+
+void AreaPicker::open() {
+    level_ = Level::States;
+    selected_ = 0;
+    state_count_ = 0;
+    for (std::size_t i = 0; i < kStateCount; ++i) {
+        uint16_t probe[1];
+        if (areas_in_state(kStateCodes[i], probe, 1) > 0) states_[state_count_++] = static_cast<uint8_t>(i);
+    }
+}
+
+std::size_t AreaPicker::count() const {
+    return level_ == Level::States ? state_count_ : area_count_ + 1;
+}
+
+void AreaPicker::move(int delta) {
+    const std::size_t rows = count();
+    if (rows == 0) {
+        selected_ = 0;
+        return;
+    }
+    if (delta < 0) {
+        const std::size_t step = static_cast<std::size_t>(-delta);
+        selected_ = selected_ > step ? selected_ - step : 0;
+    } else {
+        selected_ = std::min(rows - 1, selected_ + static_cast<std::size_t>(delta));
+    }
+}
+
+const char *AreaPicker::label(std::size_t i) const {
+    if (level_ == Level::States) return i < state_count_ ? kStateCodes[states_[i]] : "";
+    if (i == 0) return kAutoLabel;
+    return i - 1 < area_count_ ? area_name(areas_[i - 1]) : "";
+}
+
+const char *AreaPicker::title() const {
+    return level_ == Level::States ? "Area" : state_code(state_index_);
+}
+
+AreaPicker::Outcome AreaPicker::select() {
+    if (level_ == Level::States) {
+        if (selected_ >= state_count_) return Outcome::Stay;
+        state_index_ = states_[selected_];
+        state_row_ = selected_;
+        area_count_ = areas_in_state(kStateCodes[state_index_], areas_, kMaxAreas);
+        level_ = Level::Areas;
+        selected_ = 0;
+        return Outcome::Stay;
+    }
+    if (selected_ == 0) return Outcome::Auto;
+    if (selected_ - 1 >= area_count_) return Outcome::Stay;
+    chosen_ = areas_[selected_ - 1];
+    return Outcome::Area;
+}
+
+AreaPicker::Outcome AreaPicker::back() {
+    if (level_ == Level::Areas) {
+        level_ = Level::States;
+        selected_ = state_row_;
+        return Outcome::Stay;
+    }
+    return Outcome::Close;
+}
+
 void TunedUrlCache::clear() {
     for (auto &entry : entries_) {
         entry.used = false;

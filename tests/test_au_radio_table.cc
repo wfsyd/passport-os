@@ -32,7 +32,7 @@ static void lookups() {
 
     std::size_t area = 99;
     assert(area_by_name("testville", &area) && area == 0);
-    assert(area_by_name("FX", &area) && area == 1);
+    assert(area_by_name("VIC", &area) && area == 1);
     assert(!area_by_name("Nowhere", &area) && !area_by_name("", &area));
 
     double km = -1;
@@ -105,11 +105,93 @@ static void cache_capacity() {
     assert(cache.find(10) == nullptr);
 }
 
+static void states_and_bands() {
+    // Picker states: fixed AU order; areas match the state code case-insensitively.
+    assert(std::strcmp(state_code(0), "NSW") == 0 && std::strcmp(state_code(7), "NT") == 0);
+    assert(std::strcmp(state_code(kStateCount), "") == 0);
+    uint16_t out[8];
+    assert(areas_in_state("nsw", out, 8) == 1 && out[0] == 0);
+    assert(areas_in_state("VIC", out, 8) == 1 && out[0] == 1);
+    assert(areas_in_state("SA", out, 8) == 0);  // no table rows: the picker hides it
+    assert(areas_in_state("", out, 8) == 0 && areas_in_state("NSW", out, 0) == 0);
+
+    assert(bands_in_area(0) == 0x7);
+    assert(bands_in_area(1) == (1u << kBandFm));
+    assert(bands_in_area(9) == 0);
+    assert(first_band(0x7) == kBandFm && first_band(1u << kBandDab) == kBandDab && first_band(0) == kBandFm);
+    assert(next_band(kBandFm, 0x7) == kBandAm);
+    assert(next_band(kBandAm, 0x7) == kBandDab);
+    assert(next_band(kBandDab, 0x7) == kBandFm);
+    assert(next_band(kBandFm, 1u << kBandFm) == kBandFm);  // only one band: stays
+    assert(next_band(kBandAm, (1u << kBandFm) | (1u << kBandDab)) == kBandDab);  // skips a missing band
+    assert(next_band(kBandDab, (1u << kBandFm) | (1u << kBandDab)) == kBandFm);
+}
+
+static void readouts_and_choices() {
+    char text[48];
+    // Table order: 0 FM 1000, 1 FM 1010, 2 AM 630, 3 DAB 9A (Testville).
+    format_dial_readout(station_at(0), text, sizeof(text));
+    assert(std::strcmp(text, "100.0") == 0);
+    format_dial_readout(station_at(2), text, sizeof(text));
+    assert(std::strcmp(text, "630 kHz") == 0);
+    format_dial_readout(station_at(3), text, sizeof(text));
+    assert(std::strcmp(text, "9A") == 0);
+
+    assert(format_area_choice(0, text, sizeof(text)) && std::strcmp(text, "Testville, NSW") == 0);
+    assert(!format_area_choice(9, text, sizeof(text)));
+    std::size_t area = 99;
+    assert(area_for_choice("Testville, NSW", &area) && area == 0);
+    assert(area_for_choice("testville,nsw", &area) && area == 0);
+    assert(area_for_choice("Fixtureton", &area) && area == 1);
+    assert(!area_for_choice("Testville, VIC", &area));  // a stale state does not match
+    assert(!area_for_choice(", NSW", &area) && !area_for_choice("", &area) && !area_for_choice(nullptr, &area));
+
+    // Selection order: picked area, then profile city, then coordinates.
+    assert(area_for_selection("Fixtureton, VIC", "Testville", "", "-33.8", "151.2", &area) && area == 1);
+    assert(area_for_selection("", "", "", "-33.9", "151.1", &area) && area == 0);
+    assert(area_for_selection("", "Fixtureton", "", "", "", &area) && area == 1);
+    assert(!area_for_selection("Testville, VIC", "", "", "", "", &area));
+}
+
+static void picker_flow() {
+    using Outcome = AreaPicker::Outcome;
+    AreaPicker picker;
+    picker.open();
+    // Only states with rows are listed, in AU order.
+    assert(picker.level() == AreaPicker::Level::States && picker.count() == 3);
+    assert(std::strcmp(picker.label(0), "NSW") == 0 && std::strcmp(picker.label(2), "QLD") == 0);
+    assert(std::strcmp(picker.title(), "Area") == 0);
+    picker.move(-3);
+    assert(picker.selected() == 0);
+    picker.move(5);
+    assert(picker.selected() == 2);
+    picker.move(-1);
+    assert(picker.selected() == 1);
+
+    // VIC: Auto first, then its areas.
+    assert(picker.select() == Outcome::Stay && picker.count() == 2);
+    assert(picker.level() == AreaPicker::Level::Areas && std::strcmp(picker.title(), "VIC") == 0);
+    assert(std::strcmp(picker.label(0), AreaPicker::kAutoLabel) == 0);
+    assert(std::strcmp(picker.label(1), "Fixtureton") == 0);
+    picker.move(1);
+    assert(picker.select() == Outcome::Area && picker.chosen_area() == 1);
+
+    // Long OK goes back one level and keeps the state row highlighted.
+    assert(picker.back() == Outcome::Stay && picker.level() == AreaPicker::Level::States);
+    assert(picker.selected() == 1);
+    assert(picker.select() == Outcome::Stay && picker.select() == Outcome::Auto);
+    assert(picker.back() == Outcome::Stay && picker.back() == Outcome::Close);
+}
+
 int main() {
     lookups();
     collection();
     lazy_resolve();
     cache_capacity();
-    std::puts("AU radio table: lookups, nearest/profile selection, capacity, lazy resolve, LRU cache: PASS");
+    states_and_bands();
+    readouts_and_choices();
+    picker_flow();
+    std::puts("AU radio table: lookups, nearest/profile selection, capacity, lazy resolve, LRU cache, "
+              "states, bands, readouts, area choice, picker: PASS");
     return 0;
 }

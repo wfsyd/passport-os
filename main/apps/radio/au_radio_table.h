@@ -58,6 +58,62 @@ bool area_for_profile(const char *city, const char *region, const char *lat, con
 // Row indices of the area's stations whose band is in band_mask, in table order.
 std::size_t collect_stations(std::size_t area, uint8_t band_mask, uint16_t *out, std::size_t capacity);
 
+// Fixed AU state order used by the Area picker (NSW first, then the rest).
+constexpr std::size_t kStateCount = 8;
+const char *state_code(std::size_t index);
+// Areas whose state abbreviation matches `state` (case-insensitive), in table order.
+std::size_t areas_in_state(const char *state, uint16_t *out, std::size_t capacity);
+// Bit mask of the bands (1 << band) that have at least one row in `area`.
+uint8_t bands_in_area(std::size_t area);
+// Band to show first: FM when present, else the lowest band in the mask (0 for an empty mask).
+uint8_t first_band(uint8_t band_mask);
+// Next band after `current` (FM, AM, DAB+, then FM again) that is in the mask.
+// Returns `current` when no other band is available.
+uint8_t next_band(uint8_t current, uint8_t band_mask);
+// Dial readout for a row: "94.7" (FM), "774 kHz" (AM) or the DAB block such as "9C".
+void format_dial_readout(const Station &row, char *out, std::size_t capacity);
+// The value saved in the profile's radio_city for a picked area: "Name, ST".
+bool format_area_choice(std::size_t area, char *out, std::size_t capacity);
+// Area for a saved choice. Accepts "Name, ST" or a bare "Name".
+bool area_for_choice(const char *choice, std::size_t *area);
+// User-picked choice first, then the profile city/region/coordinates (area_for_profile).
+bool area_for_selection(const char *choice, const char *city, const char *region, const char *lat,
+                        const char *lon, std::size_t *area);
+
+// Area picker state machine (states, then areas of the chosen state). Pure logic: the
+// UI renders label() rows and feeds it up/down/OK/long-OK. Row 0 of the areas level is "Auto".
+class AreaPicker {
+public:
+    static constexpr std::size_t kMaxAreas = 48;
+    static constexpr const char *kAutoLabel = "Auto (location)";
+    enum class Level : uint8_t { States, Areas };
+    enum class Outcome : uint8_t { Stay, Auto, Area, Close };
+
+    void open();
+    Level level() const { return level_; }
+    // Title for the page: "Area" at the state level, the state code inside a state.
+    const char *title() const;
+    std::size_t count() const;
+    std::size_t selected() const { return selected_; }
+    void move(int delta);
+    // Stable text for row i: a state code, "Auto (location)", or a table area name.
+    const char *label(std::size_t i) const;
+    Outcome select();  // OK: enter a state, or choose the highlighted area
+    Outcome back();    // long OK: areas -> states, states -> Close
+    std::size_t chosen_area() const { return chosen_; }
+
+private:
+    Level level_ = Level::States;
+    std::size_t selected_ = 0;
+    std::size_t state_row_ = 0;
+    std::size_t chosen_ = 0;
+    uint8_t states_[kStateCount] = {};
+    std::size_t state_count_ = 0;
+    uint16_t areas_[kMaxAreas] = {};
+    std::size_t area_count_ = 0;
+    uint8_t state_index_ = 0;
+};
+
 // Most-recently-used stream URLs for table rows, keyed by row index.
 struct StreamCacheEntry {
     uint16_t station;
@@ -80,6 +136,7 @@ private:
 struct TableRam {
     uint16_t area;
     uint16_t count;
+    uint8_t band;       // the band whose rows `listed` holds (kBandFm/kBandAm/kBandDab)
     uint16_t listed[kMaxListed];
     TunedUrlCache cache;
 };

@@ -88,6 +88,20 @@ RadioStation table_station(std::size_t position) {
     return station;
 }
 
+// Every station change goes through here, so the dial readout follows the row:
+// FM frequency, AM kHz or the DAB block. Directory stations clear it.
+void show_station(std::size_t index, std::size_t count, const RadioStation &station) {
+    char readout[24] = {};
+    if (s_table_mode.load(std::memory_order_acquire)) {
+        const au_radio::TableRam &table = *table_ram();
+        if (index < table.count) {
+            au_radio::format_dial_readout(au_radio::station_at(table.listed[index]), readout, sizeof(readout));
+        }
+    }
+    radio_ui_set_dial_text(readout);
+    radio_ui_set_station(index, count, station);
+}
+
 RadioStation station_snapshot(std::size_t index) {
     RadioStation station = {};
     if (!s_stations || !s_station_mutex ||
@@ -726,7 +740,7 @@ bool radio_player_init() {
     s_decoders_registered = true;
     bsp_audio_set_volume(100);
 
-    radio_ui_set_station(s_station_index.load(), radio_player_station_count(),
+    show_station(s_station_index.load(), radio_player_station_count(),
                          radio_player_station(s_station_index.load()));
     radio_ui_set_volume(radio_player_volume());
     TaskHandle_t task = xTaskCreateStatic(player_task, "radio_stream", kStreamStackBytes, nullptr, 6,
@@ -829,9 +843,9 @@ void radio_player_set_station(std::size_t index) {
     save_setting("station", static_cast<uint8_t>(index));
     const RadioStation chosen = radio_player_station(index);
     save_station_name(chosen.name);
-    radio_ui_set_station(index, radio_player_station_count(), radio_player_station(index));
+    show_station(index, radio_player_station_count(), radio_player_station(index));
     if (radio_player_is_playing()) {
-        radio_ui_set_playback(RadioPlaybackState::Connecting, "正在切换电台");
+        radio_ui_set_playback(RadioPlaybackState::Connecting, "Switching station");
     }
 }
 
@@ -854,7 +868,7 @@ bool radio_player_replace_stations(const RadioStation *stations, std::size_t cou
     save_setting("station", static_cast<uint8_t>(selected));
     const RadioStation chosen = radio_player_station(selected);
     save_station_name(chosen.name);
-    radio_ui_set_station(selected, radio_player_station_count(), chosen);
+    show_station(selected, radio_player_station_count(), chosen);
     ESP_LOGI(kTag, "Installed local catalog with %u stations",
              static_cast<unsigned>(radio_player_station_count()));
     return true;
@@ -869,7 +883,8 @@ bool radio_player_replace_table(std::size_t area) {
     s_generation.fetch_add(1, std::memory_order_acq_rel);
     if (xSemaphoreTake(s_station_mutex, pdMS_TO_TICKS(1000)) != pdTRUE) return false;
     au_radio::TableRam &table = *table_ram();
-    const std::size_t count = au_radio::collect_stations(area, au_radio::kBandsAll, table.listed,
+    const uint8_t band = au_radio::first_band(au_radio::bands_in_area(area));
+    const std::size_t count = au_radio::collect_stations(area, 1u << band, table.listed,
                                                          au_radio::kMaxListed);
     if (count == 0) {
         xSemaphoreGive(s_station_mutex);
@@ -877,6 +892,7 @@ bool radio_player_replace_table(std::size_t area) {
     }
     table.area = static_cast<uint16_t>(area);
     table.count = static_cast<uint16_t>(count);
+    table.band = band;
     table.cache.clear();
     std::size_t selected = 0;
     if (has_remembered) {
@@ -895,9 +911,30 @@ bool radio_player_replace_table(std::size_t area) {
     save_setting("station", static_cast<uint8_t>(selected));
     const RadioStation chosen = radio_player_station(selected);
     save_station_name(chosen.name);
-    radio_ui_set_station(selected, radio_player_station_count(), chosen);
+    show_station(selected, radio_player_station_count(), chosen);
     ESP_LOGI(kTag, "Installed table area %u with %u stations",
              static_cast<unsigned>(area), static_cast<unsigned>(count));
+    return true;
+}
+
+bool radio_player_cycle_table_band() {
+    if (!s_table_mode.load(std::memory_order_acquire) || !s_stations || !s_station_mutex) return false;
+    if (xSemaphoreTake(s_station_mutex, pdMS_TO_TICKS(1000)) != pdTRUE) return false;
+    au_radio::TableRam &table = *table_ram();
+    const uint8_t next = au_radio::next_band(table.band, au_radio::bands_in_area(table.area));
+    const std::size_t count = next == table.band ? 0 : au_radio::collect_stations(
+        table.area, 1u << next, table.listed, au_radio::kMaxListed);
+    if (count == 0) {
+        xSemaphoreGive(s_station_mutex);
+        return false;
+    }
+    table.band = next;
+    table.count = static_cast<uint16_t>(count);
+    table.cache.clear();
+    s_station_count.store(count, std::memory_order_release);
+    s_station_index.store(0, std::memory_order_release);
+    xSemaphoreGive(s_station_mutex);
+    radio_player_set_station(0);
     return true;
 }
 
@@ -915,7 +952,7 @@ bool radio_player_replace_stations_resuming(const RadioStation *stations,
     save_setting("station", static_cast<uint8_t>(selected));
     const RadioStation chosen = radio_player_station(selected);
     save_station_name(chosen.name);
-    radio_ui_set_station(selected, radio_player_station_count(), chosen);
+    show_station(selected, radio_player_station_count(), chosen);
     if (has_remembered && selected > 0) {
         ESP_LOGI(kTag, "Resumed remembered station '%s' at index %u",
                  chosen.name, static_cast<unsigned>(selected));

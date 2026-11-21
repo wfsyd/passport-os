@@ -41,6 +41,9 @@ bool radio_player_replace_stations(const RadioStation *stations, std::size_t cou
 // Table mode: installs the bundled AU station table for one area (see au_radio_table.h).
 // Stream URLs resolve when a row is tuned. Returns false when the area has no rows.
 bool radio_player_replace_table(std::size_t area);
+// Table mode: moves to the next band the area has (FM, AM, DAB+, FM) and starts at its first
+// station. Returns false outside table mode or when the area has no other band.
+bool radio_player_cycle_table_band();
 // Installs a catalog and keeps listening to the station the user last chose
 // when the new catalog still offers it, so a restart resumes where it left off.
 bool radio_player_replace_stations_resuming(const RadioStation *stations,

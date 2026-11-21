@@ -73,7 +73,10 @@ bool table_area_for_profile(std::size_t *area) {
     home_profile_get(&profile);
     const char *country = profile.country_code[0] ? profile.country_code : PASSPORT_DEFAULT_COUNTRY;
     if (std::strcmp(country, "AU") != 0) return false;
-    return au_radio::area_for_profile(profile.city, profile.region, profile.lat, profile.lon, area);
+    // Order: user-picked area (radio_city, "Name, ST"), then profile city/region/GPS.
+    // IP lookup is only reached when no table area matches (directory discovery).
+    return au_radio::area_for_selection(profile.radio_city, profile.city, profile.region,
+                                        profile.lat, profile.lon, area);
 }
 
 // First station whose name contains the spoken keywords, else the top one.
@@ -193,6 +196,67 @@ void start_catalog() {
     xSemaphoreGive(s_catalog_commit);
 }
 
+// Area page: while open, the keys drive the picker instead of the station list.
+// Long OK closes one level (on_back), so the global back gesture still works.
+au_radio::AreaPicker s_picker;
+std::atomic<bool> s_picker_open{false};
+
+void show_picker_rows() {
+    static const char *rows[au_radio::AreaPicker::kMaxAreas + 1];
+    const std::size_t count = s_picker.count();
+    for (std::size_t i = 0; i < count; ++i) rows[i] = s_picker.label(i);
+    radio_ui_show_area(s_picker.title(), rows, count, s_picker.selected());
+}
+
+void close_picker() {
+    s_picker_open.store(false);
+    radio_ui_show_main();
+}
+
+// Saves the choice ("" = automatic location) and re-runs table selection for it.
+void apply_area_choice(const char *choice) {
+    home_profile_t profile;
+    home_profile_get(&profile);
+    std::snprintf(profile.radio_city, sizeof(profile.radio_city), "%s", choice ? choice : "");
+    if (home_profile_set_text(&profile) != ESP_OK) {
+        ESP_LOGW(TAG, "Area choice not saved");
+        return;
+    }
+    s_catalog_installed.store(false);
+    start_catalog();
+}
+
+void picker_key(uint8_t btn, app_btn_event_t event) {
+    if (event != BTN_EVT_CLICK) return;
+    if (btn == BSP_BTN_UP) {
+        s_picker.move(-1);
+        show_picker_rows();
+    } else if (btn == BSP_BTN_DOWN) {
+        s_picker.move(1);
+        show_picker_rows();
+    } else if (btn == BSP_BTN_OK) {
+        switch (s_picker.select()) {
+            case au_radio::AreaPicker::Outcome::Stay:
+                show_picker_rows();
+                break;
+            case au_radio::AreaPicker::Outcome::Auto:
+                apply_area_choice("");
+                close_picker();
+                break;
+            case au_radio::AreaPicker::Outcome::Area: {
+                char choice[48] = {};
+                if (au_radio::format_area_choice(s_picker.chosen_area(), choice, sizeof(choice)))
+                    apply_area_choice(choice);
+                close_picker();
+                break;
+            }
+            case au_radio::AreaPicker::Outcome::Close:
+                close_picker();
+                break;
+        }
+    }
+}
+
 void on_wifi_event(WifiEvent event, const std::string &data) {
     if (!s_radio_active.load()) return;
 
@@ -239,6 +303,7 @@ void radio_app_start(void) {
         }
     }
     // 1. 显示 Radio UI 界面
+    s_picker_open.store(false);
     radio_ui_show_main();
     radio_ui_set_volume(radio_player_volume());
     if (!s_catalog_commit || s_catalog_running.load()) {
@@ -312,6 +377,7 @@ bool radio_app_prepare_stop(void) {
 
 void radio_app_stop(void) {
     ESP_LOGI(TAG, "Stopping Radio App (keeping global Wi-Fi active)...");
+    s_picker_open.store(false);
     if (s_catalog_commit) xSemaphoreTake(s_catalog_commit, portMAX_DELAY);
     s_catalog_cancel.store(true);
     s_radio_active.store(false);
@@ -359,9 +425,34 @@ void radio_app_stop(void) {
              (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
 }
 
+// Opens the Area page. Nothing lists when the profile is not an AU table area.
+void radio_app_open_area_picker(void) {
+    if (!s_player_ready.load() || !s_radio_active.load()) return;
+    s_picker.open();
+    if (s_picker.count() == 0) return;
+    s_picker_open.store(true);
+    show_picker_rows();
+}
+
+// Moves to the next band of the current table area. False outside table mode.
+bool radio_app_cycle_band(void) {
+    return s_player_ready.load() && radio_player_cycle_table_band();
+}
+
+bool radio_app_on_back(void) {
+    if (!s_picker_open.load()) return false;
+    if (s_picker.back() == au_radio::AreaPicker::Outcome::Close) close_picker();
+    else show_picker_rows();
+    return true;
+}
+
 void radio_app_on_key(uint8_t btn, app_btn_event_t event, uint16_t mv) {
     (void)mv;
     if (!s_player_ready.load()) return;
+    if (s_picker_open.load()) {
+        picker_key(btn, event);
+        return;
+    }
 
     if (event == BTN_EVT_CLICK) {
         if (btn == BSP_BTN_UP) {
@@ -403,4 +494,5 @@ const passport_app_t g_radio_app = {
     .stop = radio_app_stop,
     .on_key = radio_app_on_key,
     .prepare_stop = radio_app_prepare_stop,
+    .on_back = radio_app_on_back,
 };

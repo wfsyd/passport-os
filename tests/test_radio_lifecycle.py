@@ -68,10 +68,12 @@ std::size_t radio_player_station_count(){return s_station_count;}
 RadioStation radio_player_station(std::size_t i){return s_stations[i];}
 uint8_t radio_player_volume(){return 80;}
 static void radio_ui_set_station(unsigned,unsigned,RadioStation){}
+static void show_station(std::size_t i,std::size_t n,RadioStation s){radio_ui_set_station(i,n,s);}
 static void radio_ui_set_volume(unsigned){}
 struct RadioLocation {char city[64],region[64],search_city[64],country_code[4];};
 struct home_profile_t {char city[64],region[64],radio_city[64],country_code[4],lat[16],lon[16];};
 namespace au_radio{inline bool area_for_profile(const char*,const char*,const char*,const char*,std::size_t*){return false;}
+inline bool area_for_selection(const char*,const char*,const char*,const char*,const char*,std::size_t*){return false;}
 inline const char *area_name(std::size_t){return "";}}
 bool radio_player_replace_table(std::size_t){return false;}
 static std::atomic<bool> s_catalog_cancel,s_radio_active,s_ui_alive,s_catalog_running,s_catalog_installed;

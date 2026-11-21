@@ -48,6 +48,11 @@ void radio_ui_set_playback(RadioPlaybackState state, const char *detail = nullpt
 void radio_ui_set_audio_levels(const uint8_t *levels, std::size_t count);
 void radio_ui_show_settings(RadioSettingsPage page, std::size_t selected,
                             uint8_t volume);
+// Table mode readout for the dial ("774 kHz", "9C"). Empty restores the frequency readout.
+void radio_ui_set_dial_text(const char *text);
+// Area page: rows are state codes or area names; `items` is copied as pointers (strings must stay valid).
+void radio_ui_show_area(const char *title, const char *const *items, std::size_t count,
+                        std::size_t selected);
 void radio_ui_show_saved_wifi(const char *const *ssids, std::size_t count,
                               std::size_t selected);
 void radio_ui_show_wifi_action(const char *ssid, std::size_t selected);
