@@ -96,6 +96,44 @@ if [[ "${variant}" == "base" ]]; then
 
     cp -- "${build_dir}"/*.map "${out_dir}/"
     idf.py -B "${build_dir}" size --format json2 --output-file "${out_dir}/size-${variant}.json"
+
+    echo "=== MAP BREAKDOWN START ==="
+    map_file="$(find "${build_dir}" -maxdepth 1 -name '*.map' | head -1)"
+    elf_file="${map_file%.map}.elf"
+    echo "map file: ${map_file}"
+    echo "elf file: ${elf_file}"
+
+    echo "== 2a: libmain.a per-object breakdown =="
+    if ! python -m esp_idf_size --archive-details libmain.a "${map_file}" 2>&1; then
+        echo "esp_idf_size failed; trying idf.py size --archive-details"
+        idf.py -B "${build_dir}" size --archive-details libmain.a 2>&1 \
+            || echo "CMD FAILED: libmain.a archive details (esp_idf_size and idf.py both failed)"
+    fi
+
+    echo "== 2b: libpassport_muse.a archive details (first 60 lines) =="
+    python -m esp_idf_size --archive-details libpassport_muse.a "${map_file}" 2>&1 | head -60 \
+        || echo "CMD FAILED: libpassport_muse.a archive details"
+
+    echo "== 2b: libesp-wifi-connect.a archive details (first 60 lines) =="
+    python -m esp_idf_size --archive-details libesp-wifi-connect.a "${map_file}" 2>&1 | head -60 \
+        || echo "CMD FAILED: libesp-wifi-connect.a archive details"
+
+    echo "== 2c: largest symbols in final ELF (last 150 by size) =="
+    riscv32-esp-elf-nm -S --size-sort -C "${elf_file}" 2>&1 | tail -150 \
+        || echo "CMD FAILED: riscv32-esp-elf-nm -S --size-sort -C ${elf_file}"
+
+    echo "== 2d: ELF section headers =="
+    riscv32-esp-elf-objdump -h "${elf_file}" 2>&1 \
+        || echo "CMD FAILED: riscv32-esp-elf-objdump -h ${elf_file}"
+
+    echo "== 2d: map context around flash.appdesc =="
+    grep -n -B3 -A40 'flash.appdesc' "${map_file}" 2>&1 | head -120 \
+        || echo "CMD FAILED: grep flash.appdesc in ${map_file}"
+
+    echo "== 2d: map context around esp_app_desc.c.obj =="
+    grep -n -A10 'esp_app_desc.c.obj' "${map_file}" 2>&1 | head -60 \
+        || echo "CMD FAILED: grep esp_app_desc.c.obj in ${map_file}"
+    echo "=== MAP BREAKDOWN END ==="
 fi
 
 app_bin=""

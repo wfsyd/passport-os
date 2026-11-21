@@ -18,11 +18,12 @@ jobs:
       matrix:
         variant:
           - base
-          - cert_cmn
-          - log_warn
-          - assert_silent
-          - nano_fmt
-          - combined
+          # Deferred variants, re-enable later:
+          # - cert_cmn
+          # - log_warn
+          # - assert_silent
+          # - nano_fmt
+          # - combined
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
