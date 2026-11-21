@@ -148,18 +148,16 @@ if [[ "${variant}" == "base" ]]; then
     python -m esp_idf_size --help 2>&1 | head -60 || true
 
     echo "== 2a: libmain.a per-object breakdown =="
-    if ! python -m esp_idf_size --archive-details esp-idf/main/libmain.a "${map_file}" 2>&1; then
-        echo "--archive-details failed; trying --archive-details=<name> --files"
-        python -m esp_idf_size --archive-details=esp-idf/main/libmain.a --files "${map_file}" 2>&1 \
-            || echo "CMD FAILED: libmain.a archive details (both flag syntaxes failed)"
+    if ! python -m esp_idf_size --archive_details esp-idf/main/libmain.a "${map_file}" 2>&1; then
+        echo "CMD FAILED: libmain.a archive details"
     fi
 
     echo "== 2b: libpassport_muse.a archive details (first 60 lines) =="
-    python -m esp_idf_size --archive-details esp-idf/passport_muse/libpassport_muse.a "${map_file}" 2>&1 | head -60 \
+    python -m esp_idf_size --archive_details esp-idf/passport_muse/libpassport_muse.a "${map_file}" 2>&1 | head -60 \
         || echo "CMD FAILED: libpassport_muse.a archive details"
 
     echo "== 2b: libesp-wifi-connect.a archive details (first 60 lines) =="
-    python -m esp_idf_size --archive-details esp-idf/esp-wifi-connect/libesp-wifi-connect.a "${map_file}" 2>&1 | head -60 \
+    python -m esp_idf_size --archive_details esp-idf/esp-wifi-connect/libesp-wifi-connect.a "${map_file}" 2>&1 | head -60 \
         || echo "CMD FAILED: libesp-wifi-connect.a archive details"
 
     echo "== 2c: largest symbols in final ELF (last 150 by size) =="
