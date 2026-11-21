@@ -24,14 +24,12 @@ struct PlaylistCollector {
     Playlist current{};
     uint64_t owner = 0;
     int special = 0;
-    size_t seen = 0;  // playlist entries in this reply, including favorites
 
     static void sink(void *opaque, JsonScanner::Event event, const char *path, const char *value, size_t) {
         auto &c = *static_cast<PlaylistCollector *>(opaque);
         if (event == JsonScanner::Event::ObjectEnd) {
             if (std::strcmp(path, "playlist[]")) return;
             if (c.current.id) {
-                ++c.seen;
                 if (c.owner == c.uid && c.special == 5) {
                     *c.favorites = c.current;
                     c.favorites->kind = PlaylistKind::Favorites;
