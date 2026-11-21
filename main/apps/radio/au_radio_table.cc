@@ -305,6 +305,16 @@ const char *area_rule_name(AreaRule rule) {
     }
 }
 
+bool first_word(const char *query, char *out, std::size_t capacity) {
+    if (!query || !out || capacity == 0) return false;
+    std::size_t length = 0;
+    while (query[length] && query[length] != ' ') ++length;
+    if (length == 0 || length >= capacity) return false;
+    std::memcpy(out, query, length);
+    out[length] = '\0';
+    return true;
+}
+
 bool shorter_query(const char *query, char *out, std::size_t capacity) {
     if (!query || !out || capacity == 0) return false;
     const std::size_t length = std::strlen(query);

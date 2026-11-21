@@ -47,7 +47,9 @@ std::size_t radio_catalog_discover_location(const RadioLocation &preferred,
                                            const char *voice_station = nullptr);
 
 // Table mode: resolves one stream URL by name through the AU directory. `query` is a
-// substring of the directory station name. Returns false when no playable entry
-// matches or `cancelled` reports the request as stale.
+// substring of the directory station name. With `must_word`, only an entry whose name
+// holds that word (whole word) and whose country is AU is accepted. Returns false when no
+// playable entry matches or `cancelled` reports the request as stale.
 bool radio_catalog_resolve_stream(const char *query, char *url, std::size_t capacity,
-                                  RadioCatalogCancelled cancelled = nullptr);
+                                  RadioCatalogCancelled cancelled = nullptr,
+                                  const char *must_word = nullptr);

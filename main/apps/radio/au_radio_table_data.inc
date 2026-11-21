@@ -4,1827 +4,1823 @@ inline constexpr std::size_t kAreaCount = 483;
 inline constexpr std::size_t kStationCount = 981;
 inline constexpr char kPool[] =
     "\000Artsound FM\000http://stream.artsound.fm/mp3\000tripl"
-    "e j\000https://mediaserviceslive.akamaized.net/hls/"
-    "live/2109456/triplejnsw/v0-221.m3u8\000ABC Classic\000"
+    "e j\000http://abc.streamguys1.com/live/triplejnsw/i"
+    "cecast.audio\000ABC Classic\000http://abc.streamguys1."
+    "com/live/classicfmnsw/icecast.audio\000ABC NewsRadi"
+    "o\000http://abc.streamguys1.com/live/newsradio/icec"
+    "ast.audio\000SBS Radio\000http://sbs-ice.streamguys1.c"
+    "om/sbs1-sbs-web\000ABC Canberra\000http://abc.streamgu"
+    "ys1.com/live/localcanberra/icecast.audio\000ABC Rad"
+    "io National\000Radio National\000http://abc.streamguys"
+    "1.com/live/rnnsw/icecast.audio\0002CA\000http://player"
+    "services.streamtheworld.com/api/livestream-redir"
+    "ect/2CAAAC.aac\000Vision Australia Radio Canberra\0002"
+    "CC\000http://playerservices.streamtheworld.com/api/"
+    "livestream-redirect/2CCAAC.aac\000ABC Jazz\0009C\000http:"
+    "//abc.streamguys1.com/live/abcjazz/icecast.audio"
+    "\000Double J\000http://abc.streamguys1.com/live/double"
+    "jnsw/icecast.audio\000SBS PopAsia\000http://sbs-ice.st"
+    "reamguys1.com/sbs-popasia-sbs-web\000act-canberra\000C"
+    "anberra\000ACT\000act-tuggeranong\000Tuggeranong\000nsw-armi"
+    "dale\000Armidale\000NSW\000nsw-balranald\000Balranald\000nsw-ba"
+    "temans-bay\000Batemans Bay/Moruya\000nsw-bathurst-cit\000"
+    "Bathurst City\000nsw-batlow\000Batlow\000nsw-bega-cooma\000B"
+    "ega/Cooma\000nsw-boggabri-coa\000Boggabri Coal Mine\000ns"
+    "w-bonalbo\000Bonalbo\000nsw-bourke\000Bourke\000nsw-braidwoo"
+    "d\000Braidwood\000nsw-brewarrina\000Brewarrina\000nsw-broken"
+    "-hill\000Broken Hill\000nsw-bulga-mine\000Bulga Mine\000nsw-"
+    "cadia-mine-s\000Cadia Mine Site\000nsw-captains-fla\000Ca"
+    "ptains Flat\000nsw-central-tabl\000Central Tablelands\000"
+    "nsw-central-west\000Central Western Slopes\000nsw-coba"
+    "r\000Cobar\000nsw-condobolin\000Condobolin\000nsw-cooma-town"
+    "\000Cooma Town\000nsw-cootamundra\000Cootamundra\000nsw-cowr"
+    "a\000Cowra\000nsw-crookwell\000Crookwell\000nsw-deniliquin\000D"
+    "eniliquin\000nsw-dubbo-city\000Dubbo (City)\000nsw-eden\000E"
+    "den\000nsw-emmaville\000Emmaville\000nsw-glen-innes\000Glen "
+    "Innes\000nsw-glendell-min\000Glendell Mine\000nsw-glouces"
+    "ter\000Gloucester\000nsw-goodooga\000Goodooga\000ABC Sydney\000"
+    "http://abc.streamguys1.com/live/localsydney/icec"
+    "ast.audio\000nsw-gosford\000Gosford\000nsw-goulburn\000Goulb"
+    "urn\000nsw-goulburn-tow\000Goulburn Town\000nsw-grafton-k"
+    "emp\000Grafton/Kempsey\000nsw-hay\000Hay\000nsw-holbrook\000Hol"
+    "brook\000nsw-illawarra\000Illawarra\000nsw-ivanhoe\000Ivanho"
+    "e\000nsw-jerilderie\000Jerilderie\000nsw-jindabyne\000Jindab"
+    "yne\000nsw-junee\000Junee\000nsw-kandos\000Kandos\000nsw-khanco"
+    "ban\000Khancoban\000nsw-lake-cowal-m\000Lake Cowal Mine\000n"
+    "sw-lightning-ri\000Lightning Ridge\000nsw-lismore\000Lism"
+    "ore\000nsw-lithgow-city\000Lithgow (City)\000nsw-long-fla"
+    "t\000Long Flat\000nsw-mt-warkworth\000MT Warkworth Mine\000n"
+    "sw-mangoola-min\000Mangoola Mine\000nsw-manning-rive\000M"
+    "anning River\000nsw-menindee\000Menindee\000nsw-merriwa\000M"
+    "erriwa\000nsw-murrumbidgee\000Murrumbidgee Irrigation "
+    "Area\000nsw-murrurundi\000Murrurundi\000nsw-narrandera\000Na"
+    "rrandera\0002HD\000http://streaming.hdserver.biz:9388/"
+    "\0002NUR\000http://playerservices.streamtheworld.com/a"
+    "pi/livestream-redirect/2NURFM.mp3\000ABC Newcastle\000"
+    "nsw-newcastle\000Newcastle\000nsw-nimbin\000Nimbin\000nsw-no"
+    "wra\000Nowra\000nsw-oberon\000Oberon\000nsw-orange\000Orange\000ns"
+    "w-parkes\000Parkes\000nsw-peak-hill\000Peak Hill\000nsw-port"
+    "-macquar\000Port Macquarie\000nsw-port-stephen\000Port St"
+    "ephens\000nsw-portland-wal\000Portland/Wallerawang\000nsw"
+    "-ravensworth\000Ravensworth Mine\000nsw-richmond-twe\000R"
+    "ichmond/Tweed\000nsw-sw-slopes-e\000SW Slopes/E Riveri"
+    "na\000FBi Radio\000http://streamer.fbiradio.com/stream"
+    "\000Smooth 95.3\000http://playerservices.streamtheworl"
+    "d.com/api/livestream-redirect/SMOOTH953_AAC48.aa"
+    "c\000Nova 96.9\000http://playerservices.streamtheworld"
+    ".com/api/livestream-redirect/NOVA_969_AAC48.aac\000"
+    "Fine Music\000http://radio12.shoutcast.net.au:2020/"
+    "stream/2MBS-ICE\000Hope 103.2\000http://28853.live.str"
+    "eamtheworld.com/2CBAAAC.aac\0002Day FM\000http://sa47."
+    "scastream.com.au/2day_128\077sca3xx=1\000Triple M Sydn"
+    "ey\000http://sa47.scastream.com.au/2mmm_128\077sca3xx="
+    "1\000KIIS 106.5\000http://ais-arn.streamguys1.com/au_0"
+    "07_icy\0002SER\000http://138.25.219.25:840/2ser128.MP3"
+    "\0002GB\000http://playerservices.streamtheworld.com/ap"
+    "i/livestream-redirect/2GB.mp3\0002UE\000Sky Sports Rad"
+    "io\000SEN 1170\0002SM\000http://cast4.asurahosting.com/pr"
+    "oxy/2sm1269/stream\000nsw-sydney\000Sydney\000nsw-talbing"
+    "o\000Talbingo\000nsw-tamworth\000Tamworth\000nsw-tarrawonga-"
+    "m\000Tarrawonga Mine\000nsw-tenterfield\000Tenterfield\000ns"
+    "w-thredbo\000Thredbo\000nsw-tumbarumba\000Tumbarumba\000nsw-"
+    "tumut\000Tumut\000nsw-ulan-coal-mi\000Ulan Coal Mine\000nsw-"
+    "united-colli\000United Collieries East Mine\000nsw-uni"
+    "ted-col-2\000United Collieries West Mine\000nsw-upper-"
+    "namoi\000Upper Namoi\000nsw-wagga-wagga\000Wagga Wagga\000ns"
+    "w-walcha\000Walcha\000nsw-walgett\000Walgett\000nsw-wilcanni"
+    "a\000Wilcannia\000nsw-wilpinjong-c\000Wilpinjong Coal Min"
+    "e\000nsw-wollongong\000Wollongong\000nsw-young\000Young\000nt-a"
+    "delaide-rive\000Adelaide River\000NT\000nt-alice-springs\000"
+    "Alice Springs\000nt-batchelor\000Batchelor\000nt-bathurst"
+    "-isla\000Bathurst Island\000nt-beswick\000Beswick\000nt-borr"
+    "oloola\000Borroloola\000nt-daly-river\000Daly River\000Mix 1"
+    "04.9\000http://playerservices.streamtheworld.com/ap"
+    "i/livestream-redirect/DAR_MIX1049AAC.aac\000ABC Dar"
+    "win\000http://abc.streamguys1.com/live/localdarwin/"
+    "icecast.audio\000nt-darwin\000Darwin\000nt-galiwinku\000Gali"
+    "winku\000nt-groote-eyland\000Groote Eylandt\000nt-jabiru\000"
+    "Jabiru\000nt-katherine\000Katherine\000nt-kintore\000Kintore"
+    "\000nt-knocker-bay\000Knocker Bay\000nt-maningrida\000Maning"
+    "rida\000nt-mataranka\000Mataranka\000nt-mcarthur-rive\000McA"
+    "rthur River Mine\000nt-mereenie-gas\000Mereenie Gas/Oi"
+    "l Field\000nt-mount-liebig\000Mount Liebig\000nt-mutitjul"
+    "u\000Mutitjulu\000nt-newcastle-wat\000Newcastle Waters\000nt"
+    "-nhulunbuy\000Nhulunbuy\000nt-pine-creek\000Pine Creek\000nt"
+    "-port-bremmer\000Port Bremmer\000nt-tennant-creek\000Tenn"
+    "ant Creek\000nt-wadeye\000Wadeye\000nt-yulara\000Yulara\000qld-"
+    "airlie-beach\000Airlie Beach\000QLD\000qld-alpha\000Alpha\000ql"
+    "d-amrun\000Amrun\000qld-aramac\000Aramac\000qld-augathella\000A"
+    "ugathella\000qld-babinda\000Babinda\000qld-ballera\000Baller"
+    "a\000qld-barcaldine\000Barcaldine\000qld-bedourie\000Bedouri"
+    "e\000qld-belyando-min\000Belyando Mine\000qld-birdsville\000"
+    "Birdsville\000qld-blackall\000Blackall\000qld-blackwater\000"
+    "Blackwater\000qld-blackwater-m\000Blackwater Mine\000qld-"
+    "blackwater-2\000Blackwater Mine North\000qld-boulia\000Bo"
+    "ulia\000qld-bowen-town\000Bowen Town\0004EB\000http://player"
+    "services.streamtheworld.com/api/livestream-redir"
+    "ect/4EBAAC.aac\0004ZZZ\000https://iheart.4zzz.org.au/z"
+    "ed-digital\0004MBS Classic\000http://stream.4mbs.com.a"
+    "u/4mbsclassicfm\000Triple M Brisbane\000Nova 106.9\000htt"
+    "p://playerservices.streamtheworld.com/api/livest"
+    "ream-redirect/NOVA_1069_AAC320.aac\000ABC Brisbane\000"
     "https://mediaserviceslive.akamaized.net/hls/live"
-    "/2108547/classicfmnsw/v0-221.m3u8\000ABC NewsRadio\000"
-    "https://mediaserviceslive.akamaized.net/hls/live"
-    "/2109425/newsradio/v0-221.m3u8\000SBS Radio\000http://"
-    "sbs-ice.streamguys1.com/sbs1-sbs-web\000ABC Canberr"
-    "a\000https://mediaserviceslive.akamaized.net/hls/li"
-    "ve/2109407/localcanberra/v0-221.m3u8\000ABC Radio N"
-    "ational\000Radio National\000http://abc.streamguys1.co"
-    "m/live/rnnsw/icecast.audio\0002CA\000http://playerserv"
-    "ices.streamtheworld.com/api/livestream-redirect/"
-    "2CAAAC.aac\000Vision Australia Radio Canberra\0002CC\000h"
+    "/2109403/localbrisbane/v0-221.m3u8\0004KQ\0004BC\000http:"
+    "//playerservices.streamtheworld.com/api/livestre"
+    "am-redirect/4BC.mp3\0004RPH\000http://audio-edge-vqwx4"
+    ".yyz.g.radiomast.io/2416c895-f32d-4faa-90a6-b2cf"
+    "9212488d\000qld-brisbane\000Brisbane\000qld-burketown\000Bur"
+    "ketown\000qld-cairns\000Cairns\000qld-cairns-mt-ya\000Cairns"
+    " (Mt Yarrabah)\000qld-cairns-north\000Cairns North\000qld"
+    "-camooweal\000Camooweal\000qld-cannington-m\000Cannington"
+    " Mine\000qld-capella\000Capella\000qld-carmila\000Carmila\000ql"
+    "d-castle-hill\000Castle Hill Gasfield\000qld-caval-rid"
+    "ge\000Caval Ridge Mine\000qld-caval-ridg-2\000Caval Ridge"
+    " Mine Cnt\000qld-caval-ridg-3\000Caval Ridge Mine Nth\000"
+    "qld-caval-ridg-4\000Caval Ridge Mine Sth\000qld-centur"
+    "y-mine\000Century Mine\000qld-charleville\000Charleville\000"
+    "qld-charters-tow\000Charters Towers\000qld-clermont\000Cl"
+    "ermont\000qld-clermont-min\000Clermont Mine\000qld-cloncu"
+    "rry\000Cloncurry\000qld-coen\000Coen\000qld-collinsville\000Col"
+    "linsville\000qld-collinsvil-2\000Collinsville Mine\000qld"
+    "-cooktown\000Cooktown\000qld-corfield\000Corfield\000qld-cow"
+    "-bay\000Cow Bay\000qld-croydon\000Croydon\000qld-cunnamulla\000"
+    "Cunnamulla\000qld-daintree\000Daintree\000qld-dajarra\000Daj"
+    "arra\000qld-darling-down\000Darling Downs\000qld-dimbulah"
+    "\000Dimbulah\000qld-dirranbandi\000Dirranbandi\000qld-dugald"
+    "-river\000Dugald River Mine\000qld-dysart\000Dysart\000qld-e"
+    "idsvold\000Eidsvold\000qld-einasleigh\000Einasleigh\000qld-e"
+    "merald\000Emerald\000qld-ernest-henry\000Ernest Henry Min"
+    "e\000qld-forsayth\000Forsayth\000qld-georgetown\000Georgetow"
+    "n\000qld-gladstone\000Gladstone\000qld-glenden\000Glenden\000Se"
+    "a FM\000http://stream.rcs.revma.com/128n3ctdwhruv\000G"
+    "old 92.5\000qld-gold-coast\000Gold Coast\000qld-goondiwin"
+    "di\000Goondiwindi\000qld-goonyella\000Goonyella\000qld-green"
+    "vale\000Greenvale\000qld-gympie\000Gympie\000qld-hail-creek\000"
+    "Hail Creek\000qld-hail-creek-s\000Hail Creek South\000qld"
+    "-herberton\000Herberton\000qld-hughenden\000Hughenden\000qld"
+    "-injune\000Injune\000qld-isisford\000Isisford\000qld-jericho"
+    "\000Jericho\000qld-julia-creek\000Julia Creek\000qld-karumba"
+    "\000Karumba\000qld-kogan-creek\000Kogan Creek Mine\000qld-la"
+    "ke-vermont\000Lake Vermont Mine\000qld-lakeland\000Lakela"
+    "nd\000qld-laura\000Laura\000qld-longreach\000Longreach\000qld-m"
+    "ackay\000Mackay\000qld-meandarra\000Meandarra\000qld-middlem"
+    "ount\000Middlemount\000qld-miles\000Miles\000qld-miriam-vale"
+    "\000Miriam Vale\000qld-mission-beac\000Mission Beach\000qld-"
+    "mitchell\000Mitchell\000qld-monto\000Monto\000qld-moranbah\000M"
+    "oranbah\000qld-moranbah-tow\000Moranbah Town\000qld-morve"
+    "n\000Morven\000qld-mossman\000Mossman\000qld-mount-garnet\000Mo"
+    "unt Garnet\000qld-mount-isa\000Mount Isa\000qld-mount-mol"
+    "loy\000Mount Molloy\000qld-mount-rawdon\000Mount Rawdon M"
+    "inesite\000qld-mount-surpri\000Mount Surprise\000qld-mour"
+    "a\000Moura\000qld-muttaburra\000Muttaburra\000qld-nambour\000Na"
+    "mbour\000qld-nebo\000Nebo\000qld-newlands-min\000Newlands Mi"
+    "ne\000qld-normanton\000Normanton\000qld-pentland\000Pentland"
+    "\000qld-poitrel-mine\000Poitrel Mine\000qld-port-douglas\000"
+    "Port Douglas\000qld-quilpie\000Quilpie\000qld-reedy-creek"
+    "\000Reedy Creek Gasfield\000qld-richmond\000Richmond\000qld-"
+    "rockhampton\000Rockhampton\000qld-rolleston-mi\000Rollest"
+    "on Mine\000qld-roma\000Roma\000qld-saraji-north\000Saraji No"
+    "rth\000qld-southern-dow\000Southern Downs\000qld-spring-g"
+    "ully\000Spring Gully Gasfield\000qld-springsure\000Spring"
+    "sure\000qld-st-george\000St George\000qld-st-lawrence\000St "
+    "Lawrence\000qld-stonehenge\000Stonehenge\000qld-surat\000Sur"
+    "at\000qld-tambo\000Tambo\000qld-tara\000Tara\000qld-tarbat\000Tarb"
+    "at\000qld-tarong-coal\000Tarong Coal Mine\000qld-taroom\000T"
+    "aroom\000qld-thargomindah\000Thargomindah\000qld-theodore"
+    "\000Theodore\000qld-thursday-isl\000Thursday Island\000ABC T"
+    "ownsville\000qld-townsville\000Townsville\000qld-townsvil"
+    "le-n\000Townsville North\000qld-tully\000Tully\000qld-wandoa"
+    "n\000Wandoan\000qld-weipa\000Weipa\000qld-wide-bay\000Wide Bay\000"
+    "qld-willows\000Willows\000qld-windorah\000Windorah\000qld-wi"
+    "nton\000Winton\000qld-wondai\000Wondai\000qld-wyandra\000Wyandr"
+    "a\000qld-yowah\000Yowah\000Radio Adelaide\000https://mediase"
+    "rviceslive.akamaized.net/hls/live/2109401/locala"
+    "delaide/v0-221.m3u8\000Triple M Adelaide\000http://leg"
+    "acy.scahw.com.au/5mmm_32\000ABC Adelaide\000FIVEaa\000htt"
+    "p://playerservices.streamtheworld.com/api/livest"
+    "ream-redirect/FIVEAA_AAC48.aac\000sa-adelaide\000Adela"
+    "ide\000SA\000sa-adelaide-foot\000Adelaide Foothills\000sa-an"
+    "damooka\000Andamooka\000sa-ceduna-smoky\000Ceduna/Smoky B"
+    "ay\000sa-coober-pedy\000Coober Pedy\000sa-dullingari\000Dull"
+    "ingari\000sa-hawker\000Hawker\000sa-jacinth-ambro\000Jacinth"
+    "-Ambrosia Mine\000sa-keith\000Keith\000sa-leigh-creek-s\000L"
+    "eigh Creek South\000sa-marree\000Marree\000sa-moomba\000Moom"
+    "ba\000sa-mount-gambier\000Mount Gambier\000sa-port-lincol"
+    "n\000Port Lincoln\000sa-prominent-hil\000Prominent Hill M"
+    "ine\000sa-quorn\000Quorn\000sa-renmark-loxto\000Renmark/Loxt"
+    "on\000sa-roxby-downs\000Roxby Downs\000sa-spencer-gulf\000Sp"
+    "encer Gulf North\000sa-streaky-bay\000Streaky Bay\000sa-t"
+    "irrawarra\000Tirrawarra\000sa-tumby-bay\000Tumby Bay\000sa-w"
+    "irrulla\000Wirrulla\000sa-woomera\000Woomera\000sa-wudinna\000W"
+    "udinna\000sa-wudinna-town\000Wudinna Town\000tas-bicheno\000"
+    "Bicheno\000TAS\000tas-currie\000Currie\000Print Radio Tasman"
+    "ia\000http://165.228.181.146:88/broadwave.mp3\077src=1"
+    "&rate=1\000ABC Hobart\000http://abc.streamguys1.com/li"
+    "ve/localhobart/icecast.audio\000tas-hobart\000Hobart\000t"
+    "as-lileah\000Lileah\000tas-ne-tasmania\000NE Tasmania\000tas"
+    "-orford\000Orford\000tas-queenstown\000Queenstown\000tas-que"
+    "enstown-z\000Queenstown/Zeehan\000tas-rosebery\000Roseber"
+    "y\000tas-st-helens\000St Helens\000tas-st-marys\000St Marys\000"
+    "tas-strahan\000Strahan\000tas-swansea\000Swansea\000tas-wara"
+    "tah\000Waratah\000tas-weldborough\000Weldborough\000vic-albu"
+    "ry-wodon\000Albury/Wodonga\000VIC\000vic-alexandra\000Alexan"
+    "dra\000vic-bairnsdale\000Bairnsdale\000vic-ballarat-loo\000B"
+    "allarat (Lookout Hill)\000vic-ballarat-war\000Ballarat"
+    " (Warrenheip)\000vic-bendigo\000Bendigo\000vic-bright\000Bri"
+    "ght\000vic-cann-river\000Cann River\000vic-corryong\000Corry"
+    "ong\000vic-eildon\000Eildon\000vic-flowerdale-h\000Flowerdal"
+    "e/Hazeldene\000vic-goulburn-val\000Goulburn Valley\000vic"
+    "-hopetoun-vic\000Hopetoun (Vic)\000vic-horsham\000Horsham"
+    "\000vic-latrobe-vall\000Latrobe Valley\000vic-mallacoota\000"
+    "Mallacoota\000vic-mansfield\000Mansfield\000vic-maryborou"
+    "g-2\000Maryborough (Vic)\000SYN\000Smooth 91.5\000Nova 100\000h"
     "ttp://playerservices.streamtheworld.com/api/live"
-    "stream-redirect/2CCAAC.aac\000ABC Jazz\0009C\000https://m"
-    "ediaserviceslive.akamaized.net/hls/live/2108543/"
-    "abcjazz/v0-221.m3u8\000Double J\000https://mediaservic"
-    "eslive.akamaized.net/hls/live/2108567/doublejnsw"
-    "/v0-221.m3u8\000SBS PopAsia\000http://sbs-ice.streamgu"
-    "ys1.com/sbs-popasia-sbs-web\000act-canberra\000Canberr"
-    "a\000ACT\000act-tuggeranong\000Tuggeranong\000nsw-armidale\000A"
-    "rmidale\000NSW\000nsw-balranald\000Balranald\000nsw-batemans"
-    "-bay\000Batemans Bay/Moruya\000nsw-bathurst-cit\000Bathur"
-    "st City\000nsw-batlow\000Batlow\000nsw-bega-cooma\000Bega/Co"
-    "oma\000nsw-boggabri-coa\000Boggabri Coal Mine\000nsw-bona"
-    "lbo\000Bonalbo\000nsw-bourke\000Bourke\000nsw-braidwood\000Brai"
-    "dwood\000nsw-brewarrina\000Brewarrina\000nsw-broken-hill\000"
-    "Broken Hill\000nsw-bulga-mine\000Bulga Mine\000nsw-cadia-"
-    "mine-s\000Cadia Mine Site\000nsw-captains-fla\000Captains"
-    " Flat\000nsw-central-tabl\000Central Tablelands\000nsw-ce"
-    "ntral-west\000Central Western Slopes\000nsw-cobar\000Coba"
-    "r\000nsw-condobolin\000Condobolin\000nsw-cooma-town\000Cooma"
-    " Town\000nsw-cootamundra\000Cootamundra\000nsw-cowra\000Cowr"
-    "a\000nsw-crookwell\000Crookwell\000nsw-deniliquin\000Deniliq"
-    "uin\000nsw-dubbo-city\000Dubbo (City)\000nsw-eden\000Eden\000ns"
-    "w-emmaville\000Emmaville\000nsw-glen-innes\000Glen Innes\000"
-    "nsw-glendell-min\000Glendell Mine\000nsw-gloucester\000Gl"
-    "oucester\000nsw-goodooga\000Goodooga\000ABC Sydney\000https:"
-    "//mediaserviceslive.akamaized.net/hls/live/21094"
-    "22/localsydney/v0-221.m3u8\000nsw-gosford\000Gosford\000n"
-    "sw-goulburn\000Goulburn\000nsw-goulburn-tow\000Goulburn T"
-    "own\000nsw-grafton-kemp\000Grafton/Kempsey\000nsw-hay\000Hay"
-    "\000nsw-holbrook\000Holbrook\000nsw-illawarra\000Illawarra\000n"
-    "sw-ivanhoe\000Ivanhoe\000nsw-jerilderie\000Jerilderie\000nsw"
-    "-jindabyne\000Jindabyne\000nsw-junee\000Junee\000nsw-kandos\000"
-    "Kandos\000nsw-khancoban\000Khancoban\000nsw-lake-cowal-m\000"
-    "Lake Cowal Mine\000nsw-lightning-ri\000Lightning Ridge"
-    "\000nsw-lismore\000Lismore\000nsw-lithgow-city\000Lithgow (C"
-    "ity)\000nsw-long-flat\000Long Flat\000nsw-mt-warkworth\000MT"
-    " Warkworth Mine\000nsw-mangoola-min\000Mangoola Mine\000n"
-    "sw-manning-rive\000Manning River\000nsw-menindee\000Menin"
-    "dee\000nsw-merriwa\000Merriwa\000nsw-murrumbidgee\000Murrumb"
-    "idgee Irrigation Area\000nsw-murrurundi\000Murrurundi\000"
-    "nsw-narrandera\000Narrandera\0002HD\000http://streaming.h"
-    "dserver.biz:9388/\0002NUR\000http://playerservices.str"
-    "eamtheworld.com/api/livestream-redirect/2NURFM.m"
-    "p3\000ABC Newcastle\000nsw-newcastle\000Newcastle\000nsw-nim"
-    "bin\000Nimbin\000nsw-nowra\000Nowra\000nsw-oberon\000Oberon\000nsw"
-    "-orange\000Orange\000nsw-parkes\000Parkes\000nsw-peak-hill\000P"
-    "eak Hill\000nsw-port-macquar\000Port Macquarie\000nsw-por"
-    "t-stephen\000Port Stephens\000nsw-portland-wal\000Portlan"
-    "d/Wallerawang\000nsw-ravensworth\000Ravensworth Mine\000n"
-    "sw-richmond-twe\000Richmond/Tweed\000nsw-sw-slopes-e\000S"
-    "W Slopes/E Riverina\000FBi Radio\000http://streamer.fb"
-    "iradio.com/stream\000Smooth 95.3\000http://playerservi"
-    "ces.streamtheworld.com/api/livestream-redirect/S"
-    "MOOTH953_AAC48.aac\000Nova 96.9\000http://playerservic"
-    "es.streamtheworld.com/api/livestream-redirect/NO"
-    "VA_969_AAC48.aac\000Fine Music\000http://radio12.shout"
-    "cast.net.au:2020/stream/2MBS-ICE\000Hope 103.2\000http"
-    "://28853.live.streamtheworld.com/2CBAAAC.aac\0002Da"
-    "y FM\000http://legacy.scahw.com.au/2day_32\000Triple M"
-    " Sydney\000http://sa47.scastream.com.au/2mmm_128\077sc"
-    "a3xx=1\000KIIS 106.5\000http://ais-arn.streamguys1.com"
-    "/au_007_icy\0002SER\000http://138.25.219.25:840/2ser12"
-    "8.MP3\0002GB\000http://playerservices.streamtheworld.c"
-    "om/api/livestream-redirect/2GB.mp3\0002UE\000Sky Sport"
-    "s Radio\000SEN 1170\0002SM\000http://cast4.asurahosting.c"
-    "om/proxy/2sm1269/stream\000nsw-sydney\000Sydney\000nsw-ta"
-    "lbingo\000Talbingo\000nsw-tamworth\000Tamworth\000nsw-tarraw"
-    "onga-m\000Tarrawonga Mine\000nsw-tenterfield\000Tenterfie"
-    "ld\000nsw-thredbo\000Thredbo\000nsw-tumbarumba\000Tumbarumba"
-    "\000nsw-tumut\000Tumut\000nsw-ulan-coal-mi\000Ulan Coal Mine"
-    "\000nsw-united-colli\000United Collieries East Mine\000ns"
-    "w-united-col-2\000United Collieries West Mine\000nsw-u"
-    "pper-namoi\000Upper Namoi\000nsw-wagga-wagga\000Wagga Wag"
-    "ga\000nsw-walcha\000Walcha\000nsw-walgett\000Walgett\000nsw-wil"
-    "cannia\000Wilcannia\000nsw-wilpinjong-c\000Wilpinjong Coa"
-    "l Mine\000nsw-wollongong\000Wollongong\000nsw-young\000Young"
-    "\000nt-adelaide-rive\000Adelaide River\000NT\000nt-alice-spr"
-    "ings\000Alice Springs\000nt-batchelor\000Batchelor\000nt-bat"
-    "hurst-isla\000Bathurst Island\000nt-beswick\000Beswick\000nt"
-    "-borroloola\000Borroloola\000nt-daly-river\000Daly River\000"
-    "Mix 104.9\000http://playerservices.streamtheworld.c"
-    "om/api/livestream-redirect/DAR_MIX1049AAC.aac\000AB"
-    "C Darwin\000https://mediaserviceslive.akamaized.net"
-    "/hls/live/2109409/localdarwin/v0-221.m3u8\000nt-dar"
-    "win\000Darwin\000nt-galiwinku\000Galiwinku\000nt-groote-eyla"
-    "nd\000Groote Eylandt\000nt-jabiru\000Jabiru\000nt-katherine\000"
-    "Katherine\000nt-kintore\000Kintore\000nt-knocker-bay\000Knoc"
-    "ker Bay\000nt-maningrida\000Maningrida\000nt-mataranka\000Ma"
-    "taranka\000nt-mcarthur-rive\000McArthur River Mine\000nt-"
-    "mereenie-gas\000Mereenie Gas/Oil Field\000nt-mount-lie"
-    "big\000Mount Liebig\000nt-mutitjulu\000Mutitjulu\000nt-newca"
-    "stle-wat\000Newcastle Waters\000nt-nhulunbuy\000Nhulunbuy"
-    "\000nt-pine-creek\000Pine Creek\000nt-port-bremmer\000Port B"
-    "remmer\000nt-tennant-creek\000Tennant Creek\000nt-wadeye\000"
-    "Wadeye\000nt-yulara\000Yulara\000qld-airlie-beach\000Airlie "
-    "Beach\000QLD\000qld-alpha\000Alpha\000qld-amrun\000Amrun\000qld-ar"
-    "amac\000Aramac\000qld-augathella\000Augathella\000qld-babind"
-    "a\000Babinda\000qld-ballera\000Ballera\000qld-barcaldine\000Bar"
-    "caldine\000qld-bedourie\000Bedourie\000qld-belyando-min\000B"
-    "elyando Mine\000qld-birdsville\000Birdsville\000qld-black"
-    "all\000Blackall\000qld-blackwater\000Blackwater\000qld-black"
-    "water-m\000Blackwater Mine\000qld-blackwater-2\000Blackwa"
-    "ter Mine North\000qld-boulia\000Boulia\000qld-bowen-town\000"
-    "Bowen Town\0004EB\000http://playerservices.streamthewo"
-    "rld.com/api/livestream-redirect/4EBAAC.aac\0004ZZZ\000"
-    "https://iheart.4zzz.org.au/zed-digital\0004MBS Clas"
-    "sic\000http://stream.4mbs.com.au/4mbsclassicfm\000Trip"
-    "le M Brisbane\000Nova 106.9\000http://playerservices.s"
-    "treamtheworld.com/api/livestream-redirect/NOVA_1"
-    "069_AAC320.aac\000ABC Brisbane\000https://mediaservice"
-    "slive.akamaized.net/hls/live/2109403/localbrisba"
-    "ne/v0-221.m3u8\0004KQ\0004BC\000http://playerservices.str"
-    "eamtheworld.com/api/livestream-redirect/4BC.mp3\000"
-    "4RPH\000http://audio-edge-vqwx4.yyz.g.radiomast.io/"
-    "2416c895-f32d-4faa-90a6-b2cf9212488d\000qld-brisban"
-    "e\000Brisbane\000qld-burketown\000Burketown\000qld-cairns\000Ca"
-    "irns\000qld-cairns-mt-ya\000Cairns (Mt Yarrabah)\000qld-c"
-    "airns-north\000Cairns North\000qld-camooweal\000Camooweal"
-    "\000qld-cannington-m\000Cannington Mine\000qld-capella\000Ca"
-    "pella\000qld-carmila\000Carmila\000qld-castle-hill\000Castle"
-    " Hill Gasfield\000qld-caval-ridge\000Caval Ridge Mine\000"
-    "qld-caval-ridg-2\000Caval Ridge Mine Cnt\000qld-caval-"
-    "ridg-3\000Caval Ridge Mine Nth\000qld-caval-ridg-4\000Cav"
-    "al Ridge Mine Sth\000qld-century-mine\000Century Mine\000"
-    "qld-charleville\000Charleville\000qld-charters-tow\000Cha"
-    "rters Towers\000qld-clermont\000Clermont\000qld-clermont-"
-    "min\000Clermont Mine\000qld-cloncurry\000Cloncurry\000qld-co"
-    "en\000Coen\000qld-collinsville\000Collinsville\000qld-collin"
-    "svil-2\000Collinsville Mine\000qld-cooktown\000Cooktown\000q"
-    "ld-corfield\000Corfield\000qld-cow-bay\000Cow Bay\000qld-cro"
-    "ydon\000Croydon\000qld-cunnamulla\000Cunnamulla\000qld-daint"
-    "ree\000Daintree\000qld-dajarra\000Dajarra\000qld-darling-dow"
-    "n\000Darling Downs\000qld-dimbulah\000Dimbulah\000qld-dirran"
-    "bandi\000Dirranbandi\000qld-dugald-river\000Dugald River "
-    "Mine\000qld-dysart\000Dysart\000qld-eidsvold\000Eidsvold\000qld"
-    "-einasleigh\000Einasleigh\000qld-emerald\000Emerald\000qld-e"
-    "rnest-henry\000Ernest Henry Mine\000qld-forsayth\000Forsa"
-    "yth\000qld-georgetown\000Georgetown\000qld-gladstone\000Glad"
-    "stone\000qld-glenden\000Glenden\000Sea FM\000http://stream.r"
-    "cs.revma.com/128n3ctdwhruv\000Gold 92.5\000qld-gold-co"
-    "ast\000Gold Coast\000qld-goondiwindi\000Goondiwindi\000qld-g"
-    "oonyella\000Goonyella\000qld-greenvale\000Greenvale\000qld-g"
-    "ympie\000Gympie\000qld-hail-creek\000Hail Creek\000qld-hail-"
-    "creek-s\000Hail Creek South\000qld-herberton\000Herberton"
-    "\000qld-hughenden\000Hughenden\000qld-injune\000Injune\000qld-i"
-    "sisford\000Isisford\000qld-jericho\000Jericho\000qld-julia-c"
-    "reek\000Julia Creek\000qld-karumba\000Karumba\000qld-kogan-c"
-    "reek\000Kogan Creek Mine\000qld-lake-vermont\000Lake Verm"
-    "ont Mine\000qld-lakeland\000Lakeland\000qld-laura\000Laura\000q"
-    "ld-longreach\000Longreach\000qld-mackay\000Mackay\000qld-mea"
-    "ndarra\000Meandarra\000qld-middlemount\000Middlemount\000qld"
-    "-miles\000Miles\000qld-miriam-vale\000Miriam Vale\000qld-mis"
-    "sion-beac\000Mission Beach\000qld-mitchell\000Mitchell\000ql"
-    "d-monto\000Monto\000qld-moranbah\000Moranbah\000qld-moranbah"
-    "-tow\000Moranbah Town\000qld-morven\000Morven\000qld-mossman"
-    "\000Mossman\000qld-mount-garnet\000Mount Garnet\000qld-mount"
-    "-isa\000Mount Isa\000qld-mount-molloy\000Mount Molloy\000qld"
-    "-mount-rawdon\000Mount Rawdon Minesite\000qld-mount-su"
-    "rpri\000Mount Surprise\000qld-moura\000Moura\000qld-muttabur"
-    "ra\000Muttaburra\000qld-nambour\000Nambour\000qld-nebo\000Nebo\000"
-    "qld-newlands-min\000Newlands Mine\000qld-normanton\000Nor"
-    "manton\000qld-pentland\000Pentland\000qld-poitrel-mine\000Po"
-    "itrel Mine\000qld-port-douglas\000Port Douglas\000qld-qui"
-    "lpie\000Quilpie\000qld-reedy-creek\000Reedy Creek Gasfiel"
-    "d\000qld-richmond\000Richmond\000qld-rockhampton\000Rockhamp"
-    "ton\000qld-rolleston-mi\000Rolleston Mine\000qld-roma\000Rom"
-    "a\000qld-saraji-north\000Saraji North\000qld-southern-dow"
-    "\000Southern Downs\000qld-spring-gully\000Spring Gully Ga"
-    "sfield\000qld-springsure\000Springsure\000qld-st-george\000S"
-    "t George\000qld-st-lawrence\000St Lawrence\000qld-stonehe"
-    "nge\000Stonehenge\000qld-surat\000Surat\000qld-tambo\000Tambo\000q"
-    "ld-tara\000Tara\000qld-tarbat\000Tarbat\000qld-tarong-coal\000T"
-    "arong Coal Mine\000qld-taroom\000Taroom\000qld-thargomind"
-    "ah\000Thargomindah\000qld-theodore\000Theodore\000qld-thursd"
-    "ay-isl\000Thursday Island\000ABC Townsville\000qld-townsv"
-    "ille\000Townsville\000qld-townsville-n\000Townsville Nort"
-    "h\000qld-tully\000Tully\000qld-wandoan\000Wandoan\000qld-weipa\000"
-    "Weipa\000qld-wide-bay\000Wide Bay\000qld-willows\000Willows\000"
-    "qld-windorah\000Windorah\000qld-winton\000Winton\000qld-wond"
-    "ai\000Wondai\000qld-wyandra\000Wyandra\000qld-yowah\000Yowah\000Ra"
-    "dio Adelaide\000https://mediaserviceslive.akamaized"
-    ".net/hls/live/2109401/localadelaide/v0-221.m3u8\000"
-    "Triple M Adelaide\000http://legacy.scahw.com.au/5mm"
-    "m_32\000ABC Adelaide\000FIVEaa\000http://playerservices.s"
-    "treamtheworld.com/api/livestream-redirect/FIVEAA"
-    "_AAC48.aac\000sa-adelaide\000Adelaide\000SA\000sa-adelaide-f"
-    "oot\000Adelaide Foothills\000sa-andamooka\000Andamooka\000sa"
-    "-ceduna-smoky\000Ceduna/Smoky Bay\000sa-coober-pedy\000Co"
-    "ober Pedy\000sa-dullingari\000Dullingari\000sa-hawker\000Haw"
-    "ker\000sa-jacinth-ambro\000Jacinth-Ambrosia Mine\000sa-ke"
-    "ith\000Keith\000sa-leigh-creek-s\000Leigh Creek South\000sa-"
-    "marree\000Marree\000sa-moomba\000Moomba\000sa-mount-gambier\000"
-    "Mount Gambier\000sa-port-lincoln\000Port Lincoln\000sa-pr"
-    "ominent-hil\000Prominent Hill Mine\000sa-quorn\000Quorn\000s"
-    "a-renmark-loxto\000Renmark/Loxton\000sa-roxby-downs\000Ro"
-    "xby Downs\000sa-spencer-gulf\000Spencer Gulf North\000sa-"
-    "streaky-bay\000Streaky Bay\000sa-tirrawarra\000Tirrawarra"
-    "\000sa-tumby-bay\000Tumby Bay\000sa-wirrulla\000Wirrulla\000sa-"
-    "woomera\000Woomera\000sa-wudinna\000Wudinna\000sa-wudinna-to"
-    "wn\000Wudinna Town\000tas-bicheno\000Bicheno\000TAS\000tas-curr"
-    "ie\000Currie\000Print Radio Tasmania\000http://165.228.18"
-    "1.146:88/broadwave.mp3\077src=1&rate=1\000ABC Hobart\000h"
-    "ttps://mediaserviceslive.akamaized.net/hls/live/"
-    "2110357/localhobart/v0-221.m3u8\000tas-hobart\000Hobar"
-    "t\000tas-lileah\000Lileah\000tas-ne-tasmania\000NE Tasmania\000"
-    "tas-orford\000Orford\000tas-queenstown\000Queenstown\000tas-"
-    "queenstown-z\000Queenstown/Zeehan\000tas-rosebery\000Rose"
-    "bery\000tas-st-helens\000St Helens\000tas-st-marys\000St Mar"
-    "ys\000tas-strahan\000Strahan\000tas-swansea\000Swansea\000tas-w"
-    "aratah\000Waratah\000tas-weldborough\000Weldborough\000vic-a"
-    "lbury-wodon\000Albury/Wodonga\000VIC\000vic-alexandra\000Ale"
-    "xandra\000vic-bairnsdale\000Bairnsdale\000vic-ballarat-lo"
-    "o\000Ballarat (Lookout Hill)\000vic-ballarat-war\000Balla"
-    "rat (Warrenheip)\000vic-bendigo\000Bendigo\000vic-bright\000"
-    "Bright\000vic-cann-river\000Cann River\000vic-corryong\000Co"
-    "rryong\000vic-eildon\000Eildon\000vic-flowerdale-h\000Flower"
-    "dale/Hazeldene\000vic-goulburn-val\000Goulburn Valley\000"
-    "vic-hopetoun-vic\000Hopetoun (Vic)\000vic-horsham\000Hors"
-    "ham\000vic-latrobe-vall\000Latrobe Valley\000vic-mallacoo"
-    "ta\000Mallacoota\000vic-mansfield\000Mansfield\000vic-marybo"
-    "roug-2\000Maryborough (Vic)\000SYN\000Smooth 91.5\000Nova 10"
-    "0\000http://playerservices.streamtheworld.com/api/l"
-    "ivestream-redirect/NOVA_100_AAC320.aac\0003RRR\000http"
-    "://realtime.rrr.org.au/p1l\000Gold 104.3\000http://ais"
-    "-arn.streamguys1.com/au_004_icy\000Triple M Melbour"
-    "ne\000PBS 106.7\000http://playerservices.streamtheworl"
-    "d.com/api/livestream-redirect/3PBS_FMAACHIGH.aac"
-    "\0003AW\000http://playerservices.streamtheworld.com/ap"
-    "i/livestream-redirect/3AW.mp3\000ABC Melbourne\000http"
-    "s://mediaserviceslive.akamaized.net/hls/live/210"
-    "9416/localmelbourne/v0-221.m3u8\0003CR\000http://playe"
-    "rservices.streamtheworld.com/api/livestream-redi"
-    "rect/3CRAAC.aac\000Kool n Deadly\000vic-melbourne\000Melb"
-    "ourne\000vic-mildura\000Mildura\000vic-mildura-sunr\000Mildu"
-    "ra/Sunraysia\000vic-murray-valle\000Murray Valley\000vic-"
-    "myrtleford\000Myrtleford\000vic-nhill\000Nhill\000vic-omeo\000O"
-    "meo\000vic-orbost\000Orbost\000vic-portland-vic\000Portland "
-    "(Vic)\000vic-swifts-creek\000Swifts Creek\000vic-upper-mu"
-    "rray\000Upper Murray\000vic-wangaratta\000Wangaratta\000vic-"
-    "warrnambool\000Warrnambool\000vic-western-vict\000Western"
-    " Victoria\000vic-wodonga\000Wodonga\000vic-yarra-ranges\000Y"
-    "arra Ranges\000wa-argyle\000Argyle\000WA\000wa-augusta\000Augus"
-    "ta\000wa-barrow-island\000Barrow Island\000ABC Perth\000http"
-    "s://mediaserviceslive.akamaized.net/hls/live/210"
-    "9419/localperth/v0-221.m3u8\000wa-boddington-go\000Bod"
-    "dington Gold Mine\000wa-brockman-2-mi\000Brockman 2 MI"
-    "ne - Pit 8\000wa-brockman-4-mi\000Brockman 4 Mine\000wa-b"
-    "roome\000Broome\000wa-bunbury\000Bunbury\000wa-busselton\000Bus"
-    "selton\000wa-cape-lambert\000Cape Lambert\000wa-carnarvon"
-    "\000Carnarvon\000wa-central-agric\000Central Agricultural"
-    "\000wa-channar-h-min\000Channar H Mine\000wa-channar-mine"
-    "\000Channar Mine\000wa-christmas-cre\000Christmas Creek M"
-    "ine\000wa-citic-pacific\000Citic Pacific Mine\000wa-cloud"
-    "break-mi\000Cloudbreak Mine Bigge Pit\000wa-cloudbreak"
-    "-2\000Cloudbreak Mine Central Hub\000wa-cloudbreak-3\000C"
-    "loudbreak Mine Kangaroo RBS\000wa-coorow\000Coorow\000wa-"
-    "corunna-downs\000Corunna Downs Mine\000wa-cue\000Cue\000wa-d"
-    "alwallinu\000Dalwallinu\000wa-dampier\000Dampier\000wa-denha"
-    "m\000Denham\000wa-derby-wa\000Derby (WA)\000wa-eastern-ridge"
-    "\000Eastern Ridge Mine\000wa-eliwana-mine\000Eliwana Mine"
-    "\000wa-eneabba\000Eneabba\000wa-esperance\000Esperance\000wa-ex"
-    "mouth\000Exmouth\000wa-fitzroy-cross\000Fitzroy Crossing\000"
-    "wa-flying-fish-m\000Flying Fish Mine\000wa-gairdner\000Ga"
-    "irdner\000wa-garden-well-m\000Garden Well Mine\000wa-gera"
-    "ldton\000Geraldton\000wa-golden-grove\000Golden Grove\000wa-"
-    "granny-smith\000Granny Smith Goldmine\000wa-green-head"
-    "\000Green Head\000wa-gruyere-gold\000Gruyere Gold Mine Ea"
-    "st\000wa-halls-creek\000Halls Creek\000wa-hope-downs-1\000Ho"
-    "pe Downs 1 Mine\000wa-hope-downs-4\000Hope Downs 4 Min"
-    "e\000wa-hope-downs-vi\000Hope Downs Village\000wa-hopetou"
-    "n-wa\000Hopetoun (WA)\000wa-jack-hills-mi\000Jack Hills M"
-    "ine\000wa-jimblebar-min\000Jimblebar Mine\000wa-jimblebar"
-    "-m-2\000Jimblebar Mine East\000wa-jundee-mine\000Jundee M"
-    "ine\000wa-jurien-bay\000Jurien Bay\000wa-kalbarri\000Kalbarr"
-    "i\000wa-kalgoorlie\000Kalgoorlie\000wa-kalgoorlie-su\000Kalg"
-    "oorlie Super Pit\000wa-kambalda\000Kambalda\000wa-karara-"
-    "mine\000Karara Mine\000wa-karlawinda-go\000Karlawinda Gol"
-    "d Mine\000wa-karratha\000Karratha\000wa-kens-bore-min\000Ken"
-    "s Bore Mine\000wa-king-of-the-h\000King of The Hills M"
-    "ine\000wa-koodaideri-mi\000Koodaideri Mine\000wa-kununurr"
-    "a\000Kununurra\000wa-laverton\000Laverton\000wa-leeman\000Leema"
-    "n\000wa-leinster\000Leinster\000wa-leonora\000Leonora\000wa-mar"
-    "andoo\000Marandoo\000wa-marandoo-mine\000Marandoo Mine Pi"
-    "t\000wa-marble-bar\000Marble Bar\000wa-marvel-loch\000Marvel"
-    " Loch\000wa-mcphee-creek\000McPhee Creek Mine\000wa-meeka"
-    "tharra\000Meekatharra\000wa-menzies\000Menzies\000wa-merredi"
-    "n\000Merredin\000wa-mesa-a-mine\000Mesa A Mine\000wa-mesa-j-"
-    "mine\000Mesa J Mine\000wa-moora\000Moora\000wa-morawa\000Morawa"
-    "\000wa-mount-keith\000Mount Keith\000wa-mount-keith-m\000Mou"
-    "nt Keith Mine Village\000wa-mount-magnet\000Mount Magn"
-    "et\000wa-mt-whalebac-2\000Mt Whaleback Mine West\000wa-mu"
-    "llewa\000Mullewa\000wa-nammuldi-mine\000Nammuldi Mine\000wa-"
-    "nannup\000Nannup\000wa-narembeen\000Narembeen\000wa-narrogin"
-    "\000Narrogin\000wa-newman\000Newman\000wa-newman-area-c\000Newm"
-    "an Area C Mine\000wa-norseman\000Norseman\000wa-north-sta"
-    "r-mi\000North Star Mine\000wa-northcliffe\000Northcliffe\000"
-    "wa-onslow\000Onslow\000wa-pannawonica\000Pannawonica\000wa-p"
-    "araburdoo\000Paraburdoo\000RTRFM\000Triple M Perth\000Mix 94"
-    ".5\0006IX\000http://playerservices.streamtheworld.com/"
-    "api/livestream-redirect/6IX.mp3\0006PR\000http://playe"
-    "rservices.streamtheworld.com/api/livestream-redi"
-    "rect/6PR.mp3\000wa-perth\000Perth\000wa-pilgangoora-m\000Pil"
-    "gangoora Mine\000wa-port-hedland\000Port Hedland\000wa-rb"
-    "s1-brockman\000RBS1 Brockman Syncline 1 Mine\000wa-rbs"
-    "2-brockman\000RBS2 Brockman Syncline 1 Mine\000wa-rave"
-    "nsthorpe\000Ravensthorpe\000wa-roebourne\000Roebourne\000wa-"
-    "roy-hill-mine\000Roy Hill Mine\000wa-sally-malay-m\000Sal"
-    "ly Malay Mine\000wa-salmon-gums\000Salmon Gums\000wa-silv"
-    "ergrass-m\000Silvergrass Mine\000wa-solomon-minin\000Solo"
-    "mon Mining Operation Area 1\000wa-solomon-min-2\000Sol"
-    "omon Mining Operation Area 2\000wa-south-flank-m\000So"
-    "uth Flank Mining Area\000wa-southern-agri\000Southern "
-    "Agricultural\000wa-southern-cros\000Southern Cross\000wa-"
-    "sunrise-dam\000Sunrise Dam\000wa-telfer\000Telfer\000wa-telf"
-    "er-mine-w\000Telfer Mine West Dome\000wa-thunderbox-mi"
-    "\000Thunderbox Mine\000wa-ti-tree-wa\000Ti Tree (WA)\000wa-t"
-    "om-price\000Tom Price\000wa-tom-price-min\000Tom Price Mi"
-    "ne\000wa-tropicana-gol\000Tropicana Gold Mine\000wa-upper"
-    "-cane-mi\000Upper Cane Mine\000wa-useless-loop\000Useless"
-    " Loop\000wa-wagin\000Wagin\000wa-walpole\000Walpole\000wa-west-"
-    "angelas\000West Angelas Dep B Mine\000wa-west-angela-2"
-    "\000West Angelas Dep C Mine\000wa-west-angela-3\000West A"
-    "ngelas Dep D Mine\000wa-west-angela-4\000West Angelas "
-    "Dep E Mine\000wa-west-angela-5\000West Angelas Dep F M"
-    "ine\000wa-west-angela-6\000West Angelas Dep H Mine\000wa-"
-    "west-angela-7\000West Angelas Mine\000wa-west-angela-8"
-    "\000West Angelas West Hill Mine\000wa-western-range\000We"
-    "stern Range Mine East\000wa-western-ran-2\000Western R"
-    "ange Mine West\000wa-western-turne\000Western Turner S"
-    "yncline Mine\000wa-western-tur-2\000Western Turner Syn"
-    "cline Mine 2\000wa-westonia\000Westonia\000wa-wickham\000Wic"
-    "kham\000wa-wiluna\000Wiluna\000wa-winu-mine\000Winu Mine\000wa-"
-    "wodgina\000Wodgina\000wa-wongan-hills\000Wongan Hills\000wa-"
-    "woodie-woodie\000Woodie Woodie Mine\000wa-wyndham\000Wynd"
-    "ham\000wa-yakabindie-mi\000Yakabindie Mine\000wa-yalgoo\000Y"
-    "algoo\000wa-yandi-bhp-mn\000Yandi BHP MN South Mine\000wa"
-    "-yandi-bhp-min\000Yandi BHP Mine Site 1\000wa-yandi-bh"
-    "p-m-2\000Yandi BHP Mine Site 2\000wa-yandi-billiar\000Yan"
-    "di Billiard Sth Mine\000wa-yandi-junctio\000Yandi Junc"
-    "tion SW Mine\000wa-yandicoogina\000Yandicoogina\000wa-yan"
-    "dicoogin-2\000Yandicoogina Village\000"
+    "stream-redirect/NOVA_100_AAC320.aac\0003RRR\000http://"
+    "realtime.rrr.org.au/p1l\000Gold 104.3\000http://ais-ar"
+    "n.streamguys1.com/au_004_icy\000Triple M Melbourne\000"
+    "PBS 106.7\000http://playerservices.streamtheworld.c"
+    "om/api/livestream-redirect/3PBS_FMAACHIGH.aac\0003A"
+    "W\000http://playerservices.streamtheworld.com/api/l"
+    "ivestream-redirect/3AW.mp3\000ABC Melbourne\000http://"
+    "abc.streamguys1.com/live/localmelbourne/icecast."
+    "audio\0003CR\000http://playerservices.streamtheworld.c"
+    "om/api/livestream-redirect/3CRAAC.aac\000Kool n Dea"
+    "dly\000vic-melbourne\000Melbourne\000vic-mildura\000Mildura\000"
+    "vic-mildura-sunr\000Mildura/Sunraysia\000vic-murray-va"
+    "lle\000Murray Valley\000vic-myrtleford\000Myrtleford\000vic-"
+    "nhill\000Nhill\000vic-omeo\000Omeo\000vic-orbost\000Orbost\000vic-"
+    "portland-vic\000Portland (Vic)\000vic-swifts-creek\000Swi"
+    "fts Creek\000vic-upper-murray\000Upper Murray\000vic-wang"
+    "aratta\000Wangaratta\000vic-warrnambool\000Warrnambool\000vi"
+    "c-western-vict\000Western Victoria\000vic-wodonga\000Wodo"
+    "nga\000vic-yarra-ranges\000Yarra Ranges\000wa-argyle\000Argy"
+    "le\000WA\000wa-augusta\000Augusta\000wa-barrow-island\000Barrow"
+    " Island\000ABC Perth\000https://mediaserviceslive.akam"
+    "aized.net/hls/live/2109419/localperth/v0-221.m3u"
+    "8\000wa-boddington-go\000Boddington Gold Mine\000wa-brock"
+    "man-2-mi\000Brockman 2 MIne - Pit 8\000wa-brockman-4-m"
+    "i\000Brockman 4 Mine\000wa-broome\000Broome\000wa-bunbury\000Bu"
+    "nbury\000wa-busselton\000Busselton\000wa-cape-lambert\000Cap"
+    "e Lambert\000wa-carnarvon\000Carnarvon\000wa-central-agri"
+    "c\000Central Agricultural\000wa-channar-h-min\000Channar "
+    "H Mine\000wa-channar-mine\000Channar Mine\000wa-christmas"
+    "-cre\000Christmas Creek Mine\000wa-citic-pacific\000Citic"
+    " Pacific Mine\000wa-cloudbreak-mi\000Cloudbreak Mine B"
+    "igge Pit\000wa-cloudbreak-2\000Cloudbreak Mine Central"
+    " Hub\000wa-cloudbreak-3\000Cloudbreak Mine Kangaroo RB"
+    "S\000wa-coorow\000Coorow\000wa-corunna-downs\000Corunna Down"
+    "s Mine\000wa-cue\000Cue\000wa-dalwallinu\000Dalwallinu\000wa-da"
+    "mpier\000Dampier\000wa-denham\000Denham\000wa-derby-wa\000Derby"
+    " (WA)\000wa-eastern-ridge\000Eastern Ridge Mine\000wa-eli"
+    "wana-mine\000Eliwana Mine\000wa-eneabba\000Eneabba\000wa-esp"
+    "erance\000Esperance\000wa-exmouth\000Exmouth\000wa-fitzroy-c"
+    "ross\000Fitzroy Crossing\000wa-flying-fish-m\000Flying Fi"
+    "sh Mine\000wa-gairdner\000Gairdner\000wa-garden-well-m\000Ga"
+    "rden Well Mine\000wa-geraldton\000Geraldton\000wa-golden-"
+    "grove\000Golden Grove\000wa-granny-smith\000Granny Smith "
+    "Goldmine\000wa-green-head\000Green Head\000wa-gruyere-gol"
+    "d\000Gruyere Gold Mine East\000wa-halls-creek\000Halls Cr"
+    "eek\000wa-hope-downs-1\000Hope Downs 1 Mine\000wa-hope-do"
+    "wns-4\000Hope Downs 4 Mine\000wa-hope-downs-vi\000Hope Do"
+    "wns Village\000wa-hopetoun-wa\000Hopetoun (WA)\000wa-jack"
+    "-hills-mi\000Jack Hills Mine\000wa-jimblebar-min\000Jimbl"
+    "ebar Mine\000wa-jimblebar-m-2\000Jimblebar Mine East\000w"
+    "a-jundee-mine\000Jundee Mine\000wa-jurien-bay\000Jurien B"
+    "ay\000wa-kalbarri\000Kalbarri\000wa-kalgoorlie\000Kalgoorlie"
+    "\000wa-kalgoorlie-su\000Kalgoorlie Super Pit\000wa-kambal"
+    "da\000Kambalda\000wa-karara-mine\000Karara Mine\000wa-karlaw"
+    "inda-go\000Karlawinda Gold Mine\000wa-karratha\000Karrath"
+    "a\000wa-kens-bore-min\000Kens Bore Mine\000wa-king-of-the"
+    "-h\000King of The Hills Mine\000wa-koodaideri-mi\000Kooda"
+    "ideri Mine\000wa-kununurra\000Kununurra\000wa-laverton\000La"
+    "verton\000wa-leeman\000Leeman\000wa-leinster\000Leinster\000wa-"
+    "leonora\000Leonora\000wa-marandoo\000Marandoo\000wa-marandoo"
+    "-mine\000Marandoo Mine Pit\000wa-marble-bar\000Marble Bar"
+    "\000wa-marvel-loch\000Marvel Loch\000wa-mcphee-creek\000McPh"
+    "ee Creek Mine\000wa-meekatharra\000Meekatharra\000wa-menz"
+    "ies\000Menzies\000wa-merredin\000Merredin\000wa-mesa-a-mine\000"
+    "Mesa A Mine\000wa-mesa-j-mine\000Mesa J Mine\000wa-moora\000"
+    "Moora\000wa-morawa\000Morawa\000wa-mount-keith\000Mount Keit"
+    "h\000wa-mount-keith-m\000Mount Keith Mine Village\000wa-m"
+    "ount-magnet\000Mount Magnet\000wa-mt-whalebac-2\000Mt Wha"
+    "leback Mine West\000wa-mullewa\000Mullewa\000wa-nammuldi-"
+    "mine\000Nammuldi Mine\000wa-nannup\000Nannup\000wa-narembeen"
+    "\000Narembeen\000wa-narrogin\000Narrogin\000wa-newman\000Newman"
+    "\000wa-newman-area-c\000Newman Area C Mine\000wa-norseman"
+    "\000Norseman\000wa-north-star-mi\000North Star Mine\000wa-no"
+    "rthcliffe\000Northcliffe\000wa-onslow\000Onslow\000wa-pannaw"
+    "onica\000Pannawonica\000wa-paraburdoo\000Paraburdoo\000RTRFM"
+    "\000Triple M Perth\000Mix 94.5\0006IX\000http://playerservic"
+    "es.streamtheworld.com/api/livestream-redirect/6I"
+    "X.mp3\0006PR\000http://playerservices.streamtheworld.c"
+    "om/api/livestream-redirect/6PR.mp3\000wa-perth\000Pert"
+    "h\000wa-pilgangoora-m\000Pilgangoora Mine\000wa-port-hedl"
+    "and\000Port Hedland\000wa-rbs1-brockman\000RBS1 Brockman "
+    "Syncline 1 Mine\000wa-rbs2-brockman\000RBS2 Brockman S"
+    "yncline 1 Mine\000wa-ravensthorpe\000Ravensthorpe\000wa-r"
+    "oebourne\000Roebourne\000wa-roy-hill-mine\000Roy Hill Min"
+    "e\000wa-sally-malay-m\000Sally Malay Mine\000wa-salmon-gu"
+    "ms\000Salmon Gums\000wa-silvergrass-m\000Silvergrass Mine"
+    "\000wa-solomon-minin\000Solomon Mining Operation Area "
+    "1\000wa-solomon-min-2\000Solomon Mining Operation Area"
+    " 2\000wa-south-flank-m\000South Flank Mining Area\000wa-s"
+    "outhern-agri\000Southern Agricultural\000wa-southern-c"
+    "ros\000Southern Cross\000wa-sunrise-dam\000Sunrise Dam\000wa"
+    "-telfer\000Telfer\000wa-telfer-mine-w\000Telfer Mine West"
+    " Dome\000wa-thunderbox-mi\000Thunderbox Mine\000wa-ti-tre"
+    "e-wa\000Ti Tree (WA)\000wa-tom-price\000Tom Price\000wa-tom-"
+    "price-min\000Tom Price Mine\000wa-tropicana-gol\000Tropic"
+    "ana Gold Mine\000wa-upper-cane-mi\000Upper Cane Mine\000w"
+    "a-useless-loop\000Useless Loop\000wa-wagin\000Wagin\000wa-wa"
+    "lpole\000Walpole\000wa-west-angelas\000West Angelas Dep B"
+    " Mine\000wa-west-angela-2\000West Angelas Dep C Mine\000w"
+    "a-west-angela-3\000West Angelas Dep D Mine\000wa-west-"
+    "angela-4\000West Angelas Dep E Mine\000wa-west-angela-"
+    "5\000West Angelas Dep F Mine\000wa-west-angela-6\000West "
+    "Angelas Dep H Mine\000wa-west-angela-7\000West Angelas"
+    " Mine\000wa-west-angela-8\000West Angelas West Hill Mi"
+    "ne\000wa-western-range\000Western Range Mine East\000wa-w"
+    "estern-ran-2\000Western Range Mine West\000wa-western-"
+    "turne\000Western Turner Syncline Mine\000wa-western-tu"
+    "r-2\000Western Turner Syncline Mine 2\000wa-westonia\000W"
+    "estonia\000wa-wickham\000Wickham\000wa-wiluna\000Wiluna\000wa-w"
+    "inu-mine\000Winu Mine\000wa-wodgina\000Wodgina\000wa-wongan-"
+    "hills\000Wongan Hills\000wa-woodie-woodie\000Woodie Woodi"
+    "e Mine\000wa-wyndham\000Wyndham\000wa-yakabindie-mi\000Yakab"
+    "indie Mine\000wa-yalgoo\000Yalgoo\000wa-yandi-bhp-mn\000Yand"
+    "i BHP MN South Mine\000wa-yandi-bhp-min\000Yandi BHP M"
+    "ine Site 1\000wa-yandi-bhp-m-2\000Yandi BHP Mine Site "
+    "2\000wa-yandi-billiar\000Yandi Billiard Sth Mine\000wa-ya"
+    "ndi-junctio\000Yandi Junction SW Mine\000wa-yandicoogi"
+    "na\000Yandicoogina\000wa-yandicoogin-2\000Yandicoogina Vi"
+    "llage\000"
     ;
 inline constexpr Area kAreas[] = {
-    {-352756, 1490978, 988, 1001, 1010, 0, 22},
-    {-354019, 1490989, 1014, 1030, 1010, 22, 7},
-    {-303761, 1516014, 1042, 1055, 1064, 29, 3},
-    {-346397, 1435656, 1068, 1082, 1064, 32, 1},
-    {-357961, 1500056, 1092, 1109, 1064, 33, 2},
-    {-334503, 1495475, 1129, 1146, 1064, 35, 4},
-    {-355458, 1481992, 1160, 1171, 1064, 39, 1},
-    {-365981, 1493831, 1178, 1193, 1064, 40, 3},
-    {-305978, 1501450, 1204, 1221, 1064, 43, 1},
-    {-287611, 1526378, 1240, 1252, 1064, 44, 1},
-    {-301989, 1462400, 1260, 1271, 1064, 45, 2},
-    {-354553, 1497714, 1278, 1292, 1064, 47, 1},
-    {-299633, 1468653, 1302, 1317, 1064, 48, 1},
-    {-319397, 1414433, 1328, 1344, 1064, 49, 3},
-    {-326711, 1510981, 1356, 1371, 1064, 52, 1},
-    {-334558, 1489864, 1382, 1399, 1064, 53, 2},
-    {-355975, 1494417, 1415, 1432, 1064, 55, 1},
-    {-333431, 1489836, 1446, 1463, 1064, 56, 3},
-    {-313428, 1490233, 1482, 1499, 1064, 59, 3},
-    {-315161, 1458567, 1522, 1532, 1064, 62, 4},
-    {-330781, 1471567, 1538, 1553, 1064, 66, 1},
-    {-362347, 1491408, 1564, 1579, 1064, 67, 1},
-    {-346433, 1480494, 1590, 1606, 1064, 68, 1},
-    {-338289, 1486978, 1618, 1628, 1064, 69, 1},
-    {-344553, 1494417, 1634, 1648, 1064, 70, 1},
-    {-356681, 1449097, 1658, 1673, 1064, 71, 1},
-    {-322367, 1486775, 1684, 1699, 1064, 72, 1},
-    {-370111, 1498897, 1712, 1721, 1064, 73, 1},
-    {-294556, 1516053, 1726, 1740, 1064, 74, 1},
-    {-297911, 1517650, 1750, 1765, 1064, 75, 1},
-    {-324169, 1510775, 1776, 1793, 1064, 76, 1},
-    {-319625, 1519469, 1807, 1822, 1064, 77, 1},
-    {-291328, 1474819, 1833, 1846, 1064, 78, 1},
-    {-334067, 1512967, 1947, 1959, 1064, 79, 1},
-    {-347583, 1497631, 1967, 1980, 1064, 80, 1},
-    {-347572, 1497636, 1989, 2006, 1064, 81, 3},
-    {-303175, 1528597, 2020, 2037, 1064, 84, 3},
-    {-344522, 1449864, 2053, 2061, 1064, 87, 1},
-    {-357253, 1473125, 2065, 2078, 1064, 88, 1},
-    {-346236, 1506944, 2087, 2101, 1064, 89, 2},
-    {-328981, 1443003, 2111, 2123, 1064, 91, 1},
-    {-353428, 1456608, 2131, 2146, 1064, 92, 1},
-    {-364011, 1486647, 2157, 2171, 1064, 93, 1},
-    {-348753, 1475767, 2181, 2191, 1064, 94, 1},
-    {-328719, 1499903, 2197, 2208, 1064, 95, 1},
-    {-362114, 1481281, 2215, 2229, 1064, 96, 2},
-    {-336314, 1474083, 2239, 2256, 1064, 98, 1},
-    {-294061, 1479722, 2272, 2289, 1064, 99, 1},
-    {-285428, 1532903, 2305, 2317, 1064, 100, 1},
-    {-334872, 1501597, 2325, 2342, 1064, 101, 1},
-    {-314461, 1524769, 2357, 2371, 1064, 102, 1},
-    {-326350, 1510694, 2381, 2398, 1064, 103, 1},
-    {-322867, 1507017, 2416, 2433, 1064, 104, 1},
-    {-317022, 1526786, 2447, 2464, 1064, 105, 3},
-    {-323889, 1424147, 2478, 2491, 1064, 108, 1},
-    {-321269, 1503128, 2500, 2512, 1064, 109, 1},
-    {-341217, 1462350, 2520, 2537, 1064, 110, 3},
-    {-317281, 1508439, 2566, 2581, 1064, 113, 2},
-    {-347511, 1465675, 2592, 2607, 1064, 115, 1},
-    {-328919, 1515383, 2753, 2767, 1064, 116, 9},
-    {-285967, 1532219, 2777, 2788, 1064, 125, 1},
-    {-346181, 1506975, 2795, 2805, 1064, 126, 1},
-    {-337028, 1498394, 2811, 2822, 1064, 127, 1},
-    {-334603, 1491236, 2829, 2840, 1064, 128, 1},
-    {-332497, 1483369, 2847, 2858, 1064, 129, 1},
-    {-327211, 1481978, 2865, 2879, 1064, 130, 1},
-    {-313414, 1526825, 2889, 2906, 1064, 131, 1},
-    {-327319, 1521314, 2921, 2938, 1064, 132, 2},
-    {-334050, 1499475, 2952, 2969, 1064, 134, 1},
-    {-324347, 1510042, 2990, 3006, 1064, 135, 1},
-    {-285456, 1532875, 3023, 3040, 1064, 136, 3},
-    {-348203, 1479014, 3055, 3071, 1064, 139, 3},
-    {-338200, 1511850, 3816, 3827, 1064, 142, 40},
-    {-355944, 1482886, 3834, 3847, 1064, 182, 1},
-    {-313214, 1507503, 3856, 3869, 1064, 183, 4},
-    {-306369, 1501711, 3878, 3895, 1064, 187, 1},
-    {-290867, 1519717, 3911, 3927, 1064, 188, 1},
-    {-364936, 1482878, 3939, 3951, 1064, 189, 1},
-    {-357761, 1480214, 3959, 3974, 1064, 190, 4},
-    {-352933, 1482478, 3985, 3995, 1064, 194, 2},
-    {-322564, 1497536, 4001, 4018, 1064, 196, 1},
-    {-325611, 1510158, 4033, 4050, 1064, 197, 1},
-    {-325425, 1509386, 4078, 4095, 1064, 198, 1},
-    {-302844, 1501675, 4123, 4139, 1064, 199, 3},
-    {-350492, 1475594, 4151, 4167, 1064, 202, 4},
-    {-309658, 1516306, 4179, 4190, 1064, 206, 1},
-    {-300081, 1481328, 4197, 4209, 1064, 207, 1},
-    {-315525, 1433808, 4217, 4231, 1064, 208, 1},
-    {-323417, 1498756, 4241, 4258, 1064, 209, 1},
-    {-346183, 1506972, 4279, 4294, 1064, 210, 2},
-    {-343417, 1483361, 4305, 4315, 1064, 212, 2},
-    {-132444, 1311092, 4321, 4338, 4353, 214, 1},
-    {-237675, 1338722, 4356, 4373, 4353, 215, 3},
-    {-130456, 1310267, 4387, 4400, 4353, 218, 2},
-    {-117758, 1305678, 4410, 4427, 4353, 220, 1},
-    {-145597, 1331172, 4443, 4454, 4353, 221, 1},
-    {-160511, 1363039, 4462, 4476, 4353, 222, 1},
-    {-137511, 1306894, 4487, 4501, 4353, 223, 1},
-    {-124144, 1309692, 4698, 4708, 4353, 224, 15},
-    {-120217, 1355736, 4715, 4728, 4353, 239, 1},
-    {-138506, 1364253, 4738, 4755, 4353, 240, 2},
-    {-126561, 1328497, 4770, 4780, 4353, 242, 1},
-    {-143961, 1321803, 4787, 4800, 4353, 243, 2},
-    {-232753, 1293886, 4810, 4821, 4353, 245, 1},
-    {-113181, 1321256, 4829, 4844, 4353, 246, 1},
-    {-120517, 1342228, 4856, 4870, 4353, 247, 1},
-    {-149356, 1330594, 4881, 4894, 4353, 248, 1},
-    {-164319, 1360967, 4904, 4921, 4353, 249, 1},
-    {-239956, 1315517, 4941, 4957, 4353, 250, 1},
-    {-232661, 1312722, 4980, 4996, 4353, 251, 2},
-    {-253514, 1310714, 5009, 5022, 4353, 253, 1},
-    {-174250, 1334481, 5032, 5049, 4353, 254, 1},
-    {-121897, 1367922, 5066, 5079, 4353, 255, 3},
-    {-138231, 1318367, 5089, 5103, 4353, 258, 1},
-    {-112186, 1322692, 5114, 5130, 4353, 259, 1},
-    {-196692, 1342606, 5143, 5160, 4353, 260, 1},
-    {-142383, 1295197, 5174, 5184, 4353, 261, 1},
-    {-252347, 1309919, 5191, 5201, 4353, 262, 3},
-    {-202731, 1487103, 5208, 5225, 5238, 265, 2},
-    {-236178, 1466300, 5242, 5252, 5238, 267, 1},
-    {-129286, 1416339, 5258, 5268, 5238, 268, 3},
-    {-229681, 1452431, 5274, 5285, 5238, 271, 2},
-    {-258064, 1465889, 5292, 5307, 5238, 273, 1},
-    {-173831, 1460031, 5318, 5330, 5238, 274, 1},
-    {-273997, 1418047, 5338, 5350, 5238, 275, 2},
-    {-235567, 1452931, 5358, 5373, 5238, 277, 3},
-    {-243583, 1394717, 5384, 5397, 5238, 280, 3},
-    {-220292, 1463700, 5406, 5423, 5238, 283, 2},
-    {-258964, 1393553, 5437, 5452, 5238, 285, 3},
-    {-244314, 1454961, 5463, 5476, 5238, 288, 1},
-    {-235742, 1490328, 5485, 5500, 5238, 289, 1},
-    {-237856, 1488622, 5511, 5528, 5238, 290, 1},
-    {-237125, 1488044, 5544, 5561, 5238, 291, 1},
-    {-229069, 1399108, 5583, 5594, 5238, 292, 1},
-    {-200064, 1482386, 5601, 5616, 5238, 293, 1},
-    {-274644, 1529475, 6181, 6194, 5238, 294, 27},
-    {-177403, 1395461, 6203, 6217, 5238, 321, 1},
-    {-172642, 1458536, 6227, 6238, 5238, 322, 3},
-    {-169047, 1458433, 6245, 6262, 5238, 325, 1},
-    {-167369, 1456617, 6283, 6300, 5238, 326, 3},
-    {-199206, 1381758, 6313, 6327, 5238, 329, 1},
-    {-218347, 1409117, 6337, 6354, 5238, 330, 1},
-    {-231183, 1480403, 6370, 6382, 5238, 331, 1},
-    {-219264, 1494100, 6390, 6402, 5238, 332, 2},
-    {-253481, 1488872, 6410, 6426, 5238, 334, 2},
-    {-221544, 1480594, 6447, 6463, 5238, 336, 1},
-    {-221242, 1480508, 6480, 6497, 5238, 337, 1},
-    {-220622, 1480578, 6518, 6535, 5238, 338, 1},
-    {-221817, 1481144, 6556, 6573, 5238, 339, 1},
-    {-187306, 1386169, 6594, 6611, 5238, 340, 2},
-    {-262544, 1463031, 6624, 6640, 5238, 342, 1},
-    {-200892, 1462525, 6652, 6669, 5238, 343, 1},
-    {-228561, 1476442, 6685, 6698, 5238, 344, 3},
-    {-227222, 1476486, 6707, 6724, 5238, 347, 1},
-    {-207153, 1405006, 6738, 6752, 5238, 348, 3},
-    {-139378, 1432025, 6762, 6771, 5238, 351, 1},
-    {-205242, 1478386, 6776, 6793, 5238, 352, 1},
-    {-205444, 1477919, 6806, 6823, 5238, 353, 1},
-    {-154731, 1452508, 6841, 6854, 5238, 354, 1},
-    {-218572, 1432597, 6863, 6876, 5238, 355, 1},
-    {-162439, 1454369, 6885, 6897, 5238, 356, 1},
-    {-182039, 1422503, 6905, 6917, 5238, 357, 1},
-    {-280658, 1456872, 6925, 6940, 5238, 358, 2},
-    {-162492, 1453228, 6951, 6964, 5238, 360, 1},
-    {-216956, 1395131, 6973, 6985, 5238, 361, 1},
-    {-268922, 1516081, 6993, 7010, 5238, 362, 3},
-    {-171269, 1450689, 7024, 7037, 5238, 365, 1},
-    {-285578, 1482503, 7046, 7062, 5238, 366, 1},
-    {-202314, 1401411, 7074, 7091, 5238, 367, 2},
-    {-225800, 1483183, 7109, 7120, 5238, 369, 1},
-    {-254097, 1511231, 7127, 7140, 5238, 370, 1},
-    {-185147, 1440897, 7149, 7164, 5238, 371, 2},
-    {-234594, 1481492, 7175, 7187, 5238, 373, 2},
-    {-204425, 1407181, 7195, 7212, 5238, 375, 2},
-    {-185875, 1436025, 7230, 7243, 5238, 377, 2},
-    {-183022, 1435450, 7252, 7267, 5238, 379, 2},
-    {-238686, 1512556, 7278, 7292, 5238, 381, 1},
-    {-213581, 1481094, 7302, 7314, 5238, 382, 2},
-    {-280336, 1532422, 7381, 7396, 5238, 384, 13},
-    {-285194, 1503378, 7407, 7423, 5238, 397, 1},
-    {-217644, 1479789, 7435, 7449, 5238, 398, 1},
-    {-190022, 1449892, 7459, 7473, 5238, 399, 1},
-    {-264228, 1528542, 7483, 7494, 5238, 400, 2},
-    {-214892, 1483661, 7501, 7516, 5238, 402, 1},
-    {-215122, 1484064, 7527, 7544, 5238, 403, 1},
-    {-173769, 1453800, 7561, 7575, 5238, 404, 1},
-    {-208453, 1441869, 7585, 7599, 5238, 405, 3},
-    {-258864, 1485219, 7609, 7620, 5238, 408, 2},
-    {-242531, 1444356, 7627, 7640, 5238, 410, 1},
-    {-236250, 1462561, 7649, 7661, 5238, 411, 1},
-    {-206528, 1418239, 7669, 7685, 5238, 412, 1},
-    {-174978, 1408383, 7697, 7709, 5238, 413, 2},
-    {-269272, 1507808, 7717, 7733, 5238, 415, 1},
-    {-224594, 1484122, 7750, 7767, 5238, 416, 2},
-    {-159006, 1448469, 7785, 7798, 5238, 418, 1},
-    {-155592, 1444450, 7807, 7817, 5238, 419, 1},
-    {-233900, 1442247, 7823, 7837, 5238, 420, 4},
-    {-210325, 1489433, 7847, 7858, 5238, 424, 3},
-    {-274917, 1496425, 7865, 7879, 5238, 427, 2},
-    {-228136, 1486786, 7889, 7905, 5238, 429, 1},
-    {-266494, 1502706, 7917, 7927, 5238, 430, 1},
-    {-243122, 1516242, 7933, 7949, 5238, 431, 1},
-    {-179358, 1461442, 7961, 7978, 5238, 432, 1},
-    {-265428, 1481114, 7992, 8005, 5238, 433, 1},
-    {-249892, 1511864, 8014, 8024, 5238, 434, 1},
-    {-219258, 1483186, 8030, 8043, 5238, 435, 1},
-    {-220006, 1480606, 8052, 8069, 5238, 436, 1},
-    {-265056, 1471339, 8083, 8094, 5238, 437, 1},
-    {-164247, 1453892, 8101, 8113, 5238, 438, 2},
-    {-176853, 1451203, 8121, 8138, 5238, 440, 1},
-    {-207344, 1395125, 8151, 8165, 5238, 441, 3},
-    {-166592, 1453233, 8175, 8192, 5238, 444, 1},
-    {-252728, 1517639, 8205, 8222, 5238, 445, 2},
-    {-181469, 1443178, 8244, 8261, 5238, 447, 2},
-    {-245636, 1499753, 8276, 8286, 5238, 449, 1},
-    {-225944, 1445483, 8292, 8307, 5238, 450, 2},
-    {-266322, 1529111, 8318, 8330, 5238, 452, 2},
-    {-216964, 1486964, 8338, 8347, 5238, 454, 1},
-    {-212128, 1478889, 8352, 8369, 5238, 455, 1},
-    {-176706, 1410767, 8383, 8397, 5238, 456, 3},
-    {-204856, 1454086, 8407, 8420, 5238, 459, 1},
-    {-220439, 1482497, 8429, 8446, 5238, 460, 1},
-    {-164819, 1454672, 8459, 8476, 5238, 461, 1},
-    {-266192, 1442647, 8489, 8501, 5238, 462, 1},
-    {-263322, 1493939, 8509, 8525, 5238, 463, 1},
-    {-207347, 1431458, 8546, 8559, 5238, 464, 3},
-    {-237297, 1505361, 8568, 8584, 5238, 467, 3},
-    {-244411, 1484167, 8596, 8613, 5238, 470, 1},
-    {-265664, 1488192, 8628, 8637, 5238, 471, 2},
-    {-223475, 1482767, 8642, 8659, 5238, 473, 1},
-    {-285358, 1518328, 8672, 8689, 5238, 474, 3},
-    {-259533, 1490644, 8704, 8721, 5238, 477, 1},
-    {-241417, 1481503, 8743, 8758, 5238, 478, 2},
-    {-280003, 1486756, 8769, 8783, 5238, 480, 1},
-    {-223464, 1495267, 8793, 8809, 5238, 481, 2},
-    {-243547, 1432875, 8821, 8836, 5238, 483, 1},
-    {-271433, 1491356, 8847, 8857, 5238, 484, 1},
-    {-248822, 1462542, 8863, 8873, 5238, 485, 2},
-    {-272781, 1504600, 8879, 8888, 5238, 487, 1},
-    {-269056, 1432919, 8893, 8904, 5238, 488, 2},
-    {-268025, 1519100, 8911, 8927, 5238, 490, 2},
-    {-256447, 1498039, 8944, 8955, 5238, 492, 3},
-    {-279931, 1438233, 8962, 8979, 5238, 495, 3},
-    {-249936, 1500964, 8992, 9005, 5238, 498, 3},
-    {-105825, 1422125, 9014, 9031, 5238, 501, 1},
-    {-193428, 1467822, 9062, 9077, 5238, 502, 4},
-    {-192497, 1467997, 9088, 9105, 5238, 506, 3},
-    {-178689, 1460075, 9122, 9132, 5238, 509, 1},
-    {-260481, 1499600, 9138, 9150, 5238, 510, 1},
-    {-126219, 1418894, 9158, 9168, 5238, 511, 3},
-    {-254269, 1521169, 9174, 9187, 5238, 514, 3},
-    {-237381, 1475378, 9196, 9208, 5238, 517, 1},
-    {-254197, 1426594, 9216, 9229, 5238, 518, 1},
-    {-222411, 1430511, 9238, 9249, 5238, 519, 1},
-    {-263347, 1517644, 9256, 9267, 5238, 520, 1},
-    {-272486, 1459786, 9274, 9286, 5238, 521, 1},
-    {-279703, 1446347, 9294, 9304, 5238, 522, 2},
-    {-351039, 1385206, 9563, 9575, 9584, 524, 20},
-    {-349247, 1386028, 9587, 9604, 9584, 544, 3},
-    {-304733, 1371667, 9623, 9636, 9584, 547, 1},
-    {-321389, 1337894, 9646, 9662, 9584, 548, 1},
-    {-290122, 1347553, 9679, 9694, 9584, 549, 3},
-    {-281419, 1408672, 9706, 9720, 9584, 552, 1},
-    {-319208, 1384453, 9731, 9741, 9584, 553, 1},
-    {-308706, 1322169, 9748, 9765, 9584, 554, 1},
-    {-360078, 1403367, 9787, 9796, 9584, 555, 1},
-    {-305997, 1384042, 9802, 9819, 9584, 556, 1},
-    {-296539, 1380550, 9837, 9847, 9584, 557, 1},
-    {-281181, 1402117, 9854, 9864, 9584, 558, 1},
-    {-376022, 1404825, 9871, 9888, 9584, 559, 3},
-    {-347017, 1358281, 9902, 9918, 9584, 562, 2},
-    {-297250, 1355703, 9931, 9948, 9584, 564, 1},
-    {-322997, 1380564, 9968, 9977, 9584, 565, 1},
-    {-344644, 1405333, 9983, 10000, 9584, 566, 3},
-    {-305464, 1368947, 10015, 10030, 9584, 569, 4},
-    {-331039, 1381642, 10042, 10058, 9584, 573, 3},
-    {-327581, 1341908, 10077, 10092, 9584, 576, 2},
-    {-276889, 1401019, 10104, 10118, 9584, 578, 1},
-    {-343503, 1359550, 10129, 10142, 9584, 579, 2},
-    {-324078, 1346128, 10152, 10164, 9584, 581, 1},
-    {-312000, 1368269, 10173, 10184, 9584, 582, 1},
-    {-331406, 1351089, 10192, 10203, 9584, 583, 1},
-    {-329761, 1354808, 10211, 10227, 9584, 584, 1},
-    {-418814, 1482964, 10240, 10252, 10260, 585, 1},
-    {-399156, 1438544, 10264, 10275, 10260, 586, 2},
-    {-428975, 1472364, 10448, 10459, 10260, 588, 17},
-    {-409592, 1451928, 10466, 10477, 10260, 605, 1},
-    {-413917, 1474261, 10484, 10500, 10260, 606, 6},
-    {-425225, 1479503, 10512, 10523, 10260, 612, 1},
-    {-420847, 1456069, 10530, 10545, 10260, 613, 2},
-    {-420919, 1456064, 10556, 10573, 10260, 615, 1},
-    {-418444, 1455414, 10591, 10604, 10260, 616, 3},
-    {-413336, 1482869, 10613, 10627, 10260, 619, 1},
-    {-415342, 1481717, 10637, 10650, 10260, 620, 1},
-    {-421528, 1452925, 10659, 10671, 10260, 621, 3},
-    {-421250, 1480733, 10679, 10691, 10260, 624, 1},
-    {-413353, 1457336, 10699, 10711, 10260, 625, 1},
-    {-412336, 1479453, 10719, 10735, 10260, 626, 1},
-    {-361019, 1469025, 10747, 10764, 10779, 627, 1},
-    {-370767, 1455731, 10783, 10797, 10779, 628, 1},
-    {-377056, 1475606, 10807, 10822, 10779, 629, 1},
-    {-372825, 1432478, 10833, 10850, 10779, 630, 2},
-    {-375753, 1439603, 10874, 10891, 10779, 632, 1},
-    {-369925, 1443089, 10913, 10925, 10779, 633, 2},
-    {-367158, 1469728, 10933, 10944, 10779, 635, 2},
-    {-375939, 1489947, 10951, 10966, 10779, 637, 1},
-    {-361856, 1479767, 10977, 10990, 10779, 638, 1},
-    {-372767, 1458503, 10999, 11010, 10779, 639, 1},
-    {-373425, 1452819, 11017, 11034, 10779, 640, 1},
-    {-363581, 1456950, 11055, 11072, 10779, 641, 2},
-    {-358531, 1422903, 11088, 11105, 10779, 643, 1},
-    {-366408, 1422575, 11120, 11132, 10779, 644, 1},
-    {-383992, 1465647, 11140, 11157, 10779, 645, 2},
-    {-375464, 1497511, 11172, 11187, 10779, 647, 1},
-    {-370433, 1459847, 11198, 11212, 10779, 648, 1},
-    {-370439, 1438186, 11222, 11239, 10779, 649, 1},
-    {-378350, 1453486, 11838, 11852, 10779, 650, 32},
-    {-343797, 1421883, 11862, 11874, 10779, 682, 1},
-    {-343797, 1421883, 11882, 11899, 10779, 683, 3},
-    {-354728, 1434558, 11917, 11934, 10779, 686, 2},
-    {-364450, 1468031, 11948, 11963, 10779, 688, 1},
-    {-364039, 1414744, 11974, 11984, 10779, 689, 1},
-    {-371464, 1476550, 11990, 11999, 10779, 690, 1},
-    {-377117, 1486000, 12004, 12015, 10779, 691, 1},
-    {-382167, 1417033, 12022, 12039, 10779, 692, 1},
-    {-372817, 1477181, 12054, 12071, 10779, 693, 1},
-    {-362536, 1468550, 12084, 12101, 10779, 694, 2},
-    {-363844, 1462053, 12114, 12129, 10779, 696, 1},
-    {-383047, 1427375, 12140, 12156, 10779, 697, 3},
-    {-374589, 1419161, 12168, 12185, 10779, 700, 3},
-    {-361228, 1468900, 12202, 12214, 10779, 703, 1},
-    {-377250, 1456972, 12222, 12239, 10779, 704, 1},
-    {-167097, 1283956, 12252, 12262, 12269, 705, 1},
-    {-343142, 1151561, 12272, 12283, 12269, 706, 1},
-    {-208178, 1154383, 12291, 12308, 12269, 707, 3},
-    {-327522, 1163444, 12412, 12429, 12269, 710, 5},
-    {-224072, 1173467, 12450, 12467, 12269, 715, 2},
-    {-225933, 1172314, 12491, 12508, 12269, 717, 2},
-    {-178886, 1222633, 12524, 12534, 12269, 719, 3},
-    {-333969, 1159153, 12541, 12552, 12269, 722, 2},
-    {-336589, 1152275, 12560, 12573, 12269, 724, 2},
-    {-206400, 1171569, 12583, 12599, 12269, 726, 1},
-    {-249114, 1137211, 12612, 12625, 12269, 727, 1},
-    {-319844, 1171897, 12635, 12652, 12269, 728, 2},
-    {-233047, 1178556, 12673, 12690, 12269, 730, 1},
-    {-232919, 1177861, 12705, 12721, 12269, 731, 1},
-    {-223439, 1196814, 12734, 12751, 12269, 732, 2},
-    {-210739, 1161508, 12772, 12789, 12269, 734, 1},
-    {-222992, 1192242, 12808, 12825, 12269, 735, 2},
-    {-223347, 1194028, 12851, 12867, 12269, 737, 2},
-    {-222847, 1193028, 12895, 12911, 12269, 739, 2},
-    {-298814, 1160247, 12940, 12950, 12269, 741, 1},
-    {-214439, 1196739, 12957, 12974, 12269, 742, 1},
-    {-274289, 1179006, 12993, 13000, 12269, 743, 1},
-    {-302906, 1166094, 13004, 13018, 12269, 744, 1},
-    {-206553, 1167281, 13029, 13040, 12269, 745, 2},
-    {-259194, 1135342, 13048, 13058, 12269, 747, 3},
-    {-173561, 1236700, 13065, 13077, 12269, 750, 2},
-    {-232983, 1197964, 13088, 13105, 12269, 752, 2},
-    {-224725, 1168297, 13124, 13140, 12269, 754, 1},
-    {-298181, 1152775, 13153, 13164, 12269, 755, 1},
-    {-337681, 1218786, 13172, 13185, 12269, 756, 3},
-    {-219592, 1141292, 13195, 13206, 12269, 759, 3},
-    {-183303, 1256806, 13214, 13231, 12269, 762, 1},
-    {-225161, 1171333, 13248, 13265, 12269, 763, 1},
-    {-342342, 1189889, 13282, 13294, 12269, 764, 1},
-    {-278928, 1223650, 13303, 13320, 12269, 765, 1},
-    {-286839, 1146761, 13337, 13350, 12269, 766, 3},
-    {-287847, 1169375, 13360, 13376, 12269, 769, 2},
-    {-288122, 1224058, 13389, 13405, 12269, 771, 1},
-    {-300739, 1149683, 13427, 13441, 12269, 772, 3},
-    {-279917, 1238494, 13452, 13468, 12269, 775, 1},
-    {-182186, 1276750, 13491, 13506, 12269, 776, 1},
-    {-229556, 1190994, 13518, 13534, 12269, 777, 2},
-    {-231547, 1195331, 13552, 13568, 12269, 779, 2},
-    {-230411, 1190322, 13586, 13603, 12269, 781, 2},
-    {-339331, 1201336, 13622, 13637, 12269, 783, 3},
-    {-260214, 1172686, 13651, 13668, 12269, 786, 1},
-    {-233794, 1200525, 13684, 13701, 12269, 787, 2},
-    {-233772, 1201539, 13716, 13733, 12269, 789, 2},
-    {-263947, 1206375, 13753, 13768, 12269, 791, 1},
-    {-302822, 1150681, 13780, 13794, 12269, 792, 3},
-    {-277056, 1141750, 13805, 13817, 12269, 795, 1},
-    {-307172, 1214403, 13826, 13840, 12269, 796, 3},
-    {-307811, 1215128, 13851, 13868, 12269, 799, 1},
-    {-312100, 1216731, 13889, 13901, 12269, 800, 1},
-    {-291814, 1167044, 13910, 13925, 12269, 801, 3},
-    {-237619, 1200967, 13937, 13954, 12269, 804, 1},
-    {-207919, 1168936, 13975, 13987, 12269, 805, 2},
-    {-220953, 1162244, 13996, 14013, 12269, 807, 1},
-    {-286831, 1211636, 14028, 14045, 12269, 808, 2},
-    {-225217, 1190481, 14068, 14085, 12269, 810, 2},
-    {-157639, 1287339, 14101, 14114, 12269, 812, 1},
-    {-286283, 1223994, 14124, 14136, 12269, 813, 3},
-    {-299619, 1149794, 14145, 14155, 12269, 816, 1},
-    {-279139, 1207058, 14162, 14174, 12269, 817, 2},
-    {-288819, 1213342, 14183, 14194, 12269, 819, 3},
-    {-226336, 1181119, 14202, 14214, 12269, 822, 2},
-    {-226597, 1181653, 14223, 14240, 12269, 824, 2},
-    {-211711, 1197489, 14258, 14272, 12269, 826, 1},
-    {-314694, 1194908, 14283, 14298, 12269, 827, 1},
-    {-215908, 1200989, 14310, 14326, 12269, 828, 2},
-    {-265919, 1184969, 14344, 14359, 12269, 830, 1},
-    {-296939, 1210300, 14371, 14382, 12269, 831, 1},
-    {-315033, 1182058, 14390, 14402, 12269, 832, 1},
-    {-216658, 1159133, 14411, 14426, 12269, 833, 2},
-    {-217447, 1162528, 14438, 14453, 12269, 835, 1},
-    {-306456, 1160081, 14465, 14474, 12269, 836, 2},
-    {-293186, 1158822, 14480, 14490, 12269, 838, 2},
-    {-272156, 1205567, 14497, 14512, 12269, 840, 2},
-    {-272825, 1205514, 14524, 14541, 12269, 842, 2},
-    {-280564, 1178425, 14566, 14582, 12269, 844, 1},
-    {-234006, 1196192, 14595, 14612, 12269, 845, 2},
-    {-285511, 1155039, 14635, 14646, 12269, 847, 1},
-    {-224108, 1174164, 14654, 14671, 12269, 848, 2},
-    {-339817, 1157606, 14685, 14695, 12269, 850, 1},
-    {-320625, 1183900, 14702, 14715, 12269, 851, 1},
-    {-329606, 1172161, 14725, 14737, 12269, 852, 1},
-    {-233492, 1197250, 14746, 14756, 12269, 853, 1},
-    {-229058, 1189225, 14763, 14780, 12269, 854, 3},
-    {-321425, 1217275, 14799, 14811, 12269, 857, 1},
-    {-212578, 1190339, 14820, 14837, 12269, 858, 1},
-    {-346322, 1161231, 14853, 14868, 12269, 859, 1},
-    {-216458, 1151150, 14880, 14890, 12269, 860, 2},
-    {-216617, 1163439, 14897, 14912, 12269, 862, 2},
-    {-232331, 1176658, 14924, 14938, 12269, 864, 2},
-    {-320108, 1160844, 15133, 15142, 12269, 866, 26},
-    {-210597, 1189014, 15148, 15165, 12269, 892, 2},
-    {-203761, 1185775, 15182, 15198, 12269, 894, 3},
-    {-225339, 1171292, 15211, 15228, 12269, 897, 2},
-    {-225106, 1172103, 15258, 15275, 12269, 899, 2},
-    {-335811, 1200467, 15305, 15321, 12269, 901, 3},
-    {-207719, 1171419, 15334, 15347, 12269, 904, 1},
-    {-225006, 1200017, 15357, 15374, 12269, 905, 1},
-    {-173483, 1280658, 15388, 15405, 12269, 906, 1},
-    {-331200, 1216261, 15422, 15437, 12269, 907, 1},
-    {-223222, 1173069, 15449, 15466, 12269, 908, 2},
-    {-221489, 1178497, 15483, 15500, 12269, 910, 1},
-    {-221250, 1179208, 15532, 15549, 12269, 911, 1},
-    {-229789, 1189031, 15581, 15598, 12269, 912, 4},
-    {-346558, 1176475, 15622, 15639, 12269, 916, 3},
-    {-312761, 1195092, 15661, 15678, 12269, 919, 2},
-    {-290811, 1224083, 15693, 15708, 12269, 921, 1},
-    {-217214, 1222228, 15720, 15730, 12269, 922, 1},
-    {-217158, 1221792, 15737, 15754, 12269, 923, 1},
-    {-281811, 1210003, 15776, 15793, 12269, 924, 1},
-    {-218317, 1176058, 15809, 15823, 12269, 925, 1},
-    {-226994, 1177747, 15836, 15849, 12269, 926, 2},
-    {-227639, 1177522, 15859, 15876, 12269, 928, 1},
-    {-292419, 1245517, 15891, 15908, 12269, 929, 1},
-    {-221878, 1162506, 15928, 15945, 12269, 930, 1},
-    {-261269, 1134175, 15961, 15977, 12269, 931, 1},
-    {-333372, 1170939, 15990, 15999, 12269, 932, 1},
-    {-349608, 1167394, 16005, 16016, 12269, 933, 1},
-    {-231136, 1187819, 16024, 16040, 12269, 934, 2},
-    {-231442, 1186561, 16064, 16081, 12269, 936, 2},
-    {-231781, 1186464, 16105, 16122, 12269, 938, 2},
-    {-231939, 1187836, 16146, 16163, 12269, 940, 2},
-    {-231914, 1188517, 16187, 16204, 12269, 942, 2},
-    {-231300, 1188728, 16228, 16245, 12269, 944, 2},
-    {-231547, 1187800, 16269, 16286, 12269, 946, 2},
-    {-231169, 1185844, 16304, 16321, 12269, 948, 2},
-    {-231961, 1175058, 16349, 16366, 12269, 950, 2},
-    {-231753, 1174450, 16390, 16407, 12269, 952, 2},
-    {-226667, 1175811, 16431, 16448, 12269, 954, 2},
-    {-226892, 1174817, 16477, 16494, 12269, 956, 1},
-    {-313022, 1186975, 16525, 16537, 12269, 957, 2},
-    {-206328, 1171528, 16546, 16557, 12269, 959, 1},
-    {-265950, 1202281, 16565, 16575, 12269, 960, 2},
-    {-207325, 1217594, 16582, 16595, 12269, 962, 1},
-    {-211858, 1186764, 16605, 16616, 12269, 963, 1},
-    {-308906, 1167247, 16624, 16640, 12269, 964, 2},
-    {-216531, 1212228, 16653, 16670, 12269, 966, 2},
-    {-154936, 1281372, 16689, 16700, 12269, 968, 1},
-    {-274233, 1205833, 16708, 16725, 12269, 969, 1},
-    {-283422, 1166789, 16741, 16751, 12269, 970, 1},
-    {-228083, 1191067, 16758, 16774, 12269, 971, 2},
-    {-227125, 1190958, 16798, 16815, 12269, 973, 1},
-    {-227308, 1190161, 16837, 16854, 12269, 974, 1},
-    {-228128, 1192747, 16876, 16893, 12269, 975, 2},
-    {-227961, 1191597, 16917, 16934, 12269, 977, 2},
-    {-227700, 1192317, 16957, 16973, 12269, 979, 1},
-    {-228011, 1192472, 16986, 17003, 12269, 980, 1},
+    {-352756, 1490978, 850, 863, 872, 0, 22},
+    {-354019, 1490989, 876, 892, 872, 22, 7},
+    {-303761, 1516014, 904, 917, 926, 29, 3},
+    {-346397, 1435656, 930, 944, 926, 32, 1},
+    {-357961, 1500056, 954, 971, 926, 33, 2},
+    {-334503, 1495475, 991, 1008, 926, 35, 4},
+    {-355458, 1481992, 1022, 1033, 926, 39, 1},
+    {-365981, 1493831, 1040, 1055, 926, 40, 3},
+    {-305978, 1501450, 1066, 1083, 926, 43, 1},
+    {-287611, 1526378, 1102, 1114, 926, 44, 1},
+    {-301989, 1462400, 1122, 1133, 926, 45, 2},
+    {-354553, 1497714, 1140, 1154, 926, 47, 1},
+    {-299633, 1468653, 1164, 1179, 926, 48, 1},
+    {-319397, 1414433, 1190, 1206, 926, 49, 3},
+    {-326711, 1510981, 1218, 1233, 926, 52, 1},
+    {-334558, 1489864, 1244, 1261, 926, 53, 2},
+    {-355975, 1494417, 1277, 1294, 926, 55, 1},
+    {-333431, 1489836, 1308, 1325, 926, 56, 3},
+    {-313428, 1490233, 1344, 1361, 926, 59, 3},
+    {-315161, 1458567, 1384, 1394, 926, 62, 4},
+    {-330781, 1471567, 1400, 1415, 926, 66, 1},
+    {-362347, 1491408, 1426, 1441, 926, 67, 1},
+    {-346433, 1480494, 1452, 1468, 926, 68, 1},
+    {-338289, 1486978, 1480, 1490, 926, 69, 1},
+    {-344553, 1494417, 1496, 1510, 926, 70, 1},
+    {-356681, 1449097, 1520, 1535, 926, 71, 1},
+    {-322367, 1486775, 1546, 1561, 926, 72, 1},
+    {-370111, 1498897, 1574, 1583, 926, 73, 1},
+    {-294556, 1516053, 1588, 1602, 926, 74, 1},
+    {-297911, 1517650, 1612, 1627, 926, 75, 1},
+    {-324169, 1510775, 1638, 1655, 926, 76, 1},
+    {-319625, 1519469, 1669, 1684, 926, 77, 1},
+    {-291328, 1474819, 1695, 1708, 926, 78, 1},
+    {-334067, 1512967, 1786, 1798, 926, 79, 1},
+    {-347583, 1497631, 1806, 1819, 926, 80, 1},
+    {-347572, 1497636, 1828, 1845, 926, 81, 3},
+    {-303175, 1528597, 1859, 1876, 926, 84, 3},
+    {-344522, 1449864, 1892, 1900, 926, 87, 1},
+    {-357253, 1473125, 1904, 1917, 926, 88, 1},
+    {-346236, 1506944, 1926, 1940, 926, 89, 2},
+    {-328981, 1443003, 1950, 1962, 926, 91, 1},
+    {-353428, 1456608, 1970, 1985, 926, 92, 1},
+    {-364011, 1486647, 1996, 2010, 926, 93, 1},
+    {-348753, 1475767, 2020, 2030, 926, 94, 1},
+    {-328719, 1499903, 2036, 2047, 926, 95, 1},
+    {-362114, 1481281, 2054, 2068, 926, 96, 2},
+    {-336314, 1474083, 2078, 2095, 926, 98, 1},
+    {-294061, 1479722, 2111, 2128, 926, 99, 1},
+    {-285428, 1532903, 2144, 2156, 926, 100, 1},
+    {-334872, 1501597, 2164, 2181, 926, 101, 1},
+    {-314461, 1524769, 2196, 2210, 926, 102, 1},
+    {-326350, 1510694, 2220, 2237, 926, 103, 1},
+    {-322867, 1507017, 2255, 2272, 926, 104, 1},
+    {-317022, 1526786, 2286, 2303, 926, 105, 3},
+    {-323889, 1424147, 2317, 2330, 926, 108, 1},
+    {-321269, 1503128, 2339, 2351, 926, 109, 1},
+    {-341217, 1462350, 2359, 2376, 926, 110, 3},
+    {-317281, 1508439, 2405, 2420, 926, 113, 2},
+    {-347511, 1465675, 2431, 2446, 926, 115, 1},
+    {-328919, 1515383, 2592, 2606, 926, 116, 9},
+    {-285967, 1532219, 2616, 2627, 926, 125, 1},
+    {-346181, 1506975, 2634, 2644, 926, 126, 1},
+    {-337028, 1498394, 2650, 2661, 926, 127, 1},
+    {-334603, 1491236, 2668, 2679, 926, 128, 1},
+    {-332497, 1483369, 2686, 2697, 926, 129, 1},
+    {-327211, 1481978, 2704, 2718, 926, 130, 1},
+    {-313414, 1526825, 2728, 2745, 926, 131, 1},
+    {-327319, 1521314, 2760, 2777, 926, 132, 2},
+    {-334050, 1499475, 2791, 2808, 926, 134, 1},
+    {-324347, 1510042, 2829, 2845, 926, 135, 1},
+    {-285456, 1532875, 2862, 2879, 926, 136, 3},
+    {-348203, 1479014, 2894, 2910, 926, 139, 3},
+    {-338200, 1511850, 3667, 3678, 926, 142, 40},
+    {-355944, 1482886, 3685, 3698, 926, 182, 1},
+    {-313214, 1507503, 3707, 3720, 926, 183, 4},
+    {-306369, 1501711, 3729, 3746, 926, 187, 1},
+    {-290867, 1519717, 3762, 3778, 926, 188, 1},
+    {-364936, 1482878, 3790, 3802, 926, 189, 1},
+    {-357761, 1480214, 3810, 3825, 926, 190, 4},
+    {-352933, 1482478, 3836, 3846, 926, 194, 2},
+    {-322564, 1497536, 3852, 3869, 926, 196, 1},
+    {-325611, 1510158, 3884, 3901, 926, 197, 1},
+    {-325425, 1509386, 3929, 3946, 926, 198, 1},
+    {-302844, 1501675, 3974, 3990, 926, 199, 3},
+    {-350492, 1475594, 4002, 4018, 926, 202, 4},
+    {-309658, 1516306, 4030, 4041, 926, 206, 1},
+    {-300081, 1481328, 4048, 4060, 926, 207, 1},
+    {-315525, 1433808, 4068, 4082, 926, 208, 1},
+    {-323417, 1498756, 4092, 4109, 926, 209, 1},
+    {-346183, 1506972, 4130, 4145, 926, 210, 2},
+    {-343417, 1483361, 4156, 4166, 926, 212, 2},
+    {-132444, 1311092, 4172, 4189, 4204, 214, 1},
+    {-237675, 1338722, 4207, 4224, 4204, 215, 3},
+    {-130456, 1310267, 4238, 4251, 4204, 218, 2},
+    {-117758, 1305678, 4261, 4278, 4204, 220, 1},
+    {-145597, 1331172, 4294, 4305, 4204, 221, 1},
+    {-160511, 1363039, 4313, 4327, 4204, 222, 1},
+    {-137511, 1306894, 4338, 4352, 4204, 223, 1},
+    {-124144, 1309692, 4526, 4536, 4204, 224, 15},
+    {-120217, 1355736, 4543, 4556, 4204, 239, 1},
+    {-138506, 1364253, 4566, 4583, 4204, 240, 2},
+    {-126561, 1328497, 4598, 4608, 4204, 242, 1},
+    {-143961, 1321803, 4615, 4628, 4204, 243, 2},
+    {-232753, 1293886, 4638, 4649, 4204, 245, 1},
+    {-113181, 1321256, 4657, 4672, 4204, 246, 1},
+    {-120517, 1342228, 4684, 4698, 4204, 247, 1},
+    {-149356, 1330594, 4709, 4722, 4204, 248, 1},
+    {-164319, 1360967, 4732, 4749, 4204, 249, 1},
+    {-239956, 1315517, 4769, 4785, 4204, 250, 1},
+    {-232661, 1312722, 4808, 4824, 4204, 251, 2},
+    {-253514, 1310714, 4837, 4850, 4204, 253, 1},
+    {-174250, 1334481, 4860, 4877, 4204, 254, 1},
+    {-121897, 1367922, 4894, 4907, 4204, 255, 3},
+    {-138231, 1318367, 4917, 4931, 4204, 258, 1},
+    {-112186, 1322692, 4942, 4958, 4204, 259, 1},
+    {-196692, 1342606, 4971, 4988, 4204, 260, 1},
+    {-142383, 1295197, 5002, 5012, 4204, 261, 1},
+    {-252347, 1309919, 5019, 5029, 4204, 262, 3},
+    {-202731, 1487103, 5036, 5053, 5066, 265, 2},
+    {-236178, 1466300, 5070, 5080, 5066, 267, 1},
+    {-129286, 1416339, 5086, 5096, 5066, 268, 3},
+    {-229681, 1452431, 5102, 5113, 5066, 271, 2},
+    {-258064, 1465889, 5120, 5135, 5066, 273, 1},
+    {-173831, 1460031, 5146, 5158, 5066, 274, 1},
+    {-273997, 1418047, 5166, 5178, 5066, 275, 2},
+    {-235567, 1452931, 5186, 5201, 5066, 277, 3},
+    {-243583, 1394717, 5212, 5225, 5066, 280, 3},
+    {-220292, 1463700, 5234, 5251, 5066, 283, 2},
+    {-258964, 1393553, 5265, 5280, 5066, 285, 3},
+    {-244314, 1454961, 5291, 5304, 5066, 288, 1},
+    {-235742, 1490328, 5313, 5328, 5066, 289, 1},
+    {-237856, 1488622, 5339, 5356, 5066, 290, 1},
+    {-237125, 1488044, 5372, 5389, 5066, 291, 1},
+    {-229069, 1399108, 5411, 5422, 5066, 292, 1},
+    {-200064, 1482386, 5429, 5444, 5066, 293, 1},
+    {-274644, 1529475, 6009, 6022, 5066, 294, 27},
+    {-177403, 1395461, 6031, 6045, 5066, 321, 1},
+    {-172642, 1458536, 6055, 6066, 5066, 322, 3},
+    {-169047, 1458433, 6073, 6090, 5066, 325, 1},
+    {-167369, 1456617, 6111, 6128, 5066, 326, 3},
+    {-199206, 1381758, 6141, 6155, 5066, 329, 1},
+    {-218347, 1409117, 6165, 6182, 5066, 330, 1},
+    {-231183, 1480403, 6198, 6210, 5066, 331, 1},
+    {-219264, 1494100, 6218, 6230, 5066, 332, 2},
+    {-253481, 1488872, 6238, 6254, 5066, 334, 2},
+    {-221544, 1480594, 6275, 6291, 5066, 336, 1},
+    {-221242, 1480508, 6308, 6325, 5066, 337, 1},
+    {-220622, 1480578, 6346, 6363, 5066, 338, 1},
+    {-221817, 1481144, 6384, 6401, 5066, 339, 1},
+    {-187306, 1386169, 6422, 6439, 5066, 340, 2},
+    {-262544, 1463031, 6452, 6468, 5066, 342, 1},
+    {-200892, 1462525, 6480, 6497, 5066, 343, 1},
+    {-228561, 1476442, 6513, 6526, 5066, 344, 3},
+    {-227222, 1476486, 6535, 6552, 5066, 347, 1},
+    {-207153, 1405006, 6566, 6580, 5066, 348, 3},
+    {-139378, 1432025, 6590, 6599, 5066, 351, 1},
+    {-205242, 1478386, 6604, 6621, 5066, 352, 1},
+    {-205444, 1477919, 6634, 6651, 5066, 353, 1},
+    {-154731, 1452508, 6669, 6682, 5066, 354, 1},
+    {-218572, 1432597, 6691, 6704, 5066, 355, 1},
+    {-162439, 1454369, 6713, 6725, 5066, 356, 1},
+    {-182039, 1422503, 6733, 6745, 5066, 357, 1},
+    {-280658, 1456872, 6753, 6768, 5066, 358, 2},
+    {-162492, 1453228, 6779, 6792, 5066, 360, 1},
+    {-216956, 1395131, 6801, 6813, 5066, 361, 1},
+    {-268922, 1516081, 6821, 6838, 5066, 362, 3},
+    {-171269, 1450689, 6852, 6865, 5066, 365, 1},
+    {-285578, 1482503, 6874, 6890, 5066, 366, 1},
+    {-202314, 1401411, 6902, 6919, 5066, 367, 2},
+    {-225800, 1483183, 6937, 6948, 5066, 369, 1},
+    {-254097, 1511231, 6955, 6968, 5066, 370, 1},
+    {-185147, 1440897, 6977, 6992, 5066, 371, 2},
+    {-234594, 1481492, 7003, 7015, 5066, 373, 2},
+    {-204425, 1407181, 7023, 7040, 5066, 375, 2},
+    {-185875, 1436025, 7058, 7071, 5066, 377, 2},
+    {-183022, 1435450, 7080, 7095, 5066, 379, 2},
+    {-238686, 1512556, 7106, 7120, 5066, 381, 1},
+    {-213581, 1481094, 7130, 7142, 5066, 382, 2},
+    {-280336, 1532422, 7209, 7224, 5066, 384, 13},
+    {-285194, 1503378, 7235, 7251, 5066, 397, 1},
+    {-217644, 1479789, 7263, 7277, 5066, 398, 1},
+    {-190022, 1449892, 7287, 7301, 5066, 399, 1},
+    {-264228, 1528542, 7311, 7322, 5066, 400, 2},
+    {-214892, 1483661, 7329, 7344, 5066, 402, 1},
+    {-215122, 1484064, 7355, 7372, 5066, 403, 1},
+    {-173769, 1453800, 7389, 7403, 5066, 404, 1},
+    {-208453, 1441869, 7413, 7427, 5066, 405, 3},
+    {-258864, 1485219, 7437, 7448, 5066, 408, 2},
+    {-242531, 1444356, 7455, 7468, 5066, 410, 1},
+    {-236250, 1462561, 7477, 7489, 5066, 411, 1},
+    {-206528, 1418239, 7497, 7513, 5066, 412, 1},
+    {-174978, 1408383, 7525, 7537, 5066, 413, 2},
+    {-269272, 1507808, 7545, 7561, 5066, 415, 1},
+    {-224594, 1484122, 7578, 7595, 5066, 416, 2},
+    {-159006, 1448469, 7613, 7626, 5066, 418, 1},
+    {-155592, 1444450, 7635, 7645, 5066, 419, 1},
+    {-233900, 1442247, 7651, 7665, 5066, 420, 4},
+    {-210325, 1489433, 7675, 7686, 5066, 424, 3},
+    {-274917, 1496425, 7693, 7707, 5066, 427, 2},
+    {-228136, 1486786, 7717, 7733, 5066, 429, 1},
+    {-266494, 1502706, 7745, 7755, 5066, 430, 1},
+    {-243122, 1516242, 7761, 7777, 5066, 431, 1},
+    {-179358, 1461442, 7789, 7806, 5066, 432, 1},
+    {-265428, 1481114, 7820, 7833, 5066, 433, 1},
+    {-249892, 1511864, 7842, 7852, 5066, 434, 1},
+    {-219258, 1483186, 7858, 7871, 5066, 435, 1},
+    {-220006, 1480606, 7880, 7897, 5066, 436, 1},
+    {-265056, 1471339, 7911, 7922, 5066, 437, 1},
+    {-164247, 1453892, 7929, 7941, 5066, 438, 2},
+    {-176853, 1451203, 7949, 7966, 5066, 440, 1},
+    {-207344, 1395125, 7979, 7993, 5066, 441, 3},
+    {-166592, 1453233, 8003, 8020, 5066, 444, 1},
+    {-252728, 1517639, 8033, 8050, 5066, 445, 2},
+    {-181469, 1443178, 8072, 8089, 5066, 447, 2},
+    {-245636, 1499753, 8104, 8114, 5066, 449, 1},
+    {-225944, 1445483, 8120, 8135, 5066, 450, 2},
+    {-266322, 1529111, 8146, 8158, 5066, 452, 2},
+    {-216964, 1486964, 8166, 8175, 5066, 454, 1},
+    {-212128, 1478889, 8180, 8197, 5066, 455, 1},
+    {-176706, 1410767, 8211, 8225, 5066, 456, 3},
+    {-204856, 1454086, 8235, 8248, 5066, 459, 1},
+    {-220439, 1482497, 8257, 8274, 5066, 460, 1},
+    {-164819, 1454672, 8287, 8304, 5066, 461, 1},
+    {-266192, 1442647, 8317, 8329, 5066, 462, 1},
+    {-263322, 1493939, 8337, 8353, 5066, 463, 1},
+    {-207347, 1431458, 8374, 8387, 5066, 464, 3},
+    {-237297, 1505361, 8396, 8412, 5066, 467, 3},
+    {-244411, 1484167, 8424, 8441, 5066, 470, 1},
+    {-265664, 1488192, 8456, 8465, 5066, 471, 2},
+    {-223475, 1482767, 8470, 8487, 5066, 473, 1},
+    {-285358, 1518328, 8500, 8517, 5066, 474, 3},
+    {-259533, 1490644, 8532, 8549, 5066, 477, 1},
+    {-241417, 1481503, 8571, 8586, 5066, 478, 2},
+    {-280003, 1486756, 8597, 8611, 5066, 480, 1},
+    {-223464, 1495267, 8621, 8637, 5066, 481, 2},
+    {-243547, 1432875, 8649, 8664, 5066, 483, 1},
+    {-271433, 1491356, 8675, 8685, 5066, 484, 1},
+    {-248822, 1462542, 8691, 8701, 5066, 485, 2},
+    {-272781, 1504600, 8707, 8716, 5066, 487, 1},
+    {-269056, 1432919, 8721, 8732, 5066, 488, 2},
+    {-268025, 1519100, 8739, 8755, 5066, 490, 2},
+    {-256447, 1498039, 8772, 8783, 5066, 492, 3},
+    {-279931, 1438233, 8790, 8807, 5066, 495, 3},
+    {-249936, 1500964, 8820, 8833, 5066, 498, 3},
+    {-105825, 1422125, 8842, 8859, 5066, 501, 1},
+    {-193428, 1467822, 8890, 8905, 5066, 502, 4},
+    {-192497, 1467997, 8916, 8933, 5066, 506, 3},
+    {-178689, 1460075, 8950, 8960, 5066, 509, 1},
+    {-260481, 1499600, 8966, 8978, 5066, 510, 1},
+    {-126219, 1418894, 8986, 8996, 5066, 511, 3},
+    {-254269, 1521169, 9002, 9015, 5066, 514, 3},
+    {-237381, 1475378, 9024, 9036, 5066, 517, 1},
+    {-254197, 1426594, 9044, 9057, 5066, 518, 1},
+    {-222411, 1430511, 9066, 9077, 5066, 519, 1},
+    {-263347, 1517644, 9084, 9095, 5066, 520, 1},
+    {-272486, 1459786, 9102, 9114, 5066, 521, 1},
+    {-279703, 1446347, 9122, 9132, 5066, 522, 2},
+    {-351039, 1385206, 9391, 9403, 9412, 524, 20},
+    {-349247, 1386028, 9415, 9432, 9412, 544, 3},
+    {-304733, 1371667, 9451, 9464, 9412, 547, 1},
+    {-321389, 1337894, 9474, 9490, 9412, 548, 1},
+    {-290122, 1347553, 9507, 9522, 9412, 549, 3},
+    {-281419, 1408672, 9534, 9548, 9412, 552, 1},
+    {-319208, 1384453, 9559, 9569, 9412, 553, 1},
+    {-308706, 1322169, 9576, 9593, 9412, 554, 1},
+    {-360078, 1403367, 9615, 9624, 9412, 555, 1},
+    {-305997, 1384042, 9630, 9647, 9412, 556, 1},
+    {-296539, 1380550, 9665, 9675, 9412, 557, 1},
+    {-281181, 1402117, 9682, 9692, 9412, 558, 1},
+    {-376022, 1404825, 9699, 9716, 9412, 559, 3},
+    {-347017, 1358281, 9730, 9746, 9412, 562, 2},
+    {-297250, 1355703, 9759, 9776, 9412, 564, 1},
+    {-322997, 1380564, 9796, 9805, 9412, 565, 1},
+    {-344644, 1405333, 9811, 9828, 9412, 566, 3},
+    {-305464, 1368947, 9843, 9858, 9412, 569, 4},
+    {-331039, 1381642, 9870, 9886, 9412, 573, 3},
+    {-327581, 1341908, 9905, 9920, 9412, 576, 2},
+    {-276889, 1401019, 9932, 9946, 9412, 578, 1},
+    {-343503, 1359550, 9957, 9970, 9412, 579, 2},
+    {-324078, 1346128, 9980, 9992, 9412, 581, 1},
+    {-312000, 1368269, 10001, 10012, 9412, 582, 1},
+    {-331406, 1351089, 10020, 10031, 9412, 583, 1},
+    {-329761, 1354808, 10039, 10055, 9412, 584, 1},
+    {-418814, 1482964, 10068, 10080, 10088, 585, 1},
+    {-399156, 1438544, 10092, 10103, 10088, 586, 2},
+    {-428975, 1472364, 10253, 10264, 10088, 588, 17},
+    {-409592, 1451928, 10271, 10282, 10088, 605, 1},
+    {-413917, 1474261, 10289, 10305, 10088, 606, 6},
+    {-425225, 1479503, 10317, 10328, 10088, 612, 1},
+    {-420847, 1456069, 10335, 10350, 10088, 613, 2},
+    {-420919, 1456064, 10361, 10378, 10088, 615, 1},
+    {-418444, 1455414, 10396, 10409, 10088, 616, 3},
+    {-413336, 1482869, 10418, 10432, 10088, 619, 1},
+    {-415342, 1481717, 10442, 10455, 10088, 620, 1},
+    {-421528, 1452925, 10464, 10476, 10088, 621, 3},
+    {-421250, 1480733, 10484, 10496, 10088, 624, 1},
+    {-413353, 1457336, 10504, 10516, 10088, 625, 1},
+    {-412336, 1479453, 10524, 10540, 10088, 626, 1},
+    {-361019, 1469025, 10552, 10569, 10584, 627, 1},
+    {-370767, 1455731, 10588, 10602, 10584, 628, 1},
+    {-377056, 1475606, 10612, 10627, 10584, 629, 1},
+    {-372825, 1432478, 10638, 10655, 10584, 630, 2},
+    {-375753, 1439603, 10679, 10696, 10584, 632, 1},
+    {-369925, 1443089, 10718, 10730, 10584, 633, 2},
+    {-367158, 1469728, 10738, 10749, 10584, 635, 2},
+    {-375939, 1489947, 10756, 10771, 10584, 637, 1},
+    {-361856, 1479767, 10782, 10795, 10584, 638, 1},
+    {-372767, 1458503, 10804, 10815, 10584, 639, 1},
+    {-373425, 1452819, 10822, 10839, 10584, 640, 1},
+    {-363581, 1456950, 10860, 10877, 10584, 641, 2},
+    {-358531, 1422903, 10893, 10910, 10584, 643, 1},
+    {-366408, 1422575, 10925, 10937, 10584, 644, 1},
+    {-383992, 1465647, 10945, 10962, 10584, 645, 2},
+    {-375464, 1497511, 10977, 10992, 10584, 647, 1},
+    {-370433, 1459847, 11003, 11017, 10584, 648, 1},
+    {-370439, 1438186, 11027, 11044, 10584, 649, 1},
+    {-378350, 1453486, 11620, 11634, 10584, 650, 32},
+    {-343797, 1421883, 11644, 11656, 10584, 682, 1},
+    {-343797, 1421883, 11664, 11681, 10584, 683, 3},
+    {-354728, 1434558, 11699, 11716, 10584, 686, 2},
+    {-364450, 1468031, 11730, 11745, 10584, 688, 1},
+    {-364039, 1414744, 11756, 11766, 10584, 689, 1},
+    {-371464, 1476550, 11772, 11781, 10584, 690, 1},
+    {-377117, 1486000, 11786, 11797, 10584, 691, 1},
+    {-382167, 1417033, 11804, 11821, 10584, 692, 1},
+    {-372817, 1477181, 11836, 11853, 10584, 693, 1},
+    {-362536, 1468550, 11866, 11883, 10584, 694, 2},
+    {-363844, 1462053, 11896, 11911, 10584, 696, 1},
+    {-383047, 1427375, 11922, 11938, 10584, 697, 3},
+    {-374589, 1419161, 11950, 11967, 10584, 700, 3},
+    {-361228, 1468900, 11984, 11996, 10584, 703, 1},
+    {-377250, 1456972, 12004, 12021, 10584, 704, 1},
+    {-167097, 1283956, 12034, 12044, 12051, 705, 1},
+    {-343142, 1151561, 12054, 12065, 12051, 706, 1},
+    {-208178, 1154383, 12073, 12090, 12051, 707, 3},
+    {-327522, 1163444, 12194, 12211, 12051, 710, 5},
+    {-224072, 1173467, 12232, 12249, 12051, 715, 2},
+    {-225933, 1172314, 12273, 12290, 12051, 717, 2},
+    {-178886, 1222633, 12306, 12316, 12051, 719, 3},
+    {-333969, 1159153, 12323, 12334, 12051, 722, 2},
+    {-336589, 1152275, 12342, 12355, 12051, 724, 2},
+    {-206400, 1171569, 12365, 12381, 12051, 726, 1},
+    {-249114, 1137211, 12394, 12407, 12051, 727, 1},
+    {-319844, 1171897, 12417, 12434, 12051, 728, 2},
+    {-233047, 1178556, 12455, 12472, 12051, 730, 1},
+    {-232919, 1177861, 12487, 12503, 12051, 731, 1},
+    {-223439, 1196814, 12516, 12533, 12051, 732, 2},
+    {-210739, 1161508, 12554, 12571, 12051, 734, 1},
+    {-222992, 1192242, 12590, 12607, 12051, 735, 2},
+    {-223347, 1194028, 12633, 12649, 12051, 737, 2},
+    {-222847, 1193028, 12677, 12693, 12051, 739, 2},
+    {-298814, 1160247, 12722, 12732, 12051, 741, 1},
+    {-214439, 1196739, 12739, 12756, 12051, 742, 1},
+    {-274289, 1179006, 12775, 12782, 12051, 743, 1},
+    {-302906, 1166094, 12786, 12800, 12051, 744, 1},
+    {-206553, 1167281, 12811, 12822, 12051, 745, 2},
+    {-259194, 1135342, 12830, 12840, 12051, 747, 3},
+    {-173561, 1236700, 12847, 12859, 12051, 750, 2},
+    {-232983, 1197964, 12870, 12887, 12051, 752, 2},
+    {-224725, 1168297, 12906, 12922, 12051, 754, 1},
+    {-298181, 1152775, 12935, 12946, 12051, 755, 1},
+    {-337681, 1218786, 12954, 12967, 12051, 756, 3},
+    {-219592, 1141292, 12977, 12988, 12051, 759, 3},
+    {-183303, 1256806, 12996, 13013, 12051, 762, 1},
+    {-225161, 1171333, 13030, 13047, 12051, 763, 1},
+    {-342342, 1189889, 13064, 13076, 12051, 764, 1},
+    {-278928, 1223650, 13085, 13102, 12051, 765, 1},
+    {-286839, 1146761, 13119, 13132, 12051, 766, 3},
+    {-287847, 1169375, 13142, 13158, 12051, 769, 2},
+    {-288122, 1224058, 13171, 13187, 12051, 771, 1},
+    {-300739, 1149683, 13209, 13223, 12051, 772, 3},
+    {-279917, 1238494, 13234, 13250, 12051, 775, 1},
+    {-182186, 1276750, 13273, 13288, 12051, 776, 1},
+    {-229556, 1190994, 13300, 13316, 12051, 777, 2},
+    {-231547, 1195331, 13334, 13350, 12051, 779, 2},
+    {-230411, 1190322, 13368, 13385, 12051, 781, 2},
+    {-339331, 1201336, 13404, 13419, 12051, 783, 3},
+    {-260214, 1172686, 13433, 13450, 12051, 786, 1},
+    {-233794, 1200525, 13466, 13483, 12051, 787, 2},
+    {-233772, 1201539, 13498, 13515, 12051, 789, 2},
+    {-263947, 1206375, 13535, 13550, 12051, 791, 1},
+    {-302822, 1150681, 13562, 13576, 12051, 792, 3},
+    {-277056, 1141750, 13587, 13599, 12051, 795, 1},
+    {-307172, 1214403, 13608, 13622, 12051, 796, 3},
+    {-307811, 1215128, 13633, 13650, 12051, 799, 1},
+    {-312100, 1216731, 13671, 13683, 12051, 800, 1},
+    {-291814, 1167044, 13692, 13707, 12051, 801, 3},
+    {-237619, 1200967, 13719, 13736, 12051, 804, 1},
+    {-207919, 1168936, 13757, 13769, 12051, 805, 2},
+    {-220953, 1162244, 13778, 13795, 12051, 807, 1},
+    {-286831, 1211636, 13810, 13827, 12051, 808, 2},
+    {-225217, 1190481, 13850, 13867, 12051, 810, 2},
+    {-157639, 1287339, 13883, 13896, 12051, 812, 1},
+    {-286283, 1223994, 13906, 13918, 12051, 813, 3},
+    {-299619, 1149794, 13927, 13937, 12051, 816, 1},
+    {-279139, 1207058, 13944, 13956, 12051, 817, 2},
+    {-288819, 1213342, 13965, 13976, 12051, 819, 3},
+    {-226336, 1181119, 13984, 13996, 12051, 822, 2},
+    {-226597, 1181653, 14005, 14022, 12051, 824, 2},
+    {-211711, 1197489, 14040, 14054, 12051, 826, 1},
+    {-314694, 1194908, 14065, 14080, 12051, 827, 1},
+    {-215908, 1200989, 14092, 14108, 12051, 828, 2},
+    {-265919, 1184969, 14126, 14141, 12051, 830, 1},
+    {-296939, 1210300, 14153, 14164, 12051, 831, 1},
+    {-315033, 1182058, 14172, 14184, 12051, 832, 1},
+    {-216658, 1159133, 14193, 14208, 12051, 833, 2},
+    {-217447, 1162528, 14220, 14235, 12051, 835, 1},
+    {-306456, 1160081, 14247, 14256, 12051, 836, 2},
+    {-293186, 1158822, 14262, 14272, 12051, 838, 2},
+    {-272156, 1205567, 14279, 14294, 12051, 840, 2},
+    {-272825, 1205514, 14306, 14323, 12051, 842, 2},
+    {-280564, 1178425, 14348, 14364, 12051, 844, 1},
+    {-234006, 1196192, 14377, 14394, 12051, 845, 2},
+    {-285511, 1155039, 14417, 14428, 12051, 847, 1},
+    {-224108, 1174164, 14436, 14453, 12051, 848, 2},
+    {-339817, 1157606, 14467, 14477, 12051, 850, 1},
+    {-320625, 1183900, 14484, 14497, 12051, 851, 1},
+    {-329606, 1172161, 14507, 14519, 12051, 852, 1},
+    {-233492, 1197250, 14528, 14538, 12051, 853, 1},
+    {-229058, 1189225, 14545, 14562, 12051, 854, 3},
+    {-321425, 1217275, 14581, 14593, 12051, 857, 1},
+    {-212578, 1190339, 14602, 14619, 12051, 858, 1},
+    {-346322, 1161231, 14635, 14650, 12051, 859, 1},
+    {-216458, 1151150, 14662, 14672, 12051, 860, 2},
+    {-216617, 1163439, 14679, 14694, 12051, 862, 2},
+    {-232331, 1176658, 14706, 14720, 12051, 864, 2},
+    {-320108, 1160844, 14915, 14924, 12051, 866, 26},
+    {-210597, 1189014, 14930, 14947, 12051, 892, 2},
+    {-203761, 1185775, 14964, 14980, 12051, 894, 3},
+    {-225339, 1171292, 14993, 15010, 12051, 897, 2},
+    {-225106, 1172103, 15040, 15057, 12051, 899, 2},
+    {-335811, 1200467, 15087, 15103, 12051, 901, 3},
+    {-207719, 1171419, 15116, 15129, 12051, 904, 1},
+    {-225006, 1200017, 15139, 15156, 12051, 905, 1},
+    {-173483, 1280658, 15170, 15187, 12051, 906, 1},
+    {-331200, 1216261, 15204, 15219, 12051, 907, 1},
+    {-223222, 1173069, 15231, 15248, 12051, 908, 2},
+    {-221489, 1178497, 15265, 15282, 12051, 910, 1},
+    {-221250, 1179208, 15314, 15331, 12051, 911, 1},
+    {-229789, 1189031, 15363, 15380, 12051, 912, 4},
+    {-346558, 1176475, 15404, 15421, 12051, 916, 3},
+    {-312761, 1195092, 15443, 15460, 12051, 919, 2},
+    {-290811, 1224083, 15475, 15490, 12051, 921, 1},
+    {-217214, 1222228, 15502, 15512, 12051, 922, 1},
+    {-217158, 1221792, 15519, 15536, 12051, 923, 1},
+    {-281811, 1210003, 15558, 15575, 12051, 924, 1},
+    {-218317, 1176058, 15591, 15605, 12051, 925, 1},
+    {-226994, 1177747, 15618, 15631, 12051, 926, 2},
+    {-227639, 1177522, 15641, 15658, 12051, 928, 1},
+    {-292419, 1245517, 15673, 15690, 12051, 929, 1},
+    {-221878, 1162506, 15710, 15727, 12051, 930, 1},
+    {-261269, 1134175, 15743, 15759, 12051, 931, 1},
+    {-333372, 1170939, 15772, 15781, 12051, 932, 1},
+    {-349608, 1167394, 15787, 15798, 12051, 933, 1},
+    {-231136, 1187819, 15806, 15822, 12051, 934, 2},
+    {-231442, 1186561, 15846, 15863, 12051, 936, 2},
+    {-231781, 1186464, 15887, 15904, 12051, 938, 2},
+    {-231939, 1187836, 15928, 15945, 12051, 940, 2},
+    {-231914, 1188517, 15969, 15986, 12051, 942, 2},
+    {-231300, 1188728, 16010, 16027, 12051, 944, 2},
+    {-231547, 1187800, 16051, 16068, 12051, 946, 2},
+    {-231169, 1185844, 16086, 16103, 12051, 948, 2},
+    {-231961, 1175058, 16131, 16148, 12051, 950, 2},
+    {-231753, 1174450, 16172, 16189, 12051, 952, 2},
+    {-226667, 1175811, 16213, 16230, 12051, 954, 2},
+    {-226892, 1174817, 16259, 16276, 12051, 956, 1},
+    {-313022, 1186975, 16307, 16319, 12051, 957, 2},
+    {-206328, 1171528, 16328, 16339, 12051, 959, 1},
+    {-265950, 1202281, 16347, 16357, 12051, 960, 2},
+    {-207325, 1217594, 16364, 16377, 12051, 962, 1},
+    {-211858, 1186764, 16387, 16398, 12051, 963, 1},
+    {-308906, 1167247, 16406, 16422, 12051, 964, 2},
+    {-216531, 1212228, 16435, 16452, 12051, 966, 2},
+    {-154936, 1281372, 16471, 16482, 12051, 968, 1},
+    {-274233, 1205833, 16490, 16507, 12051, 969, 1},
+    {-283422, 1166789, 16523, 16533, 12051, 970, 1},
+    {-228083, 1191067, 16540, 16556, 12051, 971, 2},
+    {-227125, 1190958, 16580, 16597, 12051, 973, 1},
+    {-227308, 1190161, 16619, 16636, 12051, 974, 1},
+    {-228128, 1192747, 16658, 16675, 12051, 975, 2},
+    {-227961, 1191597, 16699, 16716, 12051, 977, 2},
+    {-227700, 1192317, 16739, 16755, 12051, 979, 1},
+    {-228011, 1192472, 16768, 16785, 12051, 980, 1},
     {},
 };
 inline constexpr Station kStations[] = {
     {1, 1, 0, 927, 0, 13},
     {43, 43, 0, 1015, 0, 52},
-    {132, 132, 0, 1023, 0, 144},
-    {226, 226, 0, 1039, 0, 240},
-    {319, 319, 0, 1055, 0, 329},
-    {373, 373, 0, 666, 1, 386},
-    {469, 488, 0, 846, 1, 503},
-    {555, 555, 0, 1053, 1, 559},
-    {635, 635, 0, 1125, 1, 0},
-    {667, 667, 0, 1206, 1, 671},
-    {319, 319, 0, 1440, 1, 329},
-    {555, 555, 0, 0, 2, 559},
-    {667, 667, 0, 0, 2, 671},
-    {373, 373, 0, 0, 2, 386},
-    {132, 132, 0, 0, 2, 144},
-    {747, 747, 756, 0, 2, 759},
-    {226, 226, 0, 0, 2, 240},
-    {469, 488, 0, 0, 2, 503},
-    {836, 836, 756, 0, 2, 845},
-    {925, 925, 756, 0, 2, 937},
-    {319, 319, 0, 0, 2, 329},
+    {109, 109, 0, 1023, 0, 121},
+    {180, 180, 0, 1039, 0, 194},
+    {250, 250, 0, 1055, 0, 260},
+    {304, 304, 0, 666, 1, 317},
+    {377, 396, 0, 846, 1, 411},
+    {463, 463, 0, 1053, 1, 467},
+    {543, 543, 0, 1125, 1, 0},
+    {575, 575, 0, 1206, 1, 579},
+    {250, 250, 0, 1440, 1, 260},
+    {463, 463, 0, 0, 2, 467},
+    {575, 575, 0, 0, 2, 579},
+    {304, 304, 0, 0, 2, 317},
+    {109, 109, 0, 0, 2, 121},
+    {655, 655, 664, 0, 2, 667},
+    {180, 180, 0, 0, 2, 194},
+    {377, 396, 0, 0, 2, 411},
+    {721, 721, 664, 0, 2, 730},
+    {787, 787, 664, 0, 2, 799},
+    {250, 250, 0, 0, 2, 260},
     {43, 43, 0, 0, 2, 52},
     {43, 43, 0, 959, 0, 52},
-    {132, 132, 0, 991, 0, 144},
-    {132, 132, 0, 0, 2, 144},
-    {747, 747, 756, 0, 2, 759},
-    {836, 836, 756, 0, 2, 845},
-    {925, 925, 756, 0, 2, 937},
+    {109, 109, 0, 991, 0, 121},
+    {109, 109, 0, 0, 2, 121},
+    {655, 655, 664, 0, 2, 667},
+    {721, 721, 664, 0, 2, 730},
+    {787, 787, 664, 0, 2, 799},
     {43, 43, 0, 0, 2, 52},
     {43, 43, 0, 1011, 0, 52},
-    {132, 132, 0, 1035, 0, 144},
-    {469, 488, 0, 720, 1, 503},
-    {469, 488, 0, 931, 0, 503},
-    {132, 132, 0, 1019, 0, 144},
-    {469, 488, 0, 1051, 0, 503},
-    {319, 319, 0, 911, 0, 329},
+    {109, 109, 0, 1035, 0, 121},
+    {377, 396, 0, 720, 1, 411},
+    {377, 396, 0, 931, 0, 411},
+    {109, 109, 0, 1019, 0, 121},
+    {377, 396, 0, 1051, 0, 411},
+    {250, 250, 0, 911, 0, 260},
     {43, 43, 0, 959, 0, 52},
-    {469, 488, 0, 967, 0, 503},
-    {132, 132, 0, 975, 0, 144},
-    {319, 319, 0, 925, 0, 329},
-    {132, 132, 0, 993, 0, 144},
+    {377, 396, 0, 967, 0, 411},
+    {109, 109, 0, 975, 0, 121},
+    {250, 250, 0, 925, 0, 260},
+    {109, 109, 0, 993, 0, 121},
     {43, 43, 0, 1001, 0, 52},
-    {469, 488, 0, 1009, 0, 503},
+    {377, 396, 0, 1009, 0, 411},
     {43, 43, 0, 1035, 0, 52},
-    {469, 488, 0, 921, 0, 503},
+    {377, 396, 0, 921, 0, 411},
     {43, 43, 0, 993, 0, 52},
-    {469, 488, 0, 1011, 0, 503},
-    {373, 373, 0, 1003, 0, 386},
-    {319, 319, 0, 897, 0, 329},
+    {377, 396, 0, 1011, 0, 411},
+    {304, 304, 0, 1003, 0, 317},
+    {250, 250, 0, 897, 0, 260},
     {43, 43, 0, 1021, 0, 52},
-    {469, 488, 0, 1029, 0, 503},
-    {132, 132, 0, 1037, 0, 144},
+    {377, 396, 0, 1029, 0, 411},
+    {109, 109, 0, 1037, 0, 121},
     {43, 43, 0, 909, 0, 52},
     {43, 43, 0, 889, 0, 52},
-    {469, 488, 0, 897, 0, 503},
-    {226, 226, 0, 885, 0, 240},
+    {377, 396, 0, 897, 0, 411},
+    {180, 180, 0, 885, 0, 194},
     {43, 43, 0, 1019, 0, 52},
-    {132, 132, 0, 1027, 0, 144},
-    {469, 488, 0, 1043, 0, 503},
+    {109, 109, 0, 1027, 0, 121},
+    {377, 396, 0, 1043, 0, 411},
     {43, 43, 0, 1023, 0, 52},
-    {132, 132, 0, 1055, 0, 144},
-    {469, 488, 0, 1079, 0, 503},
+    {109, 109, 0, 1055, 0, 121},
+    {377, 396, 0, 1079, 0, 411},
     {43, 43, 0, 1013, 0, 52},
-    {319, 319, 0, 1053, 0, 329},
-    {132, 132, 0, 1069, 0, 144},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 889, 0, 503},
-    {469, 488, 0, 953, 0, 503},
-    {319, 319, 0, 1029, 0, 329},
-    {319, 319, 0, 959, 0, 329},
-    {469, 488, 0, 1045, 0, 503},
-    {469, 488, 0, 993, 0, 503},
-    {319, 319, 0, 1005, 0, 329},
-    {469, 488, 0, 1079, 0, 503},
-    {469, 488, 0, 931, 0, 503},
-    {469, 488, 0, 1051, 0, 503},
+    {250, 250, 0, 1053, 0, 260},
+    {109, 109, 0, 1069, 0, 121},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 889, 0, 411},
+    {377, 396, 0, 953, 0, 411},
+    {250, 250, 0, 1029, 0, 260},
+    {250, 250, 0, 959, 0, 260},
+    {377, 396, 0, 1045, 0, 411},
+    {377, 396, 0, 993, 0, 411},
+    {250, 250, 0, 1005, 0, 260},
+    {377, 396, 0, 1079, 0, 411},
+    {377, 396, 0, 931, 0, 411},
+    {377, 396, 0, 1051, 0, 411},
     {43, 43, 0, 1009, 0, 52},
-    {469, 488, 0, 1025, 0, 503},
-    {469, 488, 0, 1009, 0, 503},
-    {1855, 1855, 0, 925, 0, 1866},
-    {469, 488, 0, 1098, 1, 503},
+    {377, 396, 0, 1025, 0, 411},
+    {377, 396, 0, 1009, 0, 411},
+    {1717, 1717, 0, 925, 0, 1728},
+    {377, 396, 0, 1098, 1, 411},
     {43, 43, 0, 887, 0, 52},
-    {132, 132, 0, 895, 0, 144},
-    {469, 488, 0, 979, 0, 503},
+    {109, 109, 0, 895, 0, 121},
+    {377, 396, 0, 979, 0, 411},
     {43, 43, 0, 915, 0, 52},
-    {132, 132, 0, 979, 0, 144},
-    {469, 488, 0, 995, 0, 503},
-    {469, 488, 0, 889, 0, 503},
-    {319, 319, 0, 937, 0, 329},
-    {132, 132, 0, 957, 0, 144},
+    {109, 109, 0, 979, 0, 121},
+    {377, 396, 0, 995, 0, 411},
+    {377, 396, 0, 889, 0, 411},
+    {250, 250, 0, 937, 0, 260},
+    {109, 109, 0, 957, 0, 121},
     {43, 43, 0, 989, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 941, 0, 503},
-    {469, 488, 0, 971, 0, 503},
-    {319, 319, 0, 987, 0, 329},
-    {469, 488, 0, 1003, 0, 503},
-    {132, 132, 0, 881, 0, 144},
-    {469, 488, 0, 913, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 941, 0, 411},
+    {377, 396, 0, 971, 0, 411},
+    {250, 250, 0, 987, 0, 260},
+    {377, 396, 0, 1003, 0, 411},
+    {109, 109, 0, 881, 0, 121},
+    {377, 396, 0, 913, 0, 411},
     {43, 43, 0, 909, 0, 52},
-    {469, 488, 0, 937, 0, 503},
-    {319, 319, 0, 989, 0, 329},
-    {469, 488, 0, 921, 0, 503},
-    {319, 319, 0, 1079, 0, 329},
+    {377, 396, 0, 937, 0, 411},
+    {250, 250, 0, 989, 0, 260},
+    {377, 396, 0, 921, 0, 411},
+    {250, 250, 0, 1079, 0, 260},
     {43, 43, 0, 953, 0, 52},
     {43, 43, 0, 897, 0, 52},
     {43, 43, 0, 963, 0, 52},
-    {469, 488, 0, 971, 0, 503},
-    {132, 132, 0, 987, 0, 144},
-    {469, 488, 0, 957, 0, 503},
-    {469, 488, 0, 1035, 0, 503},
+    {377, 396, 0, 971, 0, 411},
+    {109, 109, 0, 987, 0, 121},
+    {377, 396, 0, 957, 0, 411},
+    {377, 396, 0, 1035, 0, 411},
     {43, 43, 0, 965, 0, 52},
-    {132, 132, 0, 973, 0, 144},
-    {469, 488, 0, 989, 0, 503},
-    {319, 319, 0, 1001, 0, 329},
-    {469, 488, 0, 1041, 0, 503},
-    {319, 319, 0, 935, 0, 329},
-    {2618, 2618, 0, 975, 0, 2622},
+    {109, 109, 0, 973, 0, 121},
+    {377, 396, 0, 989, 0, 411},
+    {250, 250, 0, 1001, 0, 260},
+    {377, 396, 0, 1041, 0, 411},
+    {250, 250, 0, 935, 0, 260},
+    {2457, 2457, 0, 975, 0, 2461},
     {43, 43, 0, 1021, 0, 52},
-    {2658, 2658, 0, 1037, 0, 2663},
-    {132, 132, 0, 1061, 0, 144},
-    {2618, 2618, 0, 1143, 1, 2622},
-    {2739, 2739, 0, 1233, 1, 0},
-    {319, 319, 0, 1413, 1, 329},
-    {226, 226, 0, 1458, 1, 240},
-    {469, 488, 0, 1512, 1, 503},
-    {319, 319, 0, 1063, 0, 329},
-    {469, 488, 0, 603, 1, 503},
-    {319, 319, 0, 1071, 0, 329},
-    {319, 319, 0, 1005, 0, 329},
-    {319, 319, 0, 1013, 0, 329},
-    {319, 319, 0, 1009, 0, 329},
-    {319, 319, 0, 1077, 0, 329},
-    {2739, 2739, 0, 959, 0, 0},
-    {469, 488, 0, 983, 0, 503},
-    {469, 488, 0, 925, 0, 503},
+    {2497, 2497, 0, 1037, 0, 2502},
+    {109, 109, 0, 1061, 0, 121},
+    {2457, 2457, 0, 1143, 1, 2461},
+    {2578, 2578, 0, 1233, 1, 0},
+    {250, 250, 0, 1413, 1, 260},
+    {180, 180, 0, 1458, 1, 194},
+    {377, 396, 0, 1512, 1, 411},
+    {250, 250, 0, 1063, 0, 260},
+    {377, 396, 0, 603, 1, 411},
+    {250, 250, 0, 1071, 0, 260},
+    {250, 250, 0, 1005, 0, 260},
+    {250, 250, 0, 1013, 0, 260},
+    {250, 250, 0, 1009, 0, 260},
+    {250, 250, 0, 1077, 0, 260},
+    {2578, 2578, 0, 959, 0, 0},
+    {377, 396, 0, 983, 0, 411},
+    {377, 396, 0, 925, 0, 411},
     {43, 43, 0, 917, 0, 52},
-    {132, 132, 0, 953, 0, 144},
+    {109, 109, 0, 953, 0, 121},
     {43, 43, 0, 961, 0, 52},
-    {469, 488, 0, 969, 0, 503},
-    {132, 132, 0, 883, 0, 144},
-    {469, 488, 0, 891, 0, 503},
+    {377, 396, 0, 969, 0, 411},
+    {109, 109, 0, 883, 0, 121},
+    {377, 396, 0, 891, 0, 411},
     {43, 43, 0, 907, 0, 52},
-    {132, 132, 0, 929, 0, 144},
-    {3092, 3092, 0, 945, 0, 3102},
-    {3138, 3138, 0, 953, 0, 3150},
-    {3235, 3235, 0, 969, 0, 3245},
-    {319, 319, 0, 977, 0, 329},
-    {3329, 3329, 0, 1025, 0, 3340},
-    {3393, 3393, 0, 1032, 0, 3404},
-    {3453, 3453, 0, 1041, 0, 3461},
-    {3496, 3496, 0, 1049, 0, 3512},
+    {109, 109, 0, 929, 0, 121},
+    {2931, 2931, 0, 945, 0, 2941},
+    {2977, 2977, 0, 953, 0, 2989},
+    {3074, 3074, 0, 969, 0, 3084},
+    {250, 250, 0, 977, 0, 260},
+    {3168, 3168, 0, 1025, 0, 3179},
+    {3232, 3232, 0, 1032, 0, 3243},
+    {3292, 3292, 0, 1041, 0, 3300},
+    {3347, 3347, 0, 1049, 0, 3363},
     {43, 43, 0, 1057, 0, 52},
-    {3559, 3559, 0, 1065, 0, 3570},
-    {3612, 3612, 0, 1073, 0, 3617},
-    {469, 488, 0, 576, 1, 503},
-    {226, 226, 0, 630, 1, 240},
-    {1855, 1855, 0, 702, 1, 1866},
-    {3654, 3654, 0, 873, 1, 3658},
-    {3731, 3731, 0, 954, 1, 0},
-    {3735, 3735, 0, 1017, 1, 0},
-    {319, 319, 0, 1107, 1, 329},
-    {3752, 3752, 0, 1170, 1, 0},
-    {3761, 3761, 0, 1269, 1, 3765},
-    {3453, 3453, 0, 0, 2, 3461},
-    {3654, 3654, 0, 0, 2, 3658},
-    {3761, 3761, 0, 0, 2, 3765},
-    {3731, 3731, 0, 0, 2, 0},
-    {132, 132, 0, 0, 2, 144},
-    {747, 747, 756, 0, 2, 759},
-    {226, 226, 0, 0, 2, 240},
-    {469, 488, 0, 0, 2, 503},
-    {1855, 1855, 0, 0, 2, 1866},
-    {836, 836, 756, 0, 2, 845},
-    {3559, 3559, 0, 0, 2, 3570},
-    {3235, 3235, 0, 0, 2, 3245},
-    {925, 925, 756, 0, 2, 937},
-    {319, 319, 0, 0, 2, 329},
-    {3752, 3752, 0, 0, 2, 0},
-    {3735, 3735, 0, 0, 2, 0},
-    {3138, 3138, 0, 0, 2, 3150},
-    {3496, 3496, 0, 0, 2, 3512},
+    {3410, 3410, 0, 1065, 0, 3421},
+    {3463, 3463, 0, 1073, 0, 3468},
+    {377, 396, 0, 576, 1, 411},
+    {180, 180, 0, 630, 1, 194},
+    {1717, 1717, 0, 702, 1, 1728},
+    {3505, 3505, 0, 873, 1, 3509},
+    {3582, 3582, 0, 954, 1, 0},
+    {3586, 3586, 0, 1017, 1, 0},
+    {250, 250, 0, 1107, 1, 260},
+    {3603, 3603, 0, 1170, 1, 0},
+    {3612, 3612, 0, 1269, 1, 3616},
+    {3292, 3292, 0, 0, 2, 3300},
+    {3505, 3505, 0, 0, 2, 3509},
+    {3612, 3612, 0, 0, 2, 3616},
+    {3582, 3582, 0, 0, 2, 0},
+    {109, 109, 0, 0, 2, 121},
+    {655, 655, 664, 0, 2, 667},
+    {180, 180, 0, 0, 2, 194},
+    {377, 396, 0, 0, 2, 411},
+    {1717, 1717, 0, 0, 2, 1728},
+    {721, 721, 664, 0, 2, 730},
+    {3410, 3410, 0, 0, 2, 3421},
+    {3074, 3074, 0, 0, 2, 3084},
+    {787, 787, 664, 0, 2, 799},
+    {250, 250, 0, 0, 2, 260},
+    {3603, 3603, 0, 0, 2, 0},
+    {3586, 3586, 0, 0, 2, 0},
+    {2977, 2977, 0, 0, 2, 2989},
+    {3347, 3347, 0, 0, 2, 3363},
     {43, 43, 0, 0, 2, 52},
-    {469, 488, 0, 913, 0, 503},
-    {469, 488, 0, 939, 0, 503},
+    {377, 396, 0, 913, 0, 411},
+    {377, 396, 0, 939, 0, 411},
     {43, 43, 0, 947, 0, 52},
-    {319, 319, 0, 971, 0, 329},
-    {132, 132, 0, 1031, 0, 144},
+    {250, 250, 0, 971, 0, 260},
+    {109, 109, 0, 1031, 0, 121},
     {43, 43, 0, 979, 0, 52},
-    {469, 488, 0, 905, 0, 503},
-    {469, 488, 0, 905, 0, 503},
-    {132, 132, 0, 973, 0, 144},
-    {319, 319, 0, 1005, 0, 329},
-    {469, 488, 0, 1045, 0, 503},
+    {377, 396, 0, 905, 0, 411},
+    {377, 396, 0, 905, 0, 411},
+    {109, 109, 0, 973, 0, 121},
+    {250, 250, 0, 1005, 0, 260},
+    {377, 396, 0, 1045, 0, 411},
     {43, 43, 0, 1061, 0, 52},
-    {319, 319, 0, 947, 0, 329},
-    {469, 488, 0, 995, 0, 503},
+    {250, 250, 0, 947, 0, 260},
+    {377, 396, 0, 995, 0, 411},
     {43, 43, 0, 949, 0, 52},
     {43, 43, 0, 985, 0, 52},
     {43, 43, 0, 937, 0, 52},
-    {132, 132, 0, 967, 0, 144},
+    {109, 109, 0, 967, 0, 121},
     {43, 43, 0, 999, 0, 52},
-    {469, 488, 0, 1007, 0, 503},
+    {377, 396, 0, 1007, 0, 411},
     {43, 43, 0, 1011, 0, 52},
-    {319, 319, 0, 1035, 0, 329},
-    {469, 488, 0, 1043, 0, 503},
-    {132, 132, 0, 1059, 0, 144},
-    {469, 488, 0, 901, 0, 503},
-    {469, 488, 0, 1075, 0, 503},
-    {469, 488, 0, 1485, 1, 503},
+    {250, 250, 0, 1035, 0, 260},
+    {377, 396, 0, 1043, 0, 411},
+    {109, 109, 0, 1059, 0, 121},
+    {377, 396, 0, 901, 0, 411},
+    {377, 396, 0, 1075, 0, 411},
+    {377, 396, 0, 1485, 1, 411},
     {43, 43, 0, 957, 0, 52},
-    {319, 319, 0, 1035, 1, 329},
-    {469, 488, 0, 1431, 1, 503},
-    {469, 488, 0, 971, 0, 503},
-    {319, 319, 0, 987, 0, 329},
-    {469, 488, 0, 1005, 0, 503},
+    {250, 250, 0, 1035, 1, 260},
+    {377, 396, 0, 1431, 1, 411},
+    {377, 396, 0, 971, 0, 411},
+    {250, 250, 0, 987, 0, 260},
+    {377, 396, 0, 1005, 0, 411},
     {43, 43, 0, 949, 0, 52},
-    {132, 132, 0, 979, 0, 144},
-    {469, 488, 0, 997, 0, 503},
-    {469, 488, 0, 921, 0, 503},
+    {109, 109, 0, 979, 0, 121},
+    {377, 396, 0, 997, 0, 411},
+    {377, 396, 0, 921, 0, 411},
     {43, 43, 0, 929, 0, 52},
-    {469, 488, 0, 929, 0, 503},
+    {377, 396, 0, 929, 0, 411},
     {43, 43, 0, 1041, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {319, 319, 0, 1009, 0, 329},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {250, 250, 0, 1009, 0, 260},
     {43, 43, 0, 1033, 0, 52},
-    {4512, 4512, 0, 1049, 0, 4522},
-    {4606, 4606, 0, 1057, 0, 4617},
-    {132, 132, 0, 1073, 0, 144},
-    {469, 488, 0, 657, 1, 503},
-    {132, 132, 0, 0, 2, 144},
-    {4606, 4606, 0, 0, 2, 4617},
-    {747, 747, 756, 0, 2, 759},
-    {469, 488, 0, 0, 2, 503},
-    {836, 836, 756, 0, 2, 845},
-    {4512, 4512, 0, 0, 2, 4522},
-    {925, 925, 756, 0, 2, 937},
-    {319, 319, 0, 0, 2, 329},
+    {4363, 4363, 0, 1049, 0, 4373},
+    {4457, 4457, 0, 1057, 0, 4468},
+    {109, 109, 0, 1073, 0, 121},
+    {377, 396, 0, 657, 1, 411},
+    {109, 109, 0, 0, 2, 121},
+    {4457, 4457, 0, 0, 2, 4468},
+    {655, 655, 664, 0, 2, 667},
+    {377, 396, 0, 0, 2, 411},
+    {721, 721, 664, 0, 2, 730},
+    {4363, 4363, 0, 0, 2, 4373},
+    {787, 787, 664, 0, 2, 799},
+    {250, 250, 0, 0, 2, 260},
     {43, 43, 0, 0, 2, 52},
-    {469, 488, 0, 1075, 0, 503},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 981, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 997, 0, 52},
-    {469, 488, 0, 639, 1, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1045, 0, 503},
-    {469, 488, 0, 1029, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 639, 1, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1045, 0, 411},
+    {377, 396, 0, 1029, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 1069, 0, 52},
     {43, 43, 0, 1043, 0, 52},
     {43, 43, 0, 1001, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
-    {469, 488, 0, 917, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
+    {377, 396, 0, 917, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 981, 0, 52},
-    {319, 319, 0, 997, 0, 329},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1037, 0, 503},
-    {469, 488, 0, 684, 1, 503},
-    {469, 488, 0, 1005, 0, 503},
+    {250, 250, 0, 997, 0, 260},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1037, 0, 411},
+    {377, 396, 0, 684, 1, 411},
+    {377, 396, 0, 1005, 0, 411},
     {43, 43, 0, 957, 0, 52},
-    {469, 488, 0, 981, 0, 503},
-    {132, 132, 0, 989, 0, 144},
-    {469, 488, 0, 931, 0, 503},
-    {132, 132, 0, 955, 0, 144},
-    {469, 488, 0, 1073, 0, 503},
+    {377, 396, 0, 981, 0, 411},
+    {109, 109, 0, 989, 0, 121},
+    {377, 396, 0, 931, 0, 411},
+    {109, 109, 0, 955, 0, 121},
+    {377, 396, 0, 1073, 0, 411},
     {43, 43, 0, 981, 0, 52},
-    {132, 132, 0, 989, 0, 144},
-    {469, 488, 0, 997, 0, 503},
-    {319, 319, 0, 997, 0, 329},
-    {469, 488, 0, 1079, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 941, 0, 503},
-    {469, 488, 0, 1027, 0, 503},
+    {109, 109, 0, 989, 0, 121},
+    {377, 396, 0, 997, 0, 411},
+    {250, 250, 0, 997, 0, 260},
+    {377, 396, 0, 1079, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 941, 0, 411},
+    {377, 396, 0, 1027, 0, 411},
     {43, 43, 0, 1043, 0, 52},
-    {132, 132, 0, 977, 0, 144},
+    {109, 109, 0, 977, 0, 121},
     {43, 43, 0, 1057, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
     {43, 43, 0, 997, 0, 52},
-    {319, 319, 0, 1029, 0, 329},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 983, 0, 503},
+    {250, 250, 0, 1029, 0, 260},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 983, 0, 411},
     {43, 43, 0, 999, 0, 52},
     {43, 43, 0, 1029, 0, 52},
-    {319, 319, 0, 1045, 0, 329},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1079, 0, 503},
-    {469, 488, 0, 943, 0, 503},
-    {469, 488, 0, 1053, 0, 503},
-    {469, 488, 0, 1027, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 927, 0, 503},
-    {319, 319, 0, 933, 0, 329},
-    {5627, 5627, 0, 981, 0, 5631},
-    {5707, 5707, 0, 1021, 0, 5712},
-    {5751, 5751, 0, 1037, 0, 5764},
-    {5804, 5804, 0, 1045, 0, 0},
-    {132, 132, 0, 1061, 0, 144},
-    {5822, 5822, 0, 1069, 0, 5833},
+    {250, 250, 0, 1045, 0, 260},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1079, 0, 411},
+    {377, 396, 0, 943, 0, 411},
+    {377, 396, 0, 1053, 0, 411},
+    {377, 396, 0, 1027, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 927, 0, 411},
+    {250, 250, 0, 933, 0, 260},
+    {5455, 5455, 0, 981, 0, 5459},
+    {5535, 5535, 0, 1021, 0, 5540},
+    {5579, 5579, 0, 1037, 0, 5592},
+    {5632, 5632, 0, 1045, 0, 0},
+    {109, 109, 0, 1061, 0, 121},
+    {5650, 5650, 0, 1069, 0, 5661},
     {43, 43, 0, 1077, 0, 52},
-    {5919, 5919, 0, 612, 1, 5932},
-    {6015, 6015, 0, 693, 1, 0},
-    {469, 488, 0, 792, 1, 503},
-    {6019, 6019, 0, 882, 1, 6023},
-    {226, 226, 0, 936, 1, 240},
-    {6096, 6096, 0, 1296, 1, 6101},
-    {6019, 6019, 0, 0, 2, 6023},
-    {6015, 6015, 0, 0, 2, 0},
-    {5919, 5919, 0, 0, 2, 5932},
-    {132, 132, 0, 0, 2, 144},
-    {747, 747, 756, 0, 2, 759},
-    {226, 226, 0, 0, 2, 240},
-    {469, 488, 0, 0, 2, 503},
-    {836, 836, 756, 0, 2, 845},
-    {5822, 5822, 0, 0, 2, 5833},
-    {925, 925, 756, 0, 2, 937},
-    {319, 319, 0, 0, 2, 329},
-    {5804, 5804, 0, 0, 2, 0},
+    {5747, 5747, 0, 612, 1, 5760},
+    {5843, 5843, 0, 693, 1, 0},
+    {377, 396, 0, 792, 1, 411},
+    {5847, 5847, 0, 882, 1, 5851},
+    {180, 180, 0, 936, 1, 194},
+    {5924, 5924, 0, 1296, 1, 5929},
+    {5847, 5847, 0, 0, 2, 5851},
+    {5843, 5843, 0, 0, 2, 0},
+    {5747, 5747, 0, 0, 2, 5760},
+    {109, 109, 0, 0, 2, 121},
+    {655, 655, 664, 0, 2, 667},
+    {180, 180, 0, 0, 2, 194},
+    {377, 396, 0, 0, 2, 411},
+    {721, 721, 664, 0, 2, 730},
+    {5650, 5650, 0, 0, 2, 5661},
+    {787, 787, 664, 0, 2, 799},
+    {250, 250, 0, 0, 2, 260},
+    {5632, 5632, 0, 0, 2, 0},
     {43, 43, 0, 0, 2, 52},
     {43, 43, 0, 979, 0, 52},
-    {469, 488, 0, 1051, 0, 503},
-    {132, 132, 0, 1059, 0, 144},
+    {377, 396, 0, 1051, 0, 411},
+    {109, 109, 0, 1059, 0, 121},
     {43, 43, 0, 1075, 0, 52},
-    {319, 319, 0, 905, 0, 329},
-    {469, 488, 0, 939, 0, 503},
-    {132, 132, 0, 947, 0, 144},
+    {250, 250, 0, 905, 0, 260},
+    {377, 396, 0, 939, 0, 411},
+    {109, 109, 0, 947, 0, 121},
     {43, 43, 0, 971, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 999, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
-    {319, 319, 0, 897, 0, 329},
-    {469, 488, 0, 929, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
+    {250, 250, 0, 897, 0, 260},
+    {377, 396, 0, 929, 0, 411},
     {43, 43, 0, 901, 0, 52},
-    {469, 488, 0, 933, 0, 503},
+    {377, 396, 0, 933, 0, 411},
     {43, 43, 0, 957, 0, 52},
     {43, 43, 0, 1033, 0, 52},
     {43, 43, 0, 1001, 0, 52},
     {43, 43, 0, 889, 0, 52},
-    {469, 488, 0, 1005, 0, 503},
+    {377, 396, 0, 1005, 0, 411},
     {43, 43, 0, 1017, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
-    {469, 488, 0, 975, 0, 503},
-    {319, 319, 0, 1037, 0, 329},
-    {132, 132, 0, 1045, 0, 144},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
+    {377, 396, 0, 975, 0, 411},
+    {250, 250, 0, 1037, 0, 260},
+    {109, 109, 0, 1045, 0, 121},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 943, 0, 52},
     {43, 43, 0, 1053, 0, 52},
-    {319, 319, 0, 1061, 0, 329},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1075, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
+    {250, 250, 0, 1061, 0, 260},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1075, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 965, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
-    {469, 488, 0, 1073, 0, 503},
-    {319, 319, 0, 991, 0, 329},
-    {469, 488, 0, 1075, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
+    {377, 396, 0, 1073, 0, 411},
+    {250, 250, 0, 991, 0, 260},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 1013, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {319, 319, 0, 905, 0, 329},
-    {319, 319, 0, 965, 0, 329},
+    {377, 396, 0, 1077, 0, 411},
+    {250, 250, 0, 905, 0, 260},
+    {250, 250, 0, 965, 0, 260},
     {43, 43, 0, 1041, 0, 52},
-    {469, 488, 0, 1057, 0, 503},
-    {132, 132, 0, 1073, 0, 144},
-    {469, 488, 0, 933, 0, 503},
-    {469, 488, 0, 1073, 0, 503},
+    {377, 396, 0, 1057, 0, 411},
+    {109, 109, 0, 1073, 0, 121},
+    {377, 396, 0, 933, 0, 411},
+    {377, 396, 0, 1073, 0, 411},
     {43, 43, 0, 897, 0, 52},
-    {469, 488, 0, 913, 0, 503},
-    {469, 488, 0, 933, 0, 503},
-    {469, 488, 0, 1027, 0, 503},
+    {377, 396, 0, 913, 0, 411},
+    {377, 396, 0, 933, 0, 411},
+    {377, 396, 0, 1027, 0, 411},
     {43, 43, 0, 937, 0, 52},
-    {469, 488, 0, 953, 0, 503},
-    {132, 132, 0, 907, 0, 144},
-    {469, 488, 0, 939, 0, 503},
+    {377, 396, 0, 953, 0, 411},
+    {109, 109, 0, 907, 0, 121},
+    {377, 396, 0, 939, 0, 411},
     {43, 43, 0, 893, 0, 52},
-    {132, 132, 0, 905, 0, 144},
+    {109, 109, 0, 905, 0, 121},
     {43, 43, 0, 1037, 0, 52},
-    {469, 488, 0, 1069, 0, 503},
+    {377, 396, 0, 1069, 0, 411},
     {43, 43, 0, 1045, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 959, 0, 503},
-    {469, 488, 0, 933, 0, 503},
-    {319, 319, 0, 941, 0, 329},
-    {132, 132, 0, 885, 0, 144},
-    {469, 488, 0, 901, 0, 503},
-    {7322, 7322, 0, 909, 0, 7329},
-    {7371, 7371, 0, 925, 0, 0},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 959, 0, 411},
+    {377, 396, 0, 933, 0, 411},
+    {250, 250, 0, 941, 0, 260},
+    {109, 109, 0, 885, 0, 121},
+    {377, 396, 0, 901, 0, 411},
+    {7150, 7150, 0, 909, 0, 7157},
+    {7199, 7199, 0, 925, 0, 0},
     {43, 43, 0, 977, 0, 52},
-    {132, 132, 0, 0, 2, 144},
-    {747, 747, 756, 0, 2, 759},
-    {469, 488, 0, 0, 2, 503},
-    {836, 836, 756, 0, 2, 845},
-    {7371, 7371, 0, 0, 2, 0},
-    {925, 925, 756, 0, 2, 937},
-    {7322, 7322, 0, 0, 2, 7329},
+    {109, 109, 0, 0, 2, 121},
+    {655, 655, 664, 0, 2, 667},
+    {377, 396, 0, 0, 2, 411},
+    {721, 721, 664, 0, 2, 730},
+    {7199, 7199, 0, 0, 2, 0},
+    {787, 787, 664, 0, 2, 799},
+    {7150, 7150, 0, 0, 2, 7157},
     {43, 43, 0, 0, 2, 52},
-    {469, 488, 0, 943, 0, 503},
+    {377, 396, 0, 943, 0, 411},
     {43, 43, 0, 1009, 0, 52},
-    {469, 488, 0, 1019, 0, 503},
-    {132, 132, 0, 937, 0, 144},
-    {469, 488, 0, 969, 0, 503},
+    {377, 396, 0, 1019, 0, 411},
+    {109, 109, 0, 937, 0, 121},
+    {377, 396, 0, 969, 0, 411},
     {43, 43, 0, 1015, 0, 52},
     {43, 43, 0, 1007, 0, 52},
-    {469, 488, 0, 931, 0, 503},
-    {319, 319, 0, 1043, 0, 329},
+    {377, 396, 0, 931, 0, 411},
+    {250, 250, 0, 1043, 0, 260},
     {43, 43, 0, 1059, 0, 52},
-    {469, 488, 0, 1075, 0, 503},
-    {319, 319, 0, 1027, 0, 329},
-    {469, 488, 0, 1075, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1075, 0, 503},
+    {377, 396, 0, 1075, 0, 411},
+    {250, 250, 0, 1027, 0, 260},
+    {377, 396, 0, 1075, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 1045, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 925, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 925, 0, 411},
     {43, 43, 0, 975, 0, 52},
-    {469, 488, 0, 991, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 991, 0, 503},
-    {319, 319, 0, 1013, 0, 329},
-    {132, 132, 0, 1021, 0, 144},
+    {377, 396, 0, 991, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 991, 0, 411},
+    {250, 250, 0, 1013, 0, 260},
+    {109, 109, 0, 1021, 0, 121},
     {43, 43, 0, 1061, 0, 52},
-    {132, 132, 0, 979, 0, 144},
+    {109, 109, 0, 979, 0, 121},
     {43, 43, 0, 995, 0, 52},
-    {469, 488, 0, 1027, 0, 503},
-    {319, 319, 0, 979, 0, 329},
-    {469, 488, 0, 1043, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 921, 0, 503},
-    {469, 488, 0, 899, 0, 503},
-    {469, 488, 0, 909, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1019, 0, 503},
-    {469, 488, 0, 1065, 0, 503},
-    {319, 319, 0, 929, 0, 329},
-    {469, 488, 0, 1075, 0, 503},
-    {469, 488, 0, 901, 0, 503},
-    {319, 319, 0, 951, 0, 329},
-    {469, 488, 0, 973, 0, 503},
-    {132, 132, 0, 1017, 0, 144},
+    {377, 396, 0, 1027, 0, 411},
+    {250, 250, 0, 979, 0, 260},
+    {377, 396, 0, 1043, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 921, 0, 411},
+    {377, 396, 0, 899, 0, 411},
+    {377, 396, 0, 909, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1019, 0, 411},
+    {377, 396, 0, 1065, 0, 411},
+    {250, 250, 0, 929, 0, 260},
+    {377, 396, 0, 1075, 0, 411},
+    {377, 396, 0, 901, 0, 411},
+    {250, 250, 0, 951, 0, 260},
+    {377, 396, 0, 973, 0, 411},
+    {109, 109, 0, 1017, 0, 121},
     {43, 43, 0, 1041, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
-    {469, 488, 0, 973, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
+    {377, 396, 0, 973, 0, 411},
     {43, 43, 0, 1015, 0, 52},
-    {469, 488, 0, 1079, 0, 503},
+    {377, 396, 0, 1079, 0, 411},
     {43, 43, 0, 1037, 0, 52},
-    {469, 488, 0, 1069, 0, 503},
-    {469, 488, 0, 969, 0, 503},
-    {319, 319, 0, 1005, 0, 329},
-    {469, 488, 0, 1077, 0, 503},
-    {132, 132, 0, 887, 0, 144},
+    {377, 396, 0, 1069, 0, 411},
+    {377, 396, 0, 969, 0, 411},
+    {250, 250, 0, 1005, 0, 260},
+    {377, 396, 0, 1077, 0, 411},
+    {109, 109, 0, 887, 0, 121},
     {43, 43, 0, 895, 0, 52},
-    {319, 319, 0, 947, 0, 329},
+    {250, 250, 0, 947, 0, 260},
     {43, 43, 0, 1073, 0, 52},
-    {319, 319, 0, 969, 0, 329},
+    {250, 250, 0, 969, 0, 260},
     {43, 43, 0, 1001, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 991, 0, 52},
-    {319, 319, 0, 1055, 0, 329},
-    {469, 488, 0, 1077, 0, 503},
+    {250, 250, 0, 1055, 0, 260},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 997, 0, 52},
     {43, 43, 0, 1013, 0, 52},
-    {319, 319, 0, 1061, 0, 329},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1031, 0, 503},
+    {250, 250, 0, 1061, 0, 260},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1031, 0, 411},
     {43, 43, 0, 1047, 0, 52},
-    {132, 132, 0, 1063, 0, 144},
+    {109, 109, 0, 1063, 0, 121},
     {43, 43, 0, 985, 0, 52},
-    {132, 132, 0, 977, 0, 144},
-    {469, 488, 0, 1073, 0, 503},
+    {109, 109, 0, 977, 0, 121},
+    {377, 396, 0, 1073, 0, 411},
     {43, 43, 0, 1001, 0, 52},
-    {132, 132, 0, 1017, 0, 144},
+    {109, 109, 0, 1017, 0, 121},
     {43, 43, 0, 1033, 0, 52},
-    {469, 488, 0, 1065, 0, 503},
+    {377, 396, 0, 1065, 0, 411},
     {43, 43, 0, 1051, 0, 52},
-    {319, 319, 0, 993, 0, 329},
-    {469, 488, 0, 1009, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 957, 0, 503},
-    {319, 319, 0, 973, 0, 329},
-    {469, 488, 0, 1003, 0, 503},
-    {469, 488, 0, 1075, 0, 503},
-    {319, 319, 0, 1035, 0, 329},
-    {469, 488, 0, 1075, 0, 503},
-    {319, 319, 0, 903, 0, 329},
-    {132, 132, 0, 1045, 0, 144},
+    {250, 250, 0, 993, 0, 260},
+    {377, 396, 0, 1009, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 957, 0, 411},
+    {250, 250, 0, 973, 0, 260},
+    {377, 396, 0, 1003, 0, 411},
+    {377, 396, 0, 1075, 0, 411},
+    {250, 250, 0, 1035, 0, 260},
+    {377, 396, 0, 1075, 0, 411},
+    {250, 250, 0, 903, 0, 260},
+    {109, 109, 0, 1045, 0, 121},
     {43, 43, 0, 1069, 0, 52},
-    {469, 488, 0, 933, 0, 503},
+    {377, 396, 0, 933, 0, 411},
     {43, 43, 0, 957, 0, 52},
     {43, 43, 0, 957, 0, 52},
-    {319, 319, 0, 973, 0, 329},
-    {469, 488, 0, 1077, 0, 503},
-    {132, 132, 0, 1045, 0, 144},
+    {250, 250, 0, 973, 0, 260},
+    {377, 396, 0, 1077, 0, 411},
+    {109, 109, 0, 1045, 0, 121},
     {43, 43, 0, 1053, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 1011, 0, 52},
-    {319, 319, 0, 1027, 0, 329},
-    {469, 488, 0, 1075, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {132, 132, 0, 1015, 0, 144},
-    {469, 488, 0, 1047, 0, 503},
+    {250, 250, 0, 1027, 0, 260},
+    {377, 396, 0, 1075, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {109, 109, 0, 1015, 0, 121},
+    {377, 396, 0, 1047, 0, 411},
     {43, 43, 0, 1055, 0, 52},
-    {9047, 9047, 0, 630, 1, 0},
-    {132, 132, 0, 959, 0, 144},
-    {469, 488, 0, 967, 0, 503},
+    {8875, 8875, 0, 630, 1, 0},
+    {109, 109, 0, 959, 0, 121},
+    {377, 396, 0, 967, 0, 411},
     {43, 43, 0, 975, 0, 52},
-    {469, 488, 0, 963, 0, 503},
-    {469, 488, 0, 989, 0, 503},
+    {377, 396, 0, 963, 0, 411},
+    {377, 396, 0, 989, 0, 411},
     {43, 43, 0, 993, 0, 52},
-    {132, 132, 0, 1025, 0, 144},
-    {469, 488, 0, 1073, 0, 503},
-    {132, 132, 0, 985, 0, 144},
+    {109, 109, 0, 1025, 0, 121},
+    {377, 396, 0, 1073, 0, 411},
+    {109, 109, 0, 985, 0, 121},
     {43, 43, 0, 993, 0, 52},
-    {469, 488, 0, 1009, 0, 503},
-    {319, 319, 0, 997, 0, 329},
-    {469, 488, 0, 1003, 0, 503},
-    {469, 488, 0, 1079, 0, 503},
-    {319, 319, 0, 989, 0, 329},
-    {319, 319, 0, 923, 0, 329},
-    {319, 319, 0, 1025, 0, 329},
+    {377, 396, 0, 1009, 0, 411},
+    {250, 250, 0, 997, 0, 260},
+    {377, 396, 0, 1003, 0, 411},
+    {377, 396, 0, 1079, 0, 411},
+    {250, 250, 0, 989, 0, 260},
+    {250, 250, 0, 923, 0, 260},
+    {250, 250, 0, 1025, 0, 260},
     {43, 43, 0, 1041, 0, 52},
-    {9310, 9310, 0, 1015, 0, 9325},
-    {132, 132, 0, 1039, 0, 144},
-    {9408, 9408, 0, 1047, 0, 9426},
+    {9138, 9138, 0, 1015, 0, 9153},
+    {109, 109, 0, 1039, 0, 121},
+    {9236, 9236, 0, 1047, 0, 9254},
     {43, 43, 0, 1055, 0, 52},
-    {319, 319, 0, 1063, 0, 329},
-    {469, 488, 0, 729, 1, 503},
-    {9461, 9461, 0, 891, 1, 9325},
-    {226, 226, 0, 972, 1, 240},
-    {9474, 9474, 0, 1395, 1, 9481},
-    {9461, 9461, 0, 0, 2, 9325},
-    {132, 132, 0, 0, 2, 144},
-    {747, 747, 756, 0, 2, 759},
-    {226, 226, 0, 0, 2, 240},
-    {469, 488, 0, 0, 2, 503},
-    {836, 836, 756, 0, 2, 845},
-    {9474, 9474, 0, 0, 2, 9481},
-    {925, 925, 756, 0, 2, 937},
-    {319, 319, 0, 0, 2, 329},
-    {9408, 9408, 0, 0, 2, 9426},
+    {250, 250, 0, 1063, 0, 260},
+    {377, 396, 0, 729, 1, 411},
+    {9289, 9289, 0, 891, 1, 9153},
+    {180, 180, 0, 972, 1, 194},
+    {9302, 9302, 0, 1395, 1, 9309},
+    {9289, 9289, 0, 0, 2, 9153},
+    {109, 109, 0, 0, 2, 121},
+    {655, 655, 664, 0, 2, 667},
+    {180, 180, 0, 0, 2, 194},
+    {377, 396, 0, 0, 2, 411},
+    {721, 721, 664, 0, 2, 730},
+    {9302, 9302, 0, 0, 2, 9309},
+    {787, 787, 664, 0, 2, 799},
+    {250, 250, 0, 0, 2, 260},
+    {9236, 9236, 0, 0, 2, 9254},
     {43, 43, 0, 0, 2, 52},
-    {319, 319, 0, 951, 0, 329},
+    {250, 250, 0, 951, 0, 260},
     {43, 43, 0, 959, 0, 52},
-    {132, 132, 0, 975, 0, 144},
-    {469, 488, 0, 1075, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {319, 319, 0, 933, 0, 329},
+    {109, 109, 0, 975, 0, 121},
+    {377, 396, 0, 1075, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {250, 250, 0, 933, 0, 260},
     {43, 43, 0, 1013, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 1053, 0, 52},
-    {469, 488, 0, 1075, 0, 503},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 1053, 0, 52},
-    {469, 488, 0, 969, 0, 503},
-    {469, 488, 0, 1061, 0, 503},
-    {469, 488, 0, 1073, 0, 503},
+    {377, 396, 0, 969, 0, 411},
+    {377, 396, 0, 1061, 0, 411},
+    {377, 396, 0, 1073, 0, 411},
     {43, 43, 0, 1045, 0, 52},
     {43, 43, 0, 1025, 0, 52},
-    {469, 488, 0, 1033, 0, 503},
-    {132, 132, 0, 1041, 0, 144},
+    {377, 396, 0, 1033, 0, 411},
+    {109, 109, 0, 1041, 0, 121},
     {43, 43, 0, 923, 0, 52},
-    {132, 132, 0, 931, 0, 144},
+    {109, 109, 0, 931, 0, 121},
     {43, 43, 0, 929, 0, 52},
-    {469, 488, 0, 1079, 0, 503},
+    {377, 396, 0, 1079, 0, 411},
     {43, 43, 0, 1019, 0, 52},
-    {132, 132, 0, 1051, 0, 144},
-    {469, 488, 0, 1305, 1, 503},
-    {319, 319, 0, 923, 0, 329},
+    {109, 109, 0, 1051, 0, 121},
+    {377, 396, 0, 1305, 1, 411},
+    {250, 250, 0, 923, 0, 260},
     {43, 43, 0, 939, 0, 52},
-    {469, 488, 0, 1019, 0, 503},
-    {132, 132, 0, 1035, 0, 144},
+    {377, 396, 0, 1019, 0, 411},
+    {109, 109, 0, 1035, 0, 121},
     {43, 43, 0, 1035, 0, 52},
-    {132, 132, 0, 1043, 0, 144},
-    {469, 488, 0, 1067, 0, 503},
-    {469, 488, 0, 1009, 0, 503},
+    {109, 109, 0, 1043, 0, 121},
+    {377, 396, 0, 1067, 0, 411},
+    {377, 396, 0, 1009, 0, 411},
     {43, 43, 0, 1033, 0, 52},
     {43, 43, 0, 1077, 0, 52},
     {43, 43, 0, 1003, 0, 52},
-    {469, 488, 0, 1019, 0, 503},
-    {469, 488, 0, 1073, 0, 503},
-    {469, 488, 0, 1057, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1019, 0, 411},
+    {377, 396, 0, 1073, 0, 411},
+    {377, 396, 0, 1057, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 1053, 0, 52},
-    {469, 488, 0, 913, 0, 503},
+    {377, 396, 0, 913, 0, 411},
     {43, 43, 0, 981, 0, 52},
-    {469, 488, 0, 989, 0, 503},
+    {377, 396, 0, 989, 0, 411},
     {43, 43, 0, 929, 0, 52},
-    {132, 132, 0, 939, 0, 144},
-    {10282, 10282, 0, 961, 0, 10303},
-    {319, 319, 0, 1057, 0, 329},
-    {469, 488, 0, 585, 1, 503},
-    {226, 226, 0, 747, 1, 240},
-    {10282, 10282, 0, 864, 1, 10303},
-    {10356, 10356, 0, 936, 1, 10367},
-    {132, 132, 0, 0, 2, 144},
-    {10356, 10356, 0, 0, 2, 10367},
-    {747, 747, 756, 0, 2, 759},
-    {226, 226, 0, 0, 2, 240},
-    {469, 488, 0, 0, 2, 503},
-    {836, 836, 756, 0, 2, 845},
-    {925, 925, 756, 0, 2, 937},
-    {319, 319, 0, 0, 2, 329},
+    {109, 109, 0, 939, 0, 121},
+    {10110, 10110, 0, 961, 0, 10131},
+    {250, 250, 0, 1057, 0, 260},
+    {377, 396, 0, 585, 1, 411},
+    {180, 180, 0, 747, 1, 194},
+    {10110, 10110, 0, 864, 1, 10131},
+    {10184, 10184, 0, 936, 1, 10195},
+    {109, 109, 0, 0, 2, 121},
+    {10184, 10184, 0, 0, 2, 10195},
+    {655, 655, 664, 0, 2, 667},
+    {180, 180, 0, 0, 2, 194},
+    {377, 396, 0, 0, 2, 411},
+    {721, 721, 664, 0, 2, 730},
+    {787, 787, 664, 0, 2, 799},
+    {250, 250, 0, 0, 2, 260},
     {43, 43, 0, 0, 2, 52},
-    {469, 488, 0, 897, 0, 503},
+    {377, 396, 0, 897, 0, 411},
     {43, 43, 0, 909, 0, 52},
-    {132, 132, 0, 933, 0, 144},
-    {469, 488, 0, 941, 0, 503},
-    {747, 747, 756, 0, 2, 759},
-    {836, 836, 756, 0, 2, 845},
-    {925, 925, 756, 0, 2, 937},
-    {469, 488, 0, 889, 0, 503},
-    {319, 319, 0, 937, 0, 329},
-    {469, 488, 0, 630, 1, 503},
+    {109, 109, 0, 933, 0, 121},
+    {377, 396, 0, 941, 0, 411},
+    {655, 655, 664, 0, 2, 667},
+    {721, 721, 664, 0, 2, 730},
+    {787, 787, 664, 0, 2, 799},
+    {377, 396, 0, 889, 0, 411},
+    {250, 250, 0, 937, 0, 260},
+    {377, 396, 0, 630, 1, 411},
     {43, 43, 0, 889, 0, 52},
-    {319, 319, 0, 1015, 0, 329},
+    {250, 250, 0, 1015, 0, 260},
     {43, 43, 0, 1027, 0, 52},
-    {469, 488, 0, 1079, 0, 503},
-    {469, 488, 0, 961, 0, 503},
-    {469, 488, 0, 1011, 0, 503},
-    {319, 319, 0, 947, 0, 329},
+    {377, 396, 0, 1079, 0, 411},
+    {377, 396, 0, 961, 0, 411},
+    {377, 396, 0, 1011, 0, 411},
+    {250, 250, 0, 947, 0, 260},
     {43, 43, 0, 1019, 0, 52},
-    {469, 488, 0, 1059, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1049, 0, 503},
-    {469, 488, 0, 989, 0, 503},
-    {469, 488, 0, 990, 1, 503},
-    {469, 488, 0, 1045, 0, 503},
-    {469, 488, 0, 1063, 0, 503},
-    {132, 132, 0, 1055, 0, 144},
+    {377, 396, 0, 1059, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1049, 0, 411},
+    {377, 396, 0, 989, 0, 411},
+    {377, 396, 0, 990, 1, 411},
+    {377, 396, 0, 1045, 0, 411},
+    {377, 396, 0, 1063, 0, 411},
+    {109, 109, 0, 1055, 0, 121},
     {43, 43, 0, 1071, 0, 52},
-    {319, 319, 0, 959, 0, 329},
+    {250, 250, 0, 959, 0, 260},
     {43, 43, 0, 903, 0, 52},
-    {132, 132, 0, 927, 0, 144},
-    {132, 132, 0, 881, 0, 144},
-    {469, 488, 0, 889, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 981, 0, 503},
-    {469, 488, 0, 973, 0, 503},
-    {469, 488, 0, 981, 0, 503},
+    {109, 109, 0, 927, 0, 121},
+    {109, 109, 0, 881, 0, 121},
+    {377, 396, 0, 889, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 981, 0, 411},
+    {377, 396, 0, 973, 0, 411},
+    {377, 396, 0, 981, 0, 411},
     {43, 43, 0, 945, 0, 52},
-    {132, 132, 0, 961, 0, 144},
-    {469, 488, 0, 883, 0, 503},
-    {469, 488, 0, 997, 0, 503},
+    {109, 109, 0, 961, 0, 121},
+    {377, 396, 0, 883, 0, 411},
+    {377, 396, 0, 997, 0, 411},
     {43, 43, 0, 967, 0, 52},
-    {132, 132, 0, 1015, 0, 144},
-    {469, 488, 0, 1033, 0, 503},
-    {469, 488, 0, 1053, 0, 503},
-    {319, 319, 0, 1045, 0, 329},
-    {11257, 11257, 0, 907, 0, 0},
-    {11261, 11261, 0, 915, 0, 0},
-    {319, 319, 0, 931, 0, 329},
-    {11273, 11273, 0, 1003, 0, 11282},
-    {11367, 11367, 0, 1027, 0, 11372},
-    {3329, 3329, 0, 1035, 0, 3340},
-    {11403, 11403, 0, 1043, 0, 11414},
-    {11456, 11456, 0, 1051, 0, 0},
-    {132, 132, 0, 1059, 0, 144},
-    {11475, 11475, 0, 1067, 0, 11485},
+    {109, 109, 0, 1015, 0, 121},
+    {377, 396, 0, 1033, 0, 411},
+    {377, 396, 0, 1053, 0, 411},
+    {250, 250, 0, 1045, 0, 260},
+    {11062, 11062, 0, 907, 0, 0},
+    {11066, 11066, 0, 915, 0, 0},
+    {250, 250, 0, 931, 0, 260},
+    {11078, 11078, 0, 1003, 0, 11087},
+    {11172, 11172, 0, 1027, 0, 11177},
+    {3168, 3168, 0, 1035, 0, 3179},
+    {11208, 11208, 0, 1043, 0, 11219},
+    {11261, 11261, 0, 1051, 0, 0},
+    {109, 109, 0, 1059, 0, 121},
+    {11280, 11280, 0, 1067, 0, 11290},
     {43, 43, 0, 1075, 0, 52},
-    {469, 488, 0, 621, 1, 503},
-    {11569, 11569, 0, 693, 1, 11573},
-    {11646, 11646, 0, 774, 1, 11660},
-    {11744, 11744, 0, 855, 1, 11748},
-    {226, 226, 0, 1026, 1, 240},
-    {319, 319, 0, 1224, 1, 329},
-    {11824, 11824, 0, 1503, 1, 0},
-    {11569, 11569, 0, 0, 2, 11573},
-    {132, 132, 0, 0, 2, 144},
-    {747, 747, 756, 0, 2, 759},
-    {11646, 11646, 0, 0, 2, 11660},
-    {226, 226, 0, 0, 2, 240},
-    {469, 488, 0, 0, 2, 503},
-    {836, 836, 756, 0, 2, 845},
-    {11403, 11403, 0, 0, 2, 11414},
-    {11273, 11273, 0, 0, 2, 11282},
-    {925, 925, 756, 0, 2, 937},
-    {319, 319, 0, 0, 2, 329},
+    {377, 396, 0, 621, 1, 411},
+    {11374, 11374, 0, 693, 1, 11378},
+    {11451, 11451, 0, 774, 1, 11465},
+    {11526, 11526, 0, 855, 1, 11530},
+    {180, 180, 0, 1026, 1, 194},
+    {250, 250, 0, 1224, 1, 260},
+    {11606, 11606, 0, 1503, 1, 0},
+    {11374, 11374, 0, 0, 2, 11378},
+    {109, 109, 0, 0, 2, 121},
+    {655, 655, 664, 0, 2, 667},
+    {11451, 11451, 0, 0, 2, 11465},
+    {180, 180, 0, 0, 2, 194},
+    {377, 396, 0, 0, 2, 411},
+    {721, 721, 664, 0, 2, 730},
+    {11208, 11208, 0, 0, 2, 11219},
+    {11078, 11078, 0, 0, 2, 11087},
+    {787, 787, 664, 0, 2, 799},
+    {250, 250, 0, 0, 2, 260},
+    {11066, 11066, 0, 0, 2, 0},
     {11261, 11261, 0, 0, 2, 0},
-    {11456, 11456, 0, 0, 2, 0},
     {43, 43, 0, 0, 2, 52},
-    {319, 319, 0, 987, 0, 329},
+    {250, 250, 0, 987, 0, 260},
     {43, 43, 0, 1011, 0, 52},
-    {132, 132, 0, 1027, 0, 144},
-    {469, 488, 0, 1059, 0, 503},
-    {132, 132, 0, 1037, 0, 144},
+    {109, 109, 0, 1027, 0, 121},
+    {377, 396, 0, 1059, 0, 411},
+    {109, 109, 0, 1037, 0, 121},
     {43, 43, 0, 1053, 0, 52},
-    {319, 319, 0, 973, 0, 329},
-    {469, 488, 0, 957, 0, 503},
-    {469, 488, 0, 997, 0, 503},
-    {469, 488, 0, 987, 0, 503},
-    {469, 488, 0, 985, 0, 503},
-    {469, 488, 0, 1035, 0, 503},
+    {250, 250, 0, 973, 0, 260},
+    {377, 396, 0, 957, 0, 411},
+    {377, 396, 0, 997, 0, 411},
+    {377, 396, 0, 987, 0, 411},
+    {377, 396, 0, 985, 0, 411},
+    {377, 396, 0, 1035, 0, 411},
     {43, 43, 0, 1033, 0, 52},
-    {132, 132, 0, 1041, 0, 144},
-    {469, 488, 0, 756, 1, 503},
+    {109, 109, 0, 1041, 0, 121},
+    {377, 396, 0, 756, 1, 411},
     {43, 43, 0, 897, 0, 52},
-    {132, 132, 0, 921, 0, 144},
-    {469, 488, 0, 1017, 0, 503},
-    {469, 488, 0, 925, 0, 503},
-    {132, 132, 0, 933, 0, 144},
+    {109, 109, 0, 921, 0, 121},
+    {377, 396, 0, 1017, 0, 411},
+    {377, 396, 0, 925, 0, 411},
+    {109, 109, 0, 933, 0, 121},
     {43, 43, 0, 949, 0, 52},
-    {319, 319, 0, 895, 0, 329},
-    {11646, 11646, 0, 961, 0, 11660},
-    {469, 488, 0, 1075, 0, 503},
-    {469, 488, 0, 991, 0, 503},
-    {132, 132, 0, 991, 0, 144},
-    {469, 488, 0, 1007, 0, 503},
+    {250, 250, 0, 895, 0, 260},
+    {11451, 11451, 0, 961, 0, 11465},
+    {377, 396, 0, 1075, 0, 411},
+    {377, 396, 0, 991, 0, 411},
+    {109, 109, 0, 991, 0, 121},
+    {377, 396, 0, 1007, 0, 411},
     {43, 43, 0, 1055, 0, 52},
-    {12322, 12322, 0, 959, 0, 12332},
+    {12104, 12104, 0, 959, 0, 12114},
     {43, 43, 0, 983, 0, 52},
-    {747, 747, 756, 0, 2, 759},
-    {836, 836, 756, 0, 2, 845},
-    {925, 925, 756, 0, 2, 937},
-    {469, 488, 0, 1029, 0, 503},
+    {655, 655, 664, 0, 2, 667},
+    {721, 721, 664, 0, 2, 730},
+    {787, 787, 664, 0, 2, 799},
+    {377, 396, 0, 1029, 0, 411},
     {43, 43, 0, 1045, 0, 52},
     {43, 43, 0, 1037, 0, 52},
-    {469, 488, 0, 1069, 0, 503},
-    {319, 319, 0, 917, 0, 329},
+    {377, 396, 0, 1069, 0, 411},
+    {250, 250, 0, 917, 0, 260},
     {43, 43, 0, 949, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {132, 132, 0, 933, 0, 144},
+    {377, 396, 0, 1077, 0, 411},
+    {109, 109, 0, 933, 0, 121},
     {43, 43, 0, 941, 0, 52},
-    {226, 226, 0, 1152, 1, 240},
-    {469, 488, 0, 1269, 1, 503},
-    {132, 132, 0, 901, 0, 144},
-    {469, 488, 0, 1077, 0, 503},
+    {180, 180, 0, 1152, 1, 194},
+    {377, 396, 0, 1269, 1, 411},
+    {109, 109, 0, 901, 0, 121},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 981, 0, 52},
-    {132, 132, 0, 989, 0, 144},
+    {109, 109, 0, 989, 0, 121},
     {43, 43, 0, 905, 0, 52},
     {43, 43, 0, 1009, 0, 52},
-    {469, 488, 0, 925, 0, 503},
+    {377, 396, 0, 925, 0, 411},
     {43, 43, 0, 941, 0, 52},
     {43, 43, 0, 1021, 0, 52},
     {43, 43, 0, 903, 0, 52},
-    {12322, 12322, 0, 975, 0, 12332},
-    {12322, 12322, 0, 955, 0, 12332},
+    {12104, 12104, 0, 975, 0, 12114},
+    {12104, 12104, 0, 955, 0, 12114},
     {43, 43, 0, 1019, 0, 52},
-    {12322, 12322, 0, 987, 0, 12332},
+    {12104, 12104, 0, 987, 0, 12114},
     {43, 43, 0, 1035, 0, 52},
-    {319, 319, 0, 1071, 0, 329},
+    {250, 250, 0, 1071, 0, 260},
     {43, 43, 0, 979, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 612, 1, 503},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 612, 1, 411},
     {43, 43, 0, 993, 0, 52},
-    {469, 488, 0, 1079, 0, 503},
-    {319, 319, 0, 1005, 0, 329},
+    {377, 396, 0, 1079, 0, 411},
+    {250, 250, 0, 1005, 0, 260},
     {43, 43, 0, 1037, 0, 52},
-    {469, 488, 0, 1075, 0, 503},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 1059, 0, 52},
-    {469, 488, 0, 1075, 0, 503},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 1037, 0, 52},
-    {12322, 12322, 0, 1069, 0, 12332},
+    {12104, 12104, 0, 1069, 0, 12114},
     {43, 43, 0, 927, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {132, 132, 0, 1047, 0, 144},
+    {377, 396, 0, 1077, 0, 411},
+    {109, 109, 0, 1047, 0, 121},
     {43, 43, 0, 1055, 0, 52},
-    {469, 488, 0, 1063, 0, 503},
+    {377, 396, 0, 1063, 0, 411},
     {43, 43, 0, 981, 0, 52},
-    {319, 319, 0, 989, 0, 329},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
+    {250, 250, 0, 989, 0, 260},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 891, 0, 52},
     {43, 43, 0, 1049, 0, 52},
     {43, 43, 0, 1065, 0, 52},
-    {132, 132, 0, 949, 0, 144},
+    {109, 109, 0, 949, 0, 121},
     {43, 43, 0, 989, 0, 52},
-    {469, 488, 0, 997, 0, 503},
+    {377, 396, 0, 997, 0, 411},
     {43, 43, 0, 1031, 0, 52},
-    {132, 132, 0, 1063, 0, 144},
+    {109, 109, 0, 1063, 0, 121},
     {43, 43, 0, 929, 0, 52},
-    {319, 319, 0, 1001, 0, 329},
+    {250, 250, 0, 1001, 0, 260},
     {43, 43, 0, 1053, 0, 52},
-    {132, 132, 0, 1061, 0, 144},
+    {109, 109, 0, 1061, 0, 121},
     {43, 43, 0, 1025, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 1045, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 895, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 895, 0, 411},
     {43, 43, 0, 943, 0, 52},
-    {469, 488, 0, 885, 0, 503},
+    {377, 396, 0, 885, 0, 411},
     {43, 43, 0, 933, 0, 52},
     {43, 43, 0, 941, 0, 52},
-    {319, 319, 0, 957, 0, 329},
-    {469, 488, 0, 1069, 0, 503},
+    {250, 250, 0, 957, 0, 260},
+    {377, 396, 0, 1069, 0, 411},
     {43, 43, 0, 967, 0, 52},
     {43, 43, 0, 941, 0, 52},
-    {469, 488, 0, 957, 0, 503},
+    {377, 396, 0, 957, 0, 411},
     {43, 43, 0, 949, 0, 52},
-    {469, 488, 0, 965, 0, 503},
+    {377, 396, 0, 965, 0, 411},
     {43, 43, 0, 1073, 0, 52},
     {43, 43, 0, 967, 0, 52},
-    {132, 132, 0, 983, 0, 144},
-    {469, 488, 0, 1079, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {132, 132, 0, 955, 0, 144},
-    {469, 488, 0, 971, 0, 503},
+    {109, 109, 0, 983, 0, 121},
+    {377, 396, 0, 1079, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {109, 109, 0, 955, 0, 121},
+    {377, 396, 0, 971, 0, 411},
     {43, 43, 0, 987, 0, 52},
     {43, 43, 0, 935, 0, 52},
-    {469, 488, 0, 939, 0, 503},
+    {377, 396, 0, 939, 0, 411},
     {43, 43, 0, 1005, 0, 52},
-    {132, 132, 0, 1037, 0, 144},
-    {469, 488, 0, 1053, 0, 503},
+    {109, 109, 0, 1037, 0, 121},
+    {377, 396, 0, 1053, 0, 411},
     {43, 43, 0, 1053, 0, 52},
-    {469, 488, 0, 1009, 0, 503},
+    {377, 396, 0, 1009, 0, 411},
     {43, 43, 0, 1033, 0, 52},
     {43, 43, 0, 919, 0, 52},
     {43, 43, 0, 1009, 0, 52},
-    {469, 488, 0, 1025, 0, 503},
+    {377, 396, 0, 1025, 0, 411},
     {43, 43, 0, 897, 0, 52},
-    {469, 488, 0, 961, 0, 503},
-    {469, 488, 0, 1073, 0, 503},
-    {319, 319, 0, 949, 0, 329},
+    {377, 396, 0, 961, 0, 411},
+    {377, 396, 0, 1073, 0, 411},
+    {250, 250, 0, 949, 0, 260},
     {43, 43, 0, 989, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1073, 0, 503},
-    {132, 132, 0, 1045, 0, 144},
-    {469, 488, 0, 1077, 0, 503},
-    {319, 319, 0, 953, 0, 329},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1073, 0, 411},
+    {109, 109, 0, 1045, 0, 121},
+    {377, 396, 0, 1077, 0, 411},
+    {250, 250, 0, 953, 0, 260},
     {43, 43, 0, 969, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
     {43, 43, 0, 1045, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 1037, 0, 52},
-    {469, 488, 0, 1069, 0, 503},
-    {469, 488, 0, 1075, 0, 503},
+    {377, 396, 0, 1069, 0, 411},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 1037, 0, 52},
     {43, 43, 0, 987, 0, 52},
-    {469, 488, 0, 1003, 0, 503},
-    {469, 488, 0, 1079, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1073, 0, 503},
-    {469, 488, 0, 985, 0, 503},
+    {377, 396, 0, 1003, 0, 411},
+    {377, 396, 0, 1079, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1073, 0, 411},
+    {377, 396, 0, 985, 0, 411},
     {43, 43, 0, 1001, 0, 52},
     {43, 43, 0, 993, 0, 52},
-    {319, 319, 0, 1035, 0, 329},
+    {250, 250, 0, 1035, 0, 260},
     {43, 43, 0, 1051, 0, 52},
-    {319, 319, 0, 935, 0, 329},
+    {250, 250, 0, 935, 0, 260},
     {43, 43, 0, 1063, 0, 52},
     {43, 43, 0, 985, 0, 52},
-    {469, 488, 0, 993, 0, 503},
+    {377, 396, 0, 993, 0, 411},
     {43, 43, 0, 1009, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1073, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1073, 0, 411},
     {43, 43, 0, 1001, 0, 52},
-    {12322, 12322, 0, 1065, 0, 12332},
-    {469, 488, 0, 1075, 0, 503},
-    {469, 488, 0, 897, 0, 503},
+    {12104, 12104, 0, 1065, 0, 12114},
+    {377, 396, 0, 1075, 0, 411},
+    {377, 396, 0, 897, 0, 411},
     {43, 43, 0, 929, 0, 52},
-    {469, 488, 0, 989, 0, 503},
-    {469, 488, 0, 1077, 0, 503},
-    {132, 132, 0, 925, 0, 144},
-    {469, 488, 0, 937, 0, 503},
-    {132, 132, 0, 943, 0, 144},
-    {12322, 12322, 0, 983, 0, 12332},
+    {377, 396, 0, 989, 0, 411},
+    {377, 396, 0, 1077, 0, 411},
+    {109, 109, 0, 925, 0, 121},
+    {377, 396, 0, 937, 0, 411},
+    {109, 109, 0, 943, 0, 121},
+    {12104, 12104, 0, 983, 0, 12114},
     {43, 43, 0, 1017, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
     {43, 43, 0, 987, 0, 52},
-    {469, 488, 0, 1075, 0, 503},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 1051, 0, 52},
-    {469, 488, 0, 1075, 0, 503},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 1061, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 1045, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {14949, 14949, 0, 921, 0, 0},
-    {14955, 14955, 0, 929, 0, 0},
-    {14970, 14970, 0, 945, 0, 0},
-    {319, 319, 0, 969, 0, 329},
-    {132, 132, 0, 977, 0, 144},
+    {377, 396, 0, 1077, 0, 411},
+    {14731, 14731, 0, 921, 0, 0},
+    {14737, 14737, 0, 929, 0, 0},
+    {14752, 14752, 0, 945, 0, 0},
+    {250, 250, 0, 969, 0, 260},
+    {109, 109, 0, 977, 0, 121},
     {43, 43, 0, 993, 0, 52},
-    {12322, 12322, 0, 1025, 0, 12332},
-    {469, 488, 0, 1033, 0, 503},
-    {226, 226, 0, 1041, 0, 240},
-    {14979, 14979, 0, 1057, 0, 14983},
-    {226, 226, 0, 585, 1, 240},
-    {15056, 15056, 0, 882, 1, 15060},
-    {14979, 14979, 0, 1080, 1, 14983},
-    {14979, 14979, 0, 0, 2, 14983},
-    {15056, 15056, 0, 0, 2, 15060},
-    {132, 132, 0, 0, 2, 144},
-    {747, 747, 756, 0, 2, 759},
-    {226, 226, 0, 0, 2, 240},
-    {12322, 12322, 0, 0, 2, 12332},
-    {469, 488, 0, 0, 2, 503},
-    {836, 836, 756, 0, 2, 845},
-    {14970, 14970, 0, 0, 2, 0},
-    {925, 925, 756, 0, 2, 937},
-    {319, 319, 0, 0, 2, 329},
-    {14955, 14955, 0, 0, 2, 0},
+    {12104, 12104, 0, 1025, 0, 12114},
+    {377, 396, 0, 1033, 0, 411},
+    {180, 180, 0, 1041, 0, 194},
+    {14761, 14761, 0, 1057, 0, 14765},
+    {180, 180, 0, 585, 1, 194},
+    {14838, 14838, 0, 882, 1, 14842},
+    {14761, 14761, 0, 1080, 1, 14765},
+    {14761, 14761, 0, 0, 2, 14765},
+    {14838, 14838, 0, 0, 2, 14842},
+    {109, 109, 0, 0, 2, 121},
+    {655, 655, 664, 0, 2, 667},
+    {180, 180, 0, 0, 2, 194},
+    {12104, 12104, 0, 0, 2, 12114},
+    {377, 396, 0, 0, 2, 411},
+    {721, 721, 664, 0, 2, 730},
+    {14752, 14752, 0, 0, 2, 0},
+    {787, 787, 664, 0, 2, 799},
+    {250, 250, 0, 0, 2, 260},
+    {14737, 14737, 0, 0, 2, 0},
     {43, 43, 0, 0, 2, 52},
-    {469, 488, 0, 897, 0, 503},
+    {377, 396, 0, 897, 0, 411},
     {43, 43, 0, 913, 0, 52},
-    {469, 488, 0, 957, 0, 503},
-    {132, 132, 0, 973, 0, 144},
+    {377, 396, 0, 957, 0, 411},
+    {109, 109, 0, 973, 0, 121},
     {43, 43, 0, 989, 0, 52},
-    {469, 488, 0, 915, 0, 503},
+    {377, 396, 0, 915, 0, 411},
     {43, 43, 0, 931, 0, 52},
-    {469, 488, 0, 1001, 0, 503},
+    {377, 396, 0, 1001, 0, 411},
     {43, 43, 0, 1017, 0, 52},
     {43, 43, 0, 907, 0, 52},
-    {319, 319, 0, 947, 0, 329},
-    {469, 488, 0, 1075, 0, 503},
-    {469, 488, 0, 1075, 0, 503},
+    {250, 250, 0, 947, 0, 260},
+    {377, 396, 0, 1075, 0, 411},
+    {377, 396, 0, 1075, 0, 411},
     {43, 43, 0, 997, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 1007, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 1007, 0, 411},
     {43, 43, 0, 919, 0, 52},
-    {469, 488, 0, 935, 0, 503},
+    {377, 396, 0, 935, 0, 411},
     {43, 43, 0, 1075, 0, 52},
     {43, 43, 0, 1011, 0, 52},
-    {469, 488, 0, 959, 0, 503},
-    {132, 132, 0, 991, 0, 144},
+    {377, 396, 0, 959, 0, 411},
+    {109, 109, 0, 991, 0, 121},
     {43, 43, 0, 1007, 0, 52},
-    {12322, 12322, 0, 1055, 0, 12332},
+    {12104, 12104, 0, 1055, 0, 12114},
     {43, 43, 0, 929, 0, 52},
-    {132, 132, 0, 945, 0, 144},
-    {469, 488, 0, 969, 0, 503},
+    {109, 109, 0, 945, 0, 121},
+    {377, 396, 0, 969, 0, 411},
     {43, 43, 0, 1039, 0, 52},
-    {469, 488, 0, 1079, 0, 503},
-    {469, 488, 0, 961, 0, 503},
+    {377, 396, 0, 1079, 0, 411},
+    {377, 396, 0, 961, 0, 411},
     {43, 43, 0, 989, 0, 52},
     {43, 43, 0, 917, 0, 52},
     {43, 43, 0, 931, 0, 52},
     {43, 43, 0, 1053, 0, 52},
     {43, 43, 0, 1009, 0, 52},
-    {469, 488, 0, 1073, 0, 503},
+    {377, 396, 0, 1073, 0, 411},
     {43, 43, 0, 985, 0, 52},
     {43, 43, 0, 1029, 0, 52},
     {43, 43, 0, 919, 0, 52},
     {43, 43, 0, 1027, 0, 52},
-    {469, 488, 0, 1296, 1, 503},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1296, 1, 411},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 899, 0, 52},
-    {469, 488, 0, 947, 0, 503},
+    {377, 396, 0, 947, 0, 411},
     {43, 43, 0, 925, 0, 52},
-    {469, 488, 0, 933, 0, 503},
+    {377, 396, 0, 933, 0, 411},
     {43, 43, 0, 1041, 0, 52},
-    {469, 488, 0, 1049, 0, 503},
+    {377, 396, 0, 1049, 0, 411},
     {43, 43, 0, 1045, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {469, 488, 0, 903, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
+    {377, 396, 0, 903, 0, 411},
     {43, 43, 0, 951, 0, 52},
     {43, 43, 0, 1019, 0, 52},
-    {469, 488, 0, 1035, 0, 503},
-    {469, 488, 0, 973, 0, 503},
+    {377, 396, 0, 1035, 0, 411},
+    {377, 396, 0, 973, 0, 411},
     {43, 43, 0, 989, 0, 52},
     {43, 43, 0, 897, 0, 52},
-    {469, 488, 0, 945, 0, 503},
-    {469, 488, 0, 887, 0, 503},
+    {377, 396, 0, 945, 0, 411},
+    {377, 396, 0, 887, 0, 411},
     {43, 43, 0, 935, 0, 52},
-    {469, 488, 0, 895, 0, 503},
+    {377, 396, 0, 895, 0, 411},
     {43, 43, 0, 943, 0, 52},
     {43, 43, 0, 921, 0, 52},
-    {469, 488, 0, 937, 0, 503},
+    {377, 396, 0, 937, 0, 411},
     {43, 43, 0, 995, 0, 52},
     {43, 43, 0, 995, 0, 52},
-    {319, 319, 0, 1019, 0, 329},
+    {250, 250, 0, 1019, 0, 260},
     {43, 43, 0, 1049, 0, 52},
     {43, 43, 0, 1021, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {132, 132, 0, 1055, 0, 144},
+    {377, 396, 0, 1077, 0, 411},
+    {109, 109, 0, 1055, 0, 121},
     {43, 43, 0, 1053, 0, 52},
-    {319, 319, 0, 1063, 0, 329},
-    {469, 488, 0, 1079, 0, 503},
-    {12322, 12322, 0, 903, 0, 12332},
+    {250, 250, 0, 1063, 0, 260},
+    {377, 396, 0, 1079, 0, 411},
+    {12104, 12104, 0, 903, 0, 12114},
     {43, 43, 0, 919, 0, 52},
-    {469, 488, 0, 1077, 0, 503},
-    {132, 132, 0, 955, 0, 144},
-    {469, 488, 0, 1077, 0, 503},
+    {377, 396, 0, 1077, 0, 411},
+    {109, 109, 0, 955, 0, 121},
+    {377, 396, 0, 1077, 0, 411},
     {43, 43, 0, 1001, 0, 52},
-    {12322, 12322, 0, 1053, 0, 12332},
+    {12104, 12104, 0, 1053, 0, 12114},
     {43, 43, 0, 971, 0, 52},
     {43, 43, 0, 915, 0, 52},
     {43, 43, 0, 1015, 0, 52},
-    {469, 488, 0, 1079, 0, 503},
+    {377, 396, 0, 1079, 0, 411},
     {43, 43, 0, 907, 0, 52},
-    {469, 488, 0, 923, 0, 503},
+    {377, 396, 0, 923, 0, 411},
     {43, 43, 0, 1041, 0, 52},
     {43, 43, 0, 1009, 0, 52},
     {},

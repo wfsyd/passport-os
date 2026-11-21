@@ -496,10 +496,12 @@ void query_directory(const DirectoryServers &servers, const RadioLocation &locat
 // One name-based AU preset: the station whose name contains `query`, preferring MP3, then
 // direct AAC, then HLS AAC (see radio_search_consider), then the most votes.
 // No bitrate cap, so 128 kbps MP3 streams are not excluded.
+// With `must_word`, the result name must contain it as a whole word and be AU (see
+// radio_search_consider); `query` still drives the directory search.
 bool resolve_search_preset(const DirectoryServers &servers, const char *query,
                            const char *name, const char *description,
                            RadioStation *out, RadioCatalogCancelled stop,
-                           std::size_t *results = nullptr) {
+                           std::size_t *results = nullptr, const char *must_word = nullptr) {
     if (results) *results = 0;
     if (cancelled(stop) || !query[0] || !servers.count) return false;
     char encoded[160] = {}, url_query[320] = {};
@@ -510,7 +512,8 @@ bool resolve_search_preset(const DirectoryServers &servers, const char *query,
     RadioSearchBest best = {};
     search_directory(servers, url_query, stop, [&](const char *json) {
         if (results) ++*results;
-        radio_search_consider(json, query, &best);
+        if (must_word) radio_search_consider(json, must_word, &best, true);
+        else radio_search_consider(json, query, &best);
         return true;
     });
     if (!best.found) return false;
@@ -734,13 +737,13 @@ std::size_t radio_catalog_discover_city(const char *city, RadioStation *stations
 }
 
 bool radio_catalog_resolve_stream(const char *query, char *url, std::size_t capacity,
-                                  RadioCatalogCancelled cancelled) {
+                                  RadioCatalogCancelled cancelled, const char *must_word) {
     if (!query || !url || capacity == 0) return false;
     url[0] = '\0';
     const DirectoryServers servers = directory_servers(cancelled);
     RadioStation found = {};
     std::size_t results = 0;
-    if (!resolve_search_preset(servers, query, "", "", &found, cancelled, &results)) {
+    if (!resolve_search_preset(servers, query, "", "", &found, cancelled, &results, must_word)) {
         ESP_LOGI(kTag, "Stream search \"%s\": %u results, no usable stream", query, (unsigned)results);
         return false;
     }

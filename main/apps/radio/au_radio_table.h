@@ -101,6 +101,9 @@ bool area_for_selection_detail(const char *choice, const char *city, const char 
 // ("KIIS 106.5" -> "KIIS", "ABC Radio 774 AM" -> "ABC Radio"). False when nothing would
 // be dropped, when the result would be empty, or when `out` is too small.
 bool shorter_query(const char *query, char *out, std::size_t capacity);
+// The first space-delimited word of `query` ("SEN 1170" -> "SEN"). False when there is
+// no word or `out` is too small.
+bool first_word(const char *query, char *out, std::size_t capacity);
 
 // Area picker state machine (states, then areas of the chosen state). Pure logic: the
 // UI renders label() rows and feeds it up/down/OK/long-OK. At the areas level the rows are

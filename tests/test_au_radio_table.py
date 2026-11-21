@@ -121,7 +121,7 @@ with tempfile.TemporaryDirectory(prefix='passport-au-radio-') as tmp:
     streams.write_text('name,url,codec,checked\n'
                        'Test FM 1,https://streams.example.test/fm1.mp3,mp3,2026-11-01\n'
                        'Test AM 1,https://streams.example.test/fm1.mp3,mp3,2026-11-01\n'
-                       'Test DAB 1,http://streams.example.test/dab.aac,aac,2026-11-01\n', encoding='utf-8')
+                       'Test DAB 1,http://streams.example.test/dab.aac,aac,pattern\n', encoding='utf-8')
     baked = tmp / 'baked.inc'
     subprocess.run([sys.executable, str(GEN), '--input', str(source), '--streams', str(streams),
                     '--output', str(baked)], check=True, capture_output=True)
@@ -135,6 +135,7 @@ with tempfile.TemporaryDirectory(prefix='passport-au-radio-') as tmp:
         'not http': 'Test FM 1,ftp://streams.example.test/x.mp3,mp3,2026-11-01',
         'codec': 'Test FM 1,https://streams.example.test/x.mp3,ogg,2026-11-01',
         'date': 'Test FM 1,https://streams.example.test/x.mp3,mp3,2026-13-01',
+        'checked word': 'Test FM 1,https://streams.example.test/x.mp3,mp3,patterned',
         'duplicate': 'Test FM 1,https://streams.example.test/x.mp3,mp3,2026-11-01\nTest FM 1,https://streams.example.test/y.mp3,mp3,2026-11-01',
         'quote': 'Test FM 1,https://streams.example.test/"x.mp3,mp3,2026-11-01',
     }
