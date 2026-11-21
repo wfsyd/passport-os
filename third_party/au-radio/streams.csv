@@ -10,7 +10,7 @@ FBi Radio,http://streamer.fbiradio.com/stream,aac,2026-11-21
 2SER,http://138.25.219.25:840/2ser128.MP3,aac,2026-11-21
 PBS 106.7,http://playerservices.streamtheworld.com/api/livestream-redirect/3PBS_FMAACHIGH.aac,aac,2026-11-21
 4RPH,http://audio-edge-vqwx4.yyz.g.radiomast.io/2416c895-f32d-4faa-90a6-b2cf9212488d,aac,2026-11-21
-2Day FM,http://legacy.scahw.com.au/2day_32,aac,2026-11-21
+2Day FM,http://sa47.scastream.com.au/2day_128?sca3xx=1,aac,pattern
 2HD,http://streaming.hdserver.biz:9388/,aac,2026-11-21
 4BC,http://playerservices.streamtheworld.com/api/livestream-redirect/4BC.mp3,aac,2026-11-21
 ABC Canberra,http://abc.streamguys1.com/live/localcanberra/icecast.audio,aac,pattern
