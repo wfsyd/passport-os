@@ -1,0 +1,6 @@
+area_id,area_name,state,lat,lon,band,freq,dab_block,name,query
+A1,Testville,TST,-33.8,151.2,FM,1000,,Test FM 1,Test FM 1
+A1,Testville,TST,-33.8,151.2,FM,1010,,Test FM 2,Test FM 2
+A1,Testville,TST,-33.8,151.2,AM,630,,Test AM 1,Test AM 1
+A1,Testville,TST,-33.8,151.2,DAB,0,9A,Test DAB 1,Test DAB 1
+A2,Fixtureton,FX,-37.8,144.9,FM,900,,Test FM 3,Test FM 3

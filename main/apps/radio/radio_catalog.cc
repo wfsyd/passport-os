@@ -721,3 +721,14 @@ std::size_t radio_catalog_discover_city(const char *city, RadioStation *stations
     if (city) copy_text(preferred.city, sizeof(preferred.city), city);
     return radio_catalog_discover_location(preferred, stations, capacity, location);
 }
+
+bool radio_catalog_resolve_stream(const char *query, char *url, std::size_t capacity,
+                                  RadioCatalogCancelled cancelled) {
+    if (!query || !url || capacity == 0) return false;
+    url[0] = '\0';
+    const DirectoryServers servers = directory_servers(cancelled);
+    RadioStation found = {};
+    if (!resolve_search_preset(servers, query, "", "", &found, cancelled)) return false;
+    std::snprintf(url, capacity, "%s", found.url);
+    return url[0] != '\0';
+}

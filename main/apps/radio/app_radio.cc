@@ -2,6 +2,7 @@
 #include "apps/radio/radio_ui.h"
 #include "apps/radio/radio_player.h"
 #include "apps/radio/radio_catalog.h"
+#include "apps/radio/au_radio_table.h"
 #include "apps/home/home_profile.h"
 #include "voice_intent.h"
 #include "freertos/FreeRTOS.h"
@@ -65,6 +66,16 @@ void end_stop_timer() {
 
 bool catalog_cancelled() { return s_catalog_cancel.load() || !s_radio_active.load(); }
 
+// Table mode applies to an AU profile that the bundled station table covers. Other
+// profiles, and voice city requests, keep directory discovery.
+bool table_area_for_profile(std::size_t *area) {
+    home_profile_t profile;
+    home_profile_get(&profile);
+    const char *country = profile.country_code[0] ? profile.country_code : PASSPORT_DEFAULT_COUNTRY;
+    if (std::strcmp(country, "AU") != 0) return false;
+    return au_radio::area_for_profile(profile.city, profile.region, profile.lat, profile.lon, area);
+}
+
 // First station whose name contains the spoken keywords, else the top one.
 std::size_t voice_station(const RadioStation *stations, std::size_t count, const char *keywords) {
     if (keywords && keywords[0])
@@ -86,6 +97,22 @@ void catalog_worker(void *arg) {
         s_catalog_running.store(false);
         xSemaphoreGive(s_catalog_commit);
         ESP_LOGW(TAG, "Catalog deferred: player has not released stream resources");
+        vTaskDelete(nullptr);
+        return;
+    }
+    std::size_t table_area = 0;
+    if (!s_voice.load(std::memory_order_acquire) && table_area_for_profile(&table_area)) {
+        // Table mode: the rows come from flash, so no directory HTTP runs here.
+        xSemaphoreTake(s_catalog_commit, portMAX_DELAY);
+        const bool alive = !catalog_cancelled() && s_ui_alive.load();
+        if (alive && radio_player_replace_table(table_area)) {
+            ESP_LOGI(TAG, "Station table: %s", au_radio::area_name(table_area));
+            radio_ui_set_location(au_radio::area_name(table_area));
+            s_catalog_installed.store(true);
+        }
+        if (alive) radio_player_set_playing(true);
+        xSemaphoreGive(s_catalog_commit);
+        s_catalog_running.store(false);
         vTaskDelete(nullptr);
         return;
     }

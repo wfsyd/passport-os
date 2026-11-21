@@ -38,6 +38,7 @@ idf_component_register(
         "fonts/ui_font_20.c"
         "fonts/ui_digits_32.c"
         "apps/radio/app_radio.cc"
+        "apps/radio/au_radio_table.cc"
         "apps/radio/radio_catalog.cc"
         "apps/radio/radio_display_settings.cc"
         "apps/radio/radio_player.cc"

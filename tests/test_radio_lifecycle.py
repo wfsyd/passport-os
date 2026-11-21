@@ -39,6 +39,7 @@ static std::atomic<unsigned> s_generation,s_station_count,s_station_index;
 static void *s_station_mutex,*s_player_stopped;
 static bool s_decoders_registered;
 static RadioStation *s_stations;
+static std::atomic<bool> s_table_mode;
 static constexpr unsigned kMaxStations=10,kStreamStackBytes=7168;
 static int s_stream_tcb,token;
 static const RadioStation kRadioPresets[1]={{"test","test","https://example.invalid",0}};
@@ -69,7 +70,10 @@ uint8_t radio_player_volume(){return 80;}
 static void radio_ui_set_station(unsigned,unsigned,RadioStation){}
 static void radio_ui_set_volume(unsigned){}
 struct RadioLocation {char city[64],region[64],search_city[64],country_code[4];};
-struct home_profile_t {char city[64],region[64],radio_city[64],country_code[4];};
+struct home_profile_t {char city[64],region[64],radio_city[64],country_code[4],lat[16],lon[16];};
+namespace au_radio{inline bool area_for_profile(const char*,const char*,const char*,const char*,std::size_t*){return false;}
+inline const char *area_name(std::size_t){return "";}}
+bool radio_player_replace_table(std::size_t){return false;}
 static std::atomic<bool> s_catalog_cancel,s_radio_active,s_ui_alive,s_catalog_running,s_catalog_installed;
 static void *s_catalog_commit=&token;
 static bool idle=true,playing,fail_catalog_alloc,cancel_during_wait;

@@ -38,6 +38,9 @@ std::size_t radio_player_station_index();
 std::size_t radio_player_station_count();
 RadioStation radio_player_station(std::size_t index);
 bool radio_player_replace_stations(const RadioStation *stations, std::size_t count);
+// Table mode: installs the bundled AU station table for one area (see au_radio_table.h).
+// Stream URLs resolve when a row is tuned. Returns false when the area has no rows.
+bool radio_player_replace_table(std::size_t area);
 // Installs a catalog and keeps listening to the station the user last chose
 // when the new catalog still offers it, so a restart resumes where it left off.
 bool radio_player_replace_stations_resuming(const RadioStation *stations,
