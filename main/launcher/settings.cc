@@ -307,11 +307,17 @@ void settings_on_key(uint8_t btn, app_btn_event_t event, uint16_t) {
                 app_registry_switch_to(APP_ID_WIFI);
                 return;
             case 6:
+                app_registry_hold_refresh(true);
                 settings_stop();
                 if (!wifi_picker_open()) settings_start();
+                app_registry_hold_refresh(false);
                 return;
             case 7:
-                settings_stop(); network_diagnostics_open(); return;
+                app_registry_hold_refresh(true);
+                settings_stop();
+                network_diagnostics_open();
+                app_registry_hold_refresh(false);
+                return;
             case 8:
                 if (!s_reset_pending) {
                     s_reset_pending = true;
