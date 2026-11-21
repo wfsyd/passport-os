@@ -26,8 +26,14 @@ esp_err_t bsp_audio_init_feedback(void);
 // 关闭并卸载 codec/I2S,归还 DMA 与 codec 占用的堆(开机音效等一次性用途)。
 // 之后的 bsp_audio_init() 可完整重建。运行中的 App 不得调用(会拆掉它的音频)。
 void bsp_audio_deinit(void);
-// Final power-off step only: close codec and retain its control lock until sleep.
-void bsp_audio_prepare_sleep(void);
+// Final power-off step only: close codec, force the ES8311 suspend sequence
+// (REG45=0x01 included) with readback and one retry, stop I2S TX/RX, and keep
+// the control lock until deep sleep. Must run before any I2C isolation.
+// Returns ESP_FAIL if the suspend could not be verified; callers may still sleep.
+esp_err_t bsp_audio_prepare_sleep(void);
+// Deep sleep only, after bsp_audio_prepare_sleep(): switch the I2S pins to
+// high-impedance inputs. Not usable for light sleep; no I2S resume in this boot.
+esp_err_t bsp_audio_prepare_deep_sleep(void);
 
 // 设置采样格式。同格式重复调用是廉价的(直接复用已打开的 codec)。
 //

@@ -73,8 +73,10 @@ const posts=()=>requests.filter(r=>r.options.method==='POST');
  get('name').value='新名字';
  get('file').files=[{size:1000}];await get('file').onchange();
  get('shareFile').files=[{size:1000}];await get('shareFile').onchange();
- failShare=true;await get('save').onclick();assert.equal(posts().filter(r=>r.url.startsWith('/api/finish')).length,0,'failed image must not close hotspot');assert.equal(get('save').disabled,false);
- req=posts().find(r=>r.url.startsWith('/api/profile'));let profile=JSON.parse(req.options.body);assert.equal(profile.name,'新名字');assert.equal(profile.address,'原地址','address field removed; saved value is preserved');assert.equal(profile.city,'自定义城市');assert.equal(profile.lat,'22.3','preserve custom weather coordinates');
+ get('aiUsage').value='https://192.168.1.20:8787/usage.json';await get('save').onclick();assert.equal(posts().filter(r=>r.url.startsWith('/api/profile')).length,0,'AI usage URL must start with http:// and is refused before saving');
+get('aiUsage').value='http://192.168.1.20:8787/usage.json?t=abc';
+failShare=true;await get('save').onclick();assert.equal(posts().filter(r=>r.url.startsWith('/api/finish')).length,0,'failed image must not close hotspot');assert.equal(get('save').disabled,false);
+ req=posts().find(r=>r.url.startsWith('/api/profile'));let profile=JSON.parse(req.options.body);assert.equal(profile.name,'新名字');assert.equal(profile.ai_usage_url,'http://192.168.1.20:8787/usage.json?t=abc','AI usage helper URL is saved with the profile');assert.equal(profile.address,'原地址','address field removed; saved value is preserved');assert.equal(profile.city,'自定义城市');assert.equal(profile.lat,'22.3','preserve custom weather coordinates');
  req=posts().find(r=>r.url.startsWith('/api/avatar'));assert.equal(req.options.body.byteLength,4976);assert.equal(req.options.body[4],3);
  // Failed avatar uploads retain the page and pending image for a later retry.
  for(const [code,message] of [['avatar_size',/长度不匹配/],['avatar_recv',/传输中断/],['avatar_store',/原头像已保留/]]){
@@ -206,8 +208,15 @@ const posts=()=>requests.filter(r=>r.options.method==='POST');
  assert.equal(posts().filter(r=>r.url.startsWith('/api/avatar')).at(-1).options.body.byteLength,4976);
  assert.equal(posts().filter(r=>r.url.startsWith('/api/share')).at(-1).options.body.type,'image/jpeg');
  // Nationwide search and stable ids distinguish repeated county names.
- assert.ok(cityCatalog.length>=3000);assert.equal(new Set(cityCatalog.map(c=>c[4])).size,34);
- get('province').value='广东';get('province').onchange();
+ assert.ok(cityCatalog.length>=3000);assert.equal(new Set(cityCatalog.map(c=>c[4])).size,42);
+ // Australian rows keep their country, and their English state names drive the same province filter.
+assert.equal(cityCatalog.filter(c=>c[6]==='AU').length,275);
+assert.equal(cityCatalog.find(c=>c[1]==='Sydney')[6],'AU');
+assert.ok(html.includes("regionCountry[region]||'CN'"));
+get('province').value='New South Wales';get('province').onchange();
+assert.match(get('cityStatus').textContent,/找到 \d+ 个地点/);
+assert.ok(get('city').options.some(o=>o.value==='AUNSW001'));
+get('province').value='广东';get('province').onchange();
  get('citySearch').value='珠海';get('citySearch').oninput();
  const zhuhai=cityCatalog.find(c=>c[1]==='珠海'&&c[4]==='广东');
  assert.ok(get('city').options.some(o=>o.value===zhuhai[0]));

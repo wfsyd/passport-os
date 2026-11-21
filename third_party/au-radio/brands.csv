@@ -1,0 +1,641 @@
+state,callsign,band,freq,brand,query,source,confidence
+SA,5RN,AM,729,ABC Radio National,Radio National,national callsign pattern,high
+SA,5AN,AM,891,ABC Adelaide,ABC Adelaide,ABC local callsign (well-known),high
+SA,5PB,AM,972,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+SA,5AA,AM,1395,FIVEaa,FIVEaa,memory; not checked against a source,medium
+VIC,3RN,AM,990,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2RN,AM,720,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4QR,AM,612,ABC Brisbane,ABC Brisbane,ABC local callsign (well-known),high
+QLD,4KQ,AM,693,4KQ,4KQ,memory; not checked against a source,medium
+QLD,4RN,AM,792,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4BC,AM,882,4BC,4BC,memory; not checked against a source,medium
+QLD,4PB,AM,936,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+QLD,4RPH,AM,1296,4RPH,4RPH,memory; not checked against a source,medium
+WA,6PB,AM,1152,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+WA,6RN,AM,1269,ABC Radio National,Radio National,national callsign pattern,high
+ACT,2CN,AM,666,ABC Canberra,ABC Canberra,ABC local callsign (well-known),high
+ACT,2RN,AM,846,ABC Radio National,Radio National,national callsign pattern,high
+ACT,2CA,AM,1053,2CA,2CA,memory; not checked against a source,medium
+ACT,1RPH,AM,1125,Vision Australia Radio Canberra,Vision Australia Radio Canberra,memory; not checked against a source,medium
+ACT,2CC,AM,1206,2CC,2CC,memory; not checked against a source,medium
+ACT,1EA,AM,1440,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6RN,AM,612,ABC Radio National,Radio National,national callsign pattern,high
+NT,8RN,AM,657,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2RN,AM,1098,ABC Radio National,Radio National,national callsign pattern,high
+TAS,7RN,AM,585,ABC Radio National,Radio National,national callsign pattern,high
+TAS,7PB,AM,747,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+TAS,7RPH,AM,864,Print Radio Tasmania,Print Radio Tasmania,memory; not checked against a source,medium
+TAS,7ZR,AM,936,ABC Hobart,ABC Hobart,ABC local callsign (well-known),high
+NT,8RN,AM,639,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3RN,AM,621,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3AW,AM,693,3AW,3AW,memory; not checked against a source,medium
+VIC,3LO,AM,774,ABC Melbourne,ABC Melbourne,ABC local callsign (well-known),high
+VIC,3CR,AM,855,3CR,3CR,memory; not checked against a source,medium
+VIC,3PB,AM,1026,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+VIC,3EA,AM,1224,SBS Radio,SBS Radio,national callsign pattern,high
+VIC,3KND,AM,1503,Kool n Deadly,Kool n Deadly,memory; not checked against a source,medium
+NSW,2HD,AM,1143,2HD,2HD,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2NC,AM,1233,ABC Newcastle,ABC Newcastle,ABC local callsign (well-known),high
+NSW,2EA,AM,1413,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2PB,AM,1458,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+NSW,2RN,AM,1512,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2RN,AM,603,ABC Radio National,Radio National,national callsign pattern,high
+WA,6PB,AM,585,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+WA,6PR,AM,882,6PR,6PR,memory; not checked against a source,medium
+WA,6IX,AM,1080,6IX,6IX,memory; not checked against a source,medium
+TAS,7RN,AM,630,ABC Radio National,Radio National,national callsign pattern,high
+SA,5RN,AM,1305,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2RN,AM,576,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2PB,AM,630,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+NSW,2BL,AM,702,ABC Sydney,ABC Sydney,ABC local callsign (well-known),high
+NSW,2GB,AM,873,2GB,2GB,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2UE,AM,954,2UE,2UE,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2KY,AM,1017,Sky Sports Radio,Sky Sports Radio,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2EA,AM,1107,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2CH,AM,1170,SEN 1170,SEN 1170,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2SM,AM,1269,2SM,2SM,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NT,8RN,AM,684,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4QN,AM,630,ABC Townsville,ABC Townsville,ABC local callsign (well-known),high
+WA,6RN,AM,1296,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3RN,AM,756,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2RN,AM,1485,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2EA,AM,1035,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2RN,AM,1431,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2EA,AM,1485,SBS Radio,SBS Radio,national callsign pattern,high
+SA,5UV,FM,1015,Radio Adelaide,Radio Adelaide,memory; not checked against a source,medium
+SA,5ABCFM,FM,1039,ABC Classic,ABC Classic,national callsign pattern,high
+SA,5MMM,FM,1047,Triple M Adelaide,Triple M Adelaide,memory; not checked against a source,medium
+SA,5JJJ,FM,1055,triple j,triple j,national callsign pattern,high
+SA,5SBSFM,FM,1063,SBS Radio,SBS Radio,national callsign pattern,high
+SA,5SBSFM,FM,951,SBS Radio,SBS Radio,national callsign pattern,high
+SA,5JJJ,FM,959,triple j,triple j,national callsign pattern,high
+SA,5ABCFM,FM,975,ABC Classic,ABC Classic,national callsign pattern,high
+SA,5MMM,FM,983,Triple M Adelaide,Triple M Adelaide,memory; not checked against a source,medium
+NT,8MIX,FM,981,Mix 104.9,Mix 104.9,memory; not checked against a source,medium
+NT,8ABCRN,FM,1005,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,931,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCFM,FM,955,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3ABCRN,FM,1045,ABC Radio National,Radio National,national callsign pattern,high
+NT,8JJJ,FM,949,triple j,triple j,national callsign pattern,high
+NT,8ABCFM,FM,979,ABC Classic,ABC Classic,national callsign pattern,high
+NT,8ABCRN,FM,997,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,1073,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,981,triple j,triple j,national callsign pattern,high
+QLD,4ABCFM,FM,989,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4ABCRN,FM,997,ABC Radio National,Radio National,national callsign pattern,high
+SA,5ABCRN,FM,1075,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,997,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCRN,FM,1079,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,1075,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,1011,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,1035,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4ABCRN,FM,1077,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,991,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,941,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3ABCRN,FM,1063,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3ABCFM,FM,1055,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3JJJ,FM,1071,triple j,triple j,national callsign pattern,high
+VIC,3SBSFM,FM,959,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCRN,FM,1027,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1043,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,931,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCFM,FM,977,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,1057,triple j,triple j,national callsign pattern,high
+WA,6ABCFM,FM,991,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6ABCRN,FM,1007,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1055,triple j,triple j,national callsign pattern,high
+NT,8ABCRN,FM,921,ABC Radio National,Radio National,national callsign pattern,high
+NT,8JJJ,FM,929,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,1019,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,1051,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2SBSFM,FM,911,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2JJJ,FM,959,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,967,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2ABCFM,FM,975,ABC Classic,ABC Classic,national callsign pattern,high
+NT,8ABCRN,FM,929,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2SBSFM,FM,925,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4JJJ,FM,997,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,1029,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2ABCFM,FM,993,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2JJJ,FM,1001,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,1009,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,983,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,999,triple j,triple j,national callsign pattern,high
+VIC,3JJJ,FM,903,triple j,triple j,national callsign pattern,high
+VIC,3ABCFM,FM,927,ABC Classic,ABC Classic,national callsign pattern,high
+NT,8JJJ,FM,1041,triple j,triple j,national callsign pattern,high
+TAS,7ABCRN,FM,913,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1029,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,1045,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCRN,FM,943,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,1053,ABC Radio National,Radio National,national callsign pattern,high
+WA,6WF,FM,959,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+WA,6JJJ,FM,983,triple j,triple j,national callsign pattern,high
+NSW,2JJJ,FM,1035,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,921,ABC Radio National,Radio National,national callsign pattern,high
+NT,8ABCRN,FM,1077,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,993,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,1011,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,927,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2CN,FM,1003,ABC Canberra,ABC Canberra,ABC local callsign (well-known),high
+NSW,2SBSFM,FM,897,SBS Radio,SBS Radio,national callsign pattern,high
+VIC,3ABCFM,FM,881,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3ABCRN,FM,889,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,933,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4EB,FM,981,4EB,4EB,memory; not checked against a source,medium
+QLD,4ZZZ,FM,1021,4ZZZ,4ZZZ,memory; not checked against a source,medium
+QLD,4MBS,FM,1037,4MBS Classic,4MBS Classic,memory; not checked against a source,medium
+QLD,4MMM,FM,1045,Triple M Brisbane,Triple M Brisbane,memory; not checked against a source,medium
+QLD,4ABCFM,FM,1061,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4BNE,FM,1069,Nova 106.9,Nova 106.9,memory; not checked against a source,medium
+QLD,4JJJ,FM,1077,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,1029,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1045,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,1037,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,1069,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,1021,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,1029,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2ABCFM,FM,1037,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6SBSFM,FM,917,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,949,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,1077,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,909,triple j,triple j,national callsign pattern,high
+WA,6ABCFM,FM,933,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6JJJ,FM,941,triple j,triple j,national callsign pattern,high
+QLD,4JJJ,FM,979,triple j,triple j,national callsign pattern,high
+NSW,2JJJ,FM,889,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,897,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,1051,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCFM,FM,1059,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,1075,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,905,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCRN,FM,939,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCFM,FM,947,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,971,triple j,triple j,national callsign pattern,high
+ACT,1ART,FM,927,Artsound FM,Artsound FM,memory; not checked against a source,medium
+ACT,2JJJ,FM,1015,triple j,triple j,national callsign pattern,high
+ACT,2ABCFM,FM,1023,ABC Classic,ABC Classic,national callsign pattern,high
+ACT,2PB,FM,1039,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+ACT,2SBSFM,FM,1055,SBS Radio,SBS Radio,national callsign pattern,high
+VIC,3ABCRN,FM,1077,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCFM,FM,901,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2PB,FM,885,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+QLD,4SBSFM,FM,897,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCRN,FM,929,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,901,triple j,triple j,national callsign pattern,high
+QLD,4ABCRN,FM,933,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,957,triple j,triple j,national callsign pattern,high
+QLD,4JJJ,FM,1033,triple j,triple j,national callsign pattern,high
+QLD,4JJJ,FM,1001,triple j,triple j,national callsign pattern,high
+QLD,4JJJ,FM,889,triple j,triple j,national callsign pattern,high
+SA,5ABCRN,FM,1077,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,981,triple j,triple j,national callsign pattern,high
+WA,6ABCFM,FM,989,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2JJJ,FM,1019,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,1027,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,1043,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,1023,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,1055,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,1079,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,1005,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1017,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,905,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,1009,triple j,triple j,national callsign pattern,high
+QLD,4ABCRN,FM,975,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,925,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1021,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,1037,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCFM,FM,1045,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,943,triple j,triple j,national callsign pattern,high
+QLD,4JJJ,FM,1053,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,1061,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,903,triple j,triple j,national callsign pattern,high
+WA,6WF,FM,975,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+WA,6WF,FM,955,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+WA,6JJJ,FM,1019,triple j,triple j,national callsign pattern,high
+WA,6WF,FM,987,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+WA,6JJJ,FM,1035,triple j,triple j,national callsign pattern,high
+NSW,2JJJ,FM,1013,triple j,triple j,national callsign pattern,high
+NSW,2SBSFM,FM,1053,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2ABCFM,FM,1069,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,1077,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,1075,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,965,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,889,ABC Radio National,Radio National,national callsign pattern,high
+SA,5SBSFM,FM,933,SBS Radio,SBS Radio,national callsign pattern,high
+SA,5JJJ,FM,1013,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,953,ABC Radio National,Radio National,national callsign pattern,high
+WA,6SBSFM,FM,1071,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2SBSFM,FM,1029,SBS Radio,SBS Radio,national callsign pattern,high
+VIC,3ABCRN,FM,981,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,979,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,991,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2SBSFM,FM,959,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2ABCRN,FM,1045,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1013,triple j,triple j,national callsign pattern,high
+TAS,7JJJ,FM,981,triple j,triple j,national callsign pattern,high
+TAS,7ABCRN,FM,989,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,965,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,993,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,1079,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1041,triple j,triple j,national callsign pattern,high
+QLD,4ABCRN,FM,1057,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCFM,FM,1073,ABC Classic,ABC Classic,national callsign pattern,high
+NT,8SBSFM,FM,1009,SBS Radio,SBS Radio,national callsign pattern,high
+NT,8JJJ,FM,1033,triple j,triple j,national callsign pattern,high
+NT,8MIX,FM,1049,Mix 104.9,Mix 104.9,memory; not checked against a source,medium
+NT,8DDD,FM,1057,ABC Darwin,ABC Darwin,ABC local callsign (well-known),high
+NT,8ABCFM,FM,1073,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6SBSFM,FM,1005,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2ABCRN,FM,993,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1059,triple j,triple j,national callsign pattern,high
+TAS,7RPH,FM,961,Print Radio Tasmania,Print Radio Tasmania,memory; not checked against a source,medium
+NSW,2SBSFM,FM,1005,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4JJJ,FM,897,triple j,triple j,national callsign pattern,high
+QLD,4ABCRN,FM,913,ABC Radio National,Radio National,national callsign pattern,high
+SA,5JJJ,FM,1053,triple j,triple j,national callsign pattern,high
+WA,6WF,FM,1069,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+VIC,3ABCRN,FM,973,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,937,triple j,triple j,national callsign pattern,high
+QLD,4ABCRN,FM,953,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,927,triple j,triple j,national callsign pattern,high
+QLD,4ABCFM,FM,907,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,893,triple j,triple j,national callsign pattern,high
+QLD,4ABCFM,FM,905,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6ABCFM,FM,1047,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6ABCRN,FM,1063,ABC Radio National,Radio National,national callsign pattern,high
+WA,6SBSFM,FM,989,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,891,triple j,triple j,national callsign pattern,high
+QLD,4JJJ,FM,1037,triple j,triple j,national callsign pattern,high
+QLD,4ABCRN,FM,1069,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1049,triple j,triple j,national callsign pattern,high
+NT,8ABCRN,FM,1075,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1065,triple j,triple j,national callsign pattern,high
+QLD,4JJJ,FM,1045,triple j,triple j,national callsign pattern,high
+WA,6ABCFM,FM,949,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6JJJ,FM,989,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,997,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,959,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,1009,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,941,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2ABCRN,FM,1025,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCFM,FM,885,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4ABCRN,FM,901,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SEA,FM,909,Sea FM,Sea FM,memory; not checked against a source,medium
+QLD,4GLD,FM,925,Gold 92.5,Gold 92.5,memory; not checked against a source,medium
+QLD,4JJJ,FM,977,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,1031,triple j,triple j,national callsign pattern,high
+WA,6ABCFM,FM,1063,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,1009,triple j,triple j,national callsign pattern,high
+NSW,2BL,FM,925,ABC Sydney,ABC Sydney,ABC local callsign (well-known),high
+NSW,2JJJ,FM,887,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,895,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,979,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3JJJ,FM,945,triple j,triple j,national callsign pattern,high
+VIC,3ABCFM,FM,961,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2JJJ,FM,915,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,979,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,995,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,929,triple j,triple j,national callsign pattern,high
+WA,6SBSFM,FM,1001,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,1053,triple j,triple j,national callsign pattern,high
+WA,6ABCFM,FM,1061,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4ABCRN,FM,1019,ABC Radio National,Radio National,national callsign pattern,high
+NT,8JJJ,FM,981,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,1025,triple j,triple j,national callsign pattern,high
+QLD,4ABCFM,FM,937,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4ABCRN,FM,969,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1015,triple j,triple j,national callsign pattern,high
+QLD,4JJJ,FM,1007,triple j,triple j,national callsign pattern,high
+TAS,7JJJ,FM,929,triple j,triple j,national callsign pattern,high
+TAS,7ABCFM,FM,939,ABC Classic,ABC Classic,national callsign pattern,high
+TAS,7SBSFM,FM,1057,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2SBSFM,FM,937,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6ABCRN,FM,895,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,943,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,885,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,933,triple j,triple j,national callsign pattern,high
+VIC,3ABCRN,FM,883,ABC Radio National,Radio National,national callsign pattern,high
+WA,6SBSFM,FM,957,SBS Radio,SBS Radio,national callsign pattern,high
+VIC,3ABCRN,FM,997,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,1043,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4JJJ,FM,1059,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,957,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2JJJ,FM,989,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,1027,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,967,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,941,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,957,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,965,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2ABCRN,FM,971,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1073,triple j,triple j,national callsign pattern,high
+NSW,2SBSFM,FM,987,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6ABCFM,FM,983,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6ABCFM,FM,955,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6ABCRN,FM,971,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,987,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,935,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,939,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2ABCRN,FM,1003,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1005,triple j,triple j,national callsign pattern,high
+WA,6ABCFM,FM,1037,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6ABCRN,FM,1053,ABC Radio National,Radio National,national callsign pattern,high
+WA,8JJJ,FM,1053,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,1009,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1033,triple j,triple j,national callsign pattern,high
+NT,8JJJ,FM,997,triple j,triple j,national callsign pattern,high
+NT,8MIX,FM,1069,Mix 104.9,Mix 104.9,memory; not checked against a source,medium
+SA,5ABCRN,FM,969,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,919,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,881,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,913,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,1025,ABC Radio National,Radio National,national callsign pattern,high
+NT,8ABCRN,FM,1045,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,925,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,897,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,961,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,1073,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2HD,FM,905,2HD,2HD,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+QLD,4JJJ,FM,975,triple j,triple j,national callsign pattern,high
+QLD,4ABCRN,FM,991,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3JJJ,FM,967,triple j,triple j,national callsign pattern,high
+VIC,3ABCFM,FM,1015,ABC Classic,ABC Classic,national callsign pattern,high
+TAS,7RPH,FM,1069,Print Radio Tasmania,Print Radio Tasmania,memory; not checked against a source,medium
+WA,6SBSFM,FM,949,SBS Radio,SBS Radio,national callsign pattern,high
+SA,5ABCRN,FM,1061,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCFM,FM,1045,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6SBSFM,FM,953,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,969,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,937,ABC Radio National,Radio National,national callsign pattern,high
+TAS,7ABCRN,FM,897,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2SBSFM,FM,989,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2SBSFM,FM,1079,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4SBSFM,FM,1013,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCFM,FM,1021,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,1061,triple j,triple j,national callsign pattern,high
+QLD,4ABCFM,FM,979,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,995,triple j,triple j,national callsign pattern,high
+VIC,3ABCRN,FM,1033,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,897,triple j,triple j,national callsign pattern,high
+NT,8ABCRN,FM,1029,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,963,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,987,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3ABCRN,FM,1053,ABC Radio National,Radio National,national callsign pattern,high
+SA,5ABCRN,FM,1073,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3SBSFM,FM,1045,SBS Radio,SBS Radio,national callsign pattern,high
+NT,8JJJ,FM,1069,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,1003,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,979,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCRN,FM,1043,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3SYN,FM,907,SYN,SYN,memory; not checked against a source,medium
+VIC,3PTV,FM,915,Smooth 91.5,Smooth 91.5,memory; not checked against a source,medium
+VIC,3SBSFM,FM,931,SBS Radio,SBS Radio,national callsign pattern,high
+VIC,3MEL,FM,1003,Nova 100,Nova 100,memory; not checked against a source,medium
+VIC,3RRR,FM,1027,3RRR,3RRR,memory; not checked against a source,medium
+VIC,3MBS,FM,1035,Fine Music,Fine Music,memory; not checked against a source,medium
+VIC,3KKZ,FM,1043,Gold 104.3,Gold 104.3,memory; not checked against a source,medium
+VIC,3MMM,FM,1051,Triple M Melbourne,Triple M Melbourne,memory; not checked against a source,medium
+VIC,3ABCFM,FM,1059,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3PBS,FM,1067,PBS 106.7,PBS 106.7,memory; not checked against a source,medium
+VIC,3JJJ,FM,1075,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,957,ABC Radio National,Radio National,national callsign pattern,high
+NT,8JJJ,FM,1043,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,1035,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,985,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1001,triple j,triple j,national callsign pattern,high
+VIC,3SBSFM,FM,987,SBS Radio,SBS Radio,national callsign pattern,high
+VIC,3JJJ,FM,1011,triple j,triple j,national callsign pattern,high
+VIC,3ABCFM,FM,1027,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3ABCRN,FM,1059,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,921,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,899,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,909,ABC Radio National,Radio National,national callsign pattern,high
+SA,5JJJ,FM,1045,triple j,triple j,national callsign pattern,high
+WA,6SBSFM,FM,1035,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,1051,triple j,triple j,national callsign pattern,high
+QLD,4ABCRN,FM,1065,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,929,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6SBSFM,FM,935,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,1063,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,951,SBS Radio,SBS Radio,national callsign pattern,high
+SA,5JJJ,FM,1025,triple j,triple j,national callsign pattern,high
+SA,5ABCRN,FM,1033,ABC Radio National,Radio National,national callsign pattern,high
+SA,5ABCFM,FM,1041,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4ABCRN,FM,973,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCFM,FM,1017,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6JJJ,FM,985,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,993,ABC Radio National,Radio National,national callsign pattern,high
+NT,8JJJ,FM,1001,triple j,triple j,national callsign pattern,high
+NT,8ABCRN,FM,1073,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,953,triple j,triple j,national callsign pattern,high
+WA,6WF,FM,1065,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+VIC,3ABCFM,FM,1037,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3JJJ,FM,1053,triple j,triple j,national callsign pattern,high
+NSW,2JJJ,FM,965,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,973,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,989,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2SBSFM,FM,1001,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2ABCRN,FM,1041,ABC Radio National,Radio National,national callsign pattern,high
+NT,8ABCRN,FM,917,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,1005,SBS Radio,SBS Radio,national callsign pattern,high
+VIC,3SBSFM,FM,973,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCFM,FM,887,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,895,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,897,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,989,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2SBSFM,FM,935,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6ABCFM,FM,925,ABC Classic,ABC Classic,national callsign pattern,high
+TAS,7JJJ,FM,909,triple j,triple j,national callsign pattern,high
+TAS,7ABCFM,FM,933,ABC Classic,ABC Classic,national callsign pattern,high
+TAS,7ABCRN,FM,941,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,947,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2NUR,FM,1037,2NUR,2NUR,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2ABCFM,FM,1061,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4JJJ,FM,1073,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,937,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCFM,FM,943,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6WF,FM,983,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+WA,6JJJ,FM,1017,triple j,triple j,national callsign pattern,high
+VIC,3ABCRN,FM,957,ABC Radio National,Radio National,national callsign pattern,high
+NT,8SBSFM,FM,997,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2SBSFM,FM,1063,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4SBSFM,FM,969,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2SBSFM,FM,1071,SBS Radio,SBS Radio,national callsign pattern,high
+VIC,3ABCRN,FM,987,ABC Radio National,Radio National,national callsign pattern,high
+TAS,7ABCRN,FM,889,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1061,triple j,triple j,national callsign pattern,high
+NSW,2SBSFM,FM,1013,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2SBSFM,FM,1009,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6RTR,FM,921,RTRFM,RTRFM,memory; not checked against a source,medium
+WA,6MMM,FM,929,Triple M Perth,Triple M Perth,memory; not checked against a source,medium
+WA,6MIX,FM,945,Mix 94.5,Mix 94.5,memory; not checked against a source,medium
+WA,6SBSFM,FM,969,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6ABCFM,FM,977,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6WF,FM,1025,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+WA,6RN,FM,1033,ABC Radio National,Radio National,national callsign pattern,high
+WA,6PB,FM,1041,ABC NewsRadio,ABC NewsRadio,national callsign pattern,high
+WA,6JJJ,FM,913,triple j,triple j,national callsign pattern,high
+QLD,4JJJ,FM,991,triple j,triple j,national callsign pattern,high
+NT,8ABCRN,FM,1037,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,1055,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6ABCFM,FM,973,ABC Classic,ABC Classic,national callsign pattern,high
+SA,5JJJ,FM,923,triple j,triple j,national callsign pattern,high
+SA,5ABCFM,FM,931,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2SBSFM,FM,1077,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2NC,FM,959,ABC Newcastle,ABC Newcastle,ABC local callsign (well-known),high
+NSW,2HD,FM,975,2HD,2HD,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2ABCRN,FM,983,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3ABCRN,FM,985,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2ABCRN,FM,925,ABC Radio National,Radio National,national callsign pattern,high
+SA,5JJJ,FM,929,triple j,triple j,national callsign pattern,high
+TAS,7SBSFM,FM,937,SBS Radio,SBS Radio,national callsign pattern,high
+TAS,7JJJ,FM,889,triple j,triple j,national callsign pattern,high
+SA,5ABCRN,FM,1079,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,907,triple j,triple j,national callsign pattern,high
+WA,6SBSFM,FM,947,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2JJJ,FM,917,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,915,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,931,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,1001,ABC Radio National,Radio National,national callsign pattern,high
+SA,5JJJ,FM,1019,triple j,triple j,national callsign pattern,high
+SA,5ABCFM,FM,1051,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCFM,FM,953,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2JJJ,FM,961,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,969,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,1031,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1047,triple j,triple j,national callsign pattern,high
+QLD,4ABCFM,FM,1063,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6IX,FM,1057,6IX,6IX,memory; not checked against a source,medium
+QLD,4JJJ,FM,985,triple j,triple j,national callsign pattern,high
+TAS,7SBSFM,FM,1015,SBS Radio,SBS Radio,national callsign pattern,high
+TAS,7JJJ,FM,1027,triple j,triple j,national callsign pattern,high
+TAS,7ABCRN,FM,1079,ABC Radio National,Radio National,national callsign pattern,high
+SA,5SBSFM,FM,923,SBS Radio,SBS Radio,national callsign pattern,high
+SA,5JJJ,FM,939,triple j,triple j,national callsign pattern,high
+SA,5ABCRN,FM,1019,ABC Radio National,Radio National,national callsign pattern,high
+SA,5ABCFM,FM,1035,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6JJJ,FM,997,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,935,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1075,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,1011,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,959,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1007,triple j,triple j,national callsign pattern,high
+WA,6WF,FM,1055,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+WA,6ABCFM,FM,945,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6ABCRN,FM,969,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1039,triple j,triple j,national callsign pattern,high
+SA,5JJJ,FM,1035,triple j,triple j,national callsign pattern,high
+SA,5ABCFM,FM,1043,ABC Classic,ABC Classic,national callsign pattern,high
+SA,5ABCRN,FM,1067,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1051,triple j,triple j,national callsign pattern,high
+QLD,4SBSFM,FM,993,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCRN,FM,1009,ABC Radio National,Radio National,national callsign pattern,high
+TAS,7ABCRN,FM,961,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,957,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,973,SBS Radio,SBS Radio,national callsign pattern,high
+TAS,7ABCRN,FM,1011,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,1003,ABC Radio National,Radio National,national callsign pattern,high
+TAS,7SBSFM,FM,947,SBS Radio,SBS Radio,national callsign pattern,high
+TAS,7JJJ,FM,1019,triple j,triple j,national callsign pattern,high
+TAS,7ABCRN,FM,1059,ABC Radio National,Radio National,national callsign pattern,high
+SA,5ABCRN,FM,1009,ABC Radio National,Radio National,national callsign pattern,high
+SA,5JJJ,FM,1033,triple j,triple j,national callsign pattern,high
+NSW,2ABCFM,FM,883,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,891,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,907,triple j,triple j,national callsign pattern,high
+TAS,7ABCRN,FM,1077,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3ABCRN,FM,1035,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2ABCFM,FM,929,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2FBI,FM,945,FBi Radio,FBi Radio,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2PTV,FM,953,Smooth 95.3,Smooth 95.3,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2SYD,FM,969,Nova 96.9,Nova 96.9,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2SBSFM,FM,977,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2MBS,FM,1025,Fine Music,Fine Music,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2CBA,FM,1032,Hope 103.2,Hope 103.2,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2DAY,FM,1041,2Day FM,2Day FM,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2MMM,FM,1049,Triple M Sydney,Triple M Sydney,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2JJJ,FM,1057,triple j,triple j,national callsign pattern,high
+NSW,2WFM,FM,1065,KIIS 106.5,KIIS 106.5,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+NSW,2SER,FM,1073,2SER,2SER,memory; Wikipedia (partial) used to confirm some Sydney entries,medium
+QLD,4SBSFM,FM,1035,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2ABCRN,FM,939,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,947,triple j,triple j,national callsign pattern,high
+NSW,2SBSFM,FM,971,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2ABCFM,FM,1031,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4SBSFM,FM,903,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4JJJ,FM,1069,triple j,triple j,national callsign pattern,high
+NSW,2JJJ,FM,979,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,917,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,905,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1011,triple j,triple j,national callsign pattern,high
+SA,5JJJ,FM,1077,triple j,triple j,national callsign pattern,high
+QLD,4ABCFM,FM,1015,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4ABCRN,FM,1047,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,1055,triple j,triple j,national callsign pattern,high
+QLD,4ABCFM,FM,959,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4ABCRN,FM,967,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1029,triple j,triple j,national callsign pattern,high
+ACT,1ART,FM,903,Artsound FM,Artsound FM,memory; not checked against a source,medium
+ACT,2JJJ,FM,959,triple j,triple j,national callsign pattern,high
+ACT,2ABCFM,FM,991,ABC Classic,ABC Classic,national callsign pattern,high
+QLD,4ABCRN,FM,963,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2JJJ,FM,1061,triple j,triple j,national callsign pattern,high
+SA,5JJJ,FM,1003,triple j,triple j,national callsign pattern,high
+NSW,2SBSFM,FM,947,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2JJJ,FM,949,triple j,triple j,national callsign pattern,high
+NSW,2JJJ,FM,985,triple j,triple j,national callsign pattern,high
+NSW,2JJJ,FM,937,triple j,triple j,national callsign pattern,high
+VIC,3JJJ,FM,1033,triple j,triple j,national callsign pattern,high
+VIC,3ABCFM,FM,1041,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCFM,FM,967,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2JJJ,FM,999,triple j,triple j,national callsign pattern,high
+NSW,2ABCRN,FM,1007,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1027,triple j,triple j,national callsign pattern,high
+NSW,2SBSFM,FM,1035,SBS Radio,SBS Radio,national callsign pattern,high
+NSW,2ABCFM,FM,1059,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2ABCRN,FM,901,ABC Radio National,Radio National,national callsign pattern,high
+NSW,2ABCRN,FM,1075,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4ABCRN,FM,989,ABC Radio National,Radio National,national callsign pattern,high
+TAS,7ABCRN,FM,1049,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3JJJ,FM,897,triple j,triple j,national callsign pattern,high
+VIC,3ABCFM,FM,921,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3ABCRN,FM,1017,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4JJJ,FM,993,triple j,triple j,national callsign pattern,high
+QLD,4ABCFM,FM,1025,ABC Classic,ABC Classic,national callsign pattern,high
+WA,6JJJ,FM,899,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,947,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,925,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,933,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,1041,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,1049,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,903,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,951,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,1035,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,973,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,945,ABC Radio National,Radio National,national callsign pattern,high
+WA,6ABCRN,FM,887,ABC Radio National,Radio National,national callsign pattern,high
+WA,6JJJ,FM,921,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,995,triple j,triple j,national callsign pattern,high
+VIC,3ABCRN,FM,925,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3ABCFM,FM,933,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3JJJ,FM,949,triple j,triple j,national callsign pattern,high
+WA,6SBSFM,FM,1019,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4ABCFM,FM,985,ABC Classic,ABC Classic,national callsign pattern,high
+NSW,2JJJ,FM,957,triple j,triple j,national callsign pattern,high
+WA,6ABCFM,FM,1055,ABC Classic,ABC Classic,national callsign pattern,high
+VIC,3SBSFM,FM,895,SBS Radio,SBS Radio,national callsign pattern,high
+QLD,4SBSFM,FM,989,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6SBSFM,FM,1063,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6WF,FM,903,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+SA,5ABCRN,FM,1057,ABC Radio National,Radio National,national callsign pattern,high
+QLD,4SBSFM,FM,923,SBS Radio,SBS Radio,national callsign pattern,high
+WA,6JJJ,FM,971,triple j,triple j,national callsign pattern,high
+WA,6JJJ,FM,915,triple j,triple j,national callsign pattern,high
+WA,6WF,FM,1053,ABC Perth,ABC Perth,ABC local callsign (well-known),high
+WA,6JJJ,FM,1015,triple j,triple j,national callsign pattern,high
+WA,6ABCRN,FM,923,ABC Radio National,Radio National,national callsign pattern,high
+VIC,3LO,FM,961,ABC Melbourne,ABC Melbourne,ABC local callsign (well-known),high
+QLD,4SBSFM,FM,1025,SBS Radio,SBS Radio,national callsign pattern,high
+NT,8JJJ,FM,957,triple j,triple j,national callsign pattern,high
+NT,8ABCRN,FM,981,ABC Radio National,Radio National,national callsign pattern,high
+NT,8ABCFM,FM,989,ABC Classic,ABC Classic,national callsign pattern,high

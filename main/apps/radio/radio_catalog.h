@@ -4,6 +4,12 @@
 
 #include <cstddef>
 
+// Country used when the location is unknown (lookup failed or no profile country).
+// Set by the build option PASSPORT_DEFAULT_COUNTRY (main/CMakeLists.txt); "AU" unless overridden.
+#ifndef PASSPORT_DEFAULT_COUNTRY
+#define PASSPORT_DEFAULT_COUNTRY "AU"
+#endif
+
 struct RadioLocation {
     char country_code[4];
     char region[48];
@@ -39,3 +45,9 @@ std::size_t radio_catalog_discover_location(const RadioLocation &preferred,
                                            RadioLocation *location,
                                            RadioCatalogCancelled cancelled = nullptr,
                                            const char *voice_station = nullptr);
+
+// Table mode: resolves one stream URL by name through the AU directory. `query` is a
+// substring of the directory station name. Returns false when no playable entry
+// matches or `cancelled` reports the request as stale.
+bool radio_catalog_resolve_stream(const char *query, char *url, std::size_t capacity,
+                                  RadioCatalogCancelled cancelled = nullptr);

@@ -38,9 +38,11 @@ idf_component_register(
         "fonts/ui_font_20.c"
         "fonts/ui_digits_32.c"
         "apps/radio/app_radio.cc"
+        "apps/radio/au_radio_table.cc"
         "apps/radio/radio_catalog.cc"
         "apps/radio/radio_display_settings.cc"
         "apps/radio/radio_player.cc"
+        "apps/radio/radio_search_pick.cc"
         "apps/radio/radio_source.cc"
         "apps/radio/radio_sleep_timer.cc"
         "apps/radio/radio_ui.cc"
@@ -54,6 +56,7 @@ idf_component_register(
         "apps/voice/app_ui.c"
         "apps/voice/app_state.c"
         "apps/voice/time_sync.c"
+        "apps/voice/tz_zone.c"
         "ui/ui_pixel.c"
         "ui/ui_capture.c"
         "apps/voice/ui_pixel_math.c"
@@ -87,6 +90,8 @@ idf_component_register(
         "apps/sound_jump/jump_voice.c"
         "apps/sound_jump/jump_mic.c"
         "apps/sound_jump/app_sound_jump.cc"
+        "apps/ai_usage/ai_usage_core.c"
+        "apps/ai_usage/app_ai_usage.cc"
         "apps/stopwatch/stopwatch_core.c"
         "apps/stopwatch/app_stopwatch.cc"
         "apps/pomodoro/pomodoro_core.c"
@@ -148,3 +153,10 @@ target_add_binary_data(${COMPONENT_LIB} "${phone_setup_gz}" BINARY)
 if(PASSPORT_RADIO_HLS_TEST)
     target_compile_definitions(${COMPONENT_LIB} PRIVATE PASSPORT_RADIO_HLS_TEST=1)
 endif()
+
+# Country used for radio recommendations when location lookup fails (ISO 3166 alpha-2).
+set(PASSPORT_DEFAULT_COUNTRY "AU" CACHE STRING "Fallback country code for radio recommendations")
+if(NOT PASSPORT_DEFAULT_COUNTRY MATCHES "^[A-Z][A-Z]$")
+    message(FATAL_ERROR "PASSPORT_DEFAULT_COUNTRY must be two uppercase letters, got '${PASSPORT_DEFAULT_COUNTRY}'")
+endif()
+target_compile_definitions(${COMPONENT_LIB} PRIVATE "PASSPORT_DEFAULT_COUNTRY=\"${PASSPORT_DEFAULT_COUNTRY}\"")

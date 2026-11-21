@@ -13,9 +13,10 @@
 
 struct TestHttp { std::string url, body; std::size_t offset = 0; bool fail = false; };
 std::vector<std::string> queries;
-std::string city_fixture, province_fixture, state_fixture, ip_city;
+std::string city_fixture, province_fixture, state_fixture, preset_fixture, ip_city;
 bool fail_dns = false, fail_first = false, fail_all = false, stopped = false, stop_on_read = false, fake_dns = false;
-unsigned ip_requests = 0, live_http = 0;
+unsigned ip_requests = 0, ipwho_requests = 0, ipapi_requests = 0, live_http = 0;
+bool ipwho_fail = false, ipapi_fail = false;
 uint32_t esp_random() { return 0; }
 extern "C" esp_err_t esp_crt_bundle_attach(void *) { return ESP_OK; }
 
@@ -33,12 +34,18 @@ extern "C" esp_http_client_handle_t esp_http_client_init(const esp_http_client_c
     ++live_http;
     client->url = decode(config->url);
     client->fail = fail_all || (fail_first && client->url.find("de1.") != std::string::npos);
-    if (client->url.find("ip-api") != std::string::npos || client->url.find("ipwho") != std::string::npos) {
-        ++ip_requests;
+    if (client->url.find("ipwho") != std::string::npos) {
+        ++ip_requests;++ipwho_requests;
+        client->fail = client->fail || ipwho_fail;
+        client->body = "{\"success\":true,\"country_code\":\"CN\",\"region\":\"Guangdong\",\"city\":\""+ip_city+"\"}";
+    } else if (client->url.find("ip-api") != std::string::npos) {
+        ++ip_requests;++ipapi_requests;
+        client->fail = client->fail || ipapi_fail;
         client->body = "{\"status\":\"success\",\"countryCode\":\"CN\",\"regionName\":\"Guangdong\",\"city\":\""+ip_city+"\"}";
     } else {
         queries.push_back(client->url);
-        if (client->url.find("name=广东") != std::string::npos) client->body = province_fixture;
+        if (client->url.find("order=votes") != std::string::npos) client->body = preset_fixture;
+        else if (client->url.find("name=广东") != std::string::npos) client->body = province_fixture;
         else if (client->url.find("state=") != std::string::npos) client->body = state_fixture;
         else client->body = city_fixture;
     }
@@ -69,8 +76,9 @@ std::string station(const std::string &name,const std::string &url,const std::st
     return "{\"name\":\""+name+"\",\"url\":\""+url+"\",\"codec\":\"MP3\""+extra+"}";
 }
 void reset() {
-    assert(live_http==0);queries.clear();ip_requests=0;fail_dns=fail_first=fail_all=stopped=stop_on_read=fake_dns=false;
-    ip_city="Zhuhai";city_fixture="[]";province_fixture="[]";state_fixture="[]";
+    assert(live_http==0);queries.clear();ip_requests=ipwho_requests=ipapi_requests=0;
+    fail_dns=fail_first=fail_all=stopped=stop_on_read=fake_dns=ipwho_fail=ipapi_fail=false;
+    ip_city="Zhuhai";city_fixture="[]";province_fixture="[]";state_fixture="[]";preset_fixture="[]";
 }
 void unique(const RadioStation *s,std::size_t n) {
     for(std::size_t i=0;i<n;++i)for(std::size_t j=i+1;j<n;++j)assert(std::strcmp(s[i].url,s[j].url));
@@ -107,10 +115,22 @@ int main(int argc,char **argv) {
     n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);
     assert(n==8&&queries.size()==3&&std::strstr(stations[2].description,"推荐"));unique(stations,n);
 
+    // IP location: HTTPS ipwho.is first, ip-api.com only when ipwho.is fails.
     reset();ip_city="Jiangmen";city_fixture="["+station("江门电台","http://jm/live")+"]";
     n=radio_catalog_discover(stations,8,&location,cancel);
-    assert(n==7&&ip_requests==1&&!std::strcmp(location.city,"江门"));
+    assert(n==7&&ipwho_requests==1&&ipapi_requests==0&&!std::strcmp(location.city,"江门"));
+    assert(!std::strcmp(location.country_code,"CN"));
     assert(queries[0].find("name=江门")!=std::string::npos);
+
+    reset();ipwho_fail=true;ip_city="Jiangmen";city_fixture="["+station("江门备用","http://jm/backup")+"]";
+    n=radio_catalog_discover(stations,8,&location,cancel);
+    assert(n==7&&ipwho_requests==1&&ipapi_requests==1&&!std::strcmp(location.city,"江门"));
+
+    // Lookup failure: fall back to the build default country (AU) with a neutral label.
+    reset();ipwho_fail=ipapi_fail=true;
+    radio_catalog_discover(stations,8,&location,cancel);
+    assert(ipwho_requests==1&&ipapi_requests==1);
+    assert(!std::strcmp(location.country_code,"AU")&&!std::strcmp(location.city,"Recommended"));
 
     reset();fail_dns=true;fail_first=true;city_fixture="["+station("恢复","http://ok/live")+"]";
     n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);
@@ -130,11 +150,33 @@ int main(int argc,char **argv) {
     city_fixture="["+station(std::string(9000,'X'),"http://oversize/live")+","+
         station("坏台","http://bad/live",",\"lastcheckok\":false")+","+
         station("HLS台","http://hls/live",",\"hls\":true")+","+
-        "{\"name\":\"AAC台\",\"url\":\"http://aac/live.mp3\",\"codec\":\"AAC\"},"+
+        "{\"name\":\"OGG台\",\"url\":\"http://ogg/live.ogg\",\"codec\":\"OGG\"},"+
         station("长URL",std::string("http://url/")+std::string(300,'X'))+","+
         station("有效无后缀","http://valid/live")+"]";
     n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);
     assert(n==7&&!std::strcmp(stations[0].name,"有效无后缀")&&live_http==0);
+
+    // Format gate: MP3, AAC family and AAC HLS are kept; HLS with MP3 or an unknown codec,
+    // and other codecs, are rejected.
+    reset();
+    city_fixture="["+
+        std::string("{\"name\":\"MP3台\",\"url\":\"http://f/mp3\",\"codec\":\"MP3\"},")+
+        "{\"name\":\"AAC台\",\"url\":\"http://f/aac\",\"codec\":\"AAC\"},"
+        "{\"name\":\"HEAAC台\",\"url\":\"http://f/he\",\"codec\":\"AAC+\"},"
+        "{\"name\":\"HLS AAC台\",\"url\":\"http://f/aac.m3u8\",\"codec\":\"AAC\",\"hls\":1},"
+        "{\"name\":\"HLS MP3台\",\"url\":\"http://f/mp3.m3u8\",\"codec\":\"MP3\",\"hls\":1},"
+        "{\"name\":\"HLS未知台\",\"url\":\"http://f/unknown.mp3\",\"hls\":1},"
+        "{\"name\":\"OGG台\",\"url\":\"http://f/live.ogg\",\"codec\":\"OGG\"},"
+        "{\"name\":\"无编码台\",\"url\":\"http://f/undeclared.m3u8\"}]";
+    n=radio_catalog_discover_location(preferred,stations,8,&location,cancel);
+    assert(n>=5&&!std::strcmp(stations[0].name,"MP3台")&&!std::strcmp(stations[1].name,"AAC台")&&
+           !std::strcmp(stations[2].name,"HEAAC台")&&!std::strcmp(stations[3].name,"HLS AAC台")&&
+           !std::strcmp(stations[4].name,"无编码台"));
+    for(std::size_t i=0;i<n;++i)
+        assert(std::strstr(stations[i].name,"HLS MP3")==nullptr&&std::strstr(stations[i].name,"未知")==nullptr&&
+               std::strstr(stations[i].name,"OGG")==nullptr);
+    unique(stations,n);
+    assert(queries.size()>=1&&queries[0].find("codec=")==std::string::npos);
 
     char object[32];RadioJsonStream parser(object,sizeof(object));std::vector<std::string> objects;
     std::string body="[{\"a\":\"}\\\"{\",\"b\":{}},{\"large\":\""+std::string(100,'x')+"\"},{\"last\":1}]";
@@ -142,6 +184,28 @@ int main(int argc,char **argv) {
     assert(parser.Complete()&&objects.size()==2&&objects[1]=="{\"last\":1}");
     RadioJsonStream truncated(object,sizeof(object));truncated.Feed("[{",2,[](const char *){});assert(!truncated.Complete());
     RadioJsonStream invalid(object,sizeof(object));invalid.Feed("[{},]",5,[](const char *){});assert(!invalid.Complete());
+    // Australia: name presets resolve through the directory (highest votes, MP3 only),
+    // directory results follow them, and the Chinese presets are not added.
+    reset();
+    RadioLocation sydney = {};
+    std::strcpy(sydney.city,"Sydney");std::strcpy(sydney.country_code,"AU");
+    city_fixture="["+station("Sydney Local","http://local/syd.mp3")+"]";
+    preset_fixture="["+station("triple j Hobart","http://tj/hobart.mp3",",\"votes\":3100")+","+
+        station("triple j Sydney","http://tj/sydney.mp3",",\"votes\":9000")+","+
+        station("ABC Classic","http://abc/classic.mp3",",\"votes\":500")+"]";
+    n=radio_catalog_discover_location(sydney,stations,8,&location,cancel);
+    assert(n==3&&!std::strcmp(stations[0].name,"triple j")&&!std::strcmp(stations[0].url,"http://tj/sydney.mp3"));
+    assert(!std::strcmp(stations[1].name,"ABC Classic")&&!std::strcmp(stations[2].name,"Sydney Local"));
+    assert(!std::strcmp(location.country_code,"AU"));
+    bool saw_double_j=false,saw_abc_local=false,saw_cn=false;
+    for(const auto &q:queries){
+        saw_double_j|=q.find("name=Double J")!=std::string::npos&&q.find("countrycode=AU")!=std::string::npos;
+        saw_abc_local|=q.find("name=ABC Sydney")!=std::string::npos;
+        saw_cn|=q.find("lhttp")!=std::string::npos;
+    }
+    assert(saw_double_j&&saw_abc_local&&!saw_cn);
+    unique(stations,n);
+
     if(argc==3) {
         reset();
         std::ifstream local(argv[1]),province(argv[2]);assert(local&&province);

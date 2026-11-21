@@ -20,6 +20,11 @@ i2c_master_bus_handle_t bsp_i2c_bus(void);
 // 直接在正式总线上扫,不要另开临时总线 —— 原因见 bsp_i2c.c 中 bsp_i2c_scan() 的注释。
 esp_err_t bsp_i2c_scan(void);
 
+// Deep sleep only: after the last shared-bus transaction (ES8311 suspend, and
+// any CW2017 access), set SDA/SCL to high-impedance inputs with no pulls.
+// The bus must not be used again in this boot.
+esp_err_t bsp_i2c_prepare_deep_sleep(void);
+
 #ifdef __cplusplus
 }
 #endif

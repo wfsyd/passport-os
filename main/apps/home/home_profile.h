@@ -58,6 +58,12 @@ uint32_t home_profile_version(void);
 // 内容超长会拒绝并返回 ESP_ERR_INVALID_ARG,绝不静默截断用户输入。
 esp_err_t home_profile_set_text(const home_profile_t *in);
 
+// AI usage helper URL (NVS key "ai_usage_url"), kept apart from home_profile_t
+// so that the stack copies of the profile stay small. Empty means off.
+// Rejects anything but an empty string or an http:// URL that fits the buffer.
+esp_err_t home_profile_set_ai_usage_url(const char *url);
+void home_profile_get_ai_usage_url(char *out, size_t cap);
+
 bool home_profile_has_avatar(void);
 
 // 把 SPIFFS 里的头像读进 dst(需 HOME_AVATAR_BYTES 字节)。调用方不得持有

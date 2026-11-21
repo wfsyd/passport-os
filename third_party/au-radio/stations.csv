@@ -1,0 +1,1015 @@
+area_id,area_name,state,lat,lon,band,freq,dab_block,name,query
+act-canberra,Canberra,ACT,-35.2756,149.0978,FM,927,,Artsound FM,Artsound FM
+act-canberra,Canberra,ACT,-35.2756,149.0978,FM,1015,,triple j,triple j
+act-canberra,Canberra,ACT,-35.2756,149.0978,FM,1023,,ABC Classic,ABC Classic
+act-canberra,Canberra,ACT,-35.2756,149.0978,FM,1039,,ABC NewsRadio,ABC NewsRadio
+act-canberra,Canberra,ACT,-35.2756,149.0978,FM,1055,,SBS Radio,SBS Radio
+act-canberra,Canberra,ACT,-35.2756,149.0978,AM,666,,ABC Canberra,ABC Canberra
+act-canberra,Canberra,ACT,-35.2756,149.0978,AM,846,,ABC Radio National,Radio National
+act-canberra,Canberra,ACT,-35.2756,149.0978,AM,1053,,2CA,2CA
+act-canberra,Canberra,ACT,-35.2756,149.0978,AM,1125,,Vision Australia Radio Canberra,Vision Australia Radio Canberra
+act-canberra,Canberra,ACT,-35.2756,149.0978,AM,1206,,2CC,2CC
+act-canberra,Canberra,ACT,-35.2756,149.0978,AM,1440,,SBS Radio,SBS Radio
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,,2CA,2CA
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,,2CC,2CC
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,,ABC Canberra,ABC Canberra
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,,ABC Classic,ABC Classic
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,9C,ABC Jazz,ABC Jazz
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,,ABC NewsRadio,ABC NewsRadio
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,,ABC Radio National,Radio National
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,9C,Double J,Double J
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,9C,SBS PopAsia,SBS PopAsia
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,,SBS Radio,SBS Radio
+act-canberra,Canberra,ACT,-35.2756,149.0978,DAB,0,,triple j,triple j
+act-tuggeranong,Tuggeranong,ACT,-35.4019,149.0989,FM,959,,triple j,triple j
+act-tuggeranong,Tuggeranong,ACT,-35.4019,149.0989,FM,991,,ABC Classic,ABC Classic
+act-tuggeranong,Tuggeranong,ACT,-35.4019,149.0989,DAB,0,,ABC Classic,ABC Classic
+act-tuggeranong,Tuggeranong,ACT,-35.4019,149.0989,DAB,0,9C,ABC Jazz,ABC Jazz
+act-tuggeranong,Tuggeranong,ACT,-35.4019,149.0989,DAB,0,9C,Double J,Double J
+act-tuggeranong,Tuggeranong,ACT,-35.4019,149.0989,DAB,0,9C,SBS PopAsia,SBS PopAsia
+act-tuggeranong,Tuggeranong,ACT,-35.4019,149.0989,DAB,0,,triple j,triple j
+nsw-armidale,Armidale,NSW,-30.3761,151.6014,FM,1011,,triple j,triple j
+nsw-armidale,Armidale,NSW,-30.3761,151.6014,FM,1035,,ABC Classic,ABC Classic
+nsw-armidale,Armidale,NSW,-30.3761,151.6014,AM,720,,ABC Radio National,Radio National
+nsw-balranald,Balranald,NSW,-34.6397,143.5656,FM,931,,ABC Radio National,Radio National
+nsw-batemans-bay,Batemans Bay/Moruya,NSW,-35.7961,150.0056,FM,1019,,ABC Classic,ABC Classic
+nsw-batemans-bay,Batemans Bay/Moruya,NSW,-35.7961,150.0056,FM,1051,,ABC Radio National,Radio National
+nsw-bathurst-cit,Bathurst City,NSW,-33.4503,149.5475,FM,911,,SBS Radio,SBS Radio
+nsw-bathurst-cit,Bathurst City,NSW,-33.4503,149.5475,FM,959,,triple j,triple j
+nsw-bathurst-cit,Bathurst City,NSW,-33.4503,149.5475,FM,967,,ABC Radio National,Radio National
+nsw-bathurst-cit,Bathurst City,NSW,-33.4503,149.5475,FM,975,,ABC Classic,ABC Classic
+nsw-batlow,Batlow,NSW,-35.5458,148.1992,FM,925,,SBS Radio,SBS Radio
+nsw-bega-cooma,Bega/Cooma,NSW,-36.5981,149.3831,FM,993,,ABC Classic,ABC Classic
+nsw-bega-cooma,Bega/Cooma,NSW,-36.5981,149.3831,FM,1001,,triple j,triple j
+nsw-bega-cooma,Bega/Cooma,NSW,-36.5981,149.3831,FM,1009,,ABC Radio National,Radio National
+nsw-boggabri-coa,Boggabri Coal Mine,NSW,-30.5978,150.1450,FM,1035,,triple j,triple j
+nsw-bonalbo,Bonalbo,NSW,-28.7611,152.6378,FM,921,,ABC Radio National,Radio National
+nsw-bourke,Bourke,NSW,-30.1989,146.2400,FM,993,,triple j,triple j
+nsw-bourke,Bourke,NSW,-30.1989,146.2400,FM,1011,,ABC Radio National,Radio National
+nsw-braidwood,Braidwood,NSW,-35.4553,149.7714,FM,1003,,ABC Canberra,ABC Canberra
+nsw-brewarrina,Brewarrina,NSW,-29.9633,146.8653,FM,897,,SBS Radio,SBS Radio
+nsw-broken-hill,Broken Hill,NSW,-31.9397,141.4433,FM,1021,,triple j,triple j
+nsw-broken-hill,Broken Hill,NSW,-31.9397,141.4433,FM,1029,,ABC Radio National,Radio National
+nsw-broken-hill,Broken Hill,NSW,-31.9397,141.4433,FM,1037,,ABC Classic,ABC Classic
+nsw-bulga-mine,Bulga Mine,NSW,-32.6711,151.0981,FM,909,,triple j,triple j
+nsw-cadia-mine-s,Cadia Mine Site,NSW,-33.4558,148.9864,FM,889,,triple j,triple j
+nsw-cadia-mine-s,Cadia Mine Site,NSW,-33.4558,148.9864,FM,897,,ABC Radio National,Radio National
+nsw-campbelltown,Campbelltown,NSW,-34.1472,150.6708,DAB,0,9C,ABC Jazz,ABC Jazz
+nsw-campbelltown,Campbelltown,NSW,-34.1472,150.6708,DAB,0,9C,Double J,Double J
+nsw-campbelltown,Campbelltown,NSW,-34.1472,150.6708,DAB,0,9C,SBS PopAsia,SBS PopAsia
+nsw-captains-fla,Captains Flat,NSW,-35.5975,149.4417,FM,885,,ABC NewsRadio,ABC NewsRadio
+nsw-central-tabl,Central Tablelands,NSW,-33.3431,148.9836,FM,1019,,triple j,triple j
+nsw-central-tabl,Central Tablelands,NSW,-33.3431,148.9836,FM,1027,,ABC Classic,ABC Classic
+nsw-central-tabl,Central Tablelands,NSW,-33.3431,148.9836,FM,1043,,ABC Radio National,Radio National
+nsw-central-west,Central Western Slopes,NSW,-31.3428,149.0233,FM,1023,,triple j,triple j
+nsw-central-west,Central Western Slopes,NSW,-31.3428,149.0233,FM,1055,,ABC Classic,ABC Classic
+nsw-central-west,Central Western Slopes,NSW,-31.3428,149.0233,FM,1079,,ABC Radio National,Radio National
+nsw-cobar,Cobar,NSW,-31.5161,145.8567,FM,1013,,triple j,triple j
+nsw-cobar,Cobar,NSW,-31.5161,145.8567,FM,1053,,SBS Radio,SBS Radio
+nsw-cobar,Cobar,NSW,-31.5161,145.8567,FM,1069,,ABC Classic,ABC Classic
+nsw-cobar,Cobar,NSW,-31.5161,145.8567,FM,1077,,ABC Radio National,Radio National
+nsw-condobolin,Condobolin,NSW,-33.0781,147.1567,FM,889,,ABC Radio National,Radio National
+nsw-cooma-town,Cooma Town,NSW,-36.2347,149.1408,FM,953,,ABC Radio National,Radio National
+nsw-cootamundra,Cootamundra,NSW,-34.6433,148.0494,FM,1029,,SBS Radio,SBS Radio
+nsw-cowra,Cowra,NSW,-33.8289,148.6978,FM,959,,SBS Radio,SBS Radio
+nsw-crookwell,Crookwell,NSW,-34.4553,149.4417,FM,1045,,ABC Radio National,Radio National
+nsw-deniliquin,Deniliquin,NSW,-35.6681,144.9097,FM,993,,ABC Radio National,Radio National
+nsw-dubbo-city,Dubbo (City),NSW,-32.2367,148.6775,FM,1005,,SBS Radio,SBS Radio
+nsw-eden,Eden,NSW,-37.0111,149.8897,FM,1079,,ABC Radio National,Radio National
+nsw-emmaville,Emmaville,NSW,-29.4556,151.6053,FM,931,,ABC Radio National,Radio National
+nsw-glen-innes,Glen Innes,NSW,-29.7911,151.7650,FM,1051,,ABC Radio National,Radio National
+nsw-glendell-min,Glendell Mine,NSW,-32.4169,151.0775,FM,1009,,triple j,triple j
+nsw-gloucester,Gloucester,NSW,-31.9625,151.9469,FM,1025,,ABC Radio National,Radio National
+nsw-goodooga,Goodooga,NSW,-29.1328,147.4819,FM,1009,,ABC Radio National,Radio National
+nsw-gosford,Gosford,NSW,-33.4067,151.2967,FM,925,,ABC Sydney,ABC Sydney
+nsw-goulburn,Goulburn,NSW,-34.7583,149.7631,AM,1098,,ABC Radio National,Radio National
+nsw-goulburn-tow,Goulburn Town,NSW,-34.7572,149.7636,FM,887,,triple j,triple j
+nsw-goulburn-tow,Goulburn Town,NSW,-34.7572,149.7636,FM,895,,ABC Classic,ABC Classic
+nsw-goulburn-tow,Goulburn Town,NSW,-34.7572,149.7636,FM,979,,ABC Radio National,Radio National
+nsw-grafton-kemp,Grafton/Kempsey,NSW,-30.3175,152.8597,FM,915,,triple j,triple j
+nsw-grafton-kemp,Grafton/Kempsey,NSW,-30.3175,152.8597,FM,979,,ABC Classic,ABC Classic
+nsw-grafton-kemp,Grafton/Kempsey,NSW,-30.3175,152.8597,FM,995,,ABC Radio National,Radio National
+nsw-hay,Hay,NSW,-34.4522,144.9864,FM,889,,ABC Radio National,Radio National
+nsw-holbrook,Holbrook,NSW,-35.7253,147.3125,FM,937,,SBS Radio,SBS Radio
+nsw-illawarra,Illawarra,NSW,-34.6236,150.6944,FM,957,,ABC Classic,ABC Classic
+nsw-illawarra,Illawarra,NSW,-34.6236,150.6944,FM,989,,triple j,triple j
+nsw-ivanhoe,Ivanhoe,NSW,-32.8981,144.3003,FM,1077,,ABC Radio National,Radio National
+nsw-jerilderie,Jerilderie,NSW,-35.3428,145.6608,FM,941,,ABC Radio National,Radio National
+nsw-jindabyne,Jindabyne,NSW,-36.4011,148.6647,FM,971,,ABC Radio National,Radio National
+nsw-junee,Junee,NSW,-34.8753,147.5767,FM,987,,SBS Radio,SBS Radio
+nsw-kandos,Kandos,NSW,-32.8719,149.9903,FM,1003,,ABC Radio National,Radio National
+nsw-khancoban,Khancoban,NSW,-36.2114,148.1281,FM,881,,ABC Classic,ABC Classic
+nsw-khancoban,Khancoban,NSW,-36.2114,148.1281,FM,913,,ABC Radio National,Radio National
+nsw-lake-cowal-m,Lake Cowal Mine,NSW,-33.6314,147.4083,FM,909,,triple j,triple j
+nsw-lightning-ri,Lightning Ridge,NSW,-29.4061,147.9722,FM,937,,ABC Radio National,Radio National
+nsw-lismore,Lismore,NSW,-28.5428,153.2903,FM,989,,SBS Radio,SBS Radio
+nsw-lithgow-city,Lithgow (City),NSW,-33.4872,150.1597,FM,921,,ABC Radio National,Radio National
+nsw-long-flat,Long Flat,NSW,-31.4461,152.4769,FM,1079,,SBS Radio,SBS Radio
+nsw-mt-warkworth,MT Warkworth Mine,NSW,-32.6350,151.0694,FM,953,,triple j,triple j
+nsw-mangoola-min,Mangoola Mine,NSW,-32.2867,150.7017,FM,897,,triple j,triple j
+nsw-manly,Manly,NSW,-33.6714,151.2778,DAB,0,9C,ABC Jazz,ABC Jazz
+nsw-manly,Manly,NSW,-33.6714,151.2778,DAB,0,9C,Double J,Double J
+nsw-manly,Manly,NSW,-33.6714,151.2778,DAB,0,9C,SBS PopAsia,SBS PopAsia
+nsw-manning-rive,Manning River,NSW,-31.7022,152.6786,FM,963,,triple j,triple j
+nsw-manning-rive,Manning River,NSW,-31.7022,152.6786,FM,971,,ABC Radio National,Radio National
+nsw-manning-rive,Manning River,NSW,-31.7022,152.6786,FM,987,,ABC Classic,ABC Classic
+nsw-menindee,Menindee,NSW,-32.3889,142.4147,FM,957,,ABC Radio National,Radio National
+nsw-merriwa,Merriwa,NSW,-32.1269,150.3128,FM,1035,,ABC Radio National,Radio National
+nsw-murrumbidgee,Murrumbidgee Irrigation Area,NSW,-34.1217,146.2350,FM,965,,triple j,triple j
+nsw-murrumbidgee,Murrumbidgee Irrigation Area,NSW,-34.1217,146.2350,FM,973,,ABC Classic,ABC Classic
+nsw-murrumbidgee,Murrumbidgee Irrigation Area,NSW,-34.1217,146.2350,FM,989,,ABC Radio National,Radio National
+nsw-murrurundi,Murrurundi,NSW,-31.7281,150.8439,FM,1001,,SBS Radio,SBS Radio
+nsw-murrurundi,Murrurundi,NSW,-31.7281,150.8439,FM,1041,,ABC Radio National,Radio National
+nsw-narrandera,Narrandera,NSW,-34.7511,146.5675,FM,935,,SBS Radio,SBS Radio
+nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,FM,975,,2HD,2HD
+nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,FM,1021,,triple j,triple j
+nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,FM,1037,,2NUR,2NUR
+nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,FM,1061,,ABC Classic,ABC Classic
+nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,AM,1143,,2HD,2HD
+nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,AM,1233,,ABC Newcastle,ABC Newcastle
+nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,AM,1413,,SBS Radio,SBS Radio
+nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,AM,1458,,ABC NewsRadio,ABC NewsRadio
+nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,AM,1512,,ABC Radio National,Radio National
+nsw-nimbin,Nimbin,NSW,-28.5967,153.2219,FM,1063,,SBS Radio,SBS Radio
+nsw-nowra,Nowra,NSW,-34.6181,150.6975,AM,603,,ABC Radio National,Radio National
+nsw-oberon,Oberon,NSW,-33.7028,149.8394,FM,1071,,SBS Radio,SBS Radio
+nsw-orange,Orange,NSW,-33.4603,149.1236,FM,1005,,SBS Radio,SBS Radio
+nsw-parkes,Parkes,NSW,-33.2497,148.3369,FM,1013,,SBS Radio,SBS Radio
+nsw-peak-hill,Peak Hill,NSW,-32.7211,148.1978,FM,1009,,SBS Radio,SBS Radio
+nsw-port-macquar,Port Macquarie,NSW,-31.3414,152.6825,FM,1077,,SBS Radio,SBS Radio
+nsw-port-stephen,Port Stephens,NSW,-32.7319,152.1314,FM,959,,ABC Newcastle,ABC Newcastle
+nsw-port-stephen,Port Stephens,NSW,-32.7319,152.1314,FM,983,,ABC Radio National,Radio National
+nsw-portland-wal,Portland/Wallerawang,NSW,-33.4050,149.9475,FM,925,,ABC Radio National,Radio National
+nsw-ravensworth,Ravensworth Mine,NSW,-32.4347,151.0042,FM,917,,triple j,triple j
+nsw-richmond-twe,Richmond/Tweed,NSW,-28.5456,153.2875,FM,953,,ABC Classic,ABC Classic
+nsw-richmond-twe,Richmond/Tweed,NSW,-28.5456,153.2875,FM,961,,triple j,triple j
+nsw-richmond-twe,Richmond/Tweed,NSW,-28.5456,153.2875,FM,969,,ABC Radio National,Radio National
+nsw-sw-slopes-e,SW Slopes/E Riverina,NSW,-34.8203,147.9014,FM,883,,ABC Classic,ABC Classic
+nsw-sw-slopes-e,SW Slopes/E Riverina,NSW,-34.8203,147.9014,FM,891,,ABC Radio National,Radio National
+nsw-sw-slopes-e,SW Slopes/E Riverina,NSW,-34.8203,147.9014,FM,907,,triple j,triple j
+nsw-sutherland,Sutherland,NSW,-34.0306,151.0597,DAB,0,9C,ABC Jazz,ABC Jazz
+nsw-sutherland,Sutherland,NSW,-34.0306,151.0597,DAB,0,9C,Double J,Double J
+nsw-sutherland,Sutherland,NSW,-34.0306,151.0597,DAB,0,9C,SBS PopAsia,SBS PopAsia
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,929,,ABC Classic,ABC Classic
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,945,,FBi Radio,FBi Radio
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,953,,Smooth 95.3,Smooth 95.3
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,969,,Nova 96.9,Nova 96.9
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,977,,SBS Radio,SBS Radio
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,1025,,Fine Music,Fine Music
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,1032,,Hope 103.2,Hope 103.2
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,1041,,2Day FM,2Day FM
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,1049,,Triple M Sydney,Triple M Sydney
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,1057,,triple j,triple j
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,1065,,KIIS 106.5,KIIS 106.5
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,FM,1073,,2SER,2SER
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,AM,576,,ABC Radio National,Radio National
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,AM,630,,ABC NewsRadio,ABC NewsRadio
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,AM,702,,ABC Sydney,ABC Sydney
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,AM,873,,2GB,2GB
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,AM,954,,2UE,2UE
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,AM,1017,,Sky Sports Radio,Sky Sports Radio
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,AM,1107,,SBS Radio,SBS Radio
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,AM,1170,,SEN 1170,SEN 1170
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,AM,1269,,2SM,2SM
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,2Day FM,2Day FM
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,2GB,2GB
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,2SM,2SM
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,2UE,2UE
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,ABC Classic,ABC Classic
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,9C,ABC Jazz,ABC Jazz
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,ABC NewsRadio,ABC NewsRadio
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,ABC Radio National,Radio National
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,ABC Sydney,ABC Sydney
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,9C,Double J,Double J
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,KIIS 106.5,KIIS 106.5
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,Nova 96.9,Nova 96.9
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,9C,SBS PopAsia,SBS PopAsia
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,SBS Radio,SBS Radio
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,SEN 1170,SEN 1170
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,Sky Sports Radio,Sky Sports Radio
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,Smooth 95.3,Smooth 95.3
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,Triple M Sydney,Triple M Sydney
+nsw-sydney,Sydney,NSW,-33.8200,151.1850,DAB,0,,triple j,triple j
+nsw-talbingo,Talbingo,NSW,-35.5944,148.2886,FM,913,,ABC Radio National,Radio National
+nsw-tamworth,Tamworth,NSW,-31.3214,150.7503,FM,939,,ABC Radio National,Radio National
+nsw-tamworth,Tamworth,NSW,-31.3214,150.7503,FM,947,,triple j,triple j
+nsw-tamworth,Tamworth,NSW,-31.3214,150.7503,FM,971,,SBS Radio,SBS Radio
+nsw-tamworth,Tamworth,NSW,-31.3214,150.7503,FM,1031,,ABC Classic,ABC Classic
+nsw-tarrawonga-m,Tarrawonga Mine,NSW,-30.6369,150.1711,FM,979,,triple j,triple j
+nsw-tenterfield,Tenterfield,NSW,-29.0867,151.9717,FM,905,,ABC Radio National,Radio National
+nsw-thredbo,Thredbo,NSW,-36.4936,148.2878,FM,905,,ABC Radio National,Radio National
+nsw-tumbarumba,Tumbarumba,NSW,-35.7761,148.0214,FM,973,,ABC Classic,ABC Classic
+nsw-tumbarumba,Tumbarumba,NSW,-35.7761,148.0214,FM,1005,,SBS Radio,SBS Radio
+nsw-tumbarumba,Tumbarumba,NSW,-35.7761,148.0214,FM,1045,,ABC Radio National,Radio National
+nsw-tumbarumba,Tumbarumba,NSW,-35.7761,148.0214,FM,1061,,triple j,triple j
+nsw-tumut,Tumut,NSW,-35.2933,148.2478,FM,947,,SBS Radio,SBS Radio
+nsw-tumut,Tumut,NSW,-35.2933,148.2478,FM,995,,ABC Radio National,Radio National
+nsw-ulan-coal-mi,Ulan Coal Mine,NSW,-32.2564,149.7536,FM,949,,triple j,triple j
+nsw-united-colli,United Collieries East Mine,NSW,-32.5611,151.0158,FM,985,,triple j,triple j
+nsw-united-col-2,United Collieries West Mine,NSW,-32.5425,150.9386,FM,937,,triple j,triple j
+nsw-upper-namoi,Upper Namoi,NSW,-30.2844,150.1675,FM,967,,ABC Classic,ABC Classic
+nsw-upper-namoi,Upper Namoi,NSW,-30.2844,150.1675,FM,999,,triple j,triple j
+nsw-upper-namoi,Upper Namoi,NSW,-30.2844,150.1675,FM,1007,,ABC Radio National,Radio National
+nsw-wagga-wagga,Wagga Wagga,NSW,-35.0492,147.5594,FM,1011,,triple j,triple j
+nsw-wagga-wagga,Wagga Wagga,NSW,-35.0492,147.5594,FM,1035,,SBS Radio,SBS Radio
+nsw-wagga-wagga,Wagga Wagga,NSW,-35.0492,147.5594,FM,1043,,ABC Radio National,Radio National
+nsw-wagga-wagga,Wagga Wagga,NSW,-35.0492,147.5594,FM,1059,,ABC Classic,ABC Classic
+nsw-walcha,Walcha,NSW,-30.9658,151.6306,FM,901,,ABC Radio National,Radio National
+nsw-walgett,Walgett,NSW,-30.0081,148.1328,FM,1075,,ABC Radio National,Radio National
+nsw-waverley,Waverley,NSW,-33.8969,151.2556,DAB,0,9C,ABC Jazz,ABC Jazz
+nsw-waverley,Waverley,NSW,-33.8969,151.2556,DAB,0,9C,Double J,Double J
+nsw-waverley,Waverley,NSW,-33.8969,151.2556,DAB,0,9C,SBS PopAsia,SBS PopAsia
+nsw-wilcannia,Wilcannia,NSW,-31.5525,143.3808,AM,1485,,ABC Radio National,Radio National
+nsw-wilpinjong-c,Wilpinjong Coal Mine,NSW,-32.3417,149.8756,FM,957,,triple j,triple j
+nsw-windsor,Windsor,NSW,-33.5203,150.6206,DAB,0,9C,ABC Jazz,ABC Jazz
+nsw-windsor,Windsor,NSW,-33.5203,150.6206,DAB,0,9C,Double J,Double J
+nsw-windsor,Windsor,NSW,-33.5203,150.6206,DAB,0,9C,SBS PopAsia,SBS PopAsia
+nsw-wollongong,Wollongong,NSW,-34.6183,150.6972,AM,1035,,SBS Radio,SBS Radio
+nsw-wollongong,Wollongong,NSW,-34.6183,150.6972,AM,1431,,ABC Radio National,Radio National
+nsw-young,Young,NSW,-34.3417,148.3361,FM,971,,ABC Radio National,Radio National
+nsw-young,Young,NSW,-34.3417,148.3361,FM,987,,SBS Radio,SBS Radio
+nt-adelaide-rive,Adelaide River,NT,-13.2444,131.1092,FM,1005,,ABC Radio National,Radio National
+nt-alice-springs,Alice Springs,NT,-23.7675,133.8722,FM,949,,triple j,triple j
+nt-alice-springs,Alice Springs,NT,-23.7675,133.8722,FM,979,,ABC Classic,ABC Classic
+nt-alice-springs,Alice Springs,NT,-23.7675,133.8722,FM,997,,ABC Radio National,Radio National
+nt-batchelor,Batchelor,NT,-13.0456,131.0267,FM,921,,ABC Radio National,Radio National
+nt-batchelor,Batchelor,NT,-13.0456,131.0267,FM,929,,triple j,triple j
+nt-bathurst-isla,Bathurst Island,NT,-11.7758,130.5678,FM,929,,ABC Radio National,Radio National
+nt-beswick,Beswick,NT,-14.5597,133.1172,FM,1041,,triple j,triple j
+nt-borroloola,Borroloola,NT,-16.0511,136.3039,FM,1077,,ABC Radio National,Radio National
+nt-daly-river,Daly River,NT,-13.7511,130.6894,FM,1077,,ABC Radio National,Radio National
+nt-darwin,Darwin,NT,-12.4144,130.9692,FM,1009,,SBS Radio,SBS Radio
+nt-darwin,Darwin,NT,-12.4144,130.9692,FM,1033,,triple j,triple j
+nt-darwin,Darwin,NT,-12.4144,130.9692,FM,1049,,Mix 104.9,Mix 104.9
+nt-darwin,Darwin,NT,-12.4144,130.9692,FM,1057,,ABC Darwin,ABC Darwin
+nt-darwin,Darwin,NT,-12.4144,130.9692,FM,1073,,ABC Classic,ABC Classic
+nt-darwin,Darwin,NT,-12.4144,130.9692,AM,657,,ABC Radio National,Radio National
+nt-darwin,Darwin,NT,-12.4144,130.9692,DAB,0,,ABC Classic,ABC Classic
+nt-darwin,Darwin,NT,-12.4144,130.9692,DAB,0,,ABC Darwin,ABC Darwin
+nt-darwin,Darwin,NT,-12.4144,130.9692,DAB,0,9C,ABC Jazz,ABC Jazz
+nt-darwin,Darwin,NT,-12.4144,130.9692,DAB,0,,ABC Radio National,Radio National
+nt-darwin,Darwin,NT,-12.4144,130.9692,DAB,0,9C,Double J,Double J
+nt-darwin,Darwin,NT,-12.4144,130.9692,DAB,0,,Mix 104.9,Mix 104.9
+nt-darwin,Darwin,NT,-12.4144,130.9692,DAB,0,9C,SBS PopAsia,SBS PopAsia
+nt-darwin,Darwin,NT,-12.4144,130.9692,DAB,0,,SBS Radio,SBS Radio
+nt-darwin,Darwin,NT,-12.4144,130.9692,DAB,0,,triple j,triple j
+nt-galiwinku,Galiwinku,NT,-12.0217,135.5736,FM,1075,,ABC Radio National,Radio National
+nt-groote-eyland,Groote Eylandt,NT,-13.8506,136.4253,FM,981,,triple j,triple j
+nt-groote-eyland,Groote Eylandt,NT,-13.8506,136.4253,FM,1077,,ABC Radio National,Radio National
+nt-jabiru,Jabiru,NT,-12.6561,132.8497,FM,1077,,ABC Radio National,Radio National
+nt-katherine,Katherine,NT,-14.3961,132.1803,FM,997,,triple j,triple j
+nt-katherine,Katherine,NT,-14.3961,132.1803,AM,639,,ABC Radio National,Radio National
+nt-kintore,Kintore,NT,-23.2753,129.3886,FM,1077,,ABC Radio National,Radio National
+nt-knocker-bay,Knocker Bay,NT,-11.3181,132.1256,FM,1045,,ABC Radio National,Radio National
+nt-maningrida,Maningrida,NT,-12.0517,134.2228,FM,1029,,ABC Radio National,Radio National
+nt-mataranka,Mataranka,NT,-14.9356,133.0594,FM,1077,,ABC Radio National,Radio National
+nt-mcarthur-rive,McArthur River Mine,NT,-16.4319,136.0967,FM,1069,,triple j,triple j
+nt-mereenie-gas,Mereenie Gas/Oil Field,NT,-23.9956,131.5517,FM,1043,,triple j,triple j
+nt-mount-liebig,Mount Liebig,NT,-23.2661,131.2722,FM,1001,,triple j,triple j
+nt-mount-liebig,Mount Liebig,NT,-23.2661,131.2722,FM,1073,,ABC Radio National,Radio National
+nt-mutitjulu,Mutitjulu,NT,-25.3514,131.0714,FM,917,,ABC Radio National,Radio National
+nt-newcastle-wat,Newcastle Waters,NT,-17.4250,133.4481,FM,1077,,ABC Radio National,Radio National
+nt-nhulunbuy,Nhulunbuy,NT,-12.1897,136.7922,FM,981,,triple j,triple j
+nt-nhulunbuy,Nhulunbuy,NT,-12.1897,136.7922,FM,997,,SBS Radio,SBS Radio
+nt-nhulunbuy,Nhulunbuy,NT,-12.1897,136.7922,FM,1077,,ABC Radio National,Radio National
+nt-pine-creek,Pine Creek,NT,-13.8231,131.8367,FM,1077,,ABC Radio National,Radio National
+nt-port-bremmer,Port Bremmer,NT,-11.2186,132.2692,FM,1037,,ABC Radio National,Radio National
+nt-tennant-creek,Tennant Creek,NT,-19.6692,134.2606,AM,684,,ABC Radio National,Radio National
+nt-wadeye,Wadeye,NT,-14.2383,129.5197,FM,1005,,ABC Radio National,Radio National
+nt-yulara,Yulara,NT,-25.2347,130.9919,FM,957,,triple j,triple j
+nt-yulara,Yulara,NT,-25.2347,130.9919,FM,981,,ABC Radio National,Radio National
+nt-yulara,Yulara,NT,-25.2347,130.9919,FM,989,,ABC Classic,ABC Classic
+qld-airlie-beach,Airlie Beach,QLD,-20.2731,148.7103,FM,931,,ABC Radio National,Radio National
+qld-airlie-beach,Airlie Beach,QLD,-20.2731,148.7103,FM,955,,ABC Classic,ABC Classic
+qld-alpha,Alpha,QLD,-23.6178,146.6300,FM,1073,,ABC Radio National,Radio National
+qld-amrun,Amrun,QLD,-12.9286,141.6339,FM,981,,triple j,triple j
+qld-amrun,Amrun,QLD,-12.9286,141.6339,FM,989,,ABC Classic,ABC Classic
+qld-amrun,Amrun,QLD,-12.9286,141.6339,FM,997,,ABC Radio National,Radio National
+qld-aramac,Aramac,QLD,-22.9681,145.2431,FM,997,,SBS Radio,SBS Radio
+qld-aramac,Aramac,QLD,-22.9681,145.2431,FM,1079,,ABC Radio National,Radio National
+qld-augathella,Augathella,QLD,-25.8064,146.5889,FM,1077,,ABC Radio National,Radio National
+qld-babinda,Babinda,QLD,-17.3831,146.0031,FM,941,,ABC Radio National,Radio National
+qld-ballera,Ballera,QLD,-27.3997,141.8047,FM,1027,,ABC Radio National,Radio National
+qld-ballera,Ballera,QLD,-27.3997,141.8047,FM,1043,,triple j,triple j
+qld-barcaldine,Barcaldine,QLD,-23.5567,145.2931,FM,977,,ABC Classic,ABC Classic
+qld-barcaldine,Barcaldine,QLD,-23.5567,145.2931,FM,1057,,triple j,triple j
+qld-barcaldine,Barcaldine,QLD,-23.5567,145.2931,FM,1073,,ABC Radio National,Radio National
+qld-bedourie,Bedourie,QLD,-24.3583,139.4717,FM,997,,triple j,triple j
+qld-bedourie,Bedourie,QLD,-24.3583,139.4717,FM,1029,,SBS Radio,SBS Radio
+qld-bedourie,Bedourie,QLD,-24.3583,139.4717,FM,1077,,ABC Radio National,Radio National
+qld-belyando-min,Belyando Mine,QLD,-22.0292,146.3700,FM,983,,ABC Radio National,Radio National
+qld-belyando-min,Belyando Mine,QLD,-22.0292,146.3700,FM,999,,triple j,triple j
+qld-birdsville,Birdsville,QLD,-25.8964,139.3553,FM,1029,,triple j,triple j
+qld-birdsville,Birdsville,QLD,-25.8964,139.3553,FM,1045,,SBS Radio,SBS Radio
+qld-birdsville,Birdsville,QLD,-25.8964,139.3553,FM,1077,,ABC Radio National,Radio National
+qld-blackall,Blackall,QLD,-24.4314,145.4961,FM,1079,,ABC Radio National,Radio National
+qld-blackwater,Blackwater,QLD,-23.5742,149.0328,FM,943,,ABC Radio National,Radio National
+qld-blackwater-m,Blackwater Mine,QLD,-23.7856,148.8622,FM,1053,,ABC Radio National,Radio National
+qld-blackwater-2,Blackwater Mine North,QLD,-23.7125,148.8044,FM,1027,,ABC Radio National,Radio National
+qld-boulia,Boulia,QLD,-22.9069,139.9108,FM,1077,,ABC Radio National,Radio National
+qld-bowen-town,Bowen Town,QLD,-20.0064,148.2386,FM,927,,ABC Radio National,Radio National
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,FM,933,,SBS Radio,SBS Radio
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,FM,981,,4EB,4EB
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,FM,1021,,4ZZZ,4ZZZ
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,FM,1037,,4MBS Classic,4MBS Classic
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,FM,1045,,Triple M Brisbane,Triple M Brisbane
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,FM,1061,,ABC Classic,ABC Classic
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,FM,1069,,Nova 106.9,Nova 106.9
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,FM,1077,,triple j,triple j
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,AM,612,,ABC Brisbane,ABC Brisbane
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,AM,693,,4KQ,4KQ
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,AM,792,,ABC Radio National,Radio National
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,AM,882,,4BC,4BC
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,AM,936,,ABC NewsRadio,ABC NewsRadio
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,AM,1296,,4RPH,4RPH
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,4BC,4BC
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,4KQ,4KQ
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,ABC Brisbane,ABC Brisbane
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,ABC Classic,ABC Classic
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,9C,ABC Jazz,ABC Jazz
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,ABC NewsRadio,ABC NewsRadio
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,ABC Radio National,Radio National
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,9C,Double J,Double J
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,Nova 106.9,Nova 106.9
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,9C,SBS PopAsia,SBS PopAsia
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,SBS Radio,SBS Radio
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,Triple M Brisbane,Triple M Brisbane
+qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,triple j,triple j
+qld-burketown,Burketown,QLD,-17.7403,139.5461,FM,979,,triple j,triple j
+qld-caboolture,Caboolture,QLD,-27.0544,152.7861,DAB,0,9C,ABC Jazz,ABC Jazz
+qld-caboolture,Caboolture,QLD,-27.0544,152.7861,DAB,0,9C,Double J,Double J
+qld-caboolture,Caboolture,QLD,-27.0544,152.7861,DAB,0,9C,SBS PopAsia,SBS PopAsia
+qld-cairns,Cairns,QLD,-17.2642,145.8536,FM,1051,,ABC Radio National,Radio National
+qld-cairns,Cairns,QLD,-17.2642,145.8536,FM,1059,,ABC Classic,ABC Classic
+qld-cairns,Cairns,QLD,-17.2642,145.8536,FM,1075,,triple j,triple j
+qld-cairns-mt-ya,Cairns (Mt Yarrabah),QLD,-16.9047,145.8433,FM,905,,SBS Radio,SBS Radio
+qld-cairns-north,Cairns North,QLD,-16.7369,145.6617,FM,939,,ABC Radio National,Radio National
+qld-cairns-north,Cairns North,QLD,-16.7369,145.6617,FM,947,,ABC Classic,ABC Classic
+qld-cairns-north,Cairns North,QLD,-16.7369,145.6617,FM,971,,triple j,triple j
+qld-camooweal,Camooweal,QLD,-19.9206,138.1758,FM,1077,,ABC Radio National,Radio National
+qld-cannington-m,Cannington Mine,QLD,-21.8347,140.9117,FM,999,,triple j,triple j
+qld-capella,Capella,QLD,-23.1183,148.0403,FM,1073,,ABC Radio National,Radio National
+qld-carmila,Carmila,QLD,-21.9264,149.4100,FM,897,,SBS Radio,SBS Radio
+qld-carmila,Carmila,QLD,-21.9264,149.4100,FM,929,,ABC Radio National,Radio National
+qld-castle-hill,Castle Hill Gasfield,QLD,-25.3481,148.8872,FM,901,,triple j,triple j
+qld-castle-hill,Castle Hill Gasfield,QLD,-25.3481,148.8872,FM,933,,ABC Radio National,Radio National
+qld-caval-ridge,Caval Ridge Mine,QLD,-22.1544,148.0594,FM,957,,triple j,triple j
+qld-caval-ridg-2,Caval Ridge Mine Cnt,QLD,-22.1242,148.0508,FM,1033,,triple j,triple j
+qld-caval-ridg-3,Caval Ridge Mine Nth,QLD,-22.0622,148.0578,FM,1001,,triple j,triple j
+qld-caval-ridg-4,Caval Ridge Mine Sth,QLD,-22.1817,148.1144,FM,889,,triple j,triple j
+qld-century-mine,Century Mine,QLD,-18.7306,138.6169,FM,1005,,ABC Radio National,Radio National
+qld-century-mine,Century Mine,QLD,-18.7306,138.6169,FM,1017,,triple j,triple j
+qld-charleville,Charleville,QLD,-26.2544,146.3031,FM,1073,,ABC Radio National,Radio National
+qld-charters-tow,Charters Towers,QLD,-20.0892,146.2525,FM,975,,ABC Radio National,Radio National
+qld-clermont,Clermont,QLD,-22.8561,147.6442,FM,1037,,SBS Radio,SBS Radio
+qld-clermont,Clermont,QLD,-22.8561,147.6442,FM,1045,,ABC Classic,ABC Classic
+qld-clermont,Clermont,QLD,-22.8561,147.6442,FM,1077,,ABC Radio National,Radio National
+qld-clermont-min,Clermont Mine,QLD,-22.7222,147.6486,FM,943,,triple j,triple j
+qld-cloncurry,Cloncurry,QLD,-20.7153,140.5006,FM,1053,,triple j,triple j
+qld-cloncurry,Cloncurry,QLD,-20.7153,140.5006,FM,1061,,SBS Radio,SBS Radio
+qld-cloncurry,Cloncurry,QLD,-20.7153,140.5006,FM,1077,,ABC Radio National,Radio National
+qld-coen,Coen,QLD,-13.9378,143.2025,FM,1075,,ABC Radio National,Radio National
+qld-collinsville,Collinsville,QLD,-20.5242,147.8386,FM,1077,,ABC Radio National,Radio National
+qld-collinsvil-2,Collinsville Mine,QLD,-20.5444,147.7919,FM,965,,triple j,triple j
+qld-cooktown,Cooktown,QLD,-15.4731,145.2508,FM,1073,,ABC Radio National,Radio National
+qld-corfield,Corfield,QLD,-21.8572,143.2597,FM,1073,,ABC Radio National,Radio National
+qld-cow-bay,Cow Bay,QLD,-16.2439,145.4369,FM,991,,SBS Radio,SBS Radio
+qld-croydon,Croydon,QLD,-18.2039,142.2503,FM,1075,,ABC Radio National,Radio National
+qld-cunnamulla,Cunnamulla,QLD,-28.0658,145.6872,FM,1013,,triple j,triple j
+qld-cunnamulla,Cunnamulla,QLD,-28.0658,145.6872,FM,1077,,ABC Radio National,Radio National
+qld-daintree,Daintree,QLD,-16.2492,145.3228,FM,905,,SBS Radio,SBS Radio
+qld-dajarra,Dajarra,QLD,-21.6956,139.5131,FM,965,,SBS Radio,SBS Radio
+qld-darling-down,Darling Downs,QLD,-26.8922,151.6081,FM,1041,,triple j,triple j
+qld-darling-down,Darling Downs,QLD,-26.8922,151.6081,FM,1057,,ABC Radio National,Radio National
+qld-darling-down,Darling Downs,QLD,-26.8922,151.6081,FM,1073,,ABC Classic,ABC Classic
+qld-dimbulah,Dimbulah,QLD,-17.1269,145.0689,FM,933,,ABC Radio National,Radio National
+qld-dirranbandi,Dirranbandi,QLD,-28.5578,148.2503,FM,1073,,ABC Radio National,Radio National
+qld-dugald-river,Dugald River Mine,QLD,-20.2314,140.1411,FM,897,,triple j,triple j
+qld-dugald-river,Dugald River Mine,QLD,-20.2314,140.1411,FM,913,,ABC Radio National,Radio National
+qld-dysart,Dysart,QLD,-22.5800,148.3183,FM,933,,ABC Radio National,Radio National
+qld-eidsvold,Eidsvold,QLD,-25.4097,151.1231,FM,1027,,ABC Radio National,Radio National
+qld-einasleigh,Einasleigh,QLD,-18.5147,144.0897,FM,937,,triple j,triple j
+qld-einasleigh,Einasleigh,QLD,-18.5147,144.0897,FM,953,,ABC Radio National,Radio National
+qld-emerald,Emerald,QLD,-23.4594,148.1492,FM,907,,ABC Classic,ABC Classic
+qld-emerald,Emerald,QLD,-23.4594,148.1492,FM,939,,ABC Radio National,Radio National
+qld-ernest-henry,Ernest Henry Mine,QLD,-20.4425,140.7181,FM,893,,triple j,triple j
+qld-ernest-henry,Ernest Henry Mine,QLD,-20.4425,140.7181,FM,905,,ABC Classic,ABC Classic
+qld-forsayth,Forsayth,QLD,-18.5875,143.6025,FM,1037,,triple j,triple j
+qld-forsayth,Forsayth,QLD,-18.5875,143.6025,FM,1069,,ABC Radio National,Radio National
+qld-georgetown,Georgetown,QLD,-18.3022,143.5450,FM,1045,,triple j,triple j
+qld-georgetown,Georgetown,QLD,-18.3022,143.5450,FM,1077,,ABC Radio National,Radio National
+qld-gladstone,Gladstone,QLD,-23.8686,151.2556,FM,959,,ABC Radio National,Radio National
+qld-glenden,Glenden,QLD,-21.3581,148.1094,FM,933,,ABC Radio National,Radio National
+qld-glenden,Glenden,QLD,-21.3581,148.1094,FM,941,,SBS Radio,SBS Radio
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,FM,885,,ABC Classic,ABC Classic
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,FM,901,,ABC Radio National,Radio National
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,FM,909,,Sea FM,Sea FM
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,FM,925,,Gold 92.5,Gold 92.5
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,FM,977,,triple j,triple j
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,DAB,0,,ABC Classic,ABC Classic
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,DAB,0,9C,ABC Jazz,ABC Jazz
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,DAB,0,,ABC Radio National,Radio National
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,DAB,0,9C,Double J,Double J
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,DAB,0,,Gold 92.5,Gold 92.5
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,DAB,0,9C,SBS PopAsia,SBS PopAsia
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,DAB,0,,Sea FM,Sea FM
+qld-gold-coast,Gold Coast,QLD,-28.0336,153.2422,DAB,0,,triple j,triple j
+qld-goondiwindi,Goondiwindi,QLD,-28.5194,150.3378,FM,943,,ABC Radio National,Radio National
+qld-goonyella,Goonyella,QLD,-21.7644,147.9789,FM,1009,,triple j,triple j
+qld-greenvale,Greenvale,QLD,-19.0022,144.9892,FM,1019,,ABC Radio National,Radio National
+qld-gympie,Gympie,QLD,-26.4228,152.8542,FM,937,,ABC Classic,ABC Classic
+qld-gympie,Gympie,QLD,-26.4228,152.8542,FM,969,,ABC Radio National,Radio National
+qld-hail-creek,Hail Creek,QLD,-21.4892,148.3661,FM,1015,,triple j,triple j
+qld-hail-creek-s,Hail Creek South,QLD,-21.5122,148.4064,FM,1007,,triple j,triple j
+qld-herberton,Herberton,QLD,-17.3769,145.3800,FM,931,,ABC Radio National,Radio National
+qld-hughenden,Hughenden,QLD,-20.8453,144.1869,FM,1043,,SBS Radio,SBS Radio
+qld-hughenden,Hughenden,QLD,-20.8453,144.1869,FM,1059,,triple j,triple j
+qld-hughenden,Hughenden,QLD,-20.8453,144.1869,FM,1075,,ABC Radio National,Radio National
+qld-injune,Injune,QLD,-25.8864,148.5219,FM,1027,,SBS Radio,SBS Radio
+qld-injune,Injune,QLD,-25.8864,148.5219,FM,1075,,ABC Radio National,Radio National
+qld-isisford,Isisford,QLD,-24.2531,144.4356,FM,1077,,ABC Radio National,Radio National
+qld-jericho,Jericho,QLD,-23.6250,146.2561,FM,1077,,ABC Radio National,Radio National
+qld-julia-creek,Julia Creek,QLD,-20.6528,141.8239,FM,1075,,ABC Radio National,Radio National
+qld-karumba,Karumba,QLD,-17.4978,140.8383,FM,1045,,triple j,triple j
+qld-karumba,Karumba,QLD,-17.4978,140.8383,FM,1077,,ABC Radio National,Radio National
+qld-kogan-creek,Kogan Creek Mine,QLD,-26.9272,150.7808,FM,925,,ABC Radio National,Radio National
+qld-lake-vermont,Lake Vermont Mine,QLD,-22.4594,148.4122,FM,975,,triple j,triple j
+qld-lake-vermont,Lake Vermont Mine,QLD,-22.4594,148.4122,FM,991,,ABC Radio National,Radio National
+qld-lakeland,Lakeland,QLD,-15.9006,144.8469,FM,1077,,ABC Radio National,Radio National
+qld-laura,Laura,QLD,-15.5592,144.4450,FM,1077,,ABC Radio National,Radio National
+qld-longreach,Longreach,QLD,-23.3900,144.2247,FM,991,,ABC Radio National,Radio National
+qld-longreach,Longreach,QLD,-23.3900,144.2247,FM,1013,,SBS Radio,SBS Radio
+qld-longreach,Longreach,QLD,-23.3900,144.2247,FM,1021,,ABC Classic,ABC Classic
+qld-longreach,Longreach,QLD,-23.3900,144.2247,FM,1061,,triple j,triple j
+qld-mackay,Mackay,QLD,-21.0325,148.9433,FM,979,,ABC Classic,ABC Classic
+qld-mackay,Mackay,QLD,-21.0325,148.9433,FM,995,,triple j,triple j
+qld-mackay,Mackay,QLD,-21.0325,148.9433,FM,1027,,ABC Radio National,Radio National
+qld-meandarra,Meandarra,QLD,-27.4917,149.6425,FM,979,,SBS Radio,SBS Radio
+qld-meandarra,Meandarra,QLD,-27.4917,149.6425,FM,1043,,ABC Radio National,Radio National
+qld-middlemount,Middlemount,QLD,-22.8136,148.6786,FM,1077,,ABC Radio National,Radio National
+qld-miles,Miles,QLD,-26.6494,150.2706,FM,921,,ABC Radio National,Radio National
+qld-miriam-vale,Miriam Vale,QLD,-24.3122,151.6242,FM,899,,ABC Radio National,Radio National
+qld-mission-beac,Mission Beach,QLD,-17.9358,146.1442,FM,909,,ABC Radio National,Radio National
+qld-mitchell,Mitchell,QLD,-26.5428,148.1114,FM,1077,,ABC Radio National,Radio National
+qld-monto,Monto,QLD,-24.9892,151.1864,FM,1019,,ABC Radio National,Radio National
+qld-moranbah,Moranbah,QLD,-21.9258,148.3186,FM,1065,,ABC Radio National,Radio National
+qld-moranbah-tow,Moranbah Town,QLD,-22.0006,148.0606,FM,929,,SBS Radio,SBS Radio
+qld-morven,Morven,QLD,-26.5056,147.1339,FM,1075,,ABC Radio National,Radio National
+qld-mossman,Mossman,QLD,-16.4247,145.3892,FM,901,,ABC Radio National,Radio National
+qld-mossman,Mossman,QLD,-16.4247,145.3892,FM,951,,SBS Radio,SBS Radio
+qld-mount-garnet,Mount Garnet,QLD,-17.6853,145.1203,FM,973,,ABC Radio National,Radio National
+qld-mount-isa,Mount Isa,QLD,-20.7344,139.5125,FM,1017,,ABC Classic,ABC Classic
+qld-mount-isa,Mount Isa,QLD,-20.7344,139.5125,FM,1041,,triple j,triple j
+qld-mount-isa,Mount Isa,QLD,-20.7344,139.5125,FM,1073,,ABC Radio National,Radio National
+qld-mount-molloy,Mount Molloy,QLD,-16.6592,145.3233,FM,973,,ABC Radio National,Radio National
+qld-mount-rawdon,Mount Rawdon Minesite,QLD,-25.2728,151.7639,FM,1015,,triple j,triple j
+qld-mount-rawdon,Mount Rawdon Minesite,QLD,-25.2728,151.7639,FM,1079,,ABC Radio National,Radio National
+qld-mount-surpri,Mount Surprise,QLD,-18.1469,144.3178,FM,1037,,triple j,triple j
+qld-mount-surpri,Mount Surprise,QLD,-18.1469,144.3178,FM,1069,,ABC Radio National,Radio National
+qld-moura,Moura,QLD,-24.5636,149.9753,FM,969,,ABC Radio National,Radio National
+qld-muttaburra,Muttaburra,QLD,-22.5944,144.5483,FM,1005,,SBS Radio,SBS Radio
+qld-muttaburra,Muttaburra,QLD,-22.5944,144.5483,FM,1077,,ABC Radio National,Radio National
+qld-nambour,Nambour,QLD,-26.6322,152.9111,FM,887,,ABC Classic,ABC Classic
+qld-nambour,Nambour,QLD,-26.6322,152.9111,FM,895,,triple j,triple j
+qld-nebo,Nebo,QLD,-21.6964,148.6964,FM,947,,SBS Radio,SBS Radio
+qld-newlands-min,Newlands Mine,QLD,-21.2128,147.8889,FM,1073,,triple j,triple j
+qld-normanton,Normanton,QLD,-17.6706,141.0767,FM,969,,SBS Radio,SBS Radio
+qld-normanton,Normanton,QLD,-17.6706,141.0767,FM,1001,,triple j,triple j
+qld-normanton,Normanton,QLD,-17.6706,141.0767,FM,1073,,ABC Radio National,Radio National
+qld-pentland,Pentland,QLD,-20.4856,145.4086,FM,1077,,ABC Radio National,Radio National
+qld-poitrel-mine,Poitrel Mine,QLD,-22.0439,148.2497,FM,991,,triple j,triple j
+qld-port-douglas,Port Douglas,QLD,-16.4819,145.4672,FM,1055,,SBS Radio,SBS Radio
+qld-quilpie,Quilpie,QLD,-26.6192,144.2647,FM,1077,,ABC Radio National,Radio National
+qld-reedy-creek,Reedy Creek Gasfield,QLD,-26.3322,149.3939,FM,997,,triple j,triple j
+qld-richmond,Richmond,QLD,-20.7347,143.1458,FM,1013,,triple j,triple j
+qld-richmond,Richmond,QLD,-20.7347,143.1458,FM,1061,,SBS Radio,SBS Radio
+qld-richmond,Richmond,QLD,-20.7347,143.1458,FM,1077,,ABC Radio National,Radio National
+qld-rockhampton,Rockhampton,QLD,-23.7297,150.5361,FM,1031,,ABC Radio National,Radio National
+qld-rockhampton,Rockhampton,QLD,-23.7297,150.5361,FM,1047,,triple j,triple j
+qld-rockhampton,Rockhampton,QLD,-23.7297,150.5361,FM,1063,,ABC Classic,ABC Classic
+qld-rolleston-mi,Rolleston Mine,QLD,-24.4411,148.4167,FM,985,,triple j,triple j
+qld-roma,Roma,QLD,-26.5664,148.8192,FM,977,,ABC Classic,ABC Classic
+qld-roma,Roma,QLD,-26.5664,148.8192,FM,1073,,ABC Radio National,Radio National
+qld-saraji-north,Saraji North,QLD,-22.3475,148.2767,FM,1001,,triple j,triple j
+qld-southern-dow,Southern Downs,QLD,-28.5358,151.8328,FM,1017,,ABC Classic,ABC Classic
+qld-southern-dow,Southern Downs,QLD,-28.5358,151.8328,FM,1033,,triple j,triple j
+qld-southern-dow,Southern Downs,QLD,-28.5358,151.8328,FM,1065,,ABC Radio National,Radio National
+qld-spring-gully,Spring Gully Gasfield,QLD,-25.9533,149.0644,FM,1051,,triple j,triple j
+qld-springsure,Springsure,QLD,-24.1417,148.1503,FM,993,,SBS Radio,SBS Radio
+qld-springsure,Springsure,QLD,-24.1417,148.1503,FM,1009,,ABC Radio National,Radio National
+qld-st-george,St George,QLD,-28.0003,148.6756,FM,1077,,ABC Radio National,Radio National
+qld-st-lawrence,St Lawrence,QLD,-22.3464,149.5267,FM,957,,ABC Radio National,Radio National
+qld-st-lawrence,St Lawrence,QLD,-22.3464,149.5267,FM,973,,SBS Radio,SBS Radio
+qld-stonehenge,Stonehenge,QLD,-24.3547,143.2875,FM,1003,,ABC Radio National,Radio National
+qld-surat,Surat,QLD,-27.1433,149.1356,FM,1075,,ABC Radio National,Radio National
+qld-tambo,Tambo,QLD,-24.8822,146.2542,FM,1035,,SBS Radio,SBS Radio
+qld-tambo,Tambo,QLD,-24.8822,146.2542,FM,1075,,ABC Radio National,Radio National
+qld-tara,Tara,QLD,-27.2781,150.4600,FM,903,,SBS Radio,SBS Radio
+qld-tarbat,Tarbat,QLD,-26.9056,143.2919,FM,1045,,ABC Classic,ABC Classic
+qld-tarbat,Tarbat,QLD,-26.9056,143.2919,FM,1069,,triple j,triple j
+qld-tarong-coal,Tarong Coal Mine,QLD,-26.8025,151.9100,FM,933,,ABC Radio National,Radio National
+qld-tarong-coal,Tarong Coal Mine,QLD,-26.8025,151.9100,FM,957,,triple j,triple j
+qld-taroom,Taroom,QLD,-25.6447,149.8039,FM,957,,triple j,triple j
+qld-taroom,Taroom,QLD,-25.6447,149.8039,FM,973,,SBS Radio,SBS Radio
+qld-taroom,Taroom,QLD,-25.6447,149.8039,FM,1077,,ABC Radio National,Radio National
+qld-thargomindah,Thargomindah,QLD,-27.9931,143.8233,FM,1045,,ABC Classic,ABC Classic
+qld-thargomindah,Thargomindah,QLD,-27.9931,143.8233,FM,1053,,triple j,triple j
+qld-thargomindah,Thargomindah,QLD,-27.9931,143.8233,FM,1077,,ABC Radio National,Radio National
+qld-theodore,Theodore,QLD,-24.9936,150.0964,FM,1011,,triple j,triple j
+qld-theodore,Theodore,QLD,-24.9936,150.0964,FM,1027,,SBS Radio,SBS Radio
+qld-theodore,Theodore,QLD,-24.9936,150.0964,FM,1075,,ABC Radio National,Radio National
+qld-thursday-isl,Thursday Island,QLD,-10.5825,142.2125,FM,1077,,ABC Radio National,Radio National
+qld-townsville,Townsville,QLD,-19.3428,146.7822,FM,1015,,ABC Classic,ABC Classic
+qld-townsville,Townsville,QLD,-19.3428,146.7822,FM,1047,,ABC Radio National,Radio National
+qld-townsville,Townsville,QLD,-19.3428,146.7822,FM,1055,,triple j,triple j
+qld-townsville,Townsville,QLD,-19.3428,146.7822,AM,630,,ABC Townsville,ABC Townsville
+qld-townsville-n,Townsville North,QLD,-19.2497,146.7997,FM,959,,ABC Classic,ABC Classic
+qld-townsville-n,Townsville North,QLD,-19.2497,146.7997,FM,967,,ABC Radio National,Radio National
+qld-townsville-n,Townsville North,QLD,-19.2497,146.7997,FM,975,,triple j,triple j
+qld-tully,Tully,QLD,-17.8689,146.0075,FM,963,,ABC Radio National,Radio National
+qld-wandoan,Wandoan,QLD,-26.0481,149.9600,FM,989,,ABC Radio National,Radio National
+qld-weipa,Weipa,QLD,-12.6219,141.8894,FM,993,,triple j,triple j
+qld-weipa,Weipa,QLD,-12.6219,141.8894,FM,1025,,ABC Classic,ABC Classic
+qld-weipa,Weipa,QLD,-12.6219,141.8894,FM,1073,,ABC Radio National,Radio National
+qld-wide-bay,Wide Bay,QLD,-25.4269,152.1169,FM,985,,ABC Classic,ABC Classic
+qld-wide-bay,Wide Bay,QLD,-25.4269,152.1169,FM,993,,triple j,triple j
+qld-wide-bay,Wide Bay,QLD,-25.4269,152.1169,FM,1009,,ABC Radio National,Radio National
+qld-willows,Willows,QLD,-23.7381,147.5378,FM,997,,SBS Radio,SBS Radio
+qld-windorah,Windorah,QLD,-25.4197,142.6594,FM,1003,,ABC Radio National,Radio National
+qld-winton,Winton,QLD,-22.2411,143.0511,FM,1079,,ABC Radio National,Radio National
+qld-wondai,Wondai,QLD,-26.3347,151.7644,FM,989,,SBS Radio,SBS Radio
+qld-wyandra,Wyandra,QLD,-27.2486,145.9786,FM,923,,SBS Radio,SBS Radio
+qld-yowah,Yowah,QLD,-27.9703,144.6347,FM,1025,,SBS Radio,SBS Radio
+qld-yowah,Yowah,QLD,-27.9703,144.6347,FM,1041,,triple j,triple j
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,FM,1015,,Radio Adelaide,Radio Adelaide
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,FM,1039,,ABC Classic,ABC Classic
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,FM,1047,,Triple M Adelaide,Triple M Adelaide
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,FM,1055,,triple j,triple j
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,FM,1063,,SBS Radio,SBS Radio
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,AM,729,,ABC Radio National,Radio National
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,AM,891,,ABC Adelaide,ABC Adelaide
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,AM,972,,ABC NewsRadio,ABC NewsRadio
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,AM,1395,,FIVEaa,FIVEaa
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,,ABC Adelaide,ABC Adelaide
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,,ABC Classic,ABC Classic
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,9C,ABC Jazz,ABC Jazz
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,,ABC NewsRadio,ABC NewsRadio
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,,ABC Radio National,Radio National
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,9C,Double J,Double J
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,,FIVEaa,FIVEaa
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,9C,SBS PopAsia,SBS PopAsia
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,,SBS Radio,SBS Radio
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,,Triple M Adelaide,Triple M Adelaide
+sa-adelaide,Adelaide,SA,-35.1039,138.5206,DAB,0,,triple j,triple j
+sa-adelaide-foot,Adelaide Foothills,SA,-34.9247,138.6028,FM,951,,SBS Radio,SBS Radio
+sa-adelaide-foot,Adelaide Foothills,SA,-34.9247,138.6028,FM,959,,triple j,triple j
+sa-adelaide-foot,Adelaide Foothills,SA,-34.9247,138.6028,FM,975,,ABC Classic,ABC Classic
+sa-andamooka,Andamooka,SA,-30.4733,137.1667,FM,1075,,ABC Radio National,Radio National
+sa-ceduna-smoky,Ceduna/Smoky Bay,SA,-32.1389,133.7894,FM,1077,,ABC Radio National,Radio National
+sa-coober-pedy,Coober Pedy,SA,-29.0122,134.7553,FM,933,,SBS Radio,SBS Radio
+sa-coober-pedy,Coober Pedy,SA,-29.0122,134.7553,FM,1013,,triple j,triple j
+sa-coober-pedy,Coober Pedy,SA,-29.0122,134.7553,FM,1077,,ABC Radio National,Radio National
+sa-dullingari,Dullingari,SA,-28.1419,140.8672,FM,1053,,triple j,triple j
+sa-hawker,Hawker,SA,-31.9208,138.4453,FM,1075,,ABC Radio National,Radio National
+sa-jacinth-ambro,Jacinth-Ambrosia Mine,SA,-30.8706,132.2169,FM,1053,,triple j,triple j
+sa-keith,Keith,SA,-36.0078,140.3367,FM,969,,ABC Radio National,Radio National
+sa-leigh-creek-s,Leigh Creek South,SA,-30.5997,138.4042,FM,1061,,ABC Radio National,Radio National
+sa-marree,Marree,SA,-29.6539,138.0550,FM,1073,,ABC Radio National,Radio National
+sa-moomba,Moomba,SA,-28.1181,140.2117,FM,1045,,triple j,triple j
+sa-mount-gambier,Mount Gambier,SA,-37.6022,140.4825,FM,1025,,triple j,triple j
+sa-mount-gambier,Mount Gambier,SA,-37.6022,140.4825,FM,1033,,ABC Radio National,Radio National
+sa-mount-gambier,Mount Gambier,SA,-37.6022,140.4825,FM,1041,,ABC Classic,ABC Classic
+sa-port-lincoln,Port Lincoln,SA,-34.7017,135.8281,FM,923,,triple j,triple j
+sa-port-lincoln,Port Lincoln,SA,-34.7017,135.8281,FM,931,,ABC Classic,ABC Classic
+sa-prominent-hil,Prominent Hill Mine,SA,-29.7250,135.5703,FM,929,,triple j,triple j
+sa-quorn,Quorn,SA,-32.2997,138.0564,FM,1079,,ABC Radio National,Radio National
+sa-renmark-loxto,Renmark/Loxton,SA,-34.4644,140.5333,FM,1019,,triple j,triple j
+sa-renmark-loxto,Renmark/Loxton,SA,-34.4644,140.5333,FM,1051,,ABC Classic,ABC Classic
+sa-renmark-loxto,Renmark/Loxton,SA,-34.4644,140.5333,AM,1305,,ABC Radio National,Radio National
+sa-roxby-downs,Roxby Downs,SA,-30.5464,136.8947,FM,923,,SBS Radio,SBS Radio
+sa-roxby-downs,Roxby Downs,SA,-30.5464,136.8947,FM,939,,triple j,triple j
+sa-roxby-downs,Roxby Downs,SA,-30.5464,136.8947,FM,1019,,ABC Radio National,Radio National
+sa-roxby-downs,Roxby Downs,SA,-30.5464,136.8947,FM,1035,,ABC Classic,ABC Classic
+sa-spencer-gulf,Spencer Gulf North,SA,-33.1039,138.1642,FM,1035,,triple j,triple j
+sa-spencer-gulf,Spencer Gulf North,SA,-33.1039,138.1642,FM,1043,,ABC Classic,ABC Classic
+sa-spencer-gulf,Spencer Gulf North,SA,-33.1039,138.1642,FM,1067,,ABC Radio National,Radio National
+sa-streaky-bay,Streaky Bay,SA,-32.7581,134.1908,FM,1009,,ABC Radio National,Radio National
+sa-streaky-bay,Streaky Bay,SA,-32.7581,134.1908,FM,1033,,triple j,triple j
+sa-tirrawarra,Tirrawarra,SA,-27.6889,140.1019,FM,1077,,triple j,triple j
+sa-tumby-bay,Tumby Bay,SA,-34.3503,135.9550,FM,1003,,triple j,triple j
+sa-tumby-bay,Tumby Bay,SA,-34.3503,135.9550,FM,1019,,ABC Radio National,Radio National
+sa-wirrulla,Wirrulla,SA,-32.4078,134.6128,FM,1073,,ABC Radio National,Radio National
+sa-woomera,Woomera,SA,-31.2000,136.8269,FM,1057,,ABC Radio National,Radio National
+sa-wudinna,Wudinna,SA,-33.1406,135.1089,FM,1077,,ABC Radio National,Radio National
+sa-wudinna-town,Wudinna Town,SA,-32.9761,135.4808,FM,1053,,triple j,triple j
+tas-bicheno,Bicheno,TAS,-41.8814,148.2964,FM,913,,ABC Radio National,Radio National
+tas-currie,Currie,TAS,-39.9156,143.8544,FM,981,,triple j,triple j
+tas-currie,Currie,TAS,-39.9156,143.8544,FM,989,,ABC Radio National,Radio National
+tas-hobart,Hobart,TAS,-42.8975,147.2364,FM,929,,triple j,triple j
+tas-hobart,Hobart,TAS,-42.8975,147.2364,FM,939,,ABC Classic,ABC Classic
+tas-hobart,Hobart,TAS,-42.8975,147.2364,FM,961,,Print Radio Tasmania,Print Radio Tasmania
+tas-hobart,Hobart,TAS,-42.8975,147.2364,FM,1057,,SBS Radio,SBS Radio
+tas-hobart,Hobart,TAS,-42.8975,147.2364,AM,585,,ABC Radio National,Radio National
+tas-hobart,Hobart,TAS,-42.8975,147.2364,AM,747,,ABC NewsRadio,ABC NewsRadio
+tas-hobart,Hobart,TAS,-42.8975,147.2364,AM,864,,Print Radio Tasmania,Print Radio Tasmania
+tas-hobart,Hobart,TAS,-42.8975,147.2364,AM,936,,ABC Hobart,ABC Hobart
+tas-hobart,Hobart,TAS,-42.8975,147.2364,DAB,0,,ABC Classic,ABC Classic
+tas-hobart,Hobart,TAS,-42.8975,147.2364,DAB,0,,ABC Hobart,ABC Hobart
+tas-hobart,Hobart,TAS,-42.8975,147.2364,DAB,0,9C,ABC Jazz,ABC Jazz
+tas-hobart,Hobart,TAS,-42.8975,147.2364,DAB,0,,ABC NewsRadio,ABC NewsRadio
+tas-hobart,Hobart,TAS,-42.8975,147.2364,DAB,0,,ABC Radio National,Radio National
+tas-hobart,Hobart,TAS,-42.8975,147.2364,DAB,0,9C,Double J,Double J
+tas-hobart,Hobart,TAS,-42.8975,147.2364,DAB,0,9C,SBS PopAsia,SBS PopAsia
+tas-hobart,Hobart,TAS,-42.8975,147.2364,DAB,0,,SBS Radio,SBS Radio
+tas-hobart,Hobart,TAS,-42.8975,147.2364,DAB,0,,triple j,triple j
+tas-launceston,Launceston,TAS,-41.3917,147.4261,DAB,0,9C,ABC Jazz,ABC Jazz
+tas-launceston,Launceston,TAS,-41.3917,147.4261,DAB,0,9C,Double J,Double J
+tas-launceston,Launceston,TAS,-41.3917,147.4261,DAB,0,9C,SBS PopAsia,SBS PopAsia
+tas-lileah,Lileah,TAS,-40.9592,145.1928,FM,897,,ABC Radio National,Radio National
+tas-ne-tasmania,NE Tasmania,TAS,-41.3917,147.4261,FM,909,,triple j,triple j
+tas-ne-tasmania,NE Tasmania,TAS,-41.3917,147.4261,FM,933,,ABC Classic,ABC Classic
+tas-ne-tasmania,NE Tasmania,TAS,-41.3917,147.4261,FM,941,,ABC Radio National,Radio National
+tas-orford,Orford,TAS,-42.5225,147.9503,FM,889,,ABC Radio National,Radio National
+tas-queenstown,Queenstown,TAS,-42.0847,145.6069,FM,937,,SBS Radio,SBS Radio
+tas-queenstown,Queenstown,TAS,-42.0847,145.6069,AM,630,,ABC Radio National,Radio National
+tas-queenstown-z,Queenstown/Zeehan,TAS,-42.0919,145.6064,FM,889,,triple j,triple j
+tas-rosebery,Rosebery,TAS,-41.8444,145.5414,FM,1015,,SBS Radio,SBS Radio
+tas-rosebery,Rosebery,TAS,-41.8444,145.5414,FM,1027,,triple j,triple j
+tas-rosebery,Rosebery,TAS,-41.8444,145.5414,FM,1079,,ABC Radio National,Radio National
+tas-st-helens,St Helens,TAS,-41.3336,148.2869,FM,961,,ABC Radio National,Radio National
+tas-st-marys,St Marys,TAS,-41.5342,148.1717,FM,1011,,ABC Radio National,Radio National
+tas-strahan,Strahan,TAS,-42.1528,145.2925,FM,947,,SBS Radio,SBS Radio
+tas-strahan,Strahan,TAS,-42.1528,145.2925,FM,1019,,triple j,triple j
+tas-strahan,Strahan,TAS,-42.1528,145.2925,FM,1059,,ABC Radio National,Radio National
+tas-swansea,Swansea,TAS,-42.1250,148.0733,FM,1077,,ABC Radio National,Radio National
+tas-waratah,Waratah,TAS,-41.3353,145.7336,FM,1049,,ABC Radio National,Radio National
+tas-weldborough,Weldborough,TAS,-41.2336,147.9453,FM,989,,ABC Radio National,Radio National
+vic-albury-wodon,Albury/Wodonga,VIC,-36.1019,146.9025,AM,990,,ABC Radio National,Radio National
+vic-alexandra,Alexandra,VIC,-37.0767,145.5731,FM,1045,,ABC Radio National,Radio National
+vic-bacchus-mars,Bacchus Marsh,VIC,-37.6533,144.4225,DAB,0,9C,ABC Jazz,ABC Jazz
+vic-bacchus-mars,Bacchus Marsh,VIC,-37.6533,144.4225,DAB,0,9C,Double J,Double J
+vic-bacchus-mars,Bacchus Marsh,VIC,-37.6533,144.4225,DAB,0,9C,SBS PopAsia,SBS PopAsia
+vic-bairnsdale,Bairnsdale,VIC,-37.7056,147.5606,FM,1063,,ABC Radio National,Radio National
+vic-ballarat-loo,Ballarat (Lookout Hill),VIC,-37.2825,143.2478,FM,1055,,ABC Classic,ABC Classic
+vic-ballarat-loo,Ballarat (Lookout Hill),VIC,-37.2825,143.2478,FM,1071,,triple j,triple j
+vic-ballarat-war,Ballarat (Warrenheip),VIC,-37.5753,143.9603,FM,959,,SBS Radio,SBS Radio
+vic-bendigo,Bendigo,VIC,-36.9925,144.3089,FM,903,,triple j,triple j
+vic-bendigo,Bendigo,VIC,-36.9925,144.3089,FM,927,,ABC Classic,ABC Classic
+vic-bright,Bright,VIC,-36.7158,146.9728,FM,881,,ABC Classic,ABC Classic
+vic-bright,Bright,VIC,-36.7158,146.9728,FM,889,,ABC Radio National,Radio National
+vic-cann-river,Cann River,VIC,-37.5939,148.9947,FM,1077,,ABC Radio National,Radio National
+vic-corryong,Corryong,VIC,-36.1856,147.9767,FM,981,,ABC Radio National,Radio National
+vic-eildon,Eildon,VIC,-37.2767,145.8503,FM,973,,ABC Radio National,Radio National
+vic-flowerdale-h,Flowerdale/Hazeldene,VIC,-37.3425,145.2819,FM,981,,ABC Radio National,Radio National
+vic-goulburn-val,Goulburn Valley,VIC,-36.3581,145.6950,FM,945,,triple j,triple j
+vic-goulburn-val,Goulburn Valley,VIC,-36.3581,145.6950,FM,961,,ABC Classic,ABC Classic
+vic-hopetoun-vic,Hopetoun (Vic),VIC,-35.8531,142.2903,FM,883,,ABC Radio National,Radio National
+vic-horsham,Horsham,VIC,-36.6408,142.2575,FM,997,,ABC Radio National,Radio National
+vic-latrobe-vall,Latrobe Valley,VIC,-38.3992,146.5647,FM,967,,triple j,triple j
+vic-latrobe-vall,Latrobe Valley,VIC,-38.3992,146.5647,FM,1015,,ABC Classic,ABC Classic
+vic-mallacoota,Mallacoota,VIC,-37.5464,149.7511,FM,1033,,ABC Radio National,Radio National
+vic-mansfield,Mansfield,VIC,-37.0433,145.9847,FM,1053,,ABC Radio National,Radio National
+vic-maryboroug-2,Maryborough (Vic),VIC,-37.0439,143.8186,FM,1045,,SBS Radio,SBS Radio
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,907,,SYN,SYN
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,915,,Smooth 91.5,Smooth 91.5
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,931,,SBS Radio,SBS Radio
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,1003,,Nova 100,Nova 100
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,1027,,3RRR,3RRR
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,1035,,Fine Music,Fine Music
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,1043,,Gold 104.3,Gold 104.3
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,1051,,Triple M Melbourne,Triple M Melbourne
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,1059,,ABC Classic,ABC Classic
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,1067,,PBS 106.7,PBS 106.7
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,FM,1075,,triple j,triple j
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,AM,621,,ABC Radio National,Radio National
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,AM,693,,3AW,3AW
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,AM,774,,ABC Melbourne,ABC Melbourne
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,AM,855,,3CR,3CR
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,AM,1026,,ABC NewsRadio,ABC NewsRadio
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,AM,1224,,SBS Radio,SBS Radio
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,AM,1503,,Kool n Deadly,Kool n Deadly
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,3AW,3AW
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,ABC Classic,ABC Classic
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,9C,ABC Jazz,ABC Jazz
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,ABC Melbourne,ABC Melbourne
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,ABC NewsRadio,ABC NewsRadio
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,ABC Radio National,Radio National
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,9C,Double J,Double J
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,Gold 104.3,Gold 104.3
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,Nova 100,Nova 100
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,9C,SBS PopAsia,SBS PopAsia
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,SBS Radio,SBS Radio
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,Smooth 91.5,Smooth 91.5
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,Triple M Melbourne,Triple M Melbourne
+vic-melbourne,Melbourne,VIC,-37.8350,145.3486,DAB,0,,triple j,triple j
+vic-melbourne-ci,Melbourne City,VIC,-37.8103,144.9622,DAB,0,9C,ABC Jazz,ABC Jazz
+vic-melbourne-ci,Melbourne City,VIC,-37.8103,144.9622,DAB,0,9C,Double J,Double J
+vic-melbourne-ci,Melbourne City,VIC,-37.8103,144.9622,DAB,0,9C,SBS PopAsia,SBS PopAsia
+vic-mildura,Mildura,VIC,-34.3797,142.1883,FM,987,,SBS Radio,SBS Radio
+vic-mildura-sunr,Mildura/Sunraysia,VIC,-34.3797,142.1883,FM,1011,,triple j,triple j
+vic-mildura-sunr,Mildura/Sunraysia,VIC,-34.3797,142.1883,FM,1027,,ABC Classic,ABC Classic
+vic-mildura-sunr,Mildura/Sunraysia,VIC,-34.3797,142.1883,FM,1059,,ABC Radio National,Radio National
+vic-murray-valle,Murray Valley,VIC,-35.4728,143.4558,FM,1037,,ABC Classic,ABC Classic
+vic-murray-valle,Murray Valley,VIC,-35.4728,143.4558,FM,1053,,triple j,triple j
+vic-myrtleford,Myrtleford,VIC,-36.4450,146.8031,FM,973,,SBS Radio,SBS Radio
+vic-nhill,Nhill,VIC,-36.4039,141.4744,FM,957,,ABC Radio National,Radio National
+vic-omeo,Omeo,VIC,-37.1464,147.6550,FM,997,,ABC Radio National,Radio National
+vic-orbost,Orbost,VIC,-37.7117,148.6000,FM,987,,ABC Radio National,Radio National
+vic-portland-vic,Portland (Vic),VIC,-38.2167,141.7033,FM,985,,ABC Radio National,Radio National
+vic-swifts-creek,Swifts Creek,VIC,-37.2817,147.7181,FM,1035,,ABC Radio National,Radio National
+vic-upper-murray,Upper Murray,VIC,-36.2536,146.8550,FM,1033,,triple j,triple j
+vic-upper-murray,Upper Murray,VIC,-36.2536,146.8550,FM,1041,,ABC Classic,ABC Classic
+vic-wangaratta,Wangaratta,VIC,-36.3844,146.2053,AM,756,,ABC Radio National,Radio National
+vic-warrnambool,Warrnambool,VIC,-38.3047,142.7375,FM,897,,triple j,triple j
+vic-warrnambool,Warrnambool,VIC,-38.3047,142.7375,FM,921,,ABC Classic,ABC Classic
+vic-warrnambool,Warrnambool,VIC,-38.3047,142.7375,FM,1017,,ABC Radio National,Radio National
+vic-werribee,Werribee,VIC,-37.8867,144.7036,DAB,0,9C,ABC Jazz,ABC Jazz
+vic-werribee,Werribee,VIC,-37.8867,144.7036,DAB,0,9C,Double J,Double J
+vic-werribee,Werribee,VIC,-37.8867,144.7036,DAB,0,9C,SBS PopAsia,SBS PopAsia
+vic-western-vict,Western Victoria,VIC,-37.4589,141.9161,FM,925,,ABC Radio National,Radio National
+vic-western-vict,Western Victoria,VIC,-37.4589,141.9161,FM,933,,ABC Classic,ABC Classic
+vic-western-vict,Western Victoria,VIC,-37.4589,141.9161,FM,949,,triple j,triple j
+vic-wodonga,Wodonga,VIC,-36.1228,146.8900,FM,895,,SBS Radio,SBS Radio
+vic-yarra-ranges,Yarra Ranges,VIC,-37.7250,145.6972,FM,961,,ABC Melbourne,ABC Melbourne
+wa-argyle,Argyle,WA,-16.7097,128.3956,FM,1075,,ABC Radio National,Radio National
+wa-augusta,Augusta,WA,-34.3142,115.1561,FM,991,,ABC Radio National,Radio National
+wa-barrow-island,Barrow Island,WA,-20.8178,115.4383,FM,991,,ABC Classic,ABC Classic
+wa-barrow-island,Barrow Island,WA,-20.8178,115.4383,FM,1007,,ABC Radio National,Radio National
+wa-barrow-island,Barrow Island,WA,-20.8178,115.4383,FM,1055,,triple j,triple j
+wa-boddington-go,Boddington Gold Mine,WA,-32.7522,116.3444,FM,959,,ABC Perth,ABC Perth
+wa-boddington-go,Boddington Gold Mine,WA,-32.7522,116.3444,FM,983,,triple j,triple j
+wa-brockman-2-mi,Brockman 2 MIne - Pit 8,WA,-22.4072,117.3467,FM,1029,,ABC Radio National,Radio National
+wa-brockman-2-mi,Brockman 2 MIne - Pit 8,WA,-22.4072,117.3467,FM,1045,,triple j,triple j
+wa-brockman-4-mi,Brockman 4 Mine,WA,-22.5933,117.2314,FM,1037,,triple j,triple j
+wa-brockman-4-mi,Brockman 4 Mine,WA,-22.5933,117.2314,FM,1069,,ABC Radio National,Radio National
+wa-broome,Broome,WA,-17.8886,122.2633,FM,917,,SBS Radio,SBS Radio
+wa-broome,Broome,WA,-17.8886,122.2633,FM,949,,triple j,triple j
+wa-broome,Broome,WA,-17.8886,122.2633,FM,1077,,ABC Radio National,Radio National
+wa-bunbury,Bunbury,WA,-33.3969,115.9153,FM,933,,ABC Classic,ABC Classic
+wa-bunbury,Bunbury,WA,-33.3969,115.9153,FM,941,,triple j,triple j
+wa-busselton,Busselton,WA,-33.6589,115.2275,AM,1152,,ABC NewsRadio,ABC NewsRadio
+wa-busselton,Busselton,WA,-33.6589,115.2275,AM,1269,,ABC Radio National,Radio National
+wa-cape-lambert,Cape Lambert,WA,-20.6400,117.1569,FM,901,,ABC Classic,ABC Classic
+wa-carnarvon,Carnarvon,WA,-24.9114,113.7211,FM,1077,,ABC Radio National,Radio National
+wa-central-agric,Central Agricultural,WA,-31.9844,117.1897,FM,981,,triple j,triple j
+wa-central-agric,Central Agricultural,WA,-31.9844,117.1897,FM,989,,ABC Classic,ABC Classic
+wa-channar-h-min,Channar H Mine,WA,-23.3047,117.8556,FM,905,,triple j,triple j
+wa-channar-mine,Channar Mine,WA,-23.2919,117.7861,FM,1009,,triple j,triple j
+wa-christmas-cre,Christmas Creek Mine,WA,-22.3439,119.6814,FM,925,,ABC Radio National,Radio National
+wa-christmas-cre,Christmas Creek Mine,WA,-22.3439,119.6814,FM,941,,triple j,triple j
+wa-citic-pacific,Citic Pacific Mine,WA,-21.0739,116.1508,FM,1021,,triple j,triple j
+wa-cloudbreak-mi,Cloudbreak Mine Bigge Pit,WA,-22.2992,119.2242,FM,903,,triple j,triple j
+wa-cloudbreak-mi,Cloudbreak Mine Bigge Pit,WA,-22.2992,119.2242,FM,975,,ABC Perth,ABC Perth
+wa-cloudbreak-2,Cloudbreak Mine Central Hub,WA,-22.3347,119.4028,FM,955,,ABC Perth,ABC Perth
+wa-cloudbreak-2,Cloudbreak Mine Central Hub,WA,-22.3347,119.4028,FM,1019,,triple j,triple j
+wa-cloudbreak-3,Cloudbreak Mine Kangaroo RBS,WA,-22.2847,119.3028,FM,987,,ABC Perth,ABC Perth
+wa-cloudbreak-3,Cloudbreak Mine Kangaroo RBS,WA,-22.2847,119.3028,FM,1035,,triple j,triple j
+wa-coorow,Coorow,WA,-29.8814,116.0247,FM,1071,,SBS Radio,SBS Radio
+wa-corunna-downs,Corunna Downs Mine,WA,-21.4439,119.6739,FM,979,,triple j,triple j
+wa-cue,Cue,WA,-27.4289,117.9006,FM,1077,,ABC Radio National,Radio National
+wa-dalwallinu,Dalwallinu,WA,-30.2906,116.6094,AM,612,,ABC Radio National,Radio National
+wa-dampier,Dampier,WA,-20.6553,116.7281,FM,993,,triple j,triple j
+wa-dampier,Dampier,WA,-20.6553,116.7281,FM,1079,,ABC Radio National,Radio National
+wa-denham,Denham,WA,-25.9194,113.5342,FM,1005,,SBS Radio,SBS Radio
+wa-denham,Denham,WA,-25.9194,113.5342,FM,1037,,triple j,triple j
+wa-denham,Denham,WA,-25.9194,113.5342,FM,1075,,ABC Radio National,Radio National
+wa-derby-wa,Derby (WA),WA,-17.3561,123.6700,FM,1059,,triple j,triple j
+wa-derby-wa,Derby (WA),WA,-17.3561,123.6700,FM,1075,,ABC Radio National,Radio National
+wa-eastern-ridge,Eastern Ridge Mine,WA,-23.2983,119.7964,FM,1037,,triple j,triple j
+wa-eastern-ridge,Eastern Ridge Mine,WA,-23.2983,119.7964,FM,1069,,ABC Perth,ABC Perth
+wa-eliwana-mine,Eliwana Mine,WA,-22.4725,116.8297,FM,927,,triple j,triple j
+wa-eneabba,Eneabba,WA,-29.8181,115.2775,FM,1077,,ABC Radio National,Radio National
+wa-esperance,Esperance,WA,-33.7681,121.8786,FM,1047,,ABC Classic,ABC Classic
+wa-esperance,Esperance,WA,-33.7681,121.8786,FM,1055,,triple j,triple j
+wa-esperance,Esperance,WA,-33.7681,121.8786,FM,1063,,ABC Radio National,Radio National
+wa-exmouth,Exmouth,WA,-21.9592,114.1292,FM,981,,triple j,triple j
+wa-exmouth,Exmouth,WA,-21.9592,114.1292,FM,989,,SBS Radio,SBS Radio
+wa-exmouth,Exmouth,WA,-21.9592,114.1292,FM,1077,,ABC Radio National,Radio National
+wa-fitzroy-cross,Fitzroy Crossing,WA,-18.3303,125.6806,FM,1077,,ABC Radio National,Radio National
+wa-flying-fish-m,Flying Fish Mine,WA,-22.5161,117.1333,FM,891,,triple j,triple j
+wa-fremantle,Fremantle,WA,-32.0333,115.7706,DAB,0,9C,ABC Jazz,ABC Jazz
+wa-fremantle,Fremantle,WA,-32.0333,115.7706,DAB,0,9C,Double J,Double J
+wa-fremantle,Fremantle,WA,-32.0333,115.7706,DAB,0,9C,SBS PopAsia,SBS PopAsia
+wa-gairdner,Gairdner,WA,-34.2342,118.9889,FM,1049,,triple j,triple j
+wa-garden-well-m,Garden Well Mine,WA,-27.8928,122.3650,FM,1065,,triple j,triple j
+wa-geraldton,Geraldton,WA,-28.6839,114.6761,FM,949,,ABC Classic,ABC Classic
+wa-geraldton,Geraldton,WA,-28.6839,114.6761,FM,989,,triple j,triple j
+wa-geraldton,Geraldton,WA,-28.6839,114.6761,FM,997,,ABC Radio National,Radio National
+wa-golden-grove,Golden Grove,WA,-28.7847,116.9375,FM,1031,,triple j,triple j
+wa-golden-grove,Golden Grove,WA,-28.7847,116.9375,FM,1063,,ABC Classic,ABC Classic
+wa-granny-smith,Granny Smith Goldmine,WA,-28.8122,122.4058,FM,929,,triple j,triple j
+wa-green-head,Green Head,WA,-30.0739,114.9683,FM,1001,,SBS Radio,SBS Radio
+wa-green-head,Green Head,WA,-30.0739,114.9683,FM,1053,,triple j,triple j
+wa-green-head,Green Head,WA,-30.0739,114.9683,FM,1061,,ABC Classic,ABC Classic
+wa-gruyere-gold,Gruyere Gold Mine East,WA,-27.9917,123.8494,FM,1025,,triple j,triple j
+wa-halls-creek,Halls Creek,WA,-18.2186,127.6750,FM,1077,,ABC Radio National,Radio National
+wa-hope-downs-1,Hope Downs 1 Mine,WA,-22.9556,119.0994,FM,1045,,triple j,triple j
+wa-hope-downs-1,Hope Downs 1 Mine,WA,-22.9556,119.0994,FM,1077,,ABC Radio National,Radio National
+wa-hope-downs-4,Hope Downs 4 Mine,WA,-23.1547,119.5331,FM,895,,ABC Radio National,Radio National
+wa-hope-downs-4,Hope Downs 4 Mine,WA,-23.1547,119.5331,FM,943,,triple j,triple j
+wa-hope-downs-vi,Hope Downs Village,WA,-23.0411,119.0322,FM,885,,ABC Radio National,Radio National
+wa-hope-downs-vi,Hope Downs Village,WA,-23.0411,119.0322,FM,933,,triple j,triple j
+wa-hopetoun-wa,Hopetoun (WA),WA,-33.9331,120.1336,FM,941,,triple j,triple j
+wa-hopetoun-wa,Hopetoun (WA),WA,-33.9331,120.1336,FM,957,,SBS Radio,SBS Radio
+wa-hopetoun-wa,Hopetoun (WA),WA,-33.9331,120.1336,FM,1069,,ABC Radio National,Radio National
+wa-jack-hills-mi,Jack Hills Mine,WA,-26.0214,117.2686,FM,967,,triple j,triple j
+wa-jimblebar-min,Jimblebar Mine,WA,-23.3794,120.0525,FM,941,,triple j,triple j
+wa-jimblebar-min,Jimblebar Mine,WA,-23.3794,120.0525,FM,957,,ABC Radio National,Radio National
+wa-jimblebar-m-2,Jimblebar Mine East,WA,-23.3772,120.1539,FM,949,,triple j,triple j
+wa-jimblebar-m-2,Jimblebar Mine East,WA,-23.3772,120.1539,FM,965,,ABC Radio National,Radio National
+wa-jundee-mine,Jundee Mine,WA,-26.3947,120.6375,FM,1073,,triple j,triple j
+wa-jurien-bay,Jurien Bay,WA,-30.2822,115.0681,FM,967,,triple j,triple j
+wa-jurien-bay,Jurien Bay,WA,-30.2822,115.0681,FM,983,,ABC Classic,ABC Classic
+wa-jurien-bay,Jurien Bay,WA,-30.2822,115.0681,FM,1079,,ABC Radio National,Radio National
+wa-kalbarri,Kalbarri,WA,-27.7056,114.1750,FM,1077,,ABC Radio National,Radio National
+wa-kalgoorlie,Kalgoorlie,WA,-30.7172,121.4403,FM,955,,ABC Classic,ABC Classic
+wa-kalgoorlie,Kalgoorlie,WA,-30.7172,121.4403,FM,971,,ABC Radio National,Radio National
+wa-kalgoorlie,Kalgoorlie,WA,-30.7172,121.4403,FM,987,,triple j,triple j
+wa-kalgoorlie-su,Kalgoorlie Super Pit,WA,-30.7811,121.5128,FM,935,,triple j,triple j
+wa-kambalda,Kambalda,WA,-31.2100,121.6731,FM,939,,ABC Radio National,Radio National
+wa-karara-mine,Karara Mine,WA,-29.1814,116.7044,FM,1005,,triple j,triple j
+wa-karara-mine,Karara Mine,WA,-29.1814,116.7044,FM,1037,,ABC Classic,ABC Classic
+wa-karara-mine,Karara Mine,WA,-29.1814,116.7044,FM,1053,,ABC Radio National,Radio National
+wa-karlawinda-go,Karlawinda Gold Mine,WA,-23.7619,120.0967,FM,1053,,triple j,triple j
+wa-karratha,Karratha,WA,-20.7919,116.8936,FM,1009,,ABC Radio National,Radio National
+wa-karratha,Karratha,WA,-20.7919,116.8936,FM,1033,,triple j,triple j
+wa-kens-bore-min,Kens Bore Mine,WA,-22.0953,116.2244,FM,919,,triple j,triple j
+wa-king-of-the-h,King of The Hills Mine,WA,-28.6831,121.1636,FM,1009,,triple j,triple j
+wa-king-of-the-h,King of The Hills Mine,WA,-28.6831,121.1636,FM,1025,,ABC Radio National,Radio National
+wa-koodaideri-mi,Koodaideri Mine,WA,-22.5217,119.0481,FM,897,,triple j,triple j
+wa-koodaideri-mi,Koodaideri Mine,WA,-22.5217,119.0481,FM,961,,ABC Radio National,Radio National
+wa-kununurra,Kununurra,WA,-15.7639,128.7339,FM,1073,,ABC Radio National,Radio National
+wa-laverton,Laverton,WA,-28.6283,122.3994,FM,949,,SBS Radio,SBS Radio
+wa-laverton,Laverton,WA,-28.6283,122.3994,FM,989,,triple j,triple j
+wa-laverton,Laverton,WA,-28.6283,122.3994,FM,1077,,ABC Radio National,Radio National
+wa-leeman,Leeman,WA,-29.9619,114.9794,FM,1073,,ABC Radio National,Radio National
+wa-leinster,Leinster,WA,-27.9139,120.7058,FM,1045,,ABC Classic,ABC Classic
+wa-leinster,Leinster,WA,-27.9139,120.7058,FM,1077,,ABC Radio National,Radio National
+wa-leonora,Leonora,WA,-28.8819,121.3342,FM,953,,SBS Radio,SBS Radio
+wa-leonora,Leonora,WA,-28.8819,121.3342,FM,969,,triple j,triple j
+wa-leonora,Leonora,WA,-28.8819,121.3342,FM,1073,,ABC Radio National,Radio National
+wa-mandurah,Mandurah,WA,-32.6503,115.9897,DAB,0,9C,ABC Jazz,ABC Jazz
+wa-mandurah,Mandurah,WA,-32.6503,115.9897,DAB,0,9C,Double J,Double J
+wa-mandurah,Mandurah,WA,-32.6503,115.9897,DAB,0,9C,SBS PopAsia,SBS PopAsia
+wa-marandoo,Marandoo,WA,-22.6336,118.1119,FM,1045,,triple j,triple j
+wa-marandoo,Marandoo,WA,-22.6336,118.1119,FM,1077,,ABC Radio National,Radio National
+wa-marandoo-mine,Marandoo Mine Pit,WA,-22.6597,118.1653,FM,1037,,triple j,triple j
+wa-marandoo-mine,Marandoo Mine Pit,WA,-22.6597,118.1653,FM,1069,,ABC Radio National,Radio National
+wa-marble-bar,Marble Bar,WA,-21.1711,119.7489,FM,1075,,ABC Radio National,Radio National
+wa-marvel-loch,Marvel Loch,WA,-31.4694,119.4908,FM,1037,,triple j,triple j
+wa-mcphee-creek,McPhee Creek Mine,WA,-21.5908,120.0989,FM,987,,triple j,triple j
+wa-mcphee-creek,McPhee Creek Mine,WA,-21.5908,120.0989,FM,1003,,ABC Radio National,Radio National
+wa-meekatharra,Meekatharra,WA,-26.5919,118.4969,FM,1079,,ABC Radio National,Radio National
+wa-menzies,Menzies,WA,-29.6939,121.0300,FM,1077,,ABC Radio National,Radio National
+wa-merredin,Merredin,WA,-31.5033,118.2058,FM,1073,,ABC Radio National,Radio National
+wa-mesa-a-mine,Mesa A Mine,WA,-21.6658,115.9133,FM,985,,ABC Radio National,Radio National
+wa-mesa-a-mine,Mesa A Mine,WA,-21.6658,115.9133,FM,1001,,triple j,triple j
+wa-mesa-j-mine,Mesa J Mine,WA,-21.7447,116.2528,FM,993,,triple j,triple j
+wa-moora,Moora,WA,-30.6456,116.0081,FM,1035,,SBS Radio,SBS Radio
+wa-moora,Moora,WA,-30.6456,116.0081,FM,1051,,triple j,triple j
+wa-morawa,Morawa,WA,-29.3186,115.8822,FM,935,,SBS Radio,SBS Radio
+wa-morawa,Morawa,WA,-29.3186,115.8822,FM,1063,,triple j,triple j
+wa-mount-keith,Mount Keith,WA,-27.2156,120.5567,FM,985,,triple j,triple j
+wa-mount-keith,Mount Keith,WA,-27.2156,120.5567,FM,993,,ABC Radio National,Radio National
+wa-mount-keith-m,Mount Keith Mine Village,WA,-27.2825,120.5514,FM,1009,,triple j,triple j
+wa-mount-keith-m,Mount Keith Mine Village,WA,-27.2825,120.5514,FM,1077,,ABC Radio National,Radio National
+wa-mount-magnet,Mount Magnet,WA,-28.0564,117.8425,FM,1073,,ABC Radio National,Radio National
+wa-mt-whalebac-2,Mt Whaleback Mine West,WA,-23.4006,119.6192,FM,1001,,triple j,triple j
+wa-mt-whalebac-2,Mt Whaleback Mine West,WA,-23.4006,119.6192,FM,1065,,ABC Perth,ABC Perth
+wa-mullewa,Mullewa,WA,-28.5511,115.5039,FM,1075,,ABC Radio National,Radio National
+wa-nammuldi-mine,Nammuldi Mine,WA,-22.4108,117.4164,FM,897,,ABC Radio National,Radio National
+wa-nammuldi-mine,Nammuldi Mine,WA,-22.4108,117.4164,FM,929,,triple j,triple j
+wa-nannup,Nannup,WA,-33.9817,115.7606,FM,989,,ABC Radio National,Radio National
+wa-narembeen,Narembeen,WA,-32.0625,118.3900,FM,1077,,ABC Radio National,Radio National
+wa-narrogin,Narrogin,WA,-32.9606,117.2161,FM,925,,ABC Classic,ABC Classic
+wa-newman,Newman,WA,-23.3492,119.7250,FM,937,,ABC Radio National,Radio National
+wa-newman-area-c,Newman Area C Mine,WA,-22.9058,118.9225,FM,943,,ABC Classic,ABC Classic
+wa-newman-area-c,Newman Area C Mine,WA,-22.9058,118.9225,FM,983,,ABC Perth,ABC Perth
+wa-newman-area-c,Newman Area C Mine,WA,-22.9058,118.9225,FM,1017,,triple j,triple j
+wa-norseman,Norseman,WA,-32.1425,121.7275,FM,1073,,ABC Radio National,Radio National
+wa-north-star-mi,North Star Mine,WA,-21.2578,119.0339,FM,987,,triple j,triple j
+wa-northcliffe,Northcliffe,WA,-34.6322,116.1231,FM,1075,,ABC Radio National,Radio National
+wa-onslow,Onslow,WA,-21.6458,115.1150,FM,1051,,triple j,triple j
+wa-onslow,Onslow,WA,-21.6458,115.1150,FM,1075,,ABC Radio National,Radio National
+wa-pannawonica,Pannawonica,WA,-21.6617,116.3439,FM,1061,,triple j,triple j
+wa-pannawonica,Pannawonica,WA,-21.6617,116.3439,FM,1077,,ABC Radio National,Radio National
+wa-paraburdoo,Paraburdoo,WA,-23.2331,117.6658,FM,1045,,triple j,triple j
+wa-paraburdoo,Paraburdoo,WA,-23.2331,117.6658,FM,1077,,ABC Radio National,Radio National
+wa-perth,Perth,WA,-32.0108,116.0844,FM,921,,RTRFM,RTRFM
+wa-perth,Perth,WA,-32.0108,116.0844,FM,929,,Triple M Perth,Triple M Perth
+wa-perth,Perth,WA,-32.0108,116.0844,FM,945,,Mix 94.5,Mix 94.5
+wa-perth,Perth,WA,-32.0108,116.0844,FM,969,,SBS Radio,SBS Radio
+wa-perth,Perth,WA,-32.0108,116.0844,FM,977,,ABC Classic,ABC Classic
+wa-perth,Perth,WA,-32.0108,116.0844,FM,993,,triple j,triple j
+wa-perth,Perth,WA,-32.0108,116.0844,FM,1025,,ABC Perth,ABC Perth
+wa-perth,Perth,WA,-32.0108,116.0844,FM,1033,,ABC Radio National,Radio National
+wa-perth,Perth,WA,-32.0108,116.0844,FM,1041,,ABC NewsRadio,ABC NewsRadio
+wa-perth,Perth,WA,-32.0108,116.0844,FM,1057,,6IX,6IX
+wa-perth,Perth,WA,-32.0108,116.0844,AM,585,,ABC NewsRadio,ABC NewsRadio
+wa-perth,Perth,WA,-32.0108,116.0844,AM,882,,6PR,6PR
+wa-perth,Perth,WA,-32.0108,116.0844,AM,1080,,6IX,6IX
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,6IX,6IX
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,6PR,6PR
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,ABC Classic,ABC Classic
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,9C,ABC Jazz,ABC Jazz
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,ABC NewsRadio,ABC NewsRadio
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,ABC Perth,ABC Perth
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,ABC Radio National,Radio National
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,9C,Double J,Double J
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,Mix 94.5,Mix 94.5
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,9C,SBS PopAsia,SBS PopAsia
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,SBS Radio,SBS Radio
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,Triple M Perth,Triple M Perth
+wa-perth,Perth,WA,-32.0108,116.0844,DAB,0,,triple j,triple j
+wa-pilgangoora-m,Pilgangoora Mine,WA,-21.0597,118.9014,FM,897,,ABC Radio National,Radio National
+wa-pilgangoora-m,Pilgangoora Mine,WA,-21.0597,118.9014,FM,913,,triple j,triple j
+wa-port-hedland,Port Hedland,WA,-20.3761,118.5775,FM,957,,ABC Radio National,Radio National
+wa-port-hedland,Port Hedland,WA,-20.3761,118.5775,FM,973,,ABC Classic,ABC Classic
+wa-port-hedland,Port Hedland,WA,-20.3761,118.5775,FM,989,,triple j,triple j
+wa-rbs1-brockman,RBS1 Brockman Syncline 1 Mine,WA,-22.5339,117.1292,FM,915,,ABC Radio National,Radio National
+wa-rbs1-brockman,RBS1 Brockman Syncline 1 Mine,WA,-22.5339,117.1292,FM,931,,triple j,triple j
+wa-rbs2-brockman,RBS2 Brockman Syncline 1 Mine,WA,-22.5106,117.2103,FM,1001,,ABC Radio National,Radio National
+wa-rbs2-brockman,RBS2 Brockman Syncline 1 Mine,WA,-22.5106,117.2103,FM,1017,,triple j,triple j
+wa-ravensthorpe,Ravensthorpe,WA,-33.5811,120.0467,FM,907,,triple j,triple j
+wa-ravensthorpe,Ravensthorpe,WA,-33.5811,120.0467,FM,947,,SBS Radio,SBS Radio
+wa-ravensthorpe,Ravensthorpe,WA,-33.5811,120.0467,FM,1075,,ABC Radio National,Radio National
+wa-roebourne,Roebourne,WA,-20.7719,117.1419,FM,1075,,ABC Radio National,Radio National
+wa-roy-hill-mine,Roy Hill Mine,WA,-22.5006,120.0017,FM,997,,triple j,triple j
+wa-sally-malay-m,Sally Malay Mine,WA,-17.3483,128.0658,FM,1077,,ABC Radio National,Radio National
+wa-salmon-gums,Salmon Gums,WA,-33.1200,121.6261,FM,1007,,ABC Radio National,Radio National
+wa-silvergrass-m,Silvergrass Mine,WA,-22.3222,117.3069,FM,919,,triple j,triple j
+wa-silvergrass-m,Silvergrass Mine,WA,-22.3222,117.3069,FM,935,,ABC Radio National,Radio National
+wa-solomon-minin,Solomon Mining Operation Area 1,WA,-22.1489,117.8497,FM,1075,,triple j,triple j
+wa-solomon-min-2,Solomon Mining Operation Area 2,WA,-22.1250,117.9208,FM,1011,,triple j,triple j
+wa-south-flank-m,South Flank Mining Area,WA,-22.9789,118.9031,FM,959,,ABC Radio National,Radio National
+wa-south-flank-m,South Flank Mining Area,WA,-22.9789,118.9031,FM,991,,ABC Classic,ABC Classic
+wa-south-flank-m,South Flank Mining Area,WA,-22.9789,118.9031,FM,1007,,triple j,triple j
+wa-south-flank-m,South Flank Mining Area,WA,-22.9789,118.9031,FM,1055,,ABC Perth,ABC Perth
+wa-southern-agri,Southern Agricultural,WA,-34.6558,117.6475,FM,929,,triple j,triple j
+wa-southern-agri,Southern Agricultural,WA,-34.6558,117.6475,FM,945,,ABC Classic,ABC Classic
+wa-southern-agri,Southern Agricultural,WA,-34.6558,117.6475,FM,969,,ABC Radio National,Radio National
+wa-southern-cros,Southern Cross,WA,-31.2761,119.5092,FM,1039,,triple j,triple j
+wa-southern-cros,Southern Cross,WA,-31.2761,119.5092,FM,1079,,ABC Radio National,Radio National
+wa-sunrise-dam,Sunrise Dam,WA,-29.0811,122.4083,FM,961,,ABC Radio National,Radio National
+wa-telfer,Telfer,WA,-21.7214,122.2228,FM,989,,triple j,triple j
+wa-telfer-mine-w,Telfer Mine West Dome,WA,-21.7158,122.1792,FM,917,,triple j,triple j
+wa-thunderbox-mi,Thunderbox Mine,WA,-28.1811,121.0003,FM,931,,triple j,triple j
+wa-ti-tree-wa,Ti Tree (WA),WA,-21.8317,117.6058,FM,1053,,triple j,triple j
+wa-tom-price,Tom Price,WA,-22.6994,117.7747,FM,1009,,triple j,triple j
+wa-tom-price,Tom Price,WA,-22.6994,117.7747,FM,1073,,ABC Radio National,Radio National
+wa-tom-price-min,Tom Price Mine,WA,-22.7639,117.7522,FM,985,,triple j,triple j
+wa-tropicana-gol,Tropicana Gold Mine,WA,-29.2419,124.5517,FM,1029,,triple j,triple j
+wa-upper-cane-mi,Upper Cane Mine,WA,-22.1878,116.2506,FM,919,,triple j,triple j
+wa-useless-loop,Useless Loop,WA,-26.1269,113.4175,FM,1027,,triple j,triple j
+wa-wagin,Wagin,WA,-33.3372,117.0939,AM,1296,,ABC Radio National,Radio National
+wa-walpole,Walpole,WA,-34.9608,116.7394,FM,1077,,ABC Radio National,Radio National
+wa-wanneroo,Wanneroo,WA,-31.7561,115.8161,DAB,0,9C,ABC Jazz,ABC Jazz
+wa-wanneroo,Wanneroo,WA,-31.7561,115.8161,DAB,0,9C,Double J,Double J
+wa-wanneroo,Wanneroo,WA,-31.7561,115.8161,DAB,0,9C,SBS PopAsia,SBS PopAsia
+wa-west-angelas,West Angelas Dep B Mine,WA,-23.1136,118.7819,FM,899,,triple j,triple j
+wa-west-angelas,West Angelas Dep B Mine,WA,-23.1136,118.7819,FM,947,,ABC Radio National,Radio National
+wa-west-angela-2,West Angelas Dep C Mine,WA,-23.1442,118.6561,FM,925,,triple j,triple j
+wa-west-angela-2,West Angelas Dep C Mine,WA,-23.1442,118.6561,FM,933,,ABC Radio National,Radio National
+wa-west-angela-3,West Angelas Dep D Mine,WA,-23.1781,118.6464,FM,1041,,triple j,triple j
+wa-west-angela-3,West Angelas Dep D Mine,WA,-23.1781,118.6464,FM,1049,,ABC Radio National,Radio National
+wa-west-angela-4,West Angelas Dep E Mine,WA,-23.1939,118.7836,FM,1045,,triple j,triple j
+wa-west-angela-4,West Angelas Dep E Mine,WA,-23.1939,118.7836,FM,1077,,ABC Radio National,Radio National
+wa-west-angela-5,West Angelas Dep F Mine,WA,-23.1914,118.8517,FM,903,,ABC Radio National,Radio National
+wa-west-angela-5,West Angelas Dep F Mine,WA,-23.1914,118.8517,FM,951,,triple j,triple j
+wa-west-angela-6,West Angelas Dep H Mine,WA,-23.1300,118.8728,FM,1019,,triple j,triple j
+wa-west-angela-6,West Angelas Dep H Mine,WA,-23.1300,118.8728,FM,1035,,ABC Radio National,Radio National
+wa-west-angela-7,West Angelas Mine,WA,-23.1547,118.7800,FM,973,,ABC Radio National,Radio National
+wa-west-angela-7,West Angelas Mine,WA,-23.1547,118.7800,FM,989,,triple j,triple j
+wa-west-angela-8,West Angelas West Hill Mine,WA,-23.1169,118.5844,FM,897,,triple j,triple j
+wa-west-angela-8,West Angelas West Hill Mine,WA,-23.1169,118.5844,FM,945,,ABC Radio National,Radio National
+wa-western-range,Western Range Mine East,WA,-23.1961,117.5058,FM,887,,ABC Radio National,Radio National
+wa-western-range,Western Range Mine East,WA,-23.1961,117.5058,FM,935,,triple j,triple j
+wa-western-ran-2,Western Range Mine West,WA,-23.1753,117.4450,FM,895,,ABC Radio National,Radio National
+wa-western-ran-2,Western Range Mine West,WA,-23.1753,117.4450,FM,943,,triple j,triple j
+wa-western-turne,Western Turner Syncline Mine,WA,-22.6667,117.5811,FM,921,,triple j,triple j
+wa-western-turne,Western Turner Syncline Mine,WA,-22.6667,117.5811,FM,937,,ABC Radio National,Radio National
+wa-western-tur-2,Western Turner Syncline Mine 2,WA,-22.6892,117.4817,FM,995,,triple j,triple j
+wa-westonia,Westonia,WA,-31.3022,118.6975,FM,995,,triple j,triple j
+wa-westonia,Westonia,WA,-31.3022,118.6975,FM,1019,,SBS Radio,SBS Radio
+wa-wickham,Wickham,WA,-20.6328,117.1528,FM,1049,,triple j,triple j
+wa-wiluna,Wiluna,WA,-26.5950,120.2281,FM,1021,,triple j,triple j
+wa-wiluna,Wiluna,WA,-26.5950,120.2281,FM,1077,,ABC Radio National,Radio National
+wa-winu-mine,Winu Mine,WA,-20.7325,121.7594,FM,1055,,ABC Classic,ABC Classic
+wa-wodgina,Wodgina,WA,-21.1858,118.6764,FM,1053,,triple j,triple j
+wa-wongan-hills,Wongan Hills,WA,-30.8906,116.7247,FM,1063,,SBS Radio,SBS Radio
+wa-wongan-hills,Wongan Hills,WA,-30.8906,116.7247,FM,1079,,ABC Radio National,Radio National
+wa-woodie-woodie,Woodie Woodie Mine,WA,-21.6531,121.2228,FM,903,,ABC Perth,ABC Perth
+wa-woodie-woodie,Woodie Woodie Mine,WA,-21.6531,121.2228,FM,919,,triple j,triple j
+wa-wyndham,Wyndham,WA,-15.4936,128.1372,FM,1077,,ABC Radio National,Radio National
+wa-yakabindie-mi,Yakabindie Mine,WA,-27.4233,120.5833,FM,955,,ABC Classic,ABC Classic
+wa-yalgoo,Yalgoo,WA,-28.3422,116.6789,FM,1077,,ABC Radio National,Radio National
+wa-yandi-bhp-mn,Yandi BHP MN South Mine,WA,-22.8083,119.1067,FM,1001,,triple j,triple j
+wa-yandi-bhp-mn,Yandi BHP MN South Mine,WA,-22.8083,119.1067,FM,1053,,ABC Perth,ABC Perth
+wa-yandi-bhp-min,Yandi BHP Mine Site 1,WA,-22.7125,119.0958,FM,971,,triple j,triple j
+wa-yandi-bhp-m-2,Yandi BHP Mine Site 2,WA,-22.7308,119.0161,FM,915,,triple j,triple j
+wa-yandi-billiar,Yandi Billiard Sth Mine,WA,-22.8128,119.2747,FM,1015,,triple j,triple j
+wa-yandi-billiar,Yandi Billiard Sth Mine,WA,-22.8128,119.2747,FM,1079,,ABC Radio National,Radio National
+wa-yandi-junctio,Yandi Junction SW Mine,WA,-22.7961,119.1597,FM,907,,triple j,triple j
+wa-yandi-junctio,Yandi Junction SW Mine,WA,-22.7961,119.1597,FM,923,,ABC Radio National,Radio National
+wa-yandicoogina,Yandicoogina,WA,-22.7700,119.2317,FM,1041,,triple j,triple j
+wa-yandicoogin-2,Yandicoogina Village,WA,-22.8011,119.2472,FM,1009,,triple j,triple j

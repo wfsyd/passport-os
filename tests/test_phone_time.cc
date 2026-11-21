@@ -1,6 +1,7 @@
 #include <cassert>
 #include <initializer_list>
 #include <cstdio>
+#include <cstring>
 #include "phone_time.h"
 int main() {
     for (int tz : {-720, 0, 345, 480, 840}) {
@@ -15,5 +16,18 @@ int main() {
         auto *j=cJSON_Parse(text);int64_t epoch;int minutes;
         assert(!wifi_phone_time_parse(j,&epoch,&minutes));cJSON_Delete(j);
     }
-    puts("Phone time: epoch/type/range and 15-minute timezone validation PASS");
+    // Optional IANA zone: bounded copy, anything odd becomes "" (fixed-offset mode).
+    struct { const char *json; const char *zone; } zones[] = {
+        {"{\"epoch\":1790000000,\"tz_minutes\":660,\"tz_zone\":\"Australia/Sydney\"}", "Australia/Sydney"},
+        {"{\"epoch\":1790000000,\"tz_minutes\":480}", ""},
+        {"{\"epoch\":1790000000,\"tz_minutes\":480,\"tz_zone\":42}", ""},
+        {"{\"epoch\":1790000000,\"tz_minutes\":480,\"tz_zone\":\"\"}", ""},
+        {"{\"epoch\":1790000000,\"tz_minutes\":480,\"tz_zone\":\"Australia/Sydney_very_long_name_that_exceeds_the_cap_for_sure\"}", ""},
+    };
+    for (const auto &z : zones) {
+        auto *j=cJSON_Parse(z.json);char zone[32];
+        wifi_phone_zone_parse(j,zone,sizeof(zone));
+        assert(!std::strcmp(zone,z.zone));cJSON_Delete(j);
+    }
+    puts("Phone time: epoch/type/range, 15-minute timezone and IANA zone field PASS");
 }

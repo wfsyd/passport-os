@@ -24,7 +24,14 @@ bool time_sync_valid(void);                    // 是否已校时(UI "--:--" 判
 int64_t time_sync_last_epoch(void);
 int time_sync_tz_hour(void);                   // 当前时区偏移小时(默认 8)
 esp_err_t time_sync_set_tz(int hour);          // 设置时区偏移(±12 校验,NVS 持久化)
-int time_sync_tz_offset_sec(void);             // 当前时区偏移秒(本地 = UTC + 此值)
+int time_sync_tz_offset_sec(void);             // 当前时区偏移秒(本地 = UTC + 此值;有 POSIX 规则时含夏令时)
+// 手机给出的 IANA 时区名映射出的 POSIX TZ(NULL/空串 = 清除,回到固定偏移)。
+// 校时后调用;TZ 环境随之 setenv/tzset。
+esp_err_t time_sync_set_posix_tz(const char *posix);
+// 手机端 IANA 时区名(如 "Australia/Sydney");未知名等同于清除。由 phone_time.h 调用。
+void passport_phone_zone(const char *iana);
+// UTC instant -> offset seconds in force then (POSIX rule when set, else the fixed offset).
+int time_sync_offset_at_utc(int64_t utc);
 // 天气接口给出的偏移(分钟,-720..840);与当前相同则不写 NVS。
 esp_err_t time_sync_set_tz_offset_min(int minutes);
 int time_sync_format_local(char *buf, size_t cap); // "HH:MM"(校时)或 "--:--"(未校时)

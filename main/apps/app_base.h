@@ -26,6 +26,7 @@ typedef enum {
     APP_ID_NETEASE,
     APP_ID_REMINDERS,
     APP_ID_LISTS,
+    APP_ID_AI_USAGE,
     APP_ID_COUNT
 } passport_app_id_t;
 
@@ -36,6 +37,7 @@ typedef enum {
     BTN_EVT_LONG,
     BTN_EVT_LONG_UP,
     BTN_EVT_DOUBLE, // resolved by ADC task; reserved for global OK shortcut
+    BTN_EVT_TRIPLE, // resolved by ADC task; only sent to apps that asked for it (OkGesture query)
 } app_btn_event_t;
 
 typedef struct {

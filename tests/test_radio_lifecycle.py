@@ -10,6 +10,7 @@ app = (ROOT / 'main/apps/radio/app_radio.cc').read_text()
 catalog = app[app.index('bool catalog_cancelled()'):app.index('void start_catalog()')]
 prelude = r'''
 #include <cassert>
+#define PASSPORT_DEFAULT_COUNTRY "AU"
 #include <atomic>
 #include <cstring>
 #include <cstdio>
@@ -38,9 +39,12 @@ static std::atomic<unsigned> s_generation,s_station_count,s_station_index;
 static void *s_station_mutex,*s_player_stopped;
 static bool s_decoders_registered;
 static RadioStation *s_stations;
+static std::atomic<bool> s_table_mode;
 static constexpr unsigned kMaxStations=10,kStreamStackBytes=7168;
 static int s_stream_tcb,token;
 static const RadioStation kRadioPresets[1]={{"test","test","https://example.invalid",0}};
+struct RadioSearchPreset{const char *name;const char *description;const char *query;};
+static const RadioSearchPreset kAuRadioSearchPresets[2]={{"triple j","ABC","triple j"},{"ABC Jazz","ABC","ABC Jazz"}};
 static unsigned step,fail_at,sync_live,decoder_live,audio_live;
 static bool stopped=true;
 static bool failing(){return ++step==fail_at;}
@@ -64,9 +68,14 @@ std::size_t radio_player_station_count(){return s_station_count;}
 RadioStation radio_player_station(std::size_t i){return s_stations[i];}
 uint8_t radio_player_volume(){return 80;}
 static void radio_ui_set_station(unsigned,unsigned,RadioStation){}
+static void show_station(std::size_t i,std::size_t n,RadioStation s){radio_ui_set_station(i,n,s);}
 static void radio_ui_set_volume(unsigned){}
 struct RadioLocation {char city[64],region[64],search_city[64],country_code[4];};
-struct home_profile_t {char city[64],region[64],radio_city[64],country_code[4];};
+struct home_profile_t {char city[64],region[64],radio_city[64],country_code[4],lat[16],lon[16];};
+namespace au_radio{inline bool area_for_profile(const char*,const char*,const char*,const char*,std::size_t*){return false;}
+inline bool area_for_selection(const char*,const char*,const char*,const char*,const char*,std::size_t*){return false;}
+inline const char *area_name(std::size_t){return "";}}
+bool radio_player_replace_table(std::size_t){return false;}
 static std::atomic<bool> s_catalog_cancel,s_radio_active,s_ui_alive,s_catalog_running,s_catalog_installed;
 static void *s_catalog_commit=&token;
 static bool idle=true,playing,fail_catalog_alloc,cancel_during_wait;
@@ -74,7 +83,8 @@ static unsigned queries,installs,allocations;
 static void *catalog_calloc(size_t n,size_t s){allocations++;assert(idle);return fail_catalog_alloc?nullptr:std::calloc(n,s);}
 void radio_player_set_playing(bool value){playing=value;}
 bool radio_player_wait_idle(uint32_t){if(cancel_during_wait)s_catalog_cancel=true;return idle;}
-static void home_profile_get(home_profile_t*p){*p={};}
+static char profile_country[4]="";
+static void home_profile_get(home_profile_t*p){*p={};std::strcpy(p->country_code,profile_country);}
 static std::atomic<voice_intent::Request *> s_voice{nullptr};
 static RadioLocation asked;
 static std::string voice_filter;
@@ -90,8 +100,9 @@ int main(){
  using namespace audio_workspace;
  assert(acquire(Owner::Muse));assert(!radio_player_init());assert(release(Owner::Muse));
  step=fail_at=0;assert(radio_player_init());unsigned steps=step;
+ assert(s_station_count==2&&!s_stations[0].url[0]);
  assert(s_stations==(RadioStation*)radio::stations() && sizeof(RadioStation)*kMaxStations==4180);
- assert(!strcmp(s_stations[0].name,"test"));stopped=false;
+ assert(!strcmp(s_stations[0].name,"triple j"));stopped=false;
  assert(!radio_player_deinit(20) && owner==Owner::Radio && s_stations && audio_live);
  assert(!acquire(Owner::Muse) && !radio_player_init());stopped=true;
  assert(radio_player_deinit(20) && owner==Owner::None && !s_stations && !sync_live && !decoder_live);
@@ -114,7 +125,10 @@ int main(){
  // A voice request replaces the profile city once and picks the named station.
  auto *voice=new voice_intent::Request{};std::strcpy(voice->name,"北京");std::strcpy(voice->detail,"交通");
  s_voice=voice;s_catalog_running=true;catalog_worker(nullptr);
- assert(!strcmp(asked.city,"北京") && !strcmp(asked.country_code,"CN") && chosen==1 && !s_voice && voice_filter=="交通");
+ assert(!strcmp(asked.city,"北京") && !strcmp(asked.country_code,PASSPORT_DEFAULT_COUNTRY) && chosen==1 && !s_voice && voice_filter=="交通");
+ // A known profile country wins over the build default for a spoken city.
+ std::strcpy(profile_country,"CN");voice=new voice_intent::Request{};std::strcpy(voice->name,"北京");s_voice=voice;s_catalog_running=true;catalog_worker(nullptr);
+ assert(!strcmp(asked.country_code,"CN"));profile_country[0]='\0';
  voice=new voice_intent::Request{};std::strcpy(voice->name,"广东");s_voice=voice;s_catalog_running=true;
  catalog_worker(nullptr);assert(!strcmp(asked.city,"广东") && chosen==0 && !s_voice);
  chosen=-1;s_catalog_running=true;catalog_worker(nullptr);assert(!asked.city[0] && chosen==-1);

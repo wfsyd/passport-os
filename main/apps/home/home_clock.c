@@ -19,13 +19,14 @@ static void on_time_sync(struct timeval *tv) {
 
 void home_clock_start(void) {
     if (esp_sntp_enabled()) return;
-    // 单服务器(LWIP_SNTP_MAX_SERVERS=1),阿里云节点国内可达性最好;
-    // 解析失败由 SNTP 自身按间隔重试,无需外层重试任务。
+    // 两个服务器(CONFIG_LWIP_SNTP_MAX_SERVERS=2):全球 pool.ntp.org 优先,
+    // 阿里云节点作为国内备用。解析失败由 SNTP 自身按间隔重试,无需外层重试任务。
     esp_sntp_setoperatingmode(ESP_SNTP_OPMODE_POLL);
-    esp_sntp_setservername(0, "ntp.aliyun.com");
+    esp_sntp_setservername(0, "pool.ntp.org");
+    esp_sntp_setservername(1, "ntp.aliyun.com");
     esp_sntp_set_time_sync_notification_cb(on_time_sync);
     esp_sntp_init();
-    ESP_LOGI(TAG, "SNTP started (ntp.aliyun.com)");
+    ESP_LOGI(TAG, "SNTP started (pool.ntp.org, ntp.aliyun.com)");
 }
 
 void home_clock_stop(void) {

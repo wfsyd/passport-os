@@ -42,14 +42,37 @@ bool make_rule(uint8_t days,int64_t due,int offset,RepeatRule *out) {
     *out={static_cast<uint32_t>(local%86400),static_cast<int16_t>(offset/60),days,1};
     return true;
 }
+namespace {
+OffsetAt s_offset_at = nullptr;
+// UTC for a local wall time (seconds as if UTC). Uses the stored offset first; with a
+// resolver, one correction to the offset in force at that candidate instant.
+int64_t wall_to_utc(int64_t wall,int stored) {
+    int64_t candidate=wall-stored;
+    if(!s_offset_at) return candidate;
+    const int actual=s_offset_at(candidate);
+    if(actual!=stored) candidate=wall-actual;
+    return candidate;
+}
+}
+void set_offset_resolver(OffsetAt resolver) { s_offset_at=resolver; }
+int display_offset_seconds(const Record &r,int fallback) {
+    if(!r.repeat.days) return fallback;
+    if(s_offset_at) return s_offset_at(r.due);
+    return r.repeat.utc_offset_minutes*60;
+}
 int64_t next_occurrence(const Record &r,int64_t after) {
     if(!r.repeat.days || !valid_rule(r.repeat))return 0;
-    const int offset=r.repeat.utc_offset_minutes*60;
-    const int64_t today=(after+offset)/86400;
-    for(int i=0;i<=7;++i){
+    const int stored=r.repeat.utc_offset_minutes*60;
+    // Local date of 'after' under the offset in force now.
+    const int base=s_offset_at?s_offset_at(after):stored;
+    const int64_t today=(after+base)/86400;
+    // Day-of-week uses the local date (wall day), which is the same under any offset.
+    for(int i=-1;i<=7;++i){
         const int64_t day=today+i;
-        const int64_t candidate=day*86400+r.repeat.local_second-offset;
-        if((r.repeat.days&(1u<<((day+3)%7))) && candidate>after && candidate<4102444800LL)return candidate;
+        if(!(r.repeat.days&(1u<<((day+3)%7)))) continue;
+        const int64_t wall=day*86400+r.repeat.local_second;
+        const int64_t candidate=wall_to_utc(wall,stored);
+        if(candidate>after && candidate<4102444800LL)return candidate;
     }return 0;
 }
 const char *repeat_name(uint8_t days) {

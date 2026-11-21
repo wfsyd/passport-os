@@ -6,6 +6,7 @@ python3 tests/test_xiaozhi_face_power.py
 python3 tests/check_digit_font.py
 python3 tests/check_title_glyphs.py
 python3 tests/check_launcher_apps.py
+python3 -m unittest discover -s tools/ai_usage_helper/tests
 test_dir="$(mktemp -d /tmp/passport-host.XXXXXX)"
 trap 'rm -rf -- "$test_dir"' EXIT
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined \
@@ -77,16 +78,24 @@ python3 tests/test_avatar_upload.py
 "${CC:-cc}" -std=c11 -D_POSIX_C_SOURCE=200809L -Wall -Wextra -Werror -Wno-unused-variable \
     -fsanitize=address,undefined -g -ffunction-sections -fdata-sections \
     -Itests/home_mocks -Itests/radio_mocks -Imain \
-    tests/test_home_storage.c -Wl,--gc-sections -lm -o "$test_dir/home-storage"
+    tests/test_home_storage.c main/apps/ai_usage/ai_usage_core.c -Wl,--gc-sections -lm -o "$test_dir/home-storage"
 "$test_dir/home-storage"
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -g \
     -Itests/vendor/cjson -Icomponents/esp-wifi-connect/include \
     tests/test_phone_time.cc tests/vendor/cjson/cJSON.c -o "$test_dir/phone-time"
 "$test_dir/phone-time"
+"${CC:-cc}" -std=c11 -D_POSIX_C_SOURCE=200809L -Wall -Wextra -Werror -fsanitize=address,undefined -g \
+    -Imain tests/test_tz_zone.c main/apps/voice/tz_zone.c -o "$test_dir/tz-zone"
+"$test_dir/tz-zone"
 python3 tests/test_city_catalog.py
 python3 tests/test_home_weather.py
 python3 tests/test_home_weather_schedule.py
 python3 tests/test_radio_catalog.py
+python3 tests/test_au_radio_table.py
+"${CC:-cc}" -c -fsanitize=address,undefined -Itests/vendor/cjson tests/vendor/cjson/cJSON.c -o "$test_dir/cjson.o"
+"${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Imain -Itests/vendor/cjson \
+    tests/test_radio_search_pick.cc main/apps/radio/radio_search_pick.cc "$test_dir/cjson.o" -o "$test_dir/radio-search-pick"
+"$test_dir/radio-search-pick"
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -g \
     -Imain tests/test_radio_hls.cc -o "$test_dir/radio-hls"
 "$test_dir/radio-hls"
@@ -154,4 +163,10 @@ python3 tests/test_media_startup.py
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -Imain \
     -Itests/registry_mocks tests/test_netease_performance.cc main/apps/netease/netease_json.cc -o "$test_dir/netease-performance"
 "$test_dir/netease-performance"
+"${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -Imain \
+    tests/test_netease_cookie_guard.cc -o "$test_dir/netease-cookie-guard"
+"$test_dir/netease-cookie-guard"
+"${CC:-cc}" -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Imain \
+    tests/test_ai_usage_core.c main/apps/ai_usage/ai_usage_core.c -o "$test_dir/ai-usage-core"
+"$test_dir/ai-usage-core"
 echo "Host regression tests: PASS"

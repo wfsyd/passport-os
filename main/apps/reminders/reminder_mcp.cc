@@ -54,7 +54,7 @@ bool rule_arg(const cJSON *args,int64_t due,RepeatRule *out) {
     return make_rule(days,due,time_sync_tz_offset_sec(),out);
 }
 void record_json(cJSON *v,const Record &r) {
-    const int offset=r.repeat.days?r.repeat.utc_offset_minutes*60:time_sync_tz_offset_sec();
+    const int offset=display_offset_seconds(r,time_sync_tz_offset_sec());
     char when[32];format_local(r.due,offset,when,sizeof(when));
     cJSON_AddNumberToObject(v,"id",r.id);cJSON_AddStringToObject(v,"title",r.title);
     cJSON_AddStringToObject(v,"due_local",when);cJSON_AddNumberToObject(v,"due_unix",r.due);
