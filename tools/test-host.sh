@@ -90,6 +90,10 @@ python3 tests/test_city_catalog.py
 python3 tests/test_home_weather.py
 python3 tests/test_home_weather_schedule.py
 python3 tests/test_radio_catalog.py
+"${CC:-cc}" -c -fsanitize=address,undefined -Itests/vendor/cjson tests/vendor/cjson/cJSON.c -o "$test_dir/cjson.o"
+"${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Imain -Itests/vendor/cjson \
+    tests/test_radio_search_pick.cc main/apps/radio/radio_search_pick.cc "$test_dir/cjson.o" -o "$test_dir/radio-search-pick"
+"$test_dir/radio-search-pick"
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -g \
     -Imain tests/test_radio_hls.cc -o "$test_dir/radio-hls"
 "$test_dir/radio-hls"

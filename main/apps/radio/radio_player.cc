@@ -25,6 +25,7 @@
 #include <atomic>
 #include <cmath>
 #include <cstddef>
+#include <cstdio>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
@@ -617,8 +618,21 @@ bool radio_player_init() {
         return false;
     };
     if (!s_station_mutex || !s_player_stopped || !s_stations) return cleanup_failed_init();
-    std::memcpy(s_stations, kRadioPresets, sizeof(kRadioPresets));
-    s_station_count.store(sizeof(kRadioPresets) / sizeof(kRadioPresets[0]));
+    if (std::strcmp(PASSPORT_DEFAULT_COUNTRY, "AU") == 0) {
+        // Before the directory answers, list the AU presets by name; play waits for their URLs.
+        constexpr std::size_t au_count = sizeof(kAuRadioSearchPresets) / sizeof(kAuRadioSearchPresets[0]);
+        for (std::size_t i = 0; i < au_count; ++i) {
+            RadioStation &station = s_stations[i];
+            station = {};
+            std::snprintf(station.name, sizeof(station.name), "%s", kAuRadioSearchPresets[i].name);
+            std::snprintf(station.description, sizeof(station.description), "%s",
+                          kAuRadioSearchPresets[i].description);
+        }
+        s_station_count.store(au_count);
+    } else {
+        std::memcpy(s_stations, kRadioPresets, sizeof(kRadioPresets));
+        s_station_count.store(sizeof(kRadioPresets) / sizeof(kRadioPresets[0]));
+    }
 
     const uint8_t saved_station = load_setting("station", 0);
     s_station_index.store(saved_station % radio_player_station_count());

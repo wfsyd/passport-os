@@ -16,5 +16,6 @@ with tempfile.TemporaryDirectory(prefix='passport-radio-') as tmp:
                     '-fsanitize=address,undefined', '-fno-omit-frame-pointer',
                     '-Itests/radio_mocks', '-Imain', '-I'+str(CJSON),
                     'tests/test_radio_catalog.cc', 'main/apps/radio/radio_catalog.cc',
+                    'main/apps/radio/radio_search_pick.cc',
                     str(obj), '-o', str(exe)], cwd=ROOT, check=True)
     subprocess.run([str(exe)]+sys.argv[1:], check=True)

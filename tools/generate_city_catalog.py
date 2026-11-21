@@ -16,6 +16,38 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'third_party/china-cities/china_cities.txt'
 SNAPSHOT_SHA256 = '8171af06c2f2c9a44b36565e51e25eed05828137d70807d2828763146abddba3'
+AU_SOURCE = ROOT / 'third_party/au-cities/au_cities.csv'  # see NOTICE beside it
+CN_PROVINCES = 34
+AU_STATES = {
+    '01': ('ACT', 'Australian Capital Territory'), '02': ('NSW', 'New South Wales'),
+    '03': ('NT', 'Northern Territory'), '04': ('QLD', 'Queensland'),
+    '05': ('SA', 'South Australia'), '06': ('TAS', 'Tasmania'),
+    '07': ('VIC', 'Victoria'), '08': ('WA', 'Western Australia'),
+}
+
+
+AU_ORDER = ('NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT')  # picker order, not admin code order
+
+
+def au_rows():
+    """Rows in the catalog format, grouped by AU_ORDER with each state's capital first, then A-Z.
+
+    Codes AU<state><nnn> are numbered in that same order, so AUNSW001 is Sydney.
+    """
+    with AU_SOURCE.open(encoding='utf-8', newline='') as source:
+        records = list(csv.DictReader(source))
+    def order(r):
+        abbreviation = AU_STATES[r['admin1']][0]
+        return (AU_ORDER.index(abbreviation), r['capital'] != '1', r['name'].casefold(), r['name'])
+    rows, counters = [], {}
+    for r in sorted(records, key=order):
+        abbreviation, state = AU_STATES[r['admin1']]
+        counters[abbreviation] = counters.get(abbreviation, 0) + 1
+        code = f'AU{abbreviation}{counters[abbreviation]:03d}'
+        # id, display name, latitude, longitude, state, radio name, country
+        rows.append([code, r['name'], round(float(r['lat']), 4), round(float(r['lon']), 4),
+                     state, r['name'], 'AU'])
+    return rows
 
 
 def generate():
@@ -52,7 +84,9 @@ def generate():
         country = {'香港': 'HK', '澳门': 'MO', '台湾': 'TW'}.get(province, 'CN')
         # id, display name, latitude, longitude, province, parent city, radio country
         rows.append([code, name, latitude, longitude, province, parent, country])
-    assert len(rows) >= 3000 and len({r[4] for r in rows}) == 34
+    assert len({r[4] for r in rows}) == CN_PROVINCES
+    rows.extend(au_rows())
+    assert len(rows) >= 3000 and len({r[4] for r in rows}) == CN_PROVINCES + len(AU_STATES)
     assert any(r[1] == '珠海' and r[4] == '广东' for r in rows)
     payload = json.dumps(rows, ensure_ascii=False, separators=(',', ':')).encode('utf-8')
     compressed = io.BytesIO()
@@ -81,5 +115,5 @@ if __name__ == '__main__':
             assert path.read_bytes() == value, f'regenerate {path.relative_to(ROOT)}'
         else:
             path.write_bytes(value)
-    print(f'City catalog: {len(rows)} locations, 34 provinces, '
+    print(f'City catalog: {len(rows)} locations, {CN_PROVINCES + len(AU_STATES)} regions, '
           f'{len(outputs[ROOT / "main/apps/home/cities.json.gz"])} bytes in flash')

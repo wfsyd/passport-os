@@ -41,6 +41,7 @@ idf_component_register(
         "apps/radio/radio_catalog.cc"
         "apps/radio/radio_display_settings.cc"
         "apps/radio/radio_player.cc"
+        "apps/radio/radio_search_pick.cc"
         "apps/radio/radio_source.cc"
         "apps/radio/radio_sleep_timer.cc"
         "apps/radio/radio_ui.cc"

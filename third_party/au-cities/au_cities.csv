@@ -1,0 +1,276 @@
+geonames_id,name,admin1,lat,lon,population,timezone,capital
+2172517,Canberra,01,-35.2835,149.1281,367752,Australia/Sydney,1
+2147714,Sydney,02,-33.8678,151.2073,4627345,Australia/Sydney,1
+2155472,Newcastle,02,-32.9295,151.7801,308308,Australia/Sydney,0
+2171507,Wollongong,02,-34.4240,150.8935,292190,Australia/Sydney,0
+2159045,Maitland,02,-32.7331,151.5574,67132,Australia/Sydney,0
+2147497,Tamworth,02,-31.0905,150.9290,47597,Australia/Sydney,0
+2175411,Blacktown,02,-33.7667,150.9167,46942,Australia/Sydney,0
+2152659,Port Macquarie,02,-31.4308,152.9089,45692,Australia/Sydney,0
+2168305,Dubbo,02,-32.2430,148.6048,39863,Australia/Sydney,0
+2172111,Castle Hill,02,-33.7333,151.0000,39284,Australia/Sydney,0
+2154219,Orange,02,-33.2840,149.1002,38408,Australia/Sydney,0
+2177513,Auburn,02,-33.8500,151.0333,37245,Australia/Sydney,0
+2176592,Baulkham Hills,02,-33.7588,150.9929,36792,Australia/Sydney,0
+2176632,Bathurst,02,-33.4166,149.5806,33110,Australia/Sydney,0
+2176947,Bankstown,02,-33.9167,151.0333,32399,Australia/Sydney,0
+2208285,Randwick,02,-33.9144,151.2490,30532,Australia/Sydney,0
+2158651,Maroubra,02,-33.9500,151.2333,30224,Australia/Sydney,0
+9972762,Hurstville,02,-33.9677,151.1015,29744,Australia/Sydney,0
+2157995,Merrylands,02,-33.8333,150.9833,29508,Australia/Sydney,0
+2156813,Mosman,02,-33.8390,151.2396,27844,Australia/Sydney,0
+8347736,Kellyville,02,-33.7103,150.9510,27676,Australia/Sydney,0
+2159851,Liverpool,02,-33.9194,150.9259,27545,Australia/Sydney,0
+2152329,Quakers Hill,02,-33.7333,150.8833,26904,Australia/Sydney,0
+7281840,Parramatta,02,-33.8178,151.0035,26876,Australia/Sydney,0
+2171085,Coffs Harbour,02,-30.2963,153.1135,26672,Australia/Sydney,0
+2150767,Ryde,02,-33.8188,151.1062,26385,Australia/Sydney,0
+2158626,Marrickville,02,-33.9074,151.1555,26140,Australia/Sydney,0
+2148088,Strathfield,02,-33.8810,151.0799,25769,Australia/Sydney,0
+6619280,Sydney Central Business District,02,-33.8648,151.2077,25654,Australia/Sydney,0
+2171707,Chatswood,02,-33.8000,151.1833,25140,Australia/Sydney,0
+8348466,Campsie,02,-33.9125,151.1028,24487,Australia/Sydney,0
+8348574,Greenacre,02,-33.9003,151.0556,24361,Australia/Sydney,0
+2172303,Carlingford,02,-33.7827,151.0489,24131,Australia/Sydney,0
+2177565,Ashfield,02,-33.8883,151.1227,23749,Australia/Sydney,0
+2177671,Armidale,02,-30.5012,151.6655,23741,Australia/Sydney,0
+2167280,Epping,02,-33.7727,151.0818,23435,Australia/Sydney,0
+2164691,Granville,02,-33.8406,151.0075,22889,Australia/Sydney,0
+7302642,Glenmore Park,02,-33.7907,150.6693,22863,Australia/Sydney,0
+2164837,Goulburn,02,-34.7516,149.7209,22645,Australia/Sydney,0
+8348582,Greystanes,02,-33.8235,150.9461,22591,Australia/Sydney,0
+2163137,Hornsby,02,-33.7024,151.0993,22335,Australia/Sydney,0
+8348460,Cabramatta,02,-33.8974,150.9345,21634,Australia/Sydney,0
+2208305,Dee Why,02,-33.7511,151.2889,21145,Australia/Sydney,0
+8349222,Punchbowl,02,-33.9289,151.0511,20174,Australia/Sydney,0
+8349321,St Clair,02,-33.7973,150.7847,19856,Australia/Sydney,0
+2160258,Lidcombe,02,-33.8644,151.0397,19791,Australia/Sydney,0
+2175974,Bexley,02,-33.9500,151.1167,19664,Australia/Sydney,0
+2149847,Seven Hills,02,-33.7833,150.9333,19196,Australia/Sydney,0
+11523847,Wollongong city centre,02,-34.4279,150.8927,19108,Australia/Sydney,0
+8347871,Cherrybrook,02,-33.7220,151.0461,18588,Australia/Sydney,0
+2164422,Griffith,02,-34.2885,146.0509,18154,Australia/Sydney,0
+2173911,Broken Hill,02,-31.9652,141.4512,18027,Australia/Broken_Hill,0
+2166952,Fairfield,02,-33.8667,150.9500,17932,Australia/Sydney,0
+8348768,Yagoona,02,-33.9049,151.0200,17908,Australia/Sydney,0
+2143973,Westmead,02,-33.8038,150.9877,17835,Australia/Sydney,0
+2167840,Eastwood,02,-33.7918,151.0806,17792,Australia/Sydney,0
+2169956,Cronulla,02,-34.0625,151.1496,17703,Australia/Sydney,0
+2145092,Wahroonga,02,-33.7182,151.1156,17652,Australia/Sydney,0
+2167949,Earlwood,02,-33.9209,151.1251,17592,Australia/Sydney,0
+2167312,Engadine,02,-34.0656,151.0127,17141,Australia/Sydney,0
+2150669,Saint Ives,02,-33.7298,151.1598,17036,Australia/Sydney,0
+2160744,Lakemba,02,-33.9197,151.0759,16921,Australia/Sydney,0
+2156671,Mount Druitt,02,-33.7667,150.8167,16682,Australia/Sydney,0
+2147821,Surry Hills,02,-33.8837,151.2128,16492,Australia/Sydney,0
+2208313,Umina Beach,02,-33.5231,151.3133,16413,Australia/Sydney,0
+2147381,Taree,02,-31.9110,152.4539,16359,Australia/Sydney,0
+2158867,Manly,02,-33.7980,151.2883,16170,Australia/Sydney,0
+9972964,West Pennant Hills,02,-33.7457,151.0476,16162,Australia/Sydney,0
+8348142,Glenwood,02,-33.7333,150.9328,16040,Australia/Sydney,0
+2158538,Mascot,02,-33.9260,151.1935,15985,Australia/Sydney,0
+2172995,Burwood,02,-33.8833,151.1000,15935,Australia/Sydney,0
+2176934,Banora Point,02,-28.2130,153.5363,15868,Australia/Sydney,0
+2161185,Kogarah,02,-33.9681,151.1356,15705,Australia/Sydney,0
+8348477,Casula,02,-33.9522,150.8995,15695,Australia/Sydney,0
+8348511,Cranebrook,02,-33.7061,150.7094,15649,Australia/Sydney,0
+2151443,Rockdale,02,-33.9500,151.1333,15436,Australia/Sydney,0
+6621337,Kingsford,02,-33.9240,151.2275,15338,Australia/Sydney,0
+2170697,Coogee,02,-33.9205,151.2552,15333,Australia/Sydney,0
+8347914,Prestons,02,-33.9419,150.8717,15312,Australia/Sydney,0
+2157495,Miranda,02,-34.0386,151.1001,15111,Australia/Sydney,0
+2171845,Cessnock,02,-32.8321,151.3562,15076,Australia/Sydney,0
+2161608,Kensington,02,-33.9202,151.2224,15021,Australia/Sydney,0
+2073124,Darwin,03,-12.4611,130.8418,129062,Australia/Darwin,1
+2077895,Alice Springs,03,-23.6975,133.8836,25186,Australia/Darwin,0
+6301965,Palmerston,03,-12.4860,130.9833,25000,Australia/Darwin,0
+2174003,Brisbane,04,-27.4679,153.0281,2189878,Australia/Brisbane,1
+2165087,Gold Coast,04,-28.0003,153.4309,591473,Australia/Brisbane,0
+7281838,Logan City,04,-27.6392,153.1094,282673,Australia/Brisbane,0
+2146142,Townsville,04,-19.2664,146.8057,196219,Australia/Brisbane,0
+2172797,Cairns,04,-16.9237,145.7661,153075,Australia/Brisbane,0
+2146268,Toowoomba,04,-27.5606,151.9539,131258,Australia/Brisbane,0
+2159220,Mackay,04,-21.1534,149.1655,74219,Australia/Brisbane,0
+2173323,Bundaberg,04,-24.8662,152.3479,70826,Australia/Brisbane,0
+2151437,Rockhampton,04,-23.3803,150.5060,61724,Australia/Brisbane,0
+6354957,Hervey Bay,04,-25.2876,152.7694,52230,Australia/Brisbane,0
+2148928,Southport,04,-27.9672,153.3980,32965,Australia/Brisbane,0
+2147849,Surfers Paradise,04,-28.0027,153.4300,31073,Australia/Brisbane,0
+2165478,Gladstone,04,-23.8485,151.2577,30489,Australia/Brisbane,0
+2173605,Buderim,04,-26.6844,153.0571,28774,Australia/Brisbane,0
+2172832,Caboolture,04,-27.0846,152.9511,26341,Australia/Brisbane,0
+2145461,Upper Coomera,04,-27.8768,153.2857,24956,Australia/Brisbane,0
+8348930,Robina,04,-28.0707,153.3933,23140,Australia/Brisbane,0
+2065594,Mount Isa,04,-20.7252,139.4973,22785,Australia/Brisbane,0
+9957340,Forest Lake,04,-27.6256,152.9688,22581,Australia/Brisbane,0
+6943562,North Lakes,04,-27.2243,153.0207,21260,Australia/Brisbane,0
+2156934,Morayfield,04,-27.1088,152.9491,21221,Australia/Brisbane,0
+8349354,Kirwan,04,-19.3032,146.7253,21034,Australia/Brisbane,0
+6943560,Kallangur,04,-27.2520,152.9923,20222,Australia/Brisbane,0
+2169220,Deception Bay,04,-27.1935,153.0263,19539,Australia/Brisbane,0
+7932670,Redbank Plains,04,-27.6461,152.8596,19094,Australia/Brisbane,0
+2207268,Maroochydore,04,-26.6601,153.0995,18342,Australia/Brisbane,0
+8012683,Labrador,04,-27.9440,153.3981,18326,Australia/Brisbane,0
+2155787,Narangba,04,-27.2034,152.9592,18217,Australia/Brisbane,0
+9957350,Sunnybank Hills,04,-27.6103,153.0539,17842,Australia/Brisbane,0
+2172434,Capalaba,04,-27.5433,153.2029,17027,Australia/Brisbane,0
+8348765,Calamvale,04,-27.6233,153.0479,16927,Australia/Brisbane,0
+7576707,Helensvale,04,-27.9183,153.3328,16839,Australia/Brisbane,0
+2155542,Nerang,04,-27.9894,153.3363,16739,Australia/Brisbane,0
+6943558,Bracken Ridge,04,-27.3171,153.0310,16701,Australia/Brisbane,0
+8348920,Pacific Pines,04,-27.9399,153.3144,16605,Australia/Brisbane,0
+6943585,The Gap,04,-27.4419,152.9386,16371,Australia/Brisbane,0
+8348615,Alexandra Hills,04,-27.5322,153.2289,16043,Australia/Brisbane,0
+2170435,Coorparoo,04,-27.4932,153.0583,15965,Australia/Brisbane,0
+2178208,Albany Creek,04,-27.3536,152.9685,15532,Australia/Brisbane,0
+2158562,Maryborough,04,-25.5407,152.7049,15479,Australia/Brisbane,0
+7281839,Carindale,04,-27.5058,153.1024,15418,Australia/Brisbane,0
+2167651,Eight Mile Plains,04,-27.5833,153.1000,15364,Australia/Brisbane,0
+2153925,Palm Beach,04,-28.1169,153.4658,15205,Australia/Brisbane,0
+6693094,Springfield Lakes,04,-27.6676,152.9249,15081,Australia/Brisbane,0
+9958114,Rochedale South,04,-27.5952,153.1233,15073,Australia/Brisbane,0
+2078025,Adelaide,05,-34.9287,138.5986,1225235,Australia/Adelaide,1
+7302628,Adelaide Hills,05,-34.9112,138.7073,60394,Australia/Adelaide,0
+2156643,Mount Gambier,05,-37.8318,140.7792,25030,Australia/Adelaide,0
+2065740,Morphett Vale,05,-35.1333,138.5167,22788,Australia/Adelaide,0
+2071059,Gawler,05,-34.6025,138.7490,20006,Australia/Adelaide,0
+11523825,Adelaide city centre,05,-34.9287,138.6033,19820,Australia/Adelaide,0
+8349238,Parafield Gardens,05,-34.7825,138.6108,16872,Australia/Adelaide,0
+8349003,Paralowie,05,-34.7570,138.6082,16386,Australia/Adelaide,0
+2163355,Hobart,06,-42.8794,147.3294,216656,Australia/Hobart,1
+2160517,Launceston,06,-41.4388,147.1347,106153,Australia/Hobart,0
+2173125,Burnie,06,-41.0558,145.9038,19972,Australia/Hobart,0
+2158177,Melbourne,07,-37.8140,144.9633,4246375,Australia/Melbourne,1
+2165798,Geelong,07,-38.1471,144.3607,226034,Australia/Melbourne,0
+2176187,Bendigo,07,-36.7582,144.2802,100617,Australia/Melbourne,0
+2177091,Ballarat,07,-37.5662,143.8496,97937,Australia/Melbourne,0
+11523810,Melbourne City Centre,07,-37.8150,144.9666,60057,Australia/Melbourne,0
+2151716,Reservoir,07,-37.7167,145.0000,50092,Australia/Melbourne,0
+2170089,Craigieburn,07,-37.6000,144.9500,50069,Australia/Melbourne,0
+2152819,Point Cook,07,-37.9148,144.7509,49436,Australia/Melbourne,0
+2176031,Berwick,07,-38.0333,145.3500,47074,Australia/Melbourne,0
+2153953,Pakenham,07,-38.0702,145.4741,45895,Australia/Melbourne,0
+2165171,Glen Waverley,07,-37.8781,145.1648,40238,Australia/Melbourne,0
+2144095,Werribee,07,-37.9000,144.6667,40143,Australia/Melbourne,0
+7281807,Hoppers Crossing,07,-37.8826,144.7003,38178,Australia/Melbourne,0
+8015209,St Albans,07,-37.7450,144.8005,37629,Australia/Melbourne,0
+2166144,Frankston,07,-38.1446,145.1229,36239,Australia/Melbourne,0
+2147914,Sunbury,07,-37.5774,144.7261,35449,Australia/Melbourne,0
+2150717,Saint Albans,07,-37.7333,144.8000,35091,Australia/Melbourne,0
+2166143,Frankston East,07,-38.1333,145.1333,34457,Australia/Melbourne,0
+2147357,Tarneit,07,-37.8363,144.6595,34372,Australia/Melbourne,0
+2150894,Rowville,07,-37.9333,145.2333,33160,Australia/Melbourne,0
+2156492,Mount Waverley,07,-37.8771,145.1294,33149,Australia/Melbourne,0
+2157698,Mildura,07,-34.1855,142.1625,32936,Australia/Melbourne,0
+2167279,Epping,07,-37.6500,145.0333,32696,Australia/Melbourne,0
+2152558,Preston,07,-37.7500,145.0167,32499,Australia/Melbourne,0
+2149645,Shepparton,07,-36.3805,145.3987,31148,Australia/Melbourne,0
+2155204,Noble Park,07,-37.9667,145.1667,30921,Australia/Melbourne,0
+2169460,Dandenong,07,-37.9833,145.2000,30193,Australia/Melbourne,0
+9972518,Narre Warren South,07,-38.0437,145.2923,30132,Australia/Melbourne,0
+2157635,Mill Park,07,-37.6667,145.0667,29474,Australia/Melbourne,0
+2144528,Warrnambool,07,-38.3818,142.4880,29176,Australia/Melbourne,0
+8349381,Bundoora,07,-37.6983,145.0597,28828,Australia/Melbourne,0
+2168605,Doncaster East,07,-37.7876,145.1489,28016,Australia/Melbourne,0
+2151649,Richmond,07,-37.8182,145.0018,27878,Australia/Melbourne,0
+2176122,Bentleigh East,07,-37.9193,145.0530,27368,Australia/Melbourne,0
+2169867,Croydon,07,-37.8000,145.2833,26502,Australia/Melbourne,0
+2155718,Narre Warren,07,-38.0333,145.3000,26389,Australia/Melbourne,0
+7281850,Ferntree Gully,07,-37.8846,145.2954,26019,Australia/Melbourne,0
+2171168,Coburg,07,-37.7500,144.9667,25846,Australia/Melbourne,0
+2161532,Keysborough,07,-37.9912,145.1738,25637,Australia/Melbourne,0
+2163990,Hampton Park,07,-38.0333,145.2500,25377,Australia/Melbourne,0
+2148876,South Yarra,07,-37.8383,144.9915,25237,Australia/Melbourne,0
+2165290,Glen Iris,07,-37.8667,145.0667,24838,Australia/Melbourne,0
+2146108,Traralgon,07,-38.1953,146.5415,24605,Australia/Melbourne,0
+2161540,Kew,07,-37.8064,145.0309,24491,Australia/Melbourne,0
+2173741,Brunswick,07,-37.7667,144.9667,24176,Australia/Melbourne,0
+8347325,Endeavour Hills,07,-37.9770,145.2587,24116,Australia/Melbourne,0
+2155001,Northcote,07,-37.7667,145.0000,24115,Australia/Melbourne,0
+7281805,Caroline Springs,07,-37.7412,144.7363,24077,Australia/Melbourne,0
+2156942,South Morang,07,-37.6500,145.1000,23874,Australia/Melbourne,0
+2156878,Mornington,07,-38.2179,145.0388,23245,Australia/Melbourne,0
+8348078,Wyndham Vale,07,-37.8914,144.6237,23093,Australia/Melbourne,0
+2163782,Hawthorn,07,-37.8199,145.0358,23051,Australia/Melbourne,0
+2174039,Brighton,07,-37.9056,145.0028,22742,Australia/Melbourne,0
+2160706,Lalor,07,-37.6667,145.0167,22413,Australia/Melbourne,0
+7302683,Southbank,07,-37.8228,144.9643,22397,Australia/Melbourne,0
+9972522,Dandenong North,07,-37.9665,145.2081,22225,Australia/Melbourne,0
+2160582,Langwarrin,07,-38.1667,145.1667,22146,Australia/Melbourne,0
+2165200,Glenroy,07,-37.7000,144.9333,22127,Australia/Melbourne,0
+2174580,Boronia,07,-37.8667,145.2833,21857,Australia/Melbourne,0
+2207618,Cheltenham,07,-37.9694,145.0481,21837,Australia/Melbourne,0
+2172686,Camberwell,07,-37.8421,145.0694,21744,Australia/Melbourne,0
+8347896,Roxburgh Park,07,-37.6258,144.9255,21742,Australia/Melbourne,0
+2148591,Springvale,07,-37.9485,145.1527,21572,Australia/Melbourne,0
+2156977,Mooroolbark,07,-37.7825,145.3168,21503,Australia/Melbourne,0
+7932638,Malvern East,07,-37.8740,145.0425,21282,Australia/Melbourne,0
+2165329,Glenferrie,07,-37.8333,145.0500,21177,Australia/Melbourne,0
+2163776,Hawthorn South,07,-37.8329,145.0367,21177,Australia/Melbourne,0
+2168537,Doreen,07,-37.6000,145.1500,20954,Australia/Melbourne,0
+2168607,Doncaster,07,-37.7883,145.1237,20728,Australia/Melbourne,0
+2145990,Truganina,07,-37.8167,144.7500,20646,Australia/Melbourne,0
+2172191,Carrum Downs,07,-38.0997,145.1725,20444,Australia/Melbourne,0
+2146827,Thomastown,07,-37.6833,145.0167,20441,Australia/Melbourne,0
+2150660,Saint Kilda,07,-37.8676,144.9810,20417,Australia/Melbourne,0
+2164515,Greensborough,07,-37.7046,145.1030,20407,Australia/Melbourne,0
+2167208,Essendon,07,-37.7498,144.9109,20310,Australia/Melbourne,0
+2171400,Clayton,07,-37.9167,145.1167,20130,Australia/Melbourne,0
+7932629,Balwyn North,07,-37.7909,145.0939,20015,Australia/Melbourne,0
+9972516,Cranbourne North,07,-38.0776,145.2987,19900,Australia/Melbourne,0
+2170079,Cranbourne,07,-38.1134,145.2833,19825,Australia/Melbourne,0
+2143887,Wheelers Hill,07,-37.9000,145.1833,19369,Australia/Melbourne,0
+2144728,Wantirna South,07,-37.8833,145.2167,19081,Australia/Melbourne,0
+9972579,Altona Meadows,07,-37.8841,144.7837,18874,Australia/Melbourne,0
+2172293,Carlton,07,-37.8000,144.9667,18829,Australia/Melbourne,0
+2143285,Wodonga,07,-36.1218,146.8881,18582,Australia/Melbourne,0
+9972578,Sunshine West,07,-37.7912,144.8164,18568,Australia/Melbourne,0
+8348824,Highton,07,-38.1706,144.3114,18388,Australia/Melbourne,0
+2146793,Thornbury,07,-37.7582,145.0058,18292,Australia/Melbourne,0
+2169145,Deer Park,07,-37.7672,144.7666,17980,Australia/Melbourne,0
+2144764,Wangaratta,07,-36.3585,146.3206,17897,Australia/Melbourne,0
+2167445,Eltham,07,-37.7333,145.1500,17829,Australia/Melbourne,0
+9972527,Frankston South,07,-38.1660,145.1364,17826,Australia/Melbourne,0
+2156578,Mount Martha,07,-38.2667,145.0167,17788,Australia/Melbourne,0
+2156340,Mulgrave,07,-37.9284,145.1771,17647,Australia/Melbourne,0
+7932573,Melton West,07,-37.6785,144.5688,17477,Australia/Melbourne,0
+2156663,Mount Eliza,07,-38.1833,145.0833,17358,Australia/Melbourne,0
+2151576,Ringwood,07,-37.8167,145.2333,17242,Australia/Melbourne,0
+2172264,Carnegie,07,-37.8936,145.0553,17121,Australia/Melbourne,0
+8349243,Hillside,07,-37.6905,144.7417,16976,Australia/Melbourne,0
+2153720,Pascoe Vale,07,-37.7333,144.9333,16850,Australia/Melbourne,0
+2166370,Footscray,07,-37.8000,144.9000,16550,Australia/Melbourne,0
+2158051,Mernda,07,-37.6007,145.0956,16370,Australia/Melbourne,0
+2147140,Templestowe,07,-37.7540,145.1486,16305,Australia/Melbourne,0
+2160188,Lilydale,07,-37.7500,145.3500,16209,Australia/Melbourne,0
+2149975,Seaford,07,-38.1000,145.1333,16148,Australia/Melbourne,0
+9972515,Cranbourne East,07,-38.1153,145.2981,15994,Australia/Melbourne,0
+2160560,Lara,07,-38.0239,144.4062,15919,Australia/Melbourne,0
+2176123,Bentleigh,07,-37.9181,145.0354,15892,Australia/Melbourne,0
+2157410,Mitcham,07,-37.8167,145.2000,15861,Australia/Melbourne,0
+2152658,Port Melbourne,07,-37.8396,144.9423,15817,Australia/Melbourne,0
+7932646,Brighton East,07,-37.9023,145.0173,15644,Australia/Melbourne,0
+8347847,Taylors Lakes,07,-37.6986,144.7863,15422,Australia/Melbourne,0
+2154912,North Melbourne,07,-37.7980,144.9451,15395,Australia/Melbourne,0
+2164495,Greenvale,07,-37.6333,144.8667,15338,Australia/Melbourne,0
+2144604,Warragul,07,-38.1591,145.9312,15284,Australia/Melbourne,0
+2170307,Corio,07,-38.0833,144.3833,15215,Australia/Melbourne,0
+7932620,Elwood,07,-37.8821,144.9821,15122,Australia/Melbourne,0
+2063523,Perth,08,-31.9522,115.8614,1896548,Australia/Perth,1
+2062338,Rockingham,08,-32.2768,115.7298,108022,Australia/Perth,0
+2067119,Mandurah,08,-32.5269,115.7217,83294,Australia/Perth,0
+2075432,Bunbury,08,-33.3271,115.6414,68248,Australia/Perth,0
+2077963,Albany,08,-35.0269,117.8837,33650,Australia/Perth,0
+7302631,Canning Vale,08,-32.0580,115.9181,32593,Australia/Perth,0
+8349017,Baldivis,08,-32.3289,115.8305,30472,Australia/Perth,0
+2068079,Kwinana,08,-32.2301,115.7813,30433,Australia/Perth,0
+2070998,Geraldton,08,-28.7790,114.6146,26872,Australia/Perth,0
+8349051,Dianella,08,-31.8882,115.8719,23034,Australia/Perth,0
+8349108,Thornlie,08,-32.0600,115.9550,22779,Australia/Perth,0
+8348596,Ellenbrook,08,-31.7674,115.9694,22209,Australia/Perth,0
+2075265,Busselton,08,-33.6525,115.3455,21898,Australia/Perth,0
+8349083,Morley,08,-31.8878,115.9099,21134,Australia/Perth,0
+2070571,Gosnells,08,-32.0810,116.0054,19914,Australia/Perth,0
+8348081,Ballajura,08,-31.8406,115.8955,18408,Australia/Perth,0
+8348101,Willetton,08,-32.0525,115.8878,17887,Australia/Perth,0
+2061840,Scarborough,08,-31.8958,115.7643,15258,Australia/Perth,0

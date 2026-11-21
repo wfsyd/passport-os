@@ -42,6 +42,8 @@ static RadioStation *s_stations;
 static constexpr unsigned kMaxStations=10,kStreamStackBytes=7168;
 static int s_stream_tcb,token;
 static const RadioStation kRadioPresets[1]={{"test","test","https://example.invalid",0}};
+struct RadioSearchPreset{const char *name;const char *description;const char *query;};
+static const RadioSearchPreset kAuRadioSearchPresets[2]={{"triple j","ABC","triple j"},{"ABC Jazz","ABC","ABC Jazz"}};
 static unsigned step,fail_at,sync_live,decoder_live,audio_live;
 static bool stopped=true;
 static bool failing(){return ++step==fail_at;}
@@ -92,8 +94,9 @@ int main(){
  using namespace audio_workspace;
  assert(acquire(Owner::Muse));assert(!radio_player_init());assert(release(Owner::Muse));
  step=fail_at=0;assert(radio_player_init());unsigned steps=step;
+ assert(s_station_count==2&&!s_stations[0].url[0]);
  assert(s_stations==(RadioStation*)radio::stations() && sizeof(RadioStation)*kMaxStations==4180);
- assert(!strcmp(s_stations[0].name,"test"));stopped=false;
+ assert(!strcmp(s_stations[0].name,"triple j"));stopped=false;
  assert(!radio_player_deinit(20) && owner==Owner::Radio && s_stations && audio_live);
  assert(!acquire(Owner::Muse) && !radio_player_init());stopped=true;
  assert(radio_player_deinit(20) && owner==Owner::None && !s_stations && !sync_live && !decoder_live);
