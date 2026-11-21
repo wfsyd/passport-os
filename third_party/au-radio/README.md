@@ -108,7 +108,8 @@ Its state is the state of that site.
 
 `streams.csv` has the columns `name,url,codec,checked`. `name` is a station name from
 stations.csv, and the URL applies to every row with that name. `codec` is mp3, aac or hls.
-`checked` is the ISO date of the probe. The file starts with only the header.
+`checked` is the ISO date of the probe, or `pattern` for a URL built from a broadcaster's
+known pattern (such as the ABC Icecast form) and not yet probed. The file starts with only the header.
 
 `tools/generate_radio_table.py` bakes each URL into the table. A row with a baked URL plays
 it directly on tune, with no directory lookup. If that URL does not open, the device falls

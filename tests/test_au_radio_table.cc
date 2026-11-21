@@ -216,6 +216,10 @@ static void rules_and_shorter_query() {
     assert(!shorter_query("106.5", out, sizeof(out)));              // dropping it would leave nothing
     assert(!shorter_query("KIIS 106.5", out, 4));                   // "KIIS" needs 5 bytes
     assert(!shorter_query(nullptr, out, sizeof(out)));
+    assert(first_word("SEN 1170", out, sizeof(out)) && std::strcmp(out, "SEN") == 0);
+    assert(first_word("KIIS", out, sizeof(out)) && std::strcmp(out, "KIIS") == 0);
+    assert(!first_word(" 106.5", out, sizeof(out)));                // leading space: no word
+    assert(!first_word("ABC", out, 3));                             // "ABC" needs 4 bytes
 }
 
 int main() {

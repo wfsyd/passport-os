@@ -33,14 +33,14 @@ const std::string kCodecless = R"([
  {"name":"ABC Jazz","url_resolved":"http://a.example/jazz.mp3","codec":"","votes":40,"lastcheckok":1,"hls":0}
 ])";
 
-RadioSearchBest pick(const std::string &body, const char *wanted, std::size_t chunk) {
+RadioSearchBest pick(const std::string &body, const char *wanted, std::size_t chunk, bool whole_word = false) {
     RadioSearchBest best = {};
     char object[8192];
     RadioJsonStream parser(object, sizeof(object));
     for (std::size_t off = 0; off < body.size(); off += chunk) {
         const std::size_t n = std::min(chunk, body.size() - off);
         parser.Feed(body.data() + off, n, [&](const char *json) {
-            radio_search_consider(json, wanted, &best);
+            radio_search_consider(json, wanted, &best, whole_word);
         });
     }
     assert(parser.Complete());
@@ -98,6 +98,20 @@ int main() {
      {"name":"triple j unknown","url_resolved":"http://a.example/u.mp3","codec":"MP3","bitrate":0,"votes":1,"lastcheckok":1,"hls":0}
     ])";
     assert(pick(kUnknownBitrate, "triple j", 25).found);
+
+    // Whole-word mode (shortened-query retry): the name must hold the word and the country must be AU.
+    const std::string kSen = R"([
+     {"name":"Sensation Radio","url_resolved":"https://d.example/sensation.m3u8","codec":"AAC","countrycode":"AU","votes":9000,"lastcheckok":1,"hls":1},
+     {"name":"SEN","url_resolved":"https://cf.example/sen.m3u8","codec":"AAC","countrycode":"US","votes":8000,"lastcheckok":1,"hls":1},
+     {"name":"SEN 1170 Sydney","url_resolved":"http://a.example/sen.aac","codec":"AAC","countrycode":"AU","votes":10,"lastcheckok":1,"hls":0}
+    ])";
+    const RadioSearchBest sen = pick(kSen, "SEN", 17, true);
+    assert(sen.found && std::strcmp(sen.url, "http://a.example/sen.aac") == 0);
+    const std::string kSensation = R"([{"name":"Sensation Radio","url_resolved":"https://d.example/s.m3u8","codec":"AAC","countrycode":"AU","votes":9000,"lastcheckok":1,"hls":1}])";
+    assert(pick(kSensation, "SEN", 9).found);
+    assert(!pick(kSensation, "SEN", 9, true).found);
+    const std::string kNoAu = R"([{"name":"SEN","url_resolved":"http://x.example/sen.mp3","codec":"MP3","countrycode":"US","votes":1,"lastcheckok":1,"hls":0}])";
+    assert(!pick(kNoAu, "SEN", 9, true).found);
 
     // Invalid input and empty results do not select anything.
     RadioSearchBest empty = {};

@@ -350,12 +350,19 @@ bool resolve_table_stream(std::size_t station, uint32_t generation, char *url, s
         return radio_catalog_resolve_stream(name, out, size, resolve_cancelled);
     };
     au_radio::StreamLookup lookup = au_radio::resolve_stream(table.cache, row, query, url, capacity, resolve);
-    // A miss gets one retry with the shorter name ("KIIS 106.5" -> "KIIS").
+    // A miss gets one retry with the shorter name ("KIIS 106.5" -> "KIIS"). The retry
+    // accepts only an AU result whose name holds the original first word as a whole word,
+    // so a loose match cannot put another station behind this row ("SEN" in "Sensation").
     char shorter[sizeof(RadioStation::name)] = {};
     if (lookup == au_radio::StreamLookup::NotFound && !resolve_cancelled() &&
         au_radio::shorter_query(query, shorter, sizeof(shorter))) {
-        ESP_LOGI(kTag, "No stream for \"%s\"; retrying as \"%s\"", query, shorter);
-        lookup = au_radio::resolve_stream(table.cache, row, shorter, url, capacity, resolve);
+        char word[sizeof(RadioStation::name)] = {};
+        au_radio::first_word(query, word, sizeof(word));
+        ESP_LOGI(kTag, "No stream for \"%s\"; retrying as \"%s\" (name must hold \"%s\")", query, shorter, word);
+        const auto resolve_word = [&word](const char *name, char *out, std::size_t size) {
+            return radio_catalog_resolve_stream(name, out, size, resolve_cancelled, word);
+        };
+        lookup = au_radio::resolve_stream(table.cache, row, shorter, url, capacity, resolve_word);
     }
     if (lookup == au_radio::StreamLookup::NotFound) {
         ESP_LOGW(kTag, "No stream found for table row %u", static_cast<unsigned>(row));
@@ -415,14 +422,17 @@ StreamResult stream_station(std::size_t station, uint32_t generation) {
         ESP_LOGI(kTag, "Opening stream: free=%u largest=%u", (unsigned)esp_get_free_heap_size(),
                  (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
         bool opened = open_stream(preset.url);
-        if (!opened && baked_url && source.reusable()) {
-            // The baked URL did not open: look the row up by name, as a row without one.
-            baked_url = false;
-            if (!resolve_table_stream(station, generation, preset.url, sizeof(preset.url))) {
-                no_stream = true;
-                break;
+        if (!opened && baked_url) {
+            ESP_LOGW(kTag, "Baked stream failed: %s err %d", preset.url, source.status());
+            if (source.reusable()) {
+                // The baked URL did not open: look the row up by name, as a row without one.
+                baked_url = false;
+                if (!resolve_table_stream(station, generation, preset.url, sizeof(preset.url))) {
+                    no_stream = true;
+                    break;
+                }
+                opened = open_stream(preset.url);
             }
-            opened = open_stream(preset.url);
         }
         if (!opened) {
             out_of_memory = source.oom();

@@ -24,6 +24,7 @@ void esp_http_client_set_header(Http*,const char*,const char*);
 void esp_http_client_close(Http*);
 void esp_http_client_cleanup(Http*);
 int esp_http_client_get_url(Http*,char*,size_t);
+int esp_http_client_set_url(Http*,const char*);
 int esp_http_client_read(Http*,char*,size_t);
 bool esp_http_client_is_complete_data_received(Http*);
 ''',
@@ -58,6 +59,7 @@ void esp_http_client_set_header(Http*,const char*,const char*){}
 void esp_http_client_close(Http*){}
 void esp_http_client_cleanup(Http*p){assert(live);--live;delete p;}
 int esp_http_client_get_url(Http*p,char*out,size_t size){if(p->url.size()>=size)return -1;strcpy(out,p->url.c_str());return 0;}
+int esp_http_client_set_url(Http*p,const char*url){p->url=url;return 0;}
 int esp_http_client_read(Http*p,char*out,size_t size){auto n=std::min({size,p->response.body.size()-p->offset,size_t(73)});memcpy(out,p->response.body.data()+p->offset,n);p->offset+=n;return int(n);}
 bool esp_http_client_is_complete_data_received(Http*p){return p->offset==p->response.body.size()&&!p->response.truncated;}
 int64_t esp_timer_get_time(){return clock_us;}
@@ -95,7 +97,22 @@ int main(){
  reset();responses["http://r/bad.m3u8"]={{body}};{RadioSource s(stop,nullptr);assert(!s.open("http://r/bad.m3u8"));}}
  reset();responses["http://r/trunc.m3u8"]={{"#EXTM3U\n#EXTINF:6,\na.ts\n","application/vnd.apple.mpegurl","",200,true}};
  {RadioSource s(stop,nullptr);assert(!s.open("http://r/trunc.m3u8"));}
- assert(live==0);puts("Production HLS transport: redirects, segments, no replay, refresh, cancellation, cleanup, invalid bodies PASS");
+ reset();
+ // Plain http redirected to https: the http form of the target is tried first and wins here.
+ responses["http://r/hop"]={{"","","https://r/hop",302},{std::string("\xff\xfb")+std::string(300,'m'),"audio/mpeg"}};
+ {RadioSource s(stop,nullptr);assert(s.open("http://r/hop")&&s.type()==ESP_AUDIO_SIMPLE_DEC_TYPE_MP3);}
+ assert(requests["https://r/hop"]==0);
+ reset();
+ // The plain form redirects again, so the https target is used after it.
+ responses["http://r/tls"]={{"","","https://r/tls",302}};
+ responses["https://r/tls"]={{adts('t'),"audio/aac"}};
+ {RadioSource s(stop,nullptr);assert(s.open("http://r/tls")&&s.type()==ESP_AUDIO_SIMPLE_DEC_TYPE_AAC);assert(drain(s)==adts('t'));}
+ assert(requests["https://r/tls"]==1);
+ reset();
+ // An https stream that fails is not retried over http.
+ responses["https://r/gone"]={{"","","",404}};
+ {RadioSource s(stop,nullptr);assert(!s.open("https://r/gone"));}
+ assert(live==0);puts("Production HLS transport: redirects, http-before-https, segments, no replay, refresh, cancellation, cleanup, invalid bodies PASS");
 }
 '''
 with tempfile.TemporaryDirectory(prefix='radio-source-') as temp:

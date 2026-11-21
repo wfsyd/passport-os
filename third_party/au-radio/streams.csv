@@ -1,6 +1,6 @@
 name,url,codec,checked
 Radio Adelaide,https://mediaserviceslive.akamaized.net/hls/live/2109401/localadelaide/v0-221.m3u8,hls,2026-11-21
-ABC Darwin,https://mediaserviceslive.akamaized.net/hls/live/2109409/localdarwin/v0-221.m3u8,hls,2026-11-21
+ABC Darwin,http://abc.streamguys1.com/live/localdarwin/icecast.audio,aac,pattern
 4EB,http://playerservices.streamtheworld.com/api/livestream-redirect/4EBAAC.aac,aac,2026-11-21
 FIVEaa,http://playerservices.streamtheworld.com/api/livestream-redirect/FIVEAA_AAC48.aac,aac,2026-11-21
 3RRR,http://realtime.rrr.org.au/p1l,aac,2026-11-21
@@ -13,11 +13,11 @@ PBS 106.7,http://playerservices.streamtheworld.com/api/livestream-redirect/3PBS_
 2Day FM,http://legacy.scahw.com.au/2day_32,aac,2026-11-21
 2HD,http://streaming.hdserver.biz:9388/,aac,2026-11-21
 4BC,http://playerservices.streamtheworld.com/api/livestream-redirect/4BC.mp3,aac,2026-11-21
-ABC Canberra,https://mediaserviceslive.akamaized.net/hls/live/2109407/localcanberra/v0-221.m3u8,hls,2026-11-21
+ABC Canberra,http://abc.streamguys1.com/live/localcanberra/icecast.audio,aac,pattern
 Triple M Sydney,http://sa47.scastream.com.au/2mmm_128?sca3xx=1,aac,2026-11-21
 2CA,http://playerservices.streamtheworld.com/api/livestream-redirect/2CAAAC.aac,aac,2026-11-21
 4ZZZ,https://iheart.4zzz.org.au/zed-digital,aac,2026-11-21
-ABC Melbourne,https://mediaserviceslive.akamaized.net/hls/live/2109416/localmelbourne/v0-221.m3u8,hls,2026-11-21
+ABC Melbourne,http://abc.streamguys1.com/live/localmelbourne/icecast.audio,aac,pattern
 Smooth 95.3,http://playerservices.streamtheworld.com/api/livestream-redirect/SMOOTH953_AAC48.aac,aac,2026-11-21
 Print Radio Tasmania,http://165.228.181.146:88/broadwave.mp3?src=1&rate=1,aac,2026-11-21
 Nova 100,http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_100_AAC320.aac,aac,2026-11-21
@@ -26,11 +26,11 @@ Gold 104.3,http://ais-arn.streamguys1.com/au_004_icy,aac,2026-11-21
 KIIS 106.5,http://ais-arn.streamguys1.com/au_007_icy,aac,2026-11-21
 Triple M Adelaide,http://legacy.scahw.com.au/5mmm_32,aac,2026-11-21
 ABC Radio National,http://abc.streamguys1.com/live/rnnsw/icecast.audio,aac,2026-11-21
-ABC Jazz,https://mediaserviceslive.akamaized.net/hls/live/2108543/abcjazz/v0-221.m3u8,hls,2026-11-21
+ABC Jazz,http://abc.streamguys1.com/live/abcjazz/icecast.audio,aac,pattern
 Nova 106.9,http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_1069_AAC320.aac,aac,2026-11-21
-ABC Sydney,https://mediaserviceslive.akamaized.net/hls/live/2109422/localsydney/v0-221.m3u8,hls,2026-11-21
-triple j,https://mediaserviceslive.akamaized.net/hls/live/2109456/triplejnsw/v0-221.m3u8,hls,2026-11-21
-ABC Classic,https://mediaserviceslive.akamaized.net/hls/live/2108547/classicfmnsw/v0-221.m3u8,hls,2026-11-21
+ABC Sydney,http://abc.streamguys1.com/live/localsydney/icecast.audio,aac,pattern
+triple j,http://abc.streamguys1.com/live/triplejnsw/icecast.audio,aac,pattern
+ABC Classic,http://abc.streamguys1.com/live/classicfmnsw/icecast.audio,aac,pattern
 2CC,http://playerservices.streamtheworld.com/api/livestream-redirect/2CCAAC.aac,aac,2026-11-21
 2SM,http://cast4.asurahosting.com/proxy/2sm1269/stream,aac,2026-11-21
 Hope 103.2,http://28853.live.streamtheworld.com/2CBAAAC.aac,aac,2026-11-21
@@ -39,13 +39,13 @@ SBS Radio,http://sbs-ice.streamguys1.com/sbs1-sbs-web,aac,2026-11-21
 3CR,http://playerservices.streamtheworld.com/api/livestream-redirect/3CRAAC.aac,aac,2026-11-21
 Nova 96.9,http://playerservices.streamtheworld.com/api/livestream-redirect/NOVA_969_AAC48.aac,aac,2026-11-21
 SBS PopAsia,http://sbs-ice.streamguys1.com/sbs-popasia-sbs-web,aac,2026-11-21
-ABC Hobart,https://mediaserviceslive.akamaized.net/hls/live/2110357/localhobart/v0-221.m3u8,hls,2026-11-21
+ABC Hobart,http://abc.streamguys1.com/live/localhobart/icecast.audio,aac,pattern
 Artsound FM,http://stream.artsound.fm/mp3,aac,2026-11-21
-Double J,https://mediaserviceslive.akamaized.net/hls/live/2108567/doublejnsw/v0-221.m3u8,hls,2026-11-21
+Double J,http://abc.streamguys1.com/live/doublejnsw/icecast.audio,aac,pattern
 2GB,http://playerservices.streamtheworld.com/api/livestream-redirect/2GB.mp3,aac,2026-11-21
 Fine Music,http://radio12.shoutcast.net.au:2020/stream/2MBS-ICE,aac,2026-11-21
 3AW,http://playerservices.streamtheworld.com/api/livestream-redirect/3AW.mp3,aac,2026-11-21
-ABC NewsRadio,https://mediaserviceslive.akamaized.net/hls/live/2109425/newsradio/v0-221.m3u8,hls,2026-11-21
+ABC NewsRadio,http://abc.streamguys1.com/live/newsradio/icecast.audio,aac,pattern
 ABC Adelaide,https://mediaserviceslive.akamaized.net/hls/live/2109401/localadelaide/v0-221.m3u8,hls,2026-11-21
 Mix 104.9,http://playerservices.streamtheworld.com/api/livestream-redirect/DAR_MIX1049AAC.aac,aac,2026-11-21
 6PR,http://playerservices.streamtheworld.com/api/livestream-redirect/6PR.mp3,aac,2026-11-21

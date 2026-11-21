@@ -70,10 +70,12 @@ def load_streams(path, station_names):
                 fail(line, 'url must start with http:// or https://')
             if r['codec'] not in STREAM_CODECS:
                 fail(line, 'codec must be mp3, aac or hls')
-            try:
-                datetime.date.fromisoformat(r['checked'])
-            except ValueError:
-                fail(line, 'checked must be an ISO date (YYYY-MM-DD)')
+            # 'pattern': a URL built from the broadcaster's known stream pattern, not yet checked.
+            if r['checked'] != 'pattern':
+                try:
+                    datetime.date.fromisoformat(r['checked'])
+                except ValueError:
+                    fail(line, 'checked must be an ISO date (YYYY-MM-DD) or pattern')
             if r['name'] not in station_names:
                 fail(line, f'{r["name"]} is not a station name in stations.csv')
             if r['name'] in streams:
