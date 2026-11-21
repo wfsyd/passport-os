@@ -7,6 +7,7 @@
 #include "ui_pixel.h"
 #include "wifi_manager.h"
 #include "muse_avatar_frames.h"
+#include "src/misc/cache/instance/lv_image_cache.h"
 #include "esp_heap_caps.h"
 #include "esp_log.h"
 #include <cstdio>
