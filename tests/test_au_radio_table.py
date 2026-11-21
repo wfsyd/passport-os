@@ -14,7 +14,7 @@ BULK = [f'A3,Bulk,QLD,-27.5,153.0,FM,{870 + i},,Bulk FM {i:03d},Bulk FM {i:03d}'
 
 
 def decode_table(text):
-    """Read the generated .inc back: areas as (name, state, first, count), stations as (band, freq, name, dab_block)."""
+    """Read the generated .inc back: areas as (name, state, first, count), stations as (band, freq, name, dab_block, url)."""
     pool_body = text.split('inline constexpr char kPool[] =', 1)[1].split('    ;', 1)[0]
     pool = b''.join(re.sub(r'\\([0-7]{3})', lambda m: chr(int(m.group(1), 8)), lit).encode('latin-1')
                     for lit in re.findall(r'"((?:[^"\\]|\\[0-7]{3})*)"', pool_body))
@@ -27,8 +27,8 @@ def decode_table(text):
              for _, _, _, n, st, first, count in
              re.findall(r'\{(-?\d+), (-?\d+), (\d+), (\d+), (\d+), (\d+), (\d+)\},', areas_body)]
     stations_body = text.split('kStations[] = {', 1)[1].split('};', 1)[0]
-    stations = [(int(band), int(freq), string(int(name)), string(int(dab)))
-                for name, _, dab, freq, band in re.findall(r'\{(\d+), (\d+), (\d+), (\d+), (\d+)\},', stations_body)]
+    stations = [(int(band), int(freq), string(int(name)), string(int(dab)), string(int(url)))
+                for name, _, dab, freq, band, url in re.findall(r'\{(\d+), (\d+), (\d+), (\d+), (\d+), (\d+)\},', stations_body)]
     return areas, stations
 
 
@@ -49,12 +49,12 @@ for city, state in [('Sydney', 'NSW'), ('Melbourne', 'VIC'), ('Brisbane', 'QLD')
     rows = stations[first:first + count]
     assert 0 < count <= 96, city
     if city == 'Sydney':
-        names = {(band, name) for band, _, name, _ in rows}
+        names = {(band, name) for band, _, name, _, _ in rows}
         assert (0, 'triple j') in names, 'triple j on FM'
         assert (0, 'ABC Sydney') not in names and (1, 'ABC Sydney') in names, 'ABC Sydney on AM 702'
         assert (0, 'KIIS 106.5') in names, 'commercial FM brand'
         assert (2, 'Double J') in names, 'DAB Double J'
-        dab_blocks = {block for band, _, _, block in rows if band == 2}
+        dab_blocks = {block for band, _, _, block, _ in rows if band == 2}
         assert dab_blocks == {'', '9C'}, 'DAB+ simulcasts have no block, national services are on 9C'
         assert (2, 'KIIS 106.5') in names, 'commercial brand simulcast on DAB+'
 
@@ -69,6 +69,36 @@ with tempfile.TemporaryDirectory(prefix='passport-au-radio-') as tmp:
                    check=True, capture_output=True)
     text = table.read_text(encoding='utf-8')
     assert 'kAreaCount = 3;' in text and 'kStationCount = 105;' in text
+    assert all(url == '' for _, _, _, _, url in decode_table(text)[1]), 'no streams.csv, no baked URLs'
+
+    # Baked URLs from streams.csv: shared URLs are one pool string; the row gets its offset.
+    streams = tmp / 'streams-fixture.csv'
+    streams.write_text('name,url,codec,checked\n'
+                       'Test FM 1,https://streams.example.test/fm1.mp3,mp3,2026-11-01\n'
+                       'Test AM 1,https://streams.example.test/fm1.mp3,mp3,2026-11-01\n'
+                       'Test DAB 1,http://streams.example.test/dab.aac,aac,2026-11-01\n', encoding='utf-8')
+    baked = tmp / 'baked.inc'
+    subprocess.run([sys.executable, str(GEN), '--input', str(source), '--streams', str(streams),
+                    '--output', str(baked)], check=True, capture_output=True)
+    _, baked_rows = decode_table(baked.read_text(encoding='utf-8'))
+    urls = {name: url for _, _, name, _, url in baked_rows}
+    assert urls['Test FM 1'] == urls['Test AM 1'] == 'https://streams.example.test/fm1.mp3'
+    assert urls['Test DAB 1'] == 'http://streams.example.test/dab.aac' and urls['Test FM 2'] == ''
+    assert baked.read_text(encoding='utf-8').count('streams.example.test/fm1.mp3') == 1, 'pool dedupes URLs'
+    bad_streams = {
+        'unknown station': 'Nope FM,https://streams.example.test/x.mp3,mp3,2026-11-01',
+        'not http': 'Test FM 1,ftp://streams.example.test/x.mp3,mp3,2026-11-01',
+        'codec': 'Test FM 1,https://streams.example.test/x.mp3,ogg,2026-11-01',
+        'date': 'Test FM 1,https://streams.example.test/x.mp3,mp3,2026-13-01',
+        'duplicate': 'Test FM 1,https://streams.example.test/x.mp3,mp3,2026-11-01\nTest FM 1,https://streams.example.test/y.mp3,mp3,2026-11-01',
+        'quote': 'Test FM 1,https://streams.example.test/"x.mp3,mp3,2026-11-01',
+    }
+    for label, body in bad_streams.items():
+        bad = tmp / 'bad-streams.csv'
+        bad.write_text('name,url,codec,checked\n' + body + '\n', encoding='utf-8')
+        result = subprocess.run([sys.executable, str(GEN), '--input', str(source), '--streams', str(bad),
+                                 '--output', str(tmp / 'x.inc')], capture_output=True, text=True)
+        assert result.returncode != 0, label
 
     # A changed source no longer matches the generated file.
     stale = tmp / 'stale.csv'

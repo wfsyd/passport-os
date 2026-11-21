@@ -26,7 +26,7 @@ Filter rules, applied in this order (counts are printed):
            services simulcast on DAB+.
      A DAB+ row with no FM area within 50 km marks no area.
   8. An area with only DAB+ rows (no FM or AM) is folded into the nearest area within
-     40 km that has FM or AM rows. Its DAB+ rows are merged there, deduplicated by name
+     70 km that has FM or AM rows. Its DAB+ rows are merged there, deduplicated by name
      (the block of the existing row is kept). Without such an area it is kept as it is.
      Without this, a DAB+ transmitter site can become an area with three rows, which
      the device would show instead of the metro area.
@@ -72,7 +72,7 @@ DAB_NATIONAL = [('Double J', 'Double J', '9C'), ('ABC Jazz', 'ABC Jazz', '9C'),
 DAB_SIMULCAST_PURPOSES = ('National', 'Commercial')
 ROWS_PER_AREA = 96          # au_radio::kMaxListed in main/apps/radio/au_radio_table.h
 DAB_MAX_KM = 50.0
-DAB_ONLY_FOLD_KM = 40.0    # DAB+-only areas fold into an FM/AM area this close
+DAB_ONLY_FOLD_KM = 70.0    # DAB+-only areas fold into an FM/AM area this close
 MAX_TEXT = 40               # area_name, name, query limit in tools/generate_radio_table.py
 MAX_ID = 16
 DMS = re.compile(r'^\s*(\d+)\s+(\d+)\s+(\d+(?:\.\d+)?)\s*([NSEW])\s*$')
@@ -220,7 +220,7 @@ def make_area_ids(keys):
 
 
 def fold_dab_only_areas(rows, skipped):
-    """Fold each area that has only DAB+ rows into the nearest FM/AM area within 40 km.
+    """Fold each area that has only DAB+ rows into the nearest FM/AM area within 70 km.
 
     rows are output rows in COLUMNS order. The DAB+ rows are merged into the target area,
     deduplicated by name (the target's existing row, and its block, wins). A DAB+-only area
@@ -249,7 +249,7 @@ def fold_dab_only_areas(rows, skipped):
             if km <= best_km:
                 best, best_km = other_id, km
         if best is None:
-            skipped['DAB+-only area with no FM or AM area within 40 km (kept)'] += 1
+            skipped['DAB+-only area with no FM or AM area within 70 km (kept)'] += 1
             continue
         target = areas[best]
         names = {row[8] for row in target['rows'] if row[5] == 'DAB'}

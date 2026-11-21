@@ -54,9 +54,6 @@ nsw-broken-hill,Broken Hill,NSW,-31.9397,141.4433,FM,1037,,ABC Classic,ABC Class
 nsw-bulga-mine,Bulga Mine,NSW,-32.6711,151.0981,FM,909,,triple j,triple j
 nsw-cadia-mine-s,Cadia Mine Site,NSW,-33.4558,148.9864,FM,889,,triple j,triple j
 nsw-cadia-mine-s,Cadia Mine Site,NSW,-33.4558,148.9864,FM,897,,ABC Radio National,Radio National
-nsw-campbelltown,Campbelltown,NSW,-34.1472,150.6708,DAB,0,9C,ABC Jazz,ABC Jazz
-nsw-campbelltown,Campbelltown,NSW,-34.1472,150.6708,DAB,0,9C,Double J,Double J
-nsw-campbelltown,Campbelltown,NSW,-34.1472,150.6708,DAB,0,9C,SBS PopAsia,SBS PopAsia
 nsw-captains-fla,Captains Flat,NSW,-35.5975,149.4417,FM,885,,ABC NewsRadio,ABC NewsRadio
 nsw-central-tabl,Central Tablelands,NSW,-33.3431,148.9836,FM,1019,,triple j,triple j
 nsw-central-tabl,Central Tablelands,NSW,-33.3431,148.9836,FM,1027,,ABC Classic,ABC Classic
@@ -104,6 +101,9 @@ nsw-lake-cowal-m,Lake Cowal Mine,NSW,-33.6314,147.4083,FM,909,,triple j,triple j
 nsw-lightning-ri,Lightning Ridge,NSW,-29.4061,147.9722,FM,937,,ABC Radio National,Radio National
 nsw-lismore,Lismore,NSW,-28.5428,153.2903,FM,989,,SBS Radio,SBS Radio
 nsw-lithgow-city,Lithgow (City),NSW,-33.4872,150.1597,FM,921,,ABC Radio National,Radio National
+nsw-lithgow-city,Lithgow (City),NSW,-33.4872,150.1597,DAB,0,9C,ABC Jazz,ABC Jazz
+nsw-lithgow-city,Lithgow (City),NSW,-33.4872,150.1597,DAB,0,9C,Double J,Double J
+nsw-lithgow-city,Lithgow (City),NSW,-33.4872,150.1597,DAB,0,9C,SBS PopAsia,SBS PopAsia
 nsw-long-flat,Long Flat,NSW,-31.4461,152.4769,FM,1079,,SBS Radio,SBS Radio
 nsw-mt-warkworth,MT Warkworth Mine,NSW,-32.6350,151.0694,FM,953,,triple j,triple j
 nsw-mangoola-min,Mangoola Mine,NSW,-32.2867,150.7017,FM,897,,triple j,triple j
@@ -129,6 +129,9 @@ nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,AM,1458,,ABC NewsRadio,ABC NewsRad
 nsw-newcastle,Newcastle,NSW,-32.8919,151.5383,AM,1512,,ABC Radio National,Radio National
 nsw-nimbin,Nimbin,NSW,-28.5967,153.2219,FM,1063,,SBS Radio,SBS Radio
 nsw-nowra,Nowra,NSW,-34.6181,150.6975,AM,603,,ABC Radio National,Radio National
+nsw-nowra,Nowra,NSW,-34.6181,150.6975,DAB,0,9C,ABC Jazz,ABC Jazz
+nsw-nowra,Nowra,NSW,-34.6181,150.6975,DAB,0,9C,Double J,Double J
+nsw-nowra,Nowra,NSW,-34.6181,150.6975,DAB,0,9C,SBS PopAsia,SBS PopAsia
 nsw-oberon,Oberon,NSW,-33.7028,149.8394,FM,1071,,SBS Radio,SBS Radio
 nsw-orange,Orange,NSW,-33.4603,149.1236,FM,1005,,SBS Radio,SBS Radio
 nsw-parkes,Parkes,NSW,-33.2497,148.3369,FM,1013,,SBS Radio,SBS Radio
@@ -212,9 +215,6 @@ nsw-walcha,Walcha,NSW,-30.9658,151.6306,FM,901,,ABC Radio National,Radio Nationa
 nsw-walgett,Walgett,NSW,-30.0081,148.1328,FM,1075,,ABC Radio National,Radio National
 nsw-wilcannia,Wilcannia,NSW,-31.5525,143.3808,AM,1485,,ABC Radio National,Radio National
 nsw-wilpinjong-c,Wilpinjong Coal Mine,NSW,-32.3417,149.8756,FM,957,,triple j,triple j
-nsw-windsor,Windsor,NSW,-33.5203,150.6206,DAB,0,9C,ABC Jazz,ABC Jazz
-nsw-windsor,Windsor,NSW,-33.5203,150.6206,DAB,0,9C,Double J,Double J
-nsw-windsor,Windsor,NSW,-33.5203,150.6206,DAB,0,9C,SBS PopAsia,SBS PopAsia
 nsw-wollongong,Wollongong,NSW,-34.6183,150.6972,AM,1035,,SBS Radio,SBS Radio
 nsw-wollongong,Wollongong,NSW,-34.6183,150.6972,AM,1431,,ABC Radio National,Radio National
 nsw-young,Young,NSW,-34.3417,148.3361,FM,971,,ABC Radio National,Radio National
@@ -327,9 +327,6 @@ qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,SBS Radio,SBS Radio
 qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,Triple M Brisbane,Triple M Brisbane
 qld-brisbane,Brisbane,QLD,-27.4644,152.9475,DAB,0,,triple j,triple j
 qld-burketown,Burketown,QLD,-17.7403,139.5461,FM,979,,triple j,triple j
-qld-caboolture,Caboolture,QLD,-27.0544,152.7861,DAB,0,9C,ABC Jazz,ABC Jazz
-qld-caboolture,Caboolture,QLD,-27.0544,152.7861,DAB,0,9C,Double J,Double J
-qld-caboolture,Caboolture,QLD,-27.0544,152.7861,DAB,0,9C,SBS PopAsia,SBS PopAsia
 qld-cairns,Cairns,QLD,-17.2642,145.8536,FM,1051,,ABC Radio National,Radio National
 qld-cairns,Cairns,QLD,-17.2642,145.8536,FM,1059,,ABC Classic,ABC Classic
 qld-cairns,Cairns,QLD,-17.2642,145.8536,FM,1075,,triple j,triple j
@@ -637,13 +634,13 @@ tas-waratah,Waratah,TAS,-41.3353,145.7336,FM,1049,,ABC Radio National,Radio Nati
 tas-weldborough,Weldborough,TAS,-41.2336,147.9453,FM,989,,ABC Radio National,Radio National
 vic-albury-wodon,Albury/Wodonga,VIC,-36.1019,146.9025,AM,990,,ABC Radio National,Radio National
 vic-alexandra,Alexandra,VIC,-37.0767,145.5731,FM,1045,,ABC Radio National,Radio National
-vic-bacchus-mars,Bacchus Marsh,VIC,-37.6533,144.4225,DAB,0,9C,ABC Jazz,ABC Jazz
-vic-bacchus-mars,Bacchus Marsh,VIC,-37.6533,144.4225,DAB,0,9C,Double J,Double J
-vic-bacchus-mars,Bacchus Marsh,VIC,-37.6533,144.4225,DAB,0,9C,SBS PopAsia,SBS PopAsia
 vic-bairnsdale,Bairnsdale,VIC,-37.7056,147.5606,FM,1063,,ABC Radio National,Radio National
 vic-ballarat-loo,Ballarat (Lookout Hill),VIC,-37.2825,143.2478,FM,1055,,ABC Classic,ABC Classic
 vic-ballarat-loo,Ballarat (Lookout Hill),VIC,-37.2825,143.2478,FM,1071,,triple j,triple j
 vic-ballarat-war,Ballarat (Warrenheip),VIC,-37.5753,143.9603,FM,959,,SBS Radio,SBS Radio
+vic-ballarat-war,Ballarat (Warrenheip),VIC,-37.5753,143.9603,DAB,0,9C,ABC Jazz,ABC Jazz
+vic-ballarat-war,Ballarat (Warrenheip),VIC,-37.5753,143.9603,DAB,0,9C,Double J,Double J
+vic-ballarat-war,Ballarat (Warrenheip),VIC,-37.5753,143.9603,DAB,0,9C,SBS PopAsia,SBS PopAsia
 vic-bendigo,Bendigo,VIC,-36.9925,144.3089,FM,903,,triple j,triple j
 vic-bendigo,Bendigo,VIC,-36.9925,144.3089,FM,927,,ABC Classic,ABC Classic
 vic-bright,Bright,VIC,-36.7158,146.9728,FM,881,,ABC Classic,ABC Classic
@@ -711,9 +708,6 @@ vic-wangaratta,Wangaratta,VIC,-36.3844,146.2053,AM,756,,ABC Radio National,Radio
 vic-warrnambool,Warrnambool,VIC,-38.3047,142.7375,FM,897,,triple j,triple j
 vic-warrnambool,Warrnambool,VIC,-38.3047,142.7375,FM,921,,ABC Classic,ABC Classic
 vic-warrnambool,Warrnambool,VIC,-38.3047,142.7375,FM,1017,,ABC Radio National,Radio National
-vic-werribee,Werribee,VIC,-37.8867,144.7036,DAB,0,9C,ABC Jazz,ABC Jazz
-vic-werribee,Werribee,VIC,-37.8867,144.7036,DAB,0,9C,Double J,Double J
-vic-werribee,Werribee,VIC,-37.8867,144.7036,DAB,0,9C,SBS PopAsia,SBS PopAsia
 vic-western-vict,Western Victoria,VIC,-37.4589,141.9161,FM,925,,ABC Radio National,Radio National
 vic-western-vict,Western Victoria,VIC,-37.4589,141.9161,FM,933,,ABC Classic,ABC Classic
 vic-western-vict,Western Victoria,VIC,-37.4589,141.9161,FM,949,,triple j,triple j

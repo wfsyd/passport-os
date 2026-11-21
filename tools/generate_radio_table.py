@@ -8,6 +8,7 @@ Stations are grouped by area in first-seen order so each area is a contiguous ru
 """
 import argparse
 import csv
+import datetime
 import sys
 from pathlib import Path
 
@@ -15,6 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = ROOT / 'third_party/au-radio/stations.csv'
 DEFAULT_OUTPUT = ROOT / 'main/apps/radio/au_radio_table_data.inc'
 COLUMNS = ['area_id', 'area_name', 'state', 'lat', 'lon', 'band', 'freq', 'dab_block', 'name', 'query']
+STREAM_COLUMNS = ['name', 'url', 'codec', 'checked']
+STREAM_CODECS = ('mp3', 'aac', 'hls')
 BAND_CODES = {'FM': 0, 'AM': 1, 'DAB': 2}
 FM_DECIHZ = (870, 1080)   # 87.0 to 108.0 MHz, in 0.1 MHz units
 AM_KHZ = (522, 1728)
@@ -22,6 +25,7 @@ AU_LAT = (-44.0, -9.0)   # Torres Strait islands lie north of 10 S
 AU_LON = (112.0, 154.0)
 MAX_NAME_BYTES = 40
 MAX_QUERY_BYTES = 40
+MAX_URL_BYTES = 255         # RadioStation::url is 256 bytes, with its NUL
 MAX_POOL_BYTES = 65535
 MAX_ROWS = 65535
 
@@ -45,6 +49,39 @@ def load_rows(path):
     return rows
 
 
+def load_streams(path, station_names):
+    """Map station name to baked stream URL from streams.csv. A missing file means none."""
+    if not path.exists():
+        return {}
+    streams = {}
+    with path.open(encoding='utf-8', newline='') as source:
+        reader = csv.reader(source)
+        if next(reader, None) != STREAM_COLUMNS:
+            raise ValueError(f'{path}: header must be {",".join(STREAM_COLUMNS)}')
+        for line, raw in enumerate(reader, start=2):
+            if not any(cell.strip() for cell in raw):
+                continue
+            if len(raw) != len(STREAM_COLUMNS):
+                fail(line, f'{path.name}: expected {len(STREAM_COLUMNS)} columns, got {len(raw)}')
+            r = dict(zip(STREAM_COLUMNS, (cell.strip() for cell in raw)))
+            check_text(line, 'name', r['name'], MAX_NAME_BYTES)
+            check_text(line, 'url', r['url'], MAX_URL_BYTES)
+            if not r['url'].startswith(('http://', 'https://')):
+                fail(line, 'url must start with http:// or https://')
+            if r['codec'] not in STREAM_CODECS:
+                fail(line, 'codec must be mp3, aac or hls')
+            try:
+                datetime.date.fromisoformat(r['checked'])
+            except ValueError:
+                fail(line, 'checked must be an ISO date (YYYY-MM-DD)')
+            if r['name'] not in station_names:
+                fail(line, f'{r["name"]} is not a station name in stations.csv')
+            if r['name'] in streams:
+                fail(line, f'duplicate stream for {r["name"]}')
+            streams[r['name']] = r['url']
+    return streams
+
+
 def check_text(line, field, value, limit):
     if not value:
         fail(line, f'{field} is empty')
@@ -54,8 +91,9 @@ def check_text(line, field, value, limit):
         fail(line, f'{field} has control, quote or backslash characters')
 
 
-def build(rows):
-    """Return (areas, stations, pool) for the validated rows."""
+def build(rows, streams=None):
+    """Return (areas, stations, pool) for the validated rows. streams maps name to baked URL."""
+    streams = streams or {}
     areas = {}   # area_id -> dict
     order = []   # area ids in first-seen order
     grouped = {}  # area_id -> list of station dicts
@@ -103,7 +141,8 @@ def build(rows):
             fail(line, f'duplicate station {r["name"]} in {r["area_id"]}')
         seen.add(key)
         grouped[r['area_id']].append({'name': r['name'], 'query': r['query'],
-                                      'dab_block': r['dab_block'], 'freq': freq, 'band': band})
+                                      'dab_block': r['dab_block'], 'freq': freq, 'band': band,
+                                      'url': streams.get(r['name'], '')})
     stations_flat = []
     area_rows = []
     pool = bytearray(b'\0')
@@ -119,7 +158,7 @@ def build(rows):
         first = len(stations_flat)
         for s in grouped[area_id]:
             stations_flat.append((intern(s['name']), intern(s['query']), intern(s['dab_block']),
-                                  s['freq'], BAND_CODES[s['band']]))
+                                  s['freq'], BAND_CODES[s['band']], intern(s['url'])))
         a = areas[area_id]
         area_rows.append((round(a['lat'] * 10000), round(a['lon'] * 10000), intern(area_id),
                           intern(a['name']), intern(a['state']), first,
@@ -157,15 +196,18 @@ def render(area_rows, stations, pool):
     lines.append('    {},')
     lines.append('};')
     lines.append('inline constexpr Station kStations[] = {')
-    for name, query, dab, freq, band in stations:
-        lines.append(f'    {{{name}, {query}, {dab}, {freq}, {band}}},')
+    for name, query, dab, freq, band, url in stations:
+        lines.append(f'    {{{name}, {query}, {dab}, {freq}, {band}, {url}}},')
     lines.append('    {},')
     lines.append('};')
     return ('\n'.join(lines) + '\n').encode('utf-8')
 
 
-def generate(source, output):
-    area_rows, stations, pool = build(load_rows(source))
+def generate(source, output, streams_path=None):
+    rows = load_rows(source)
+    # streams.csv sits beside stations.csv unless --streams names another file.
+    streams = load_streams(streams_path or source.with_name('streams.csv'), {r['name'] for _, r in rows})
+    area_rows, stations, pool = build(rows, streams)
     return render(area_rows, stations, pool), len(area_rows), len(stations), output
 
 
@@ -173,10 +215,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--input', type=Path, default=DEFAULT_SOURCE)
     parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument('--streams', type=Path, default=None,
+                        help='baked stream URLs (default: streams.csv beside --input)')
     parser.add_argument('--check', action='store_true')
     args = parser.parse_args()
     try:
-        text, areas, stations, output = generate(args.input, args.output)
+        text, areas, stations, output = generate(args.input, args.output, args.streams)
     except (ValueError, OSError) as error:
         print(f'radio table: {error}', file=sys.stderr)
         sys.exit(1)

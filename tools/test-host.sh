@@ -91,6 +91,7 @@ python3 tests/test_home_weather.py
 python3 tests/test_home_weather_schedule.py
 python3 tests/test_radio_catalog.py
 python3 tests/test_au_radio_table.py
+python3 tests/test_probe_au_streams.py
 "${CC:-cc}" -c -fsanitize=address,undefined -Itests/vendor/cjson tests/vendor/cjson/cJSON.c -o "$test_dir/cjson.o"
 "${CXX:-c++}" -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -g -Imain -Itests/vendor/cjson \
     tests/test_radio_search_pick.cc main/apps/radio/radio_search_pick.cc "$test_dir/cjson.o" -o "$test_dir/radio-search-pick"

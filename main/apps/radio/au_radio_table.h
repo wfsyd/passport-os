@@ -41,6 +41,7 @@ struct Station {
     uint16_t dab_block;
     uint16_t frequency; // FM in 0.1 MHz, AM in kHz, DAB 0
     uint8_t band;
+    uint16_t url;       // pool offset of the baked stream URL from streams.csv; 0 when none
 };
 
 std::size_t area_count();

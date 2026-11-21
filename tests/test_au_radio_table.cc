@@ -136,7 +136,7 @@ static void readouts_and_choices() {
     assert(std::strcmp(text, "630 kHz") == 0);
     format_dial_readout(station_at(3), text, sizeof(text));
     assert(std::strcmp(text, "9A") == 0);
-    const Station simulcast{0, 0, 0, 0, kBandDab};  // empty dab_block: pool offset 0 is ""
+    const Station simulcast{0, 0, 0, 0, kBandDab, 0};  // empty dab_block: pool offset 0 is ""
     format_dial_readout(simulcast, text, sizeof(text));
     assert(std::strcmp(text, "DAB+") == 0);
 

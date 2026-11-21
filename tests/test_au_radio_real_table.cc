@@ -1,6 +1,6 @@
 // Checks the bundled Australian station table (main/apps/radio/au_radio_table_data.inc):
 // GPS and name selection for Sydney, the area picker's order for each state, and that no
-// DAB+-only area sits within 40 km of an FM/AM area. Built by tests/test_au_radio_table.py.
+// DAB+-only area sits within 70 km of an FM/AM area. Built by tests/test_au_radio_table.py.
 #include "apps/radio/au_radio_table.h"
 
 #include <cassert>
@@ -92,14 +92,14 @@ static double haversine_km(double lat1, double lon1, double lat2, double lon2) {
 }
 
 static void no_dab_only_areas() {
-    // A DAB+-only area is folded into an FM/AM area within 40 km. Any that remain have none in range.
+    // A DAB+-only area is folded into an FM/AM area within 70 km. Any that remain have none in range.
     for (std::size_t i = 0; i < area_count(); ++i) {
         if (bands_in_area(i) != (1u << kBandDab)) continue;
         for (std::size_t j = 0; j < area_count(); ++j) {
             if (bands_in_area(j) == (1u << kBandDab)) continue;
             const double km = haversine_km(area_at(i).lat_e4 / 1e4, area_at(i).lon_e4 / 1e4,
                                            area_at(j).lat_e4 / 1e4, area_at(j).lon_e4 / 1e4);
-            assert(km > 40.0 && "a DAB+-only area should have been folded into its neighbour");
+            assert(km > 70.0 && "a DAB+-only area should have been folded into its neighbour");
         }
     }
 }
